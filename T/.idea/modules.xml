@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/T.iml" filepath="$PROJECT_DIR$/T.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/android.iml" filepath="$PROJECT_DIR$/android/android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gdx-gamesvcs-master/android-amazongc/android-amazongc.iml" filepath="$PROJECT_DIR$/gdx-gamesvcs-master/android-amazongc/android-amazongc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gdx-gamesvcs-master/android-gpgs/android-gpgs.iml" filepath="$PROJECT_DIR$/gdx-gamesvcs-master/android-gpgs/android-gpgs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/core.iml" filepath="$PROJECT_DIR$/core/core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gdx-gamesvcs-master/core-gamejolt/core-gamejolt.iml" filepath="$PROJECT_DIR$/gdx-gamesvcs-master/core-gamejolt/core-gamejolt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/desktop/desktop.iml" filepath="$PROJECT_DIR$/desktop/desktop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gdx-gamesvcs-master/desktop-gpgs/desktop-gpgs.iml" filepath="$PROJECT_DIR$/gdx-gamesvcs-master/desktop-gpgs/desktop-gpgs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gdx-gamesvcs-master/html/html.iml" filepath="$PROJECT_DIR$/gdx-gamesvcs-master/html/html.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gdx-gamesvcs-master/html-gpgs/html-gpgs.iml" filepath="$PROJECT_DIR$/gdx-gamesvcs-master/html-gpgs/html-gpgs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gdx-gamesvcs-master/html-kong/html-kong.iml" filepath="$PROJECT_DIR$/gdx-gamesvcs-master/html-kong/html-kong.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ios/ios.iml" filepath="$PROJECT_DIR$/ios/ios.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gdx-gamesvcs-master/ios-gamecenter/ios-gamecenter.iml" filepath="$PROJECT_DIR$/gdx-gamesvcs-master/ios-gamecenter/ios-gamecenter.iml" />
+    </modules>
+  </component>
+</project>

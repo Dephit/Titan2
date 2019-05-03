@@ -1,0 +1,47 @@
+
+buttons.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+benchButton
+  rotate: false
+  xy: 1, 183
+  size: 61, 63
+  orig: 61, 63
+  offset: 0, 0
+  index: -1
+chouseSquatMenu
+  rotate: false
+  xy: 1, 183
+  size: 61, 63
+  orig: 61, 63
+  offset: 0, 0
+  index: -1
+deadliftButton
+  rotate: false
+  xy: 1, 183
+  size: 61, 63
+  orig: 61, 63
+  offset: 0, 0
+  index: -1
+optionButton
+  rotate: false
+  xy: 1, 118
+  size: 61, 63
+  orig: 61, 63
+  offset: 0, 0
+  index: -1
+statsButton
+  rotate: false
+  xy: 1, 53
+  size: 61, 63
+  orig: 61, 63
+  offset: 0, 0
+  index: -1
+map
+  rotate: false
+  xy: 1, 1
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1

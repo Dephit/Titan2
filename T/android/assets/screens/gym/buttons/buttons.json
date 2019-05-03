@@ -1,0 +1,17 @@
+[
+  {class:com.mygdx.game.MyGdxGame$ButtonData,name:optionButton,x:10,y:950,width:100,height:100}
+  {class:com.mygdx.game.MyGdxGame$ButtonData,name:map,x:10,y:830,width:100,height:100} 
+  {class:com.mygdx.game.MyGdxGame$ButtonData,name:statsButton,x:1600,y:750,width:300,height:300} 
+
+  {class:com.mygdx.game.MyGdxGame$ButtonData,name:chouseSquatMenu,x:770,y:200,width:200,height:100} 
+  {class:com.mygdx.game.MyGdxGame$ButtonData,name:benchButton,x:1250,y:0,width:200,height:170} 
+  {class:com.mygdx.game.MyGdxGame$ButtonData,name:deadliftButton,x:720,y:0,width:300,height:70}  
+
+ // {class:com.mygdx.game.MyGdxGame$ButtonData,name:technicSquatButton,x:770,y:300,width:200,height:100}  
+ // {class:com.mygdx.game.MyGdxGame$ButtonData,name:technicBenchButton,x:1250,y:100,width:200,height:170} 
+  //{class:com.mygdx.game.MyGdxGame$ButtonData,name:technicDeadliftButton,x:720,y:100,width:200,height:70}  
+
+ {class:com.mygdx.game.MyGdxGame$ButtonData,name:gripButton,x:1020,y:350,width:200,height:70} 
+ {class:com.mygdx.game.MyGdxGame$ButtonData,name:archButton,x:1220,y:350,width:200,height:70}  
+ {class:com.mygdx.game.MyGdxGame$ButtonData,name:watchglass,x:1603,y:753,width:303,height:303} 
+]
