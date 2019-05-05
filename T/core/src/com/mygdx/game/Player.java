@@ -66,6 +66,7 @@ public class Player extends Actor {
     private float time;
 
 
+
     public enum PlayerCondition {
         stay, down, up, left, right, squat, bench, deadlift,squatTechnic,
         benchTechnic, deadliftTechnic, gripWorkout, archWorkout, sleeping, working

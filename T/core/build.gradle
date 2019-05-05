@@ -13,4 +13,6 @@ eclipse.project {
 dependencies {
 
     implementation 'com.mobidevelop.robovm:robovm-rt:2.3.5'
+    implementation 'com.google.android.gms:play-services:12.0.1'
+
 }

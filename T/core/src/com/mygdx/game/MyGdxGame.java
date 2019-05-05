@@ -1,15 +1,14 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -21,8 +20,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
-import com.badlogic.gdx.utils.Timer;
-import com.badlogic.gdx.utils.async.AsyncTask;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 import java.util.ArrayList;
@@ -30,6 +27,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
+import sun.security.krb5.internal.crypto.RsaMd5CksumType;
+
+import static com.badlogic.gdx.Input.Keys.R;
 import static com.badlogic.gdx.net.HttpRequestBuilder.json;
 import static com.mygdx.game.MyGdxGame.Screens.gym;
 import static com.mygdx.game.MyGdxGame.Screens.map;
@@ -45,7 +45,6 @@ import static com.mygdx.game.MyMethods.createProceduralPixmap;
 import static com.mygdx.game.MyMethods.getJson;
 import static com.mygdx.game.MyMethods.getPath;
 import static com.mygdx.game.MyMethods.getTextButtonStyleFromFile;
-import static com.mygdx.game.MyMethods.textDrawing;
 
 public class MyGdxGame implements ApplicationListener
 {
@@ -55,6 +54,8 @@ public class MyGdxGame implements ApplicationListener
 	private static int mapSize;
     public static int mapCoorinateCorrector;
 
+
+
 	private Texture tex2,tex3,tex4;
 	private Pixmap pix2,pix3,pix4;
     public static List<Grid2d.MapNode> path=new LinkedList<Grid2d.MapNode>();
@@ -63,14 +64,11 @@ public class MyGdxGame implements ApplicationListener
     private static Array<Objects> playObjects=new Array<Objects>();
 
     private Grid2d map2d;
-	private Objects o;
 	private double[][] mapArr;
     private Group objectDrawOrderGroup =new Group(), hudGroup=new Group();
 
-    private GlyphLayout glyphLayout;
     public static Locale locale=null;
     private Group windowGroup=new Group();
-    private InputProcessor inputProcessor;
     private ArrayList<TextButton> buttonsArr=new ArrayList<TextButton>();
 
     public enum Screens {
@@ -103,12 +101,10 @@ public class MyGdxGame implements ApplicationListener
         if(language.equals("ru"))locale = new Locale("ru", "RU");
             else
                 locale = new Locale("es", "ES");
-
 		stage = new Stage(new StretchViewport(1920, 1080));
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 1920, 1080);
-
-		createButtons();
+  		createButtons();
 
         touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
 		player = new Player();
@@ -126,7 +122,6 @@ public class MyGdxGame implements ApplicationListener
 		tex3=new Texture(pix3);
 		pix4=createProceduralPixmap(1,1,0,0,1);
 		tex4=new Texture(pix4);
-
 		Gdx.input.setInputProcessor(stage);
     }
 
@@ -332,7 +327,7 @@ public class MyGdxGame implements ApplicationListener
         if(window==none){
             windowGroup.clear();
         } else {
-            Window w = new Window(1920 / 2 - 750, 1080 / 2 - 350, 1500, 700, currentWindow.toString());
+            Window w = new Window(1920 / 2 - 750f, 1080 / 2 - 350f, 1500, 700, currentWindow.toString());
             w.loadButtons(window.toString(), buttonsArr);
             windowGroup.addActor(w);
             windowGroup.addActor(w.thisGroup);

@@ -1,4 +1,7 @@
-#Sat Apr 27 10:20:02 MSK 2019
-base.0=C\:\\Users\\User\\Desktop\\T\\android\\build\\intermediates\\transforms\\dexMerger\\debug\\10
+#Sun May 05 21:35:09 MSK 2019
+base.0=C\:\\Users\\User\\Documents\\GitHub\\Titan\\T\\android\\build\\intermediates\\transforms\\dexMerger\\debug\\10
+path.1=classes2.dex
+renamed.1=classes2.dex
 path.0=classes.dex
 renamed.0=classes.dex
+base.1=C\:\\Users\\User\\Documents\\GitHub\\Titan\\T\\android\\build\\intermediates\\transforms\\dexMerger\\debug\\10

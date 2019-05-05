@@ -27,6 +27,8 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable = false
+            signingConfig signingConfigs.debug
         }
     }
 }
@@ -88,6 +90,12 @@ task run(type: Exec) {
     commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.mygdx.game/com.mygdx.game.AndroidLauncher'
 }
 
+dependencies {
+    implementation 'com.google.android.gms:play-services:12.0.1'
+
+}
+
+
 // sets up the Android Eclipse project, using the old Ant based build.
 eclipse {
     // need to specify Java source sets explicitly, SpringSource Gradle Eclipse plugin
@@ -116,6 +124,17 @@ eclipse {
         buildCommand "com.android.ide.eclipse.adt.PreCompilerBuilder"
         buildCommand "org.eclipse.jdt.core.javabuilder"
         buildCommand "com.android.ide.eclipse.adt.ApkBuilder"
+    }
+
+    allprojects {
+        repositories {
+            google()
+
+            // If you're using a version of Gradle lower than 4.1, you must instead use:
+            // maven {
+            //     url 'https://maven.google.com'
+            // }
+        }
     }
 }
 
