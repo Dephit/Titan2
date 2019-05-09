@@ -66,6 +66,13 @@ technicSquatButton
   orig: 64, 64
   offset: 0, 0
   index: -1
+workProgressButton
+  rotate: false
+  xy: 914, 903
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 benchButton
   rotate: false
   xy: 1, 62

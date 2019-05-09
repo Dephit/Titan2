@@ -1,9 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -20,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.badlogic.gdx.utils.SerializationException;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 import java.util.ArrayList;
@@ -27,9 +26,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
-import sun.security.krb5.internal.crypto.RsaMd5CksumType;
-
-import static com.badlogic.gdx.Input.Keys.R;
 import static com.badlogic.gdx.net.HttpRequestBuilder.json;
 import static com.mygdx.game.MyGdxGame.Screens.gym;
 import static com.mygdx.game.MyGdxGame.Screens.map;
@@ -41,6 +37,7 @@ import static com.mygdx.game.MyGdxGame.Screens.work;
 import static com.mygdx.game.MyGdxGame.Windows.chouseSquatMenu;
 import static com.mygdx.game.MyGdxGame.Windows.none;
 import static com.mygdx.game.MyGdxGame.Windows.refregirator;
+import static com.mygdx.game.MyGdxGame.Windows.workMenu;
 import static com.mygdx.game.MyMethods.createProceduralPixmap;
 import static com.mygdx.game.MyMethods.getJson;
 import static com.mygdx.game.MyMethods.getPath;
@@ -53,8 +50,6 @@ public class MyGdxGame implements ApplicationListener
 	private Player player;
 	private static int mapSize;
     public static int mapCoorinateCorrector;
-
-
 
 	private Texture tex2,tex3,tex4;
 	private Pixmap pix2,pix3,pix4;
@@ -76,7 +71,7 @@ public class MyGdxGame implements ApplicationListener
 	}
 
     public enum Windows{
-        none, refregirator, chouseSquatMenu
+        none, refregirator, chouseSquatMenu, workMenu
     }
 
     static class Coordinates{
@@ -147,9 +142,7 @@ public class MyGdxGame implements ApplicationListener
             for (Coordinates coordinate : coordinates) {
                 mapArr[coordinate.x][coordinate.y]=-1;
             }
-        }catch (GdxRuntimeException ignored){
-
-        }
+        }catch (GdxRuntimeException ignored){ }
 	}
 //debug fun
 	private void saveRoomMap() {
@@ -181,7 +174,6 @@ public class MyGdxGame implements ApplicationListener
         final ArrayList<ButtonText> buttonTextArrayList= json.fromJson(ArrayList.class,textList);
 
         for (final ButtonData buttonData : buttonDataArrayList) {
-
             final TextButton textButton = new TextButton("", getTextButtonStyleFromFile(skin,buttonData.name));
             textButton.setName(buttonData.name);
             textButton.setBounds(buttonData.x,buttonData.y,buttonData.width,buttonData.height);
@@ -229,8 +221,9 @@ public class MyGdxGame implements ApplicationListener
     static class ObjectData{
         public String name;
         public int x,y,width,height, rows,cols,time;
+        public List<int[]> animations=new ArrayList<int[]>();
 
-        public ObjectData(String name, int x, int y, int width, int height, int rows, int cols, int time) {
+        public ObjectData(String name, int x, int y, int width, int height, int rows, int cols, int time,  List<int[]> animations) {
             this.name = name;
             this.x = x;
             this.y = y;
@@ -239,6 +232,7 @@ public class MyGdxGame implements ApplicationListener
             this.rows = rows;
             this.cols = cols;
             this.time = time;
+            this.animations=animations;
         }
 
         public ObjectData() {
@@ -283,7 +277,6 @@ public class MyGdxGame implements ApplicationListener
         String objectList = getJson("screens/"+string+"/objects/objects.json");
 
         final ArrayList<ObjectData> objectDataArrayList= json.fromJson(ArrayList.class, objectList);
-
         for (final ObjectData objectData : objectDataArrayList) {
            Objects objects=new Objects("screens/" + string + "/objects/",objectData);
            playObjects.add(objects);
@@ -324,10 +317,20 @@ public class MyGdxGame implements ApplicationListener
 
     private void setUpWindow(Windows window) {
         currentWindow=window;
+
         if(window==none){
             windowGroup.clear();
         } else {
-            Window w = new Window(1920 / 2 - 750f, 1080 / 2 - 350f, 1500, 700, currentWindow.toString());
+            Window w;
+            try {
+                String s = getJson("screens/windows/" + window.toString() + "/coord.json");
+                ButtonData bounds=json.fromJson( ButtonData.class, s);
+                w= new Window(bounds.x,bounds.y,bounds.width,bounds.height, currentWindow.toString());
+            }catch (GdxRuntimeException e ){
+                w = new Window(1920 / 2 - 750f, 1080 / 2 - 350f, 1500, 700, currentWindow.toString());
+            }catch (SerializationException exception){
+                w = new Window(640 / 2 - 750f, 1080 / 2 - 350f, 1500, 700, currentWindow.toString());
+            }
             w.loadButtons(window.toString(), buttonsArr);
             windowGroup.addActor(w);
             windowGroup.addActor(w.thisGroup);
@@ -700,7 +703,22 @@ public class MyGdxGame implements ApplicationListener
                 @Override
                 public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                    setUpRoom(work);
-                   player.setPlayersAction(Player.PlayerCondition.working,0,0);
+                   setUpWindow(workMenu);
+                }
+                @Override
+                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                    return true;
+                }
+            };
+        }
+
+        //WORK
+        if(name.equals("workProgressButton")){
+            listener=new InputListener(){
+                @Override
+                public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                    player.setPlayersAction(Player.PlayerCondition.working,0,0);
+                    setUpWindow(none);
                 }
                 @Override
                 public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {

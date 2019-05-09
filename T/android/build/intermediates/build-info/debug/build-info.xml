@@ -2,33 +2,35 @@
 <instant-run
     abi="armeabi-v7a,armeabi"
     api-level="23"
-    build-mode="COLD"
+    build-mode="FULL"
     density="xxhdpi"
     format="10"
-    ir-eligibility="R_CLASS_CHANGE"
     plugin-version="3.4.0"
-    timestamp="1557084277132"
+    timestamp="1557422743478"
     token="-3181443438454619886"
-    verifier="COLD_SWAP_REQUESTED" >
+    verifier="FULL_BUILD_REQUESTED" >
 
     <task
         name="javac"
-        duration="1011" />
+        duration="2434" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="194" />
+        duration="3080" />
     <task
         name="verifier"
-        duration="102" />
+        duration="4344" />
 
     <artifact
-        location="C:\Users\User\Documents\GitHub\Titan\T\android\build\intermediates\split-apk\debug\slices\slice_1.apk"
+        location="C:\Users\User\Documents\GitHub\Titan\T\android\build\intermediates\split-apk\debug\dep\dependencies.apk"
         type="SPLIT" />
     <artifact
         location="C:\Users\User\Documents\GitHub\Titan\T\android\build\intermediates\split-apk\debug\slices\slice_2.apk"
+        type="SPLIT" />
+    <artifact
+        location="C:\Users\User\Documents\GitHub\Titan\T\android\build\intermediates\split-apk\debug\slices\slice_1.apk"
         type="SPLIT" />
     <artifact
         location="C:\Users\User\Documents\GitHub\Titan\T\android\build\intermediates\split-apk\debug\slices\slice_0.apk"
@@ -40,10 +42,19 @@
         location="C:\Users\User\Documents\GitHub\Titan\T\android\build\intermediates\split-apk\debug\slices\slice_4.apk"
         type="SPLIT" />
     <artifact
+        location="C:\Users\User\Documents\GitHub\Titan\T\android\build\intermediates\split-apk\debug\slices\slice_5.apk"
+        type="SPLIT" />
+    <artifact
         location="C:\Users\User\Documents\GitHub\Titan\T\android\build\intermediates\split-apk\debug\slices\slice_6.apk"
         type="SPLIT" />
     <artifact
         location="C:\Users\User\Documents\GitHub\Titan\T\android\build\intermediates\split-apk\debug\slices\slice_8.apk"
+        type="SPLIT" />
+    <artifact
+        location="C:\Users\User\Documents\GitHub\Titan\T\android\build\intermediates\split-apk\debug\slices\slice_7.apk"
+        type="SPLIT" />
+    <artifact
+        location="C:\Users\User\Documents\GitHub\Titan\T\android\build\intermediates\split-apk\debug\slices\slice_9.apk"
         type="SPLIT" />
     <artifact
         location="C:\Users\User\Documents\GitHub\Titan\T\android\build\intermediates\instant-run-apk\debug\android-debug.apk"
@@ -51,70 +62,40 @@
 
     <build
         build-mode="FULL"
-        timestamp="1557083257765"
+        timestamp="1557422743478"
         verifier="FULL_BUILD_REQUESTED" >
         <artifact
-            location="C:\Users\User\Documents\GitHub\Titan\T\android\build\intermediates\split-apk\debug\slices\slice_0.apk"
+            location="C:\Users\User\Documents\GitHub\Titan\T\android\build\intermediates\split-apk\debug\dep\dependencies.apk"
             type="SPLIT" />
         <artifact
-            location="C:\Users\User\Documents\GitHub\Titan\T\android\build\intermediates\instant-run-apk\debug\android-debug.apk"
-            type="SPLIT_MAIN" />
+            location="C:\Users\User\Documents\GitHub\Titan\T\android\build\intermediates\split-apk\debug\slices\slice_2.apk"
+            type="SPLIT" />
         <artifact
             location="C:\Users\User\Documents\GitHub\Titan\T\android\build\intermediates\split-apk\debug\slices\slice_1.apk"
             type="SPLIT" />
         <artifact
-            location="C:\Users\User\Documents\GitHub\Titan\T\android\build\intermediates\split-apk\debug\slices\slice_6.apk"
+            location="C:\Users\User\Documents\GitHub\Titan\T\android\build\intermediates\split-apk\debug\slices\slice_0.apk"
             type="SPLIT" />
         <artifact
-            location="C:\Users\User\Documents\GitHub\Titan\T\android\build\intermediates\split-apk\debug\slices\slice_7.apk"
+            location="C:\Users\User\Documents\GitHub\Titan\T\android\build\intermediates\split-apk\debug\slices\slice_3.apk"
             type="SPLIT" />
         <artifact
-            location="C:\Users\User\Documents\GitHub\Titan\T\android\build\intermediates\split-apk\debug\slices\slice_2.apk"
+            location="C:\Users\User\Documents\GitHub\Titan\T\android\build\intermediates\split-apk\debug\slices\slice_4.apk"
             type="SPLIT" />
         <artifact
             location="C:\Users\User\Documents\GitHub\Titan\T\android\build\intermediates\split-apk\debug\slices\slice_5.apk"
             type="SPLIT" />
         <artifact
-            location="C:\Users\User\Documents\GitHub\Titan\T\android\build\intermediates\split-apk\debug\slices\slice_4.apk"
-            type="SPLIT" />
-        <artifact
-            location="C:\Users\User\Documents\GitHub\Titan\T\android\build\intermediates\split-apk\debug\slices\slice_3.apk"
-            type="SPLIT" />
-        <artifact
-            location="C:\Users\User\Documents\GitHub\Titan\T\android\build\intermediates\split-apk\debug\slices\slice_9.apk"
-            type="SPLIT" />
-        <artifact
-            location="C:\Users\User\Documents\GitHub\Titan\T\android\build\intermediates\split-apk\debug\dep\dependencies.apk"
-            type="SPLIT" />
-        <artifact
-            location="C:\Users\User\Documents\GitHub\Titan\T\android\build\intermediates\split-apk\debug\slices\slice_8.apk"
-            type="SPLIT" />
-    </build>
-    <build
-        build-mode="COLD"
-        ir-eligibility="R_CLASS_CHANGE"
-        timestamp="1557084277132"
-        verifier="COLD_SWAP_REQUESTED" >
-        <artifact
-            location="C:\Users\User\Documents\GitHub\Titan\T\android\build\intermediates\split-apk\debug\slices\slice_1.apk"
-            type="SPLIT" />
-        <artifact
-            location="C:\Users\User\Documents\GitHub\Titan\T\android\build\intermediates\split-apk\debug\slices\slice_2.apk"
-            type="SPLIT" />
-        <artifact
-            location="C:\Users\User\Documents\GitHub\Titan\T\android\build\intermediates\split-apk\debug\slices\slice_0.apk"
-            type="SPLIT" />
-        <artifact
-            location="C:\Users\User\Documents\GitHub\Titan\T\android\build\intermediates\split-apk\debug\slices\slice_3.apk"
-            type="SPLIT" />
-        <artifact
-            location="C:\Users\User\Documents\GitHub\Titan\T\android\build\intermediates\split-apk\debug\slices\slice_4.apk"
-            type="SPLIT" />
-        <artifact
             location="C:\Users\User\Documents\GitHub\Titan\T\android\build\intermediates\split-apk\debug\slices\slice_6.apk"
             type="SPLIT" />
         <artifact
             location="C:\Users\User\Documents\GitHub\Titan\T\android\build\intermediates\split-apk\debug\slices\slice_8.apk"
+            type="SPLIT" />
+        <artifact
+            location="C:\Users\User\Documents\GitHub\Titan\T\android\build\intermediates\split-apk\debug\slices\slice_7.apk"
+            type="SPLIT" />
+        <artifact
+            location="C:\Users\User\Documents\GitHub\Titan\T\android\build\intermediates\split-apk\debug\slices\slice_9.apk"
             type="SPLIT" />
         <artifact
             location="C:\Users\User\Documents\GitHub\Titan\T\android\build\intermediates\instant-run-apk\debug\android-debug.apk"

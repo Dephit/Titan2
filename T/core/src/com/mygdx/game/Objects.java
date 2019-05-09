@@ -4,7 +4,11 @@ package com.mygdx.game;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.mygdx.game.MyMethods.*;
 
@@ -16,18 +20,8 @@ public class Objects extends Actor
     private float animationTime;
     private float time,x,y,width,height;
     private TextureRegion currentFrame;
-
-    public Objects(String s, String name) {
-    imgName=getDirectoryFiles(s,name)[0];
-    setName(name);
-    setBounds(getFileParam(imgName,".X"), getFileParam(imgName,".Y"),
-            getFileParam(imgName,".W"), getFileParam(imgName,".H"));
-    rows=getFileParam(imgName,".R");
-    colls=getFileParam(imgName,".C");
-    time=getFileParam(imgName,".T");
-    animationTime=0;
-    animation=MyMethods.createAnimation(s+imgName,colls,rows,1f);
-}
+    private List<int[]> animations=new ArrayList<int[]>();
+    int randomTime;
 
     public Objects(String path,MyGdxGame.ObjectData objectData) {
         imgName=getDirectoryFiles(path,objectData.name)[0];
@@ -37,6 +31,15 @@ public class Objects extends Actor
         colls=objectData.cols;
         time=objectData.time;
         animationTime=0;
+
+        try{
+            animations = objectData.animations;
+            randomTime=randomAnim();;
+        }catch (IllegalArgumentException e){
+            animations.add(new int[]{0, rows * colls, (int) time});
+            randomTime=randomAnim();
+        }
+
         animation=MyMethods.createAnimation(path+imgName,colls,rows,1f);
     }
 
@@ -47,11 +50,24 @@ public class Objects extends Actor
         batch.draw(currentFrame,getX(),getY(),getWidth(),getHeight());
     }
 
+
+
     @Override
     public void act(float delta) {
         super.act(delta);
-        animationTime+=delta*time;
-        if(animationTime>rows*colls)animationTime=0;
+        doRandomAnim(delta);
+    }
+
+    private int randomAnim(){
+        return MathUtils.random(0,animations.size()-1);
+    }
+
+    private void doRandomAnim(float delta) {
+        animationTime+=delta*animations.get(randomTime)[2] ;
+        if(animationTime > animations.get(randomTime)[1] || animationTime < animations.get(randomTime)[0]){
+            randomTime= MathUtils.random(0,animations.size()-1);
+            animationTime=animations.get(randomTime)[0];
+        }
     }
 
     public void dispose()
