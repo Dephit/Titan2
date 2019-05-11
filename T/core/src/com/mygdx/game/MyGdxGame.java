@@ -104,7 +104,7 @@ public class MyGdxGame implements ApplicationListener
         touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
 		player = new Player();
 		setUpRoom(menu);
-
+  
         for (StatBar stat : player.stats) {
             hudGroup.addActor(stat);
         }
@@ -565,8 +565,8 @@ public class MyGdxGame implements ApplicationListener
             listener=new InputListener(){
                 @Override
                 public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                    path = map2d.findPath((int) player.getX() / mapCoorinateCorrector, (int) player.getY() / mapCoorinateCorrector,890/mapCoorinateCorrector,175/mapCoorinateCorrector);
-                    player.setPlayersAction(Player.PlayerCondition.squat, 865,150);
+                    path = map2d.findPath((int) player.getX() / mapCoorinateCorrector, (int) player.getY() / mapCoorinateCorrector,890/mapCoorinateCorrector,125/mapCoorinateCorrector);
+                    player.setPlayersAction(Player.PlayerCondition.squat, 865,125);
                     setUpWindow(none);
                 }
                 @Override
@@ -791,4 +791,3 @@ public class MyGdxGame implements ApplicationListener
         return listener;
     }
 }
-
