@@ -118,6 +118,7 @@ public class MyGdxGame implements ApplicationListener
 		pix4=createProceduralPixmap(1,1,0,0,1);
 		tex4=new Texture(pix4);
 		Gdx.input.setInputProcessor(stage);
+
     }
 
     private void createMap() {
@@ -206,6 +207,7 @@ public class MyGdxGame implements ApplicationListener
     static class ButtonData{
 	    public String name;
 	    public int x,y,width,height;
+	    public List<String> screenLIst= new ArrayList<String>();
 
         public ButtonData(TextButton tb) {
             this.name = tb.getName();
@@ -429,7 +431,7 @@ public class MyGdxGame implements ApplicationListener
 
 	}
 
-    private InputListener getListener(String name){
+    private InputListener getListener(String name)  {
         InputListener listener = new InputListener();
 
         //QUIT

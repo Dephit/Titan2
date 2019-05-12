@@ -20,10 +20,10 @@ public class Objects extends Actor
     private float animationTime;
     private float time,x,y,width,height;
     private TextureRegion currentFrame;
-    private List<int[]> animations=new ArrayList<int[]>();
-    int randomTime;
+    private List<int[]> animations=new ArrayList<int[]>(); // int[0] - StartFrame, int[1]-LastFrame, int[2]-AnimTime, int[3]-Chance
+    private int randomTime;
 
-    public Objects(String path,MyGdxGame.ObjectData objectData) {
+    Objects(String path, MyGdxGame.ObjectData objectData) {
         imgName=getDirectoryFiles(path,objectData.name)[0];
         setName(objectData.name);
         setBounds(objectData.x, objectData.y, objectData.width, objectData.height);
@@ -34,9 +34,9 @@ public class Objects extends Actor
 
         try{
             animations = objectData.animations;
-            randomTime=randomAnim();;
+            randomTime=randomAnim();
         }catch (IllegalArgumentException e){
-            animations.add(new int[]{0, rows * colls, (int) time});
+            animations.add(new int[]{0, rows * colls, (int) time, 100});
             randomTime=randomAnim();
         }
 
@@ -59,13 +59,20 @@ public class Objects extends Actor
     }
 
     private int randomAnim(){
+        for (int i = 0; i < animations.size(); i++) {
+            if(100 - animations.get(i)[3] <= MathUtils.random(0,100)){
+                if(animations.get(i)[3] != 100 )
+                    System.out.print(animations.get(i)[3]+"   ");
+                return i;
+            }
+        }
         return MathUtils.random(0,animations.size()-1);
     }
 
     private void doRandomAnim(float delta) {
         animationTime+=delta*animations.get(randomTime)[2] ;
         if(animationTime > animations.get(randomTime)[1] || animationTime < animations.get(randomTime)[0]){
-            randomTime= MathUtils.random(0,animations.size()-1);
+            randomTime= randomAnim();
             animationTime=animations.get(randomTime)[0];
         }
     }

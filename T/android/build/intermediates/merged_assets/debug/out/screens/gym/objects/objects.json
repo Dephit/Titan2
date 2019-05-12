@@ -1,16 +1,13 @@
 [
  {class:com.mygdx.game.MyGdxGame$ObjectData,name:bench,x:1200,y:10,width:275,height:205, rows:1, cols:1, time:0}
  {class:com.mygdx.game.MyGdxGame$ObjectData,name:bike,x:180,y:230,width:300,height:300, rows:1, cols:4, time:10}
- {class:com.mygdx.game.MyGdxGame$ObjectData,name:coach,x:0,y:0,width:280,height:280,  rows:1, cols:30, time:5, animations: [[ 1, 10, 5 ], [10, 30, 5 ]] }
- {class:com.mygdx.game.MyGdxGame$ObjectData,name:deadlift,x:715,y:5,width:300,height:300, rows:1, cols:2, time:0}
+ {class:com.mygdx.game.MyGdxGame$ObjectData,name:coach,x:0,y:0,width:280,height:280,  rows:1, cols:30, time:5, animations: [[ 1, 10, 5,70], [10, 30, 5,30]] }
+ {class:com.mygdx.game.MyGdxGame$ObjectData,name:deadlift,x:655,y:0,width:545,height:180, rows:1, cols:1, time:0}
  {class:com.mygdx.game.MyGdxGame$ObjectData,name:dumbels,x:210,y:435,width:495,height:155, rows:1, cols:1, time:0}
  {class:com.mygdx.game.MyGdxGame$ObjectData,name:mirror,x:287,y:520,width:590,height:200, rows:2, cols:2, time:10}
  {class:com.mygdx.game.MyGdxGame$ObjectData,name:plate,x:975,y:125,width:115,height:160, rows:1, cols:1, time:0}
  {class:com.mygdx.game.MyGdxGame$ObjectData,name:plate2,x:640,y:125,width:115,height:160, rows:1, cols:1, time:0}
  {class:com.mygdx.game.MyGdxGame$ObjectData,name:rack,x:730,y:130,width:270,height:285, rows:1, cols:1, time:0}
  {class:com.mygdx.game.MyGdxGame$ObjectData,name:run,x:1480,y:160,width:300,height:340, rows:1, cols:4, time:10}
-
-
-
-
+  {class:com.mygdx.game.MyGdxGame$ObjectData,name: benchesNearDumbs,x:220,y:325,width:280,height:145, rows:1, cols:1, time:0}
 ]
