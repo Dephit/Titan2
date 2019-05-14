@@ -103,8 +103,7 @@ public class MyGdxGame implements ApplicationListener
 
         touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
 		player = new Player();
-		setUpRoom(menu);
-  
+        setUpRoom(menu); 
         for (StatBar stat : player.stats) {
             hudGroup.addActor(stat);
         }
