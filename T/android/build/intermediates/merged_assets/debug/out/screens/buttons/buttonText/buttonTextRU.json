@@ -1,7 +1,0 @@
-[
-	{class:com.mygdx.game.MyGdxGame$ButtonText,buttonName:technicSquatButton,text:Нажми меня!} 
-	{class:com.mygdx.game.MyGdxGame$ButtonText,buttonName:technicBenchButton,text:Пожми меня!} 
-	{class:com.mygdx.game.MyGdxGame$ButtonText,buttonName:technicDeadliftButton,text:Потяни меня!}
-	{class:com.mygdx.game.MyGdxGame$ButtonText,buttonName:archButton,text:Иди сюда!}
-	{class:com.mygdx.game.MyGdxGame$ButtonText,buttonName:gripButton,text:Подережи это!}
-]

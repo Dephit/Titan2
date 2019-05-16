@@ -1,5 +1,0 @@
-[
-  {class:com.mygdx.game.MyGdxGame$ButtonData,name:optionButton,x:500,y:450,width:250,height:100},
-  {class:com.mygdx.game.MyGdxGame$ButtonData,name:playButton,x:500,y:600,width:250,height:100},
-  {class:com.mygdx.game.MyGdxGame$ButtonData,name:quitButton,x:500,y:300,width:250,height:100}
-]

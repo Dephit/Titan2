@@ -43,124 +43,128 @@ import static com.mygdx.game.MyMethods.getJson;
 import static com.mygdx.game.MyMethods.getPath;
 import static com.mygdx.game.MyMethods.getTextButtonStyleFromFile;
 
-public class MyGdxGame implements ApplicationListener
-{
+public class MyGdxGame implements ApplicationListener {
     private OrthographicCamera camera;
-	private Vector3 touchPos;
-	private Player player;
-	private static int mapSize;
+    private Vector3 touchPos;
+    private Player player;
+    private static int mapSize;
     public static int mapCoorinateCorrector;
 
-	private Texture tex2,tex3,tex4;
-	private Pixmap pix2,pix3,pix4;
-    public static List<Grid2d.MapNode> path=new LinkedList<Grid2d.MapNode>();
-    public static List<Grid2d.MapNode> path3=new LinkedList<Grid2d.MapNode>();
-    private static Group screenButtons=new Group();
-    private static Array<Objects> playObjects=new Array<Objects>();
+    private Texture tex2, tex3, tex4;
+    private Pixmap pix2, pix3, pix4;
+    public static List<Grid2d.MapNode> path = new LinkedList<Grid2d.MapNode>();
+    public static List<Grid2d.MapNode> path3 = new LinkedList<Grid2d.MapNode>();
+    private static Group screenButtons = new Group();
+    private static Array<Objects> playObjects = new Array<Objects>();
 
     private Grid2d map2d;
-	private double[][] mapArr;
-    private Group objectDrawOrderGroup =new Group(), hudGroup=new Group();
+    private double[][] mapArr;
+    private Group objectDrawOrderGroup = new Group(), hudGroup = new Group();
 
-    public static Locale locale=null;
-    private Group windowGroup=new Group();
-    private ArrayList<TextButton> buttonsArr=new ArrayList<TextButton>();
+    public static Locale locale = null;
+    private Group windowGroup = new Group();
+    private ArrayList<TextButton> buttonsArr = new ArrayList<TextButton>();
 
     public enum Screens {
-		gym, room, map, work, shop, menu, options,stats
-	}
+        gym, room, map, work, shop, menu, options, stats
+    }
 
-    public enum Windows{
+    public enum Windows {
         none, refregirator, chouseSquatMenu, workMenu
     }
 
-    static class Coordinates{
+    static class Coordinates {
         public int x, y;
+
         Coordinates(int x, int y) {
             this.x = x;
             this.y = y;
         }
+
         public Coordinates() {
         }
     }
 
-	private static Stage stage;
-	private Screens currentScreen, previousScreen;
-	private Windows currentWindow=none;
-	private Texture background;
+    private static Stage stage;
+    private Screens currentScreen, previousScreen;
+    private Windows currentWindow = none;
+    private Texture background;
 
-	@Override
-	public void create() {
+    @Override
+    public void create() {
         FontFactory.getInstance().initialize();
         String language = "ru";
-        if(language.equals("ru"))locale = new Locale("ru", "RU");
-            else
-                locale = new Locale("es", "ES");
-		stage = new Stage(new StretchViewport(1920, 1080));
-		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 1920, 1080);
-  		createButtons();
+        if (language.equals("ru"))
+            locale = new Locale("ru", "RU");
+        else
+            locale = new Locale("es", "ES"); 
+        stage = new Stage(new StretchViewport(1920, 1080));
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, 1920, 1080);
+        createButtons();
 
         touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-		player = new Player();
-        setUpRoom(menu); 
+        player = new Player();
+        setUpRoom(menu);
+
         for (StatBar stat : player.stats) {
             hudGroup.addActor(stat);
         }
         stage.addActor(hudGroup);
         stage.addActor(windowGroup);
-
-		pix2=createProceduralPixmap(1,1,1,0,0);
-		tex2=new Texture(pix2);
-		pix3=createProceduralPixmap(1,1,0,1,0);
-		tex3=new Texture(pix3);
-		pix4=createProceduralPixmap(1,1,0,0,1);
-		tex4=new Texture(pix4);
-		Gdx.input.setInputProcessor(stage);
+                pix2 = createProceduralPixmap(1, 1, 1, 0, 0);
+        tex2 = new Texture(pix2);
+        pix3 = createProceduralPixmap(1, 1, 0, 1, 0);
+        tex3 = new Texture(pix3);
+        pix4 = createProceduralPixmap(1, 1, 0, 0, 1);
+        tex4 = new Texture(pix4);
+        Gdx.input.setInputProcessor(stage);
 
     }
 
     private void createMap() {
-		mapSize=10;
-		mapCoorinateCorrector=50;
-		mapArr = new double[mapSize][mapSize * 4];
-        //saveRoomMap();
-		RestoreMap();
-		map2d = new Grid2d(mapArr, false);
-		if(path!=null)
-		    path.clear();
+        mapSize = 10;
+        mapCoorinateCorrector = 50;
+        mapArr = new double[mapSize][mapSize * 4];
+        // saveRoomMap();
+        RestoreMap();
+        map2d = new Grid2d(mapArr, false);
+        if (path != null)
+            path.clear();
     }
 
-	private void RestoreMap() {
-		FileHandle file=null;
-        ArrayList<Coordinates> 	coordinates;
+    private void RestoreMap() {
+        FileHandle file = null;
+        ArrayList<Coordinates> coordinates;
         try {
-            file = Gdx.files.internal(getPath()+"screens/"+currentScreen+"/"+currentScreen+".json");
+            file = Gdx.files.internal(getPath() + "screens/" + currentScreen + "/" + currentScreen + ".json");
             String stringCoordinates = file.readString();
-            coordinates=( json.fromJson(ArrayList.class, stringCoordinates));
+            coordinates = (json.fromJson(ArrayList.class, stringCoordinates));
 
             for (Coordinates coordinate : coordinates) {
-                mapArr[coordinate.x][coordinate.y]=-1;
+                mapArr[coordinate.x][coordinate.y] = -1;
             }
-        }catch (GdxRuntimeException ignored){ }
-	}
-//debug fun
-	private void saveRoomMap() {
-        ArrayList<Coordinates> 	coordinates = new ArrayList();
-		for (int i = 0; i <mapSize ; i++) {
-			for (int j = 0; j < mapSize*4; j++) {
-				if(mapArr[i][j]==-1){
-					Coordinates coor=new Coordinates(i,j);
-					coordinates.add(coor);
-				}
-			}
-		}
-		FileHandle  file = null;
-		file = Gdx.files.local(getPath()+"screens/"+currentScreen+"/"+currentScreen+".json");
-	//	file.writeString("", false);
+        } catch (GdxRuntimeException ignored) {
+        }
+    }
+
+    // debug fun
+    private void saveRoomMap() {
+        ArrayList<Coordinates> coordinates = new ArrayList();
+        for (int i = 0; i < mapSize; i++) {
+            for (int j = 0; j < mapSize * 4; j++) {
+                if (mapArr[i][j] == -1) {
+                    Coordinates coor = new Coordinates(i, j);
+                    coordinates.add(coor);
+                }
+            }
+        }
+        FileHandle file = null;
+        file = Gdx.files.local(getPath() + "screens/" + currentScreen + "/" + currentScreen + ".json");
+        // file.writeString("", false);
         String score = json.toJson(coordinates);
         file.writeString(score, true);
-	}
+    }
 
     private void createButtons() {
         Skin skin = new Skin();
@@ -168,19 +172,19 @@ public class MyGdxGame implements ApplicationListener
         skin.addRegions(buttonAtlas);
 
         String buttonList = getJson("screens/buttons/buttons.json");
-        String textList=getJson("screens/buttons/buttonText/buttonText"+locale.getCountry()+".json");
+        String textList = getJson("screens/buttons/buttonText/buttonText" + locale.getCountry() + ".json");
 
-        final ArrayList<ButtonData> buttonDataArrayList= json.fromJson(ArrayList.class, buttonList);
-        final ArrayList<ButtonText> buttonTextArrayList= json.fromJson(ArrayList.class,textList);
+        final ArrayList<ButtonData> buttonDataArrayList = json.fromJson(ArrayList.class, buttonList);
+        final ArrayList<ButtonText> buttonTextArrayList = json.fromJson(ArrayList.class, textList);
 
         for (final ButtonData buttonData : buttonDataArrayList) {
-            final TextButton textButton = new TextButton("", getTextButtonStyleFromFile(skin,buttonData.name));
+            final TextButton textButton = new TextButton("", getTextButtonStyleFromFile(skin, buttonData.name));
             textButton.setName(buttonData.name);
-            textButton.setBounds(buttonData.x,buttonData.y,buttonData.width,buttonData.height);
+            textButton.setBounds(buttonData.x, buttonData.y, buttonData.width, buttonData.height);
             textButton.addListener(getListener(textButton.getName()));
 
             for (ButtonText buttonText : buttonTextArrayList) {
-                if(buttonText.buttonName.equals(textButton.getName())){
+                if (buttonText.buttonName.equals(textButton.getName())) {
                     textButton.setText(buttonText.text);
                     break;
                 }
@@ -190,7 +194,7 @@ public class MyGdxGame implements ApplicationListener
         skin.dispose();
     }
 
-    static class ButtonText{
+    static class ButtonText {
         String buttonName;
         String text;
 
@@ -203,28 +207,30 @@ public class MyGdxGame implements ApplicationListener
         }
     }
 
-    static class ButtonData{
-	    public String name;
-	    public int x,y,width,height;
-	    public List<String> screenLIst= new ArrayList<String>();
+    static class ButtonData {
+        public String name;
+        public int x, y, width, height;
+        public List<String> screenLIst = new ArrayList<String>();
 
         public ButtonData(TextButton tb) {
             this.name = tb.getName();
-            this.x = (int)tb.getX();
-            this.y = (int)tb.getY();
-            this.width = (int)tb.getWidth();
-            this.height = (int)tb.getHeight();
+            this.x = (int) tb.getX();
+            this.y = (int) tb.getY();
+            this.width = (int) tb.getWidth();
+            this.height = (int) tb.getHeight();
         }
+
         public ButtonData() {
         }
     }
 
-    static class ObjectData{
+    static class ObjectData {
         public String name;
-        public int x,y,width,height, rows,cols,time;
-        public List<int[]> animations=new ArrayList<int[]>();
+        public int x, y, width, height, rows, cols, time;
+        public List<int[]> animations = new ArrayList<int[]>();
 
-        public ObjectData(String name, int x, int y, int width, int height, int rows, int cols, int time,  List<int[]> animations) {
+        public ObjectData(String name, int x, int y, int width, int height, int rows, int cols, int time,
+                List<int[]> animations) {
             this.name = name;
             this.x = x;
             this.y = y;
@@ -233,32 +239,32 @@ public class MyGdxGame implements ApplicationListener
             this.rows = rows;
             this.cols = cols;
             this.time = time;
-            this.animations=animations;
+            this.animations = animations;
         }
 
         public ObjectData() {
         }
     }
 
-	private void setUpRoom(Screens string) {
-        previousScreen=currentScreen;
-        currentScreen=string;
+    private void setUpRoom(Screens string) {
+        previousScreen = currentScreen;
+        currentScreen = string;
         setUpWindow(none);
         clearStage();
+        background = MyMethods.LoadImg("screens/" + string + "/" + string + ".png");
 
-		background=MyMethods.LoadImg("screens/"+string+"/"+string+".png");
-
-		try {
+        try {
             createObjects(string.toString());
-        }catch (GdxRuntimeException ignored){ }
-
-		loadButtons(string);
-
-        if(currentScreen!=map&&currentScreen!=menu&&currentScreen!=options&&currentScreen!=stats){
-		    objectDrawOrderGroup.addActor(player);
+        } catch (GdxRuntimeException ignored) {
         }
 
-		for (Objects playObject : playObjects) {
+        loadButtons(string);
+
+        if (currentScreen != map && currentScreen != menu && currentScreen != options && currentScreen != stats) {
+            objectDrawOrderGroup.addActor(player);
+        }
+
+        for (Objects playObject : playObjects) {
             objectDrawOrderGroup.addActor(playObject);
         }
 
@@ -266,36 +272,36 @@ public class MyGdxGame implements ApplicationListener
         stage.addActor(screenButtons);
 
         for (Actor actor : screenButtons.getChildren()) {
-            if(actor.getName().equals("statsButton")){
+            if (actor.getName().equals("statsButton")) {
                 hudGroup.setVisible(true);
                 player.setStatVisible();
             }
         }
         createMap();
-	}
+    }
 
     private void createObjects(String string) {
-        String objectList = getJson("screens/"+string+"/objects/objects.json");
+        String objectList = getJson("screens/" + string + "/objects/objects.json");
 
-        final ArrayList<ObjectData> objectDataArrayList= json.fromJson(ArrayList.class, objectList);
+        final ArrayList<ObjectData> objectDataArrayList = json.fromJson(ArrayList.class, objectList);
         for (final ObjectData objectData : objectDataArrayList) {
-           Objects objects=new Objects("screens/" + string + "/objects/",objectData);
-           playObjects.add(objects);
-            //System.out.print(textButton.getName()+" ");
+            Objects objects = new Objects("screens/" + string + "/objects/", objectData);
+            playObjects.add(objects);
+            // System.out.print(textButton.getName()+" ");
         }
-        //skin.dispose();
+        // skin.dispose();
     }
 
     private void loadButtons(Screens string) {
-        String buttonList = getJson("screens/"+string+"/buttons/"+"buttons.json");
-        final ArrayList<ButtonData> buttonDataArrayList= json.fromJson(  ArrayList.class, buttonList);
-        //System.out.print(buttonList+" ");
+        String buttonList = getJson("screens/" + string + "/buttons/" + "buttons.json");
+        final ArrayList<ButtonData> buttonDataArrayList = json.fromJson(ArrayList.class, buttonList);
+        // System.out.print(buttonList+" ");
         for (final ButtonData buttonData : buttonDataArrayList) {
-            //System.out.print(buttonData.name+" ");
+            // System.out.print(buttonData.name+" ");
             for (TextButton textButton : buttonsArr) {
-                if(buttonData.name.equals(textButton.getName())){
-                    if(buttonData.x!=0 && buttonData.y!=0 && buttonData.width !=0 && buttonData.height!=0)
-                        textButton.setBounds(buttonData.x,buttonData.y,buttonData.width,buttonData.height);
+                if (buttonData.name.equals(textButton.getName())) {
+                    if (buttonData.x != 0 && buttonData.y != 0 && buttonData.width != 0 && buttonData.height != 0)
+                        textButton.setBounds(buttonData.x, buttonData.y, buttonData.width, buttonData.height);
                     screenButtons.addActor(textButton);
                     break;
                 }
@@ -309,482 +315,525 @@ public class MyGdxGame implements ApplicationListener
         hudGroup.setVisible(false);
         screenButtons.clear();
 
-        if(background!=null)
+        if (background != null)
             background.dispose();
 
-        if(previousScreen!=options&&previousScreen!=stats)
+        if (previousScreen != options && previousScreen != stats)
             player.setParameters();
     }
 
     private void setUpWindow(Windows window) {
-        currentWindow=window;
+        currentWindow = window;
 
-        if(window==none){
+        if (window == none) {
             windowGroup.clear();
         } else {
             Window w;
             try {
                 String s = getJson("screens/windows/" + window.toString() + "/coord.json");
-                ButtonData bounds=json.fromJson( ButtonData.class, s);
-                w= new Window(bounds.x,bounds.y,bounds.width,bounds.height, currentWindow.toString());
-            }catch (GdxRuntimeException e ){
+                ButtonData bounds = json.fromJson(ButtonData.class, s);
+                w = new Window(bounds.x, bounds.y, bounds.width, bounds.height, currentWindow.toString());
+            } catch (GdxRuntimeException e) {
                 w = new Window(1920 / 2 - 750f, 1080 / 2 - 350f, 1500, 700, currentWindow.toString());
-            }catch (SerializationException exception){
+            } catch (SerializationException exception) {
                 w = new Window(640 / 2 - 750f, 1080 / 2 - 350f, 1500, 700, currentWindow.toString());
             }
             w.loadButtons(window.toString(), buttonsArr);
             windowGroup.addActor(w);
             windowGroup.addActor(w.thisGroup);
         }
-	}
+    }
 
-	@Override
-	public void resize(int width, int height) {
+    @Override
+    public void resize(int width, int height) {
 
-	}
+    }
 
-	@Override
-	public void render() {
-		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		camera.update();
-		keyPressing();
+    @Override
+    public void render() {
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        camera.update();
+        keyPressing();
         touches();
-		stage.getBatch().setProjectionMatrix(camera.combined);
-		stage.getBatch().begin();
-		stage.getBatch().draw(background, 0, 0,1920 ,1080);
+        stage.getBatch().setProjectionMatrix(camera.combined);
+        stage.getBatch().begin();
+        stage.getBatch().draw(background, 0, 0, 1920, 1080);
 
-		/*for(int i=0;i<mapSize;i++){
-			for(int j=0;j<mapSize*4;j++){
-				if(mapArr[i][j]==0)
-					stage.getBatch().draw(tex3,j*mapCoorinateCorrector,i*mapCoorinateCorrector,8,8);
-			else
-					stage.getBatch().draw(tex4,j*mapCoorinateCorrector,i*mapCoorinateCorrector,8,8);
-				//font.draw(stage.getBatch(),j+" "+i,j*mapCoorinateCorrector,i*mapCoorinateCorrector);
-				}
+        /*
+         * for(int i=0;i<mapSize;i++){ for(int j=0;j<mapSize*4;j++){ if(mapArr[i][j]==0)
+         * stage.getBatch().draw(tex3,j*mapCoorinateCorrector,i*mapCoorinateCorrector,8,
+         * 8); else
+         * stage.getBatch().draw(tex4,j*mapCoorinateCorrector,i*mapCoorinateCorrector,8,
+         * 8); //font.draw(stage.getBatch(),j+" "+i,j*mapCoorinateCorrector,i*
+         * mapCoorinateCorrector); }
+         * 
+         * } stage.getBatch().draw(tex2, (int)player.getX()/mapCoorinateCorrector,
+         * (int)player.getY()/mapCoorinateCorrector,8,8); try { for (Grid2d.MapNode
+         * mapNode : path) { stage.getBatch().draw(tex2,
+         * mapNode.x*mapCoorinateCorrector,mapNode.y*mapCoorinateCorrector,8,8); }
+         * }catch (NullPointerException e){}
+         */
 
-			}
-        stage.getBatch().draw(tex2, (int)player.getX()/mapCoorinateCorrector, (int)player.getY()/mapCoorinateCorrector,8,8);
-        try {
-            for (Grid2d.MapNode mapNode : path) {
-                stage.getBatch().draw(tex2, mapNode.x*mapCoorinateCorrector,mapNode.y*mapCoorinateCorrector,8,8);
-            }
-        }catch (NullPointerException e){}*/
-
-		drawOrder();
-		stage.getBatch().end();
+        drawOrder();
+        stage.getBatch().end();
 
         stage.draw();
 
-        if(currentWindow==none)
+        if (currentWindow == none)
             stage.act(Gdx.graphics.getDeltaTime());
         stage.getBatch().begin();
-       // textDrawing( stage.getBatch(),1+"",1825,990,1.5f, Color.WHITE);
+        // textDrawing( stage.getBatch(),1+"",1825,990,1.5f, Color.WHITE);
         stage.getBatch().end();
-	}
+    }
 
-	private void keyPressing() {
+    private void keyPressing() {
 
-	}
+    }
 
-	private void drawOrder() {
-		for (int j = 0; j < objectDrawOrderGroup.getChildren().size; j++) {
-			for (int i = 0; i < objectDrawOrderGroup.getChildren().size - 1; i++) {
-			    if (objectDrawOrderGroup.getChildren().get(i).getY() < objectDrawOrderGroup.getChildren().get(i + 1).getY())
+    private void drawOrder() {
+        for (int j = 0; j < objectDrawOrderGroup.getChildren().size; j++) {
+            for (int i = 0; i < objectDrawOrderGroup.getChildren().size - 1; i++) {
+                if (objectDrawOrderGroup.getChildren().get(i).getY() < objectDrawOrderGroup.getChildren().get(i + 1)
+                        .getY())
                     objectDrawOrderGroup.getChildren().swap(i, i + 1);
-                if(objectDrawOrderGroup.getChildren().get(i).getName().equals("player") && player.getPlayerCondition().equals(Player.PlayerCondition.bench))
-                    objectDrawOrderGroup.getChildren().swap(i, objectDrawOrderGroup.getChildren().size-1);
+                if (objectDrawOrderGroup.getChildren().get(i).getName().equals("player")
+                        && player.getPlayerCondition().equals(Player.PlayerCondition.bench))
+                    objectDrawOrderGroup.getChildren().swap(i, objectDrawOrderGroup.getChildren().size - 1);
             }
-		}
-        stage.getActors().swap(stage.getActors().indexOf(hudGroup,true),stage.getActors().indexOf(windowGroup,true));
-        stage.getActors().swap(stage.getActors().indexOf(windowGroup,true),stage.getActors().size-1);
-	}
+        }
+        stage.getActors().swap(stage.getActors().indexOf(hudGroup, true), stage.getActors().indexOf(windowGroup, true));
+        stage.getActors().swap(stage.getActors().indexOf(windowGroup, true), stage.getActors().size - 1);
+    }
 
-	private void touches() {
-		if(Gdx.input.justTouched()) {
+    private void touches() {
+        if (Gdx.input.justTouched()) {
             touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(touchPos);
 
             try {
-                if (mapArr[(int) touchPos.y / mapCoorinateCorrector][(int) touchPos.x / mapCoorinateCorrector] != -1){
-                    path = map2d.findPath((int) player.getX() / mapCoorinateCorrector, (int) player.getY() / mapCoorinateCorrector,
-                            (int) touchPos.x / mapCoorinateCorrector, (int) touchPos.y / mapCoorinateCorrector);
-                    player.setPlayersAction(Player.PlayerCondition.stay,0,0);
+                if (mapArr[(int) touchPos.y / mapCoorinateCorrector][(int) touchPos.x / mapCoorinateCorrector] != -1) {
+                    path = map2d.findPath((int) player.getX() / mapCoorinateCorrector,
+                            (int) player.getY() / mapCoorinateCorrector, (int) touchPos.x / mapCoorinateCorrector,
+                            (int) touchPos.y / mapCoorinateCorrector);
+                    player.setPlayersAction(Player.PlayerCondition.stay, 0, 0);
                 }
-            } catch (ArrayIndexOutOfBoundsException ignored) {}
+            } catch (ArrayIndexOutOfBoundsException ignored) {
+            }
         }
-	}
+    }
 
     @Override
-	public void pause() {
+    public void pause() {
 
-	}
+    }
 
-	@Override
-	public void resume() {
+    @Override
+    public void resume() {
 
-	}
+    }
 
-	@Override
-	public void dispose() {
+    @Override
+    public void dispose() {
 
-	}
+    }
 
-    private InputListener getListener(String name)  {
+    private InputListener getListener(String name) {
         InputListener listener = new InputListener();
 
-        //QUIT
-        if(name.equals("quitButton")){
-            listener=new InputListener(){
+        // QUIT
+        if (name.equals("quitButton")) {
+            listener = new InputListener() {
                 @Override
-                public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     Gdx.app.exit();
                 }
+
                 @Override
-                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                     return true;
                 }
             };
         }
 
-//Stats
-        if(name.equals("statsButton")){
-            listener=new InputListener(){
+        // Stats
+        if (name.equals("statsButton")) {
+            listener = new InputListener() {
                 @Override
-                public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setUpRoom(stats);
 
                 }
 
                 @Override
-                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                     return true;
                 }
             };
         }
-//Play
-        if(name.equals("playButton")){
-            listener=new InputListener(){
+        // Play
+        if (name.equals("playButton")) {
+            listener = new InputListener() {
                 @Override
-                public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setUpRoom(gym);
                 }
+
                 @Override
-                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                     return true;
                 }
             };
         }
-//Back
-        if(name.equals("backButton")){
-            listener=new InputListener(){
+        // Back
+        if (name.equals("backButton")) {
+            listener = new InputListener() {
                 @Override
-                public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setUpRoom(previousScreen);
 
                 }
+
                 @Override
-                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                     return true;
                 }
             };
         }
 
-//MAp
-        if(name.equals("map")){
-            listener=new InputListener(){
+        // MAp
+        if (name.equals("map")) {
+            listener = new InputListener() {
                 @Override
-                public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setUpRoom(map);
                 }
+
                 @Override
-                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                     return true;
                 }
             };
         }
 
-        //Gym
-        if(name.equals("gym")){
-            listener=new InputListener(){
+        // Gym
+        if (name.equals("gym")) {
+            listener = new InputListener() {
                 @Override
-                public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setUpRoom(gym);
                 }
+
                 @Override
-                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                     return true;
                 }
             };
         }
 
-        //Room
-        if(name.equals("room")){
-            listener=new InputListener(){
+        // Room
+        if (name.equals("room")) {
+            listener = new InputListener() {
                 @Override
-                public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setUpRoom(room);
 
                 }
+
                 @Override
-                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                     return true;
                 }
             };
         }
 
-        //Options
-        if(name.equals("optionButton")){
-            listener=new InputListener(){
+        // Options
+        if (name.equals("optionButton")) {
+            listener = new InputListener() {
                 @Override
-                public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setUpRoom(options);
                 }
+
                 @Override
-                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                     return true;
                 }
             };
         }
 
-        //MainMenu
-        if(name.equals("mainMenuButton")){
-            listener=new InputListener(){
+        // MainMenu
+        if (name.equals("mainMenuButton")) {
+            listener = new InputListener() {
                 @Override
-                public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setUpRoom(menu);
                 }
+
                 @Override
-                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                     return true;
                 }
             };
         }
 
-        //Squat
-        if(name.equals("squatButton")){
-            listener=new InputListener(){
+        // Squat
+        if (name.equals("squatButton")) {
+            listener = new InputListener() {
                 @Override
-                public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                    path = map2d.findPath((int) player.getX() / mapCoorinateCorrector, (int) player.getY() / mapCoorinateCorrector,890/mapCoorinateCorrector,125/mapCoorinateCorrector);
-                    player.setPlayersAction(Player.PlayerCondition.squat, 865,125);
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                    path = map2d.findPath((int) player.getX() / mapCoorinateCorrector,
+                            (int) player.getY() / mapCoorinateCorrector, 890 / mapCoorinateCorrector,
+                            125 / mapCoorinateCorrector);
+                    player.setPlayersAction(Player.PlayerCondition.squat, 865, 125);
                     setUpWindow(none);
                 }
+
                 @Override
-                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                     return true;
                 }
             };
         }
 
-        //SquatTechnic
-        if(name.equals("technicSquatButton")){
-            listener=new InputListener(){
+        // SquatTechnic
+        if (name.equals("technicSquatButton")) {
+            listener = new InputListener() {
                 @Override
-                public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                    path = map2d.findPath((int) player.getX() / mapCoorinateCorrector, (int) player.getY() / mapCoorinateCorrector,890/mapCoorinateCorrector,175/mapCoorinateCorrector);
-                    player.setPlayersAction(Player.PlayerCondition.squatTechnic, 865,150);
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                    path = map2d.findPath((int) player.getX() / mapCoorinateCorrector,
+                            (int) player.getY() / mapCoorinateCorrector, 890 / mapCoorinateCorrector,
+                            175 / mapCoorinateCorrector);
+                    player.setPlayersAction(Player.PlayerCondition.squatTechnic, 865, 150);
                     setUpWindow(none);
                 }
+
                 @Override
-                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                     return true;
                 }
             };
         }
 
-        //chouseSquatMenu
-        if(name.equals("chouseSquatMenu")){
-            listener=new InputListener(){
+        // chouseSquatMenu
+        if (name.equals("chouseSquatMenu")) {
+            listener = new InputListener() {
                 @Override
-                public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                   setUpWindow(chouseSquatMenu);
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                    setUpWindow(chouseSquatMenu);
 
                 }
+
                 @Override
-                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                     return true;
                 }
             };
         }
 
-        //Bench
-        if(name.equals("benchButton")){
-            listener=new InputListener(){
+        // Bench
+        if (name.equals("benchButton")) {
+            listener = new InputListener() {
                 @Override
-                public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                    path = map2d.findPath((int) player.getX() / mapCoorinateCorrector, (int) player.getY() / mapCoorinateCorrector,1300/mapCoorinateCorrector,150/mapCoorinateCorrector);
-                    player.setPlayersAction(Player.PlayerCondition.bench, 1350,35);
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                    path = map2d.findPath((int) player.getX() / mapCoorinateCorrector,
+                            (int) player.getY() / mapCoorinateCorrector, 1300 / mapCoorinateCorrector,
+                            150 / mapCoorinateCorrector);
+                    player.setPlayersAction(Player.PlayerCondition.bench, 1350, 35);
                 }
+
                 @Override
-                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                     return true;
                 }
             };
         }
 
-        //BenchTechnic
-        if(name.equals("technicBenchButton")){
-            listener=new InputListener(){
+        // BenchTechnic
+        if (name.equals("technicBenchButton")) {
+            listener = new InputListener() {
                 @Override
-                public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                    path = map2d.findPath((int) player.getX() / mapCoorinateCorrector, (int) player.getY() / mapCoorinateCorrector,890/mapCoorinateCorrector,175/mapCoorinateCorrector);
-                    player.setPlayersAction(Player.PlayerCondition.benchTechnic, 865,150);
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                    path = map2d.findPath((int) player.getX() / mapCoorinateCorrector,
+                            (int) player.getY() / mapCoorinateCorrector, 890 / mapCoorinateCorrector,
+                            175 / mapCoorinateCorrector);
+                    player.setPlayersAction(Player.PlayerCondition.benchTechnic, 865, 150);
                 }
+
                 @Override
-                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                     return true;
                 }
             };
         }
 
-        //Deadlift
-        if(name.equals("deadliftButton")){
-            listener=new InputListener(){
+        // Deadlift
+        if (name.equals("deadliftButton")) {
+            listener = new InputListener() {
                 @Override
-                public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                    path = map2d.findPath((int) player.getX() / mapCoorinateCorrector, (int) player.getY() / mapCoorinateCorrector,890/mapCoorinateCorrector,50/mapCoorinateCorrector);
-                    player.setPlayersAction(Player.PlayerCondition.deadlift, 865,30);
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                    path = map2d.findPath((int) player.getX() / mapCoorinateCorrector,
+                            (int) player.getY() / mapCoorinateCorrector, 890 / mapCoorinateCorrector,
+                            50 / mapCoorinateCorrector);
+                    player.setPlayersAction(Player.PlayerCondition.deadlift, 865, 30);
                 }
+
                 @Override
-                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                     return true;
                 }
             };
         }
 
-        //DeadliftTechnic
-        if(name.equals("technicDeadliftButton")){
-            listener=new InputListener(){
+        // DeadliftTechnic
+        if (name.equals("technicDeadliftButton")) {
+            listener = new InputListener() {
                 @Override
-                public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                    path = map2d.findPath((int) player.getX() / mapCoorinateCorrector, (int) player.getY() / mapCoorinateCorrector,890/mapCoorinateCorrector,50/mapCoorinateCorrector);
-                    player.setPlayersAction(Player.PlayerCondition.deadliftTechnic, 865,150);
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                    path = map2d.findPath((int) player.getX() / mapCoorinateCorrector,
+                            (int) player.getY() / mapCoorinateCorrector, 890 / mapCoorinateCorrector,
+                            50 / mapCoorinateCorrector);
+                    player.setPlayersAction(Player.PlayerCondition.deadliftTechnic, 865, 150);
                 }
+
                 @Override
-                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                     return true;
                 }
             };
         }
 
-        //GripButton
-        if(name.equals("gripButton")){
-            listener=new InputListener(){
+        // GripButton
+        if (name.equals("gripButton")) {
+            listener = new InputListener() {
                 @Override
-                public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                    path = map2d.findPath((int) player.getX() / mapCoorinateCorrector, (int) player.getY() / mapCoorinateCorrector,1000/mapCoorinateCorrector,350/mapCoorinateCorrector);
-                    player.setPlayersAction(Player.PlayerCondition.gripWorkout, 1000,350);
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                    path = map2d.findPath((int) player.getX() / mapCoorinateCorrector,
+                            (int) player.getY() / mapCoorinateCorrector, 1000 / mapCoorinateCorrector,
+                            350 / mapCoorinateCorrector);
+                    player.setPlayersAction(Player.PlayerCondition.gripWorkout, 1000, 350);
                 }
+
                 @Override
-                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                     return true;
                 }
             };
         }
 
-        //Arch
-        if(name.equals("archButton")){
-            listener=new InputListener(){
+        // Arch
+        if (name.equals("archButton")) {
+            listener = new InputListener() {
                 @Override
-                public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                    path = map2d.findPath((int) player.getX() / mapCoorinateCorrector, (int) player.getY() / mapCoorinateCorrector,1200/mapCoorinateCorrector,350/mapCoorinateCorrector);
-                    player.setPlayersAction(Player.PlayerCondition.archWorkout, 1200,350);
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                    path = map2d.findPath((int) player.getX() / mapCoorinateCorrector,
+                            (int) player.getY() / mapCoorinateCorrector, 1200 / mapCoorinateCorrector,
+                            350 / mapCoorinateCorrector);
+                    player.setPlayersAction(Player.PlayerCondition.archWorkout, 1200, 350);
                 }
+
                 @Override
-                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                     return true;
                 }
             };
         }
 
-        //WORK
-        if(name.equals("workButton")){
-            listener=new InputListener(){
+        // WORK
+        if (name.equals("workButton")) {
+            listener = new InputListener() {
                 @Override
-                public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                   setUpRoom(work);
-                   setUpWindow(workMenu);
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                    setUpRoom(work);
+                    setUpWindow(workMenu);
                 }
+
                 @Override
-                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                     return true;
                 }
             };
         }
 
-        //WORK
-        if(name.equals("workProgressButton")){
-            listener=new InputListener(){
+        // WORK
+        if (name.equals("workProgressButton")) {
+            listener = new InputListener() {
                 @Override
-                public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                    player.setPlayersAction(Player.PlayerCondition.working,0,0);
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                    player.setPlayersAction(Player.PlayerCondition.working, 0, 0);
                     setUpWindow(none);
                 }
+
                 @Override
-                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                     return true;
                 }
             };
         }
 
-        //Sleeping
-        if(name.equals("sleepButton")){
-            listener=new InputListener(){
+        // Sleeping
+        if (name.equals("sleepButton")) {
+            listener = new InputListener() {
                 @Override
-                public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                    path = map2d.findPath((int) player.getX() / mapCoorinateCorrector, (int) player.getY() / mapCoorinateCorrector,1000/mapCoorinateCorrector,300/mapCoorinateCorrector);
-                    player.setPlayersAction(Player.PlayerCondition.sleeping, 1920/2,-1);
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                    path = map2d.findPath((int) player.getX() / mapCoorinateCorrector,
+                            (int) player.getY() / mapCoorinateCorrector, 1000 / mapCoorinateCorrector,
+                            300 / mapCoorinateCorrector);
+                    player.setPlayersAction(Player.PlayerCondition.sleeping, 1920 / 2, -1);
 
                 }
+
                 @Override
-                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                     return true;
                 }
             };
         }
 
-        //OpenWindow
-        if(name.equals("openWindow")){
-            listener=new InputListener(){
+        // OpenWindow
+        if (name.equals("openWindow")) {
+            listener = new InputListener() {
                 @Override
-                public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                  setUpWindow(refregirator);
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                    setUpWindow(refregirator);
                 }
+
                 @Override
-                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                     return true;
                 }
             };
         }
-//Food
-        if(name.equals("potato")){
-            listener=new InputListener(){
+        // Food
+        if (name.equals("potato")) {
+            listener = new InputListener() {
                 @Override
-                public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     player.energy.addProgress(0.25f);
                     player.food.addProgress(0.25f);
                     player.health.addProgress(0.25f);
                     System.out.print(" Feed");
                 }
+
                 @Override
-                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 
                     return true;
                 }
             };
         }
 
-        //CloseWindow
-        if(name.equals("closeWindow")){
-            listener=new InputListener(){
+        // CloseWindow
+        if (name.equals("closeWindow")) {
+            listener = new InputListener() {
                 @Override
-                public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                    currentWindow=none;
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                    currentWindow = none;
                     windowGroup.clear();
                 }
+
                 @Override
-                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                     return true;
                 }
             };

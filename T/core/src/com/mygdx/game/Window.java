@@ -16,7 +16,6 @@ import static com.mygdx.game.MyMethods.getJson;
 public class Window extends Actor{
 
     private final Animation animation;
-    private Food f;
     public Group thisGroup;
 
     Window(float x, float y, float width, float height, String name) {

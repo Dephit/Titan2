@@ -6,29 +6,10 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Debug (Launch)",
-            "request": "launch",
-            "mainClass": ""
-        },
-        {
-            "type": "java",
-            "name": "Debug (Launch) - Current File",
-            "request": "launch",
-            "mainClass": "${file}"
-        },
-        {
-            "type": "java",
             "name": "Debug (Launch)-DesktopLauncher<my-gdx-game-desktop>",
             "request": "launch",
             "mainClass": "com.mygdx.game.desktop.DesktopLauncher",
             "projectName": "my-gdx-game-desktop"
         },
-        {
-            "type": "java",
-            "name": "Debug (Launch)-IOSLauncher<my-gdx-game-ios>",
-            "request": "launch",
-            "mainClass": "com.mygdx.game.IOSLauncher",
-            "projectName": "my-gdx-game-ios"
-        }
     ]
 }

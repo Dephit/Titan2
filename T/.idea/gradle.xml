@@ -3,25 +3,15 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <compositeConfiguration>
-          <compositeBuild compositeDefinitionSource="SCRIPT" />
-        </compositeConfiguration>
-        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleHome" value="$APPLICATION_HOME_DIR$/gradle/gradle-5.1.1" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/android" />
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/desktop" />
-            <option value="$PROJECT_DIR$/gdx-gamesvcs-master/android-amazongc" />
-            <option value="$PROJECT_DIR$/gdx-gamesvcs-master/android-gpgs" />
-            <option value="$PROJECT_DIR$/gdx-gamesvcs-master/core-gamejolt" />
-            <option value="$PROJECT_DIR$/gdx-gamesvcs-master/desktop-gpgs" />
-            <option value="$PROJECT_DIR$/gdx-gamesvcs-master/html" />
-            <option value="$PROJECT_DIR$/gdx-gamesvcs-master/html-gpgs" />
-            <option value="$PROJECT_DIR$/gdx-gamesvcs-master/html-kong" />
-            <option value="$PROJECT_DIR$/gdx-gamesvcs-master/ios-gamecenter" />
             <option value="$PROJECT_DIR$/ios" />
           </set>
         </option>

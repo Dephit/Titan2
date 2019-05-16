@@ -1,14 +1,13 @@
 package com.mygdx.game;
 
+import static com.mygdx.game.MyMethods.getPath;
+
 import java.util.Locale;
 
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
-
-import static com.mygdx.game.MyMethods.getPath;
 
 public class FontFactory {
 

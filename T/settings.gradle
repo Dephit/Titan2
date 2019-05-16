@@ -1,9 +1,1 @@
-include 'desktop', 'android', 'ios', 'core', ':ios-gamecenter', ':android-gpgs', ':core-gamejolt', ':android-amazongc', ':html', ':html-gpgs', ':desktop-gpgs', ':html-kong'
-project(':ios-gamecenter').projectDir = new File('gdx-gamesvcs-master/ios-gamecenter')
-project(':android-gpgs').projectDir = new File('gdx-gamesvcs-master/android-gpgs')
-project(':core-gamejolt').projectDir = new File('gdx-gamesvcs-master/core-gamejolt')
-project(':android-amazongc').projectDir = new File('gdx-gamesvcs-master/android-amazongc')
-project(':html').projectDir = new File('gdx-gamesvcs-master/html')
-project(':html-gpgs').projectDir = new File('gdx-gamesvcs-master/html-gpgs')
-project(':desktop-gpgs').projectDir = new File('gdx-gamesvcs-master/desktop-gpgs')
-project(':html-kong').projectDir = new File('gdx-gamesvcs-master/html-kong')
+include 'desktop', 'android', 'ios', 'core'
