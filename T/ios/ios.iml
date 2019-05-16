@@ -34,15 +34,19 @@
     <orderEntry type="library" exported="" name="Gradle: gdx-platform-1.9.9-natives-ios" level="project" />
     <orderEntry type="library" exported="" name="Gradle: gdx-box2d-platform-1.9.9-natives-ios" level="project" />
     <orderEntry type="library" exported="" name="Gradle: gdx-freetype-platform-1.9.9-natives-ios" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: gdx-box2d-1.9.9" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: gdx-freetype-1.9.9" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: gdx-1.9.9" level="project" />
     <orderEntry type="library" exported="" name="Gradle: robovm-objc-2.3.5" level="project" />
-    <orderEntry type="module" module-name="core" exported="" />
-    <orderEntry type="module" module-name="core" exported="" />
-    <orderEntry type="module" module-name="core" exported="" />
-    <orderEntry type="module" module-name="core" exported="" />
-    <orderEntry type="module" module-name="core" exported="" />
-    <orderEntry type="module" module-name="core" exported="" />
+    <orderEntry type="library" exported="" name="Gradle: gdx-1.9.9" level="project" />
+    <orderEntry type="library" exported="" scope="RUNTIME" name="Gradle: gdx-box2d-1.9.9" level="project" />
+    <orderEntry type="library" exported="" scope="RUNTIME" name="Gradle: gdx-freetype-1.9.9" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="Gradle: gdx-box2d-1.9.9" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="Gradle: gdx-freetype-1.9.9" level="project" />
+    <orderEntry type="library" exported="" name="ios.ios-1.0" level="project" />
+    <orderEntry type="library" exported="" name="ios.ios-1.0" level="project" />
+    <orderEntry type="library" exported="" name="ios.ios-1.0" level="project" />
+    <orderEntry type="library" exported="" name="ios.ios-1.0" level="project" />
+    <orderEntry type="library" exported="" name="ios.ios-1.0" level="project" />
+    <orderEntry type="library" exported="" name="ios.ios-1.0" level="project" />
+    <orderEntry type="library" exported="" name="ios.ios-1.0" level="project" />
+    <orderEntry type="library" exported="" name="ios.ios-1.0" level="project" />
   </component>
 </module>

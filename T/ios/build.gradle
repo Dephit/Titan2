@@ -3,9 +3,6 @@ sourceSets.main.java.srcDirs = [ "src/" ]
 sourceCompatibility = '1.7'
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
-ext {
-	mainClassName = "com.mygdx.game.IOSLauncher"
-}
 
 launchIPhoneSimulator.dependsOn build
 launchIPadSimulator.dependsOn build
