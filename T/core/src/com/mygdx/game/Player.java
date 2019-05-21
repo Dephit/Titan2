@@ -1,6 +1,8 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -12,6 +14,7 @@ import java.util.AbstractMap;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 
+import static com.mygdx.game.MyMethods.LoadImg;
 import static com.mygdx.game.MyMethods.format;
 import static com.mygdx.game.MyMethods.sort_array;
 import static com.mygdx.game.MyMethods.textDrawing;
@@ -28,6 +31,7 @@ import static com.mygdx.game.Player.PlayerCondition.sleeping;
 import static com.mygdx.game.Player.PlayerCondition.squat;
 import static com.mygdx.game.Player.PlayerCondition.squatTechnic;
 import static com.mygdx.game.Player.PlayerCondition.stay;
+import static com.mygdx.game.Player.PlayerCondition.talkToArmGirl;
 import static com.mygdx.game.Player.PlayerCondition.up;
 import static com.mygdx.game.Player.PlayerCondition.working;
 
@@ -37,6 +41,7 @@ public class Player extends Actor {
     private final StatBar hours;
     private final StatBar hoursSecond;
     private final StatBar minutesSecond;
+    private final Texture message;
     private StatBar workProgress;
     public  StatBar energy, food;
     public  StatBar health;
@@ -64,12 +69,12 @@ public class Player extends Actor {
     private float fat_level;
     private float money;
     private float time;
-
+    public boolean showMess;
 
 
     public enum PlayerCondition {
         stay, down, up, left, right, squat, bench, deadlift,squatTechnic,
-        benchTechnic, deadliftTechnic, gripWorkout, archWorkout, sleeping, working
+        benchTechnic, deadliftTechnic, gripWorkout, archWorkout, sleeping, working, talkToArmGirl
     }
 
     public PlayerCondition getPlayerCondition() {
@@ -86,7 +91,8 @@ public class Player extends Actor {
     Player() {
         setName("player");
         speed=new Vector2();
-
+        //debugMessage
+        message=LoadImg("screens/message.png");
         energy = new StatBar("Энергия", 1640,785,150,150);
         energy.makeRadian(new Color(240/255f,230/255f,74/255f,1));
         food = new StatBar("Еда", 1660f,805f,110,110);
@@ -205,6 +211,10 @@ public class Player extends Actor {
         textDrawing( batch,format("ЖП: %.5f",bench_multiply),1700,800,1, Color.WHITE);
         textDrawing( batch,format("ТП: %.5f",deadlift_multiply),1700,750,1, Color.WHITE);
         textDrawing( batch,format("Деньги: %.1f",money),1700,700,1, Color.WHITE);
+        if(showMess){
+            batch.draw(message, 780,650,155*1.5f,80*1.5f);
+            textDrawing(batch, "Пошел ты!",800,700,1,Color.BLACK);
+        }
         }
 
     @Override
@@ -215,6 +225,8 @@ public class Player extends Actor {
        //calculateStats();
         Walk();
         calculateHours();
+        if(Gdx.input.isTouched())   //debug
+            showMess=false;
     }
 
     private void calculateHours() {
@@ -223,6 +235,8 @@ public class Player extends Actor {
             time=0;
             minutesSecond.setLeveled(true,minutesSecond.getLevel()+1,minutesSecond.getMaxLevel());
             if(minutesSecond.getLevel()>minutesSecond.getMaxLevel()){
+
+
                 minutesSecond.setLeveled(true,0,minutesSecond.getMaxLevel());
                 minutes.setLeveled(true,minutes.getLevel()+1,minutes.getMaxLevel());
             }
@@ -440,7 +454,8 @@ public class Player extends Actor {
             animationTime += delta*10; // #15
             if(animationTime <12f || animationTime >15f) animationTime =12f;
 
-        }else if(playerCondition==stay){
+        }else
+            if(playerCondition==stay){
 
             animationTime +=delta;
             if(animationTime <6|| animationTime >7f){
@@ -448,7 +463,8 @@ public class Player extends Actor {
                 animationTime =6f;
             }
 
-        }else if(playerCondition==squat||playerCondition==squatTechnic){
+        }else
+            if(playerCondition==squat||playerCondition==squatTechnic){
 
             animationTime +=delta*5;
             if(animationTime <19|| animationTime >23f) {
@@ -456,7 +472,8 @@ public class Player extends Actor {
                 animationTime =19f;
             }
 
-        }else if(playerCondition==bench||playerCondition==benchTechnic||playerCondition == archWorkout){
+        }else
+            if(playerCondition==bench||playerCondition==benchTechnic||playerCondition == archWorkout){
 
             animationTime +=delta*5;
             if(animationTime <23|| animationTime >27f){
@@ -464,7 +481,8 @@ public class Player extends Actor {
                 animationTime =23f;
             }
 
-        }else if(playerCondition==deadlift||playerCondition==deadliftTechnic||playerCondition==gripWorkout){
+        }else
+            if(playerCondition==deadlift||playerCondition==deadliftTechnic||playerCondition==gripWorkout){
 
             animationTime +=delta*5;
             if(animationTime <28|| animationTime >32f){
@@ -486,24 +504,18 @@ public class Player extends Actor {
             }
         }
         else if(playerCondition==working){
-
             if(workProgress.getCurrentAmount()>=1f || energy.getCurrentAmount()<=0 || health.getCurrentAmount()<=0){
                 if(workProgress.getCurrentAmount()>=1f)money+=1500;
                 setPlayersAction(stay,400,100);
                 setBounds(400,100,140,220);
             }
-
             animationTime +=delta;
-            if(animationTime <33){
-                setBounds(0,0,1920,1080);
-                animationTime =33f;
-            }else
-            if(animationTime >36f){
-                animationTime =33f;
-                calculateStats();
-            }
-
         }
+        else if(playerCondition==talkToArmGirl) {
+            //debugMessage
+            setPlayersAction(stay,955,450);
+            showMess=true;
+            }
     }
 
     public void setPlayersAction(PlayerCondition playerCondition, int x, int y) {

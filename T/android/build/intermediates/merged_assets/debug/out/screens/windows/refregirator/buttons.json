@@ -1,0 +1,5 @@
+[
+
+  {class:com.mygdx.game.MyGdxGame$ButtonData,name:closeWindow,x:650,y:300,width:75,height:75} 
+  {class:com.mygdx.game.MyGdxGame$ButtonData,name:potato,x:250,y:725,width:125,height:125}
+]

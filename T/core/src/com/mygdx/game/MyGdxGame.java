@@ -56,6 +56,7 @@ public class MyGdxGame implements ApplicationListener {
     public static List<Grid2d.MapNode> path3 = new LinkedList<Grid2d.MapNode>();
     private static Group screenButtons = new Group();
     private static Array<Objects> playObjects = new Array<Objects>();
+    private static Array<Objects> allObjects = new Array<Objects>();
 
     private Grid2d map2d;
     private double[][] mapArr;
@@ -97,7 +98,8 @@ public class MyGdxGame implements ApplicationListener {
         if (language.equals("ru"))
             locale = new Locale("ru", "RU");
         else
-            locale = new Locale("es", "ES"); 
+            locale = new Locale("es", "ES");
+
         stage = new Stage(new StretchViewport(1920, 1080));
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1920, 1080);
@@ -112,7 +114,8 @@ public class MyGdxGame implements ApplicationListener {
         }
         stage.addActor(hudGroup);
         stage.addActor(windowGroup);
-                pix2 = createProceduralPixmap(1, 1, 1, 0, 0);
+
+        pix2 = createProceduralPixmap(1, 1, 1, 0, 0);
         tex2 = new Texture(pix2);
         pix3 = createProceduralPixmap(1, 1, 0, 1, 0);
         tex3 = new Texture(pix3);
@@ -282,24 +285,34 @@ public class MyGdxGame implements ApplicationListener {
 
     private void createObjects(String string) {
         String objectList = getJson("screens/" + string + "/objects/objects.json");
-
         final ArrayList<ObjectData> objectDataArrayList = json.fromJson(ArrayList.class, objectList);
+
         for (final ObjectData objectData : objectDataArrayList) {
-            Objects objects = new Objects("screens/" + string + "/objects/", objectData);
-            playObjects.add(objects);
-            // System.out.print(textButton.getName()+" ");
+            boolean needLoad=false;
+          /*  for (Objects object : allObjects) {
+                if(object.getName().equals(objectData.name)) {
+                    playObjects.add(object);
+                    needLoad = true;
+                    break;
+                }
+            }*/
+            if(!needLoad) {
+                Objects objects = new Objects("screens/" + string + "/objects/", objectData);
+                playObjects.add(objects);
+                allObjects.add(objects);
+            }
         }
-        // skin.dispose();
     }
 
     private void loadButtons(Screens string) {
         String buttonList = getJson("screens/" + string + "/buttons/" + "buttons.json");
         final ArrayList<ButtonData> buttonDataArrayList = json.fromJson(ArrayList.class, buttonList);
-        // System.out.print(buttonList+" ");
+
         for (final ButtonData buttonData : buttonDataArrayList) {
-            // System.out.print(buttonData.name+" ");
             for (TextButton textButton : buttonsArr) {
+
                 if (buttonData.name.equals(textButton.getName())) {
+
                     if (buttonData.x != 0 && buttonData.y != 0 && buttonData.width != 0 && buttonData.height != 0)
                         textButton.setBounds(buttonData.x, buttonData.y, buttonData.width, buttonData.height);
                     screenButtons.addActor(textButton);
@@ -471,6 +484,9 @@ public class MyGdxGame implements ApplicationListener {
                 }
             };
         }
+
+
+
         // Play
         if (name.equals("playButton")) {
             listener = new InputListener() {
@@ -838,6 +854,25 @@ public class MyGdxGame implements ApplicationListener {
                 }
             };
         }
+
+        if (name.equals("girlButton")) {
+            listener = new InputListener() {
+                @Override
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                    path = map2d.findPath((int) player.getX() / mapCoorinateCorrector,
+                            (int) player.getY() / mapCoorinateCorrector, 955 / mapCoorinateCorrector,
+                            430 / mapCoorinateCorrector);
+                    player.setPlayersAction(Player.PlayerCondition.talkToArmGirl, 955,430);
+                    setUpWindow(none);
+                }
+
+                @Override
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    return true;
+                }
+            };
+        }
+
         return listener;
     }
 }

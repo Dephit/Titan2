@@ -15,6 +15,5 @@ public class AndroidLauncher extends AndroidApplication {
 		initialize(new MyGdxGame(), config);
 		Toast toast=Toast.makeText(this,"this is toast", Toast.LENGTH_LONG);
 		toast.show();
-
 	}
 }

@@ -62,7 +62,7 @@ public class Objects extends Actor
         for (int i = 0; i < animations.size(); i++) {
             if(100 - animations.get(i)[3] <= MathUtils.random(0,100)){
                 if(animations.get(i)[3] != 100 )
-                    System.out.print(animations.get(i)[3]+"   ");
+                //    System.out.print(animations.get(i)[3]+"   ");
                 return i;
             }
         }
