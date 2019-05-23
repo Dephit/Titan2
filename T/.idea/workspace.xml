@@ -85,36 +85,17 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/MyGdxGame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="237">
-              <caret line="863" column="30" selection-start-line="863" selection-start-column="30" selection-end-line="863" selection-end-column="30" />
-              <folding>
-                <element signature="e#12435#12499#0" />
-                <element signature="e#12505#13960#0" />
-                <element signature="e#14007#14962#0" />
-                <element signature="e#14968#15749#0" />
-                <element signature="e#17043#17475#1" />
-                <element signature="e#17531#17975#1" />
-                <element signature="e#18024#18456#1" />
-                <element signature="e#18505#18937#1" />
-                <element signature="e#18988#19422#1" />
-                <element signature="e#19484#19920#1" />
-                <element signature="e#19985#20418#1" />
-                <element signature="e#20477#21244#1" />
-                <element signature="e#21317#22091#1" />
-                <element signature="e#22164#22611#1" />
-                <element signature="e#22670#23399#1" />
-                <element signature="e#23472#24207#1" />
-                <element signature="e#24272#25001#1" />
-                <element signature="e#25080#25817#1" />
-                <element signature="e#25880#26616#1" />
-                <element signature="e#26673#27409#1" />
-                <element signature="e#27466#27942#1" />
-                <element signature="e#28007#28525#1" />
-                <element signature="e#28587#29324#1" />
-                <element signature="e#29387#29830#1" />
-                <element signature="e#29882#30486#1" />
-                <element signature="e#30551#31030#1" />
-              </folding>
+            <state relative-caret-position="-406">
+              <caret line="457" column="13" selection-start-line="457" selection-start-column="13" selection-end-line="457" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/MyMethods.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret line="25" column="22" selection-start-line="25" selection-start-column="22" selection-end-line="25" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -122,8 +103,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/android/assets/screens/gym/objects/objects.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="247">
-              <caret line="18" column="95" selection-start-line="18" selection-start-column="62" selection-end-line="18" selection-end-column="95" />
+            <state relative-caret-position="-7">
+              <caret line="25" selection-start-line="25" selection-end-line="25" />
             </state>
           </provider>
         </entry>
@@ -131,28 +112,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Player.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="224">
-              <caret line="515" column="41" selection-start-line="515" selection-start-column="34" selection-end-line="515" selection-end-column="41" />
+            <state>
+              <caret line="484" column="35" selection-start-line="484" selection-start-column="35" selection-end-line="484" selection-end-column="35" />
               <folding>
-                <element signature="e#6319#6640#0" />
-                <element signature="e#7884#9186#1" />
-                <element signature="e#9198#15325#0" />
-                <element signature="e#15331#15777#0" />
-                <element signature="e#15783#16208#0" />
-                <element signature="e#16214#16648#0" />
-                <element signature="e#16654#17083#0" />
-                <element signature="e#17089#17584#0" />
-                <element signature="e#17664#17791#1" />
-                <element signature="e#17827#17953#1" />
-                <element signature="e#17991#18119#1" />
-                <element signature="e#18158#18294#1" />
-                <element signature="e#18324#18509#1" />
-                <element signature="e#18571#18762#1" />
-                <element signature="e#18856#19046#1" />
-                <element signature="e#19144#19333#1" />
-                <element signature="e#19376#19845#1" />
-                <element signature="e#19902#20491#1" />
-                <element signature="e#20378#20573#0" />
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -166,7 +129,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Objects.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="307">
+            <state>
               <caret line="42" column="25" selection-start-line="42" selection-start-column="25" selection-end-line="42" selection-end-column="25" />
             </state>
           </provider>
@@ -178,6 +141,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -185,6 +149,9 @@
     <findStrings>
       <find>s</find>
       <find>createo</find>
+      <find>pla</find>
+      <find>player</find>
+      <find>objectDrawOrderGroup</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -197,9 +164,11 @@
         <option value="$PROJECT_DIR$/core/src/com/mygdx/game/threeD.java" />
         <option value="$PROJECT_DIR$/desktop/src/com/mygdx/game/desktop/DesktopLauncher.java" />
         <option value="$PROJECT_DIR$/core/src/com/mygdx/game/Objects.java" />
-        <option value="$PROJECT_DIR$/android/assets/screens/gym/objects/objects.json" />
+        <option value="$PROJECT_DIR$/core/src/com/mygdx/game/Foo.java" />
+        <option value="$PROJECT_DIR$/core/src/com/mygdx/game/Message.java" />
         <option value="$PROJECT_DIR$/core/src/com/mygdx/game/Player.java" />
         <option value="$PROJECT_DIR$/core/src/com/mygdx/game/MyGdxGame.java" />
+        <option value="$PROJECT_DIR$/android/assets/screens/gym/objects/objects.json" />
       </list>
     </option>
   </component>
@@ -227,20 +196,20 @@
             <path>
               <item name="T" type="b2602c69:ProjectViewProjectNode" />
               <item name="T" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="android" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="core" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
             </path>
             <path>
               <item name="T" type="b2602c69:ProjectViewProjectNode" />
               <item name="T" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="android" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="T" type="b2602c69:ProjectViewProjectNode" />
               <item name="T" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="android" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="screens" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="game" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -254,16 +223,23 @@
     <property name="TODO_SCOPE" value="Project Files" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="device.picker.selection" value="994948a2" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/android/build/outputs/apk/debug/android-debug.apk" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../ud851-Exercises/Lesson05a-Android-Lifecycle/T05a.01-Exercise-LogLifecycle" />
     <property name="not.eligible.for.single.variant.sync" value="true" />
-    <property name="project.structure.last.edited" value="Dependencies" />
+    <property name="project.structure.last.edited" value="Suggestions" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
   </component>
   <component name="PsdUISettings">
+    <option name="MODULE_TAB" value="Properties" />
+    <option name="LAST_EDITED_SIGNING_CONFIG" value="debug" />
     <option name="LAST_EDITED_BUILD_TYPE" value="debug" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.mygdx.game" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -379,8 +355,8 @@
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Captures" order="0" sideWeight="0.28455284" side_tool="true" visible="true" weight="0.13842663" />
-      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.7154471" visible="true" weight="0.13842663" />
+      <window_info id="Captures" order="0" sideWeight="0.2905569" side_tool="true" visible="true" weight="0.1376702" />
+      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.7094431" visible="true" weight="0.1376702" />
       <window_info id="Structure" order="2" sideWeight="0.2743561" side_tool="true" weight="0.3294621" />
       <window_info id="Build Variants" order="3" sideWeight="0.2743561" side_tool="true" weight="0.3294621" />
       <window_info id="Image Layers" order="4" />
@@ -388,15 +364,15 @@
       <window_info id="Resources Explorer" order="6" sideWeight="0.4994206" weight="0.3294621" />
       <window_info id="Capture Tool" order="7" />
       <window_info id="Favorites" order="8" sideWeight="0.2743561" side_tool="true" weight="0.3294621" />
-      <window_info anchor="bottom" id="Run" order="0" weight="0.1902439" />
+      <window_info anchor="bottom" id="Run" order="0" sideWeight="0.49924356" weight="0.18861789" />
       <window_info anchor="bottom" id="Logcat" order="1" weight="0.3284553" />
       <window_info anchor="bottom" id="TODO" order="2" weight="0.32922733" />
       <window_info anchor="bottom" id="Android Profiler" order="3" weight="0.32922733" />
       <window_info anchor="bottom" id="Debug" order="4" />
-      <window_info anchor="bottom" id="Terminal" order="5" sideWeight="0.49938875" weight="0.3284553" />
-      <window_info anchor="bottom" id="Event Log" order="6" sideWeight="0.50061125" side_tool="true" weight="0.32922733" />
+      <window_info anchor="bottom" id="Terminal" order="5" sideWeight="0.49938875" weight="0.3281075" />
+      <window_info active="true" anchor="bottom" id="Event Log" order="6" sideWeight="0.50075644" side_tool="true" visible="true" weight="0.3284553" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Build" order="8" weight="0.2292683" />
+      <window_info anchor="bottom" id="Build" order="8" weight="0.22764228" />
       <window_info anchor="bottom" id="Find" order="9" />
       <window_info anchor="bottom" id="Dependency Viewer" order="10" weight="0.32922733" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" weight="0.3294621" />
@@ -475,13 +451,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="83" column="7" selection-start-line="83" selection-start-column="7" selection-end-line="83" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/4804b26c153cace1ecb629f266b38ec1/jars/classes.jar!/com/google/android/gms/analytics/GoogleAnalytics.class" />
     <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/threeD.java" />
     <entry file="file://$PROJECT_DIR$/desktop/src/com/mygdx/game/desktop/DesktopLauncher.java">
@@ -507,83 +476,56 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Objects.java">
+    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Foo.java" />
+    <entry file="file://$PROJECT_DIR$/installDebug.bat">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="307">
-          <caret line="42" column="25" selection-start-line="42" selection-start-column="25" selection-end-line="42" selection-end-column="25" />
+        <state relative-caret-position="629">
+          <caret line="83" column="1" selection-start-line="83" selection-start-column="1" selection-end-line="83" selection-end-column="1" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/android/assets/screens/gym/objects/objects.json">
+    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Message.java" />
+    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/MyMethods.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="18" column="95" selection-start-line="18" selection-start-column="62" selection-end-line="18" selection-end-column="95" />
+        <state>
+          <caret line="25" column="22" selection-start-line="25" selection-start-column="22" selection-end-line="25" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Player.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="484" column="35" selection-start-line="484" selection-start-column="35" selection-end-line="484" selection-end-column="35" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/android/assets/screens/message.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Player.java">
+    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Objects.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="515" column="41" selection-start-line="515" selection-start-column="34" selection-end-line="515" selection-end-column="41" />
-          <folding>
-            <element signature="e#6319#6640#0" />
-            <element signature="e#7884#9186#1" />
-            <element signature="e#9198#15325#0" />
-            <element signature="e#15331#15777#0" />
-            <element signature="e#15783#16208#0" />
-            <element signature="e#16214#16648#0" />
-            <element signature="e#16654#17083#0" />
-            <element signature="e#17089#17584#0" />
-            <element signature="e#17664#17791#1" />
-            <element signature="e#17827#17953#1" />
-            <element signature="e#17991#18119#1" />
-            <element signature="e#18158#18294#1" />
-            <element signature="e#18324#18509#1" />
-            <element signature="e#18571#18762#1" />
-            <element signature="e#18856#19046#1" />
-            <element signature="e#19144#19333#1" />
-            <element signature="e#19376#19845#1" />
-            <element signature="e#19902#20491#1" />
-            <element signature="e#20378#20573#0" />
-          </folding>
+        <state>
+          <caret line="42" column="25" selection-start-line="42" selection-start-column="25" selection-end-line="42" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/android/assets/screens/gym/objects/objects.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-7">
+          <caret line="25" selection-start-line="25" selection-end-line="25" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/MyGdxGame.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="863" column="30" selection-start-line="863" selection-start-column="30" selection-end-line="863" selection-end-column="30" />
-          <folding>
-            <element signature="e#12435#12499#0" />
-            <element signature="e#12505#13960#0" />
-            <element signature="e#14007#14962#0" />
-            <element signature="e#14968#15749#0" />
-            <element signature="e#17043#17475#1" />
-            <element signature="e#17531#17975#1" />
-            <element signature="e#18024#18456#1" />
-            <element signature="e#18505#18937#1" />
-            <element signature="e#18988#19422#1" />
-            <element signature="e#19484#19920#1" />
-            <element signature="e#19985#20418#1" />
-            <element signature="e#20477#21244#1" />
-            <element signature="e#21317#22091#1" />
-            <element signature="e#22164#22611#1" />
-            <element signature="e#22670#23399#1" />
-            <element signature="e#23472#24207#1" />
-            <element signature="e#24272#25001#1" />
-            <element signature="e#25080#25817#1" />
-            <element signature="e#25880#26616#1" />
-            <element signature="e#26673#27409#1" />
-            <element signature="e#27466#27942#1" />
-            <element signature="e#28007#28525#1" />
-            <element signature="e#28587#29324#1" />
-            <element signature="e#29387#29830#1" />
-            <element signature="e#29882#30486#1" />
-            <element signature="e#30551#31030#1" />
-          </folding>
+        <state relative-caret-position="-406">
+          <caret line="457" column="13" selection-start-line="457" selection-start-column="13" selection-end-line="457" selection-end-column="13" />
         </state>
       </provider>
     </entry>

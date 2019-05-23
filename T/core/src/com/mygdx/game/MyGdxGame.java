@@ -3,10 +3,13 @@ package com.mygdx.game;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -38,10 +41,12 @@ import static com.mygdx.game.MyGdxGame.Windows.chouseSquatMenu;
 import static com.mygdx.game.MyGdxGame.Windows.none;
 import static com.mygdx.game.MyGdxGame.Windows.refregirator;
 import static com.mygdx.game.MyGdxGame.Windows.workMenu;
+import static com.mygdx.game.MyMethods.LoadImg;
 import static com.mygdx.game.MyMethods.createProceduralPixmap;
 import static com.mygdx.game.MyMethods.getJson;
 import static com.mygdx.game.MyMethods.getPath;
 import static com.mygdx.game.MyMethods.getTextButtonStyleFromFile;
+import static com.mygdx.game.MyMethods.textDrawing;
 
 public class MyGdxGame implements ApplicationListener {
     private OrthographicCamera camera;
@@ -54,17 +59,19 @@ public class MyGdxGame implements ApplicationListener {
     private Pixmap pix2, pix3, pix4;
     public static List<Grid2d.MapNode> path = new LinkedList<Grid2d.MapNode>();
     public static List<Grid2d.MapNode> path3 = new LinkedList<Grid2d.MapNode>();
-    private static Group screenButtons = new Group();
+
     private static Array<Objects> playObjects = new Array<Objects>();
     private static Array<Objects> allObjects = new Array<Objects>();
 
+    private ArrayList<TextButton> buttonsArr = new ArrayList<TextButton>();
+    private static Group screenButtons = new Group();
+
     private Grid2d map2d;
     private double[][] mapArr;
-    private Group objectDrawOrderGroup = new Group(), hudGroup = new Group();
+    private Group objectDrawOrderGroup = new Group(), hudGroup = new Group(), windowGroup = new Group();
 
     public static Locale locale = null;
-    private Group windowGroup = new Group();
-    private ArrayList<TextButton> buttonsArr = new ArrayList<TextButton>();
+
 
     public enum Screens {
         gym, room, map, work, shop, menu, options, stats
@@ -99,6 +106,7 @@ public class MyGdxGame implements ApplicationListener {
             locale = new Locale("ru", "RU");
         else
             locale = new Locale("es", "ES");
+
 
         stage = new Stage(new StretchViewport(1920, 1080));
         camera = new OrthographicCamera();
@@ -176,7 +184,6 @@ public class MyGdxGame implements ApplicationListener {
 
         String buttonList = getJson("screens/buttons/buttons.json");
         String textList = getJson("screens/buttons/buttonText/buttonText" + locale.getCountry() + ".json");
-
         final ArrayList<ButtonData> buttonDataArrayList = json.fromJson(ArrayList.class, buttonList);
         final ArrayList<ButtonText> buttonTextArrayList = json.fromJson(ArrayList.class, textList);
 
@@ -253,13 +260,14 @@ public class MyGdxGame implements ApplicationListener {
         previousScreen = currentScreen;
         currentScreen = string;
         setUpWindow(none);
+
         clearStage();
+
         background = MyMethods.LoadImg("screens/" + string + "/" + string + ".png");
 
         try {
             createObjects(string.toString());
-        } catch (GdxRuntimeException ignored) {
-        }
+        } catch (GdxRuntimeException ignored) { }
 
         loadButtons(string);
 
@@ -405,6 +413,7 @@ public class MyGdxGame implements ApplicationListener {
     }
 
     private void drawOrder() {
+
         for (int j = 0; j < objectDrawOrderGroup.getChildren().size; j++) {
             for (int i = 0; i < objectDrawOrderGroup.getChildren().size - 1; i++) {
                 if (objectDrawOrderGroup.getChildren().get(i).getY() < objectDrawOrderGroup.getChildren().get(i + 1)
@@ -864,6 +873,8 @@ public class MyGdxGame implements ApplicationListener {
                             430 / mapCoorinateCorrector);
                     player.setPlayersAction(Player.PlayerCondition.talkToArmGirl, 955,430);
                     setUpWindow(none);
+
+
                 }
 
                 @Override
