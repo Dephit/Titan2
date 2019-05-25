@@ -1,16 +1,22 @@
 [
   //map
-  {class:com.mygdx.game.MyGdxGame$ButtonData,name:room,x:300,y:902,width:100,height:100}
-  {class:com.mygdx.game.MyGdxGame$ButtonData,name:gym,x:500,y:102,width:100,height:100}
-  {class:com.mygdx.game.MyGdxGame$ButtonData,name:statsButton,x:1603,y:753,width:303,height:303}
-  {class:com.mygdx.game.MyGdxGame$ButtonData,name:workButton,x:1800,y:830,width:100,height:100}
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"room",   "screens": [["map","room",   700, 100, 100, 100]]},
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"gym",   "screens": [["map","gym",   300, 700, 100, 100]]},
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"statsButton",   "screens": [["map","statsButton",  1600, 750, 303, 303],
+                                                                                      ["gym","statsButton",  1600, 750, 300, 300],
+                                                                                      ["room","statsButton",  1600, 750, 300, 300],
+                                                                                      ["work","statsButton",  1600, 750, 300, 300]]},
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"workButton",   "screens": [["map","workButton",   1800, 830, 100, 100]]},
+  //
+
    //gym
-
-  {class:com.mygdx.game.MyGdxGame$ButtonData,name:chouseSquatMenu,x:770,y:200,width:200,height:100}
-  {class:com.mygdx.game.MyGdxGame$ButtonData,name:benchButton,x:1250,y:0,width:200,height:170}
-  {class:com.mygdx.game.MyGdxGame$ButtonData,name:deadliftButton,x:720,y:0,width:300,height:70}
-
-  {class:com.mygdx.game.MyGdxGame$ButtonData,name:technicSquatButton,x:770,y:300,width:200,height:100}
+  //TODO Refactor gramaticly wrong names
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"chouseSquatMenu",   "screens": [["gym","chouseSquatMenu", 770, 200, 200, 100]]},
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"benchButton",   "screens": [["gym","benchButton", 1250, 1, 200, 170]]},
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"deadliftButton",   "screens": [["gym","deadliftButton", 720, 1, 300, 70]]},
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"girlButton",   "screens": [["gym","girlButton",   919, 475, 185, 270]]},
+  //TODO Add the whole exercieses list
+ // {class:com.mygdx.game.MyGdxGame$ButtonData,name:technicSquatButton,x:770,y:300,width:200,height:100}
  // {class:com.mygdx.game.MyGdxGame$ButtonData,name:technicBenchButton,x:1250,y:100,width:200,height:170}
   //{class:com.mygdx.game.MyGdxGame$ButtonData,name:technicDeadliftButton,x:720,y:100,width:200,height:70}
 
@@ -18,37 +24,43 @@
 // {class:com.mygdx.game.MyGdxGame$ButtonData,name:archButton,x:1220,y:350,width:200,height:70}
  //
  //menu
-  {class:com.mygdx.game.MyGdxGame$ButtonData,name:optionButton,x:500,y:450,width:250,height:100 },
-  {class:com.mygdx.game.MyGdxGame$ButtonData,name:playButton,x:500,y:600,width:250,height:100},
-  {class:com.mygdx.game.MyGdxGame$ButtonData,name:quitButton,x:500,y:300,width:250,height:100}
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"optionButton", "screens": [["menu","optionButton", 500, 450, 250, 100],
+                                                                                     ["gym","optionButton", 10,950, 100, 100],
+                                                                                     ["map","optionButton", 10,950, 100, 100],
+                                                                                     ["room","optionButton", 10,950, 100, 100],
+                                                                                     ["work","optionButton", 10,950, 100, 100]]},
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"playButton",   "screens": [["menu","playButton",   500, 600, 250, 100]]},
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"quitButton",   "screens": [["menu","quitButton",   500, 300, 250, 100]]},
   //
-  //option
-   {class:com.mygdx.game.MyGdxGame$ButtonData,name:backButton,x:10,y:950,width:100,height:100}
-  {class:com.mygdx.game.MyGdxGame$ButtonData,name:mainMenuButton,x:500,y:400,width:250,height:100}
+  //options
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"backButton",   "screens": [["options","backButton",   10, 950, 100, 100],
+                                                                                      ["stats","backButton", 10, 950, 100, 100]]},
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"mainMenuButton",   "screens": [["options","mainMenuButton",   500, 400, 250, 100]]},
   //
 
   //room
-  {class:com.mygdx.game.MyGdxGame$ButtonData,name:map,x:10,y:830,width:100,height:100}
-  {class:com.mygdx.game.MyGdxGame$ButtonData,name:sleepButton,x:1000,y:610,width:100,height:100}
-  {class:com.mygdx.game.MyGdxGame$ButtonData,name:openWindow,x:100,y:350,width:100,height:100}
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"map",   "screens": [["room","map", 10, 830, 100, 100],
+                                                                              ["gym","map", 10, 830, 100, 100],
+                                                                              ["work","map", 10, 830, 100, 100]]},
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"sleepButton",   "screens": [["room","sleepButton",   1300, 400, 100, 100]]},
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"openWindow",   "screens": [["room","openWindow",   100, 350, 100, 100]]},
+  //TODO rename openWindow to refWindow or somthing like that
   //
 
-  //stats
-  {class:com.mygdx.game.MyGdxGame$ButtonData,name:backButton,x:10,y:950,width:100,height:100}
-  //
 
-  //refregirator
-  {class:com.mygdx.game.MyGdxGame$ButtonData,name:potato,x:250,y:725,width:125,height:125}
+
+  //refregiratorWindow
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"potato",   "screens": [["refregirator","potato",   250, 725, 125, 125]]},
   //
 
   //squatMenu
-   {class:com.mygdx.game.MyGdxGame$ButtonData,name:closeWindow,x:650,y:300,width:75,height:75}
-  {class:com.mygdx.game.MyGdxGame$ButtonData,name:squatButton,x:250,y:725,width:125,height:125}
-   {class:com.mygdx.game.MyGdxGame$ButtonData,name:technicSquatButton,x:250,y:425,width:125,height:125}
+
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"squatButton",   "screens": [["squatMenu","squatButton",   1320, 215, 575, 85]]},
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"technicSquatButton",   "screens": [["squatMenu","technicSquatButton",   1320, 125, 575, 85]]},
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"closeWindow",   "screens": [["squatMenu","closeWindow",   1320, 35, 575, 85]]},
    //
 
    //workMenu
-     {class:com.mygdx.game.MyGdxGame$ButtonData,name:workProgressButton,x:250,y:725,width:125,height:125}
-     // 
-     {class:com.mygdx.game.MyGdxGame$ButtonData,name:girlButton,x:919,y:475, width:185,height:270}
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"workProgressButton",   "screens": [["workMenu","workProgressButton",   250, 725, 125, 125]]},
+
 ]

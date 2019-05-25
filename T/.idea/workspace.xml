@@ -65,6 +65,12 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/T$Descktop.ic" NAME="Descktop Coverage Results" MODIFIED="1558789505055" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+  <component name="CoverageViewManager">
+    <option name="myElementSize" value="190" />
+  </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -82,55 +88,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/MyGdxGame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-406">
-              <caret line="457" column="13" selection-start-line="457" selection-start-column="13" selection-end-line="457" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/MyMethods.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret line="25" column="22" selection-start-line="25" selection-start-column="22" selection-end-line="25" selection-end-column="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/android/assets/screens/gym/objects/objects.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-7">
-              <caret line="25" selection-start-line="25" selection-end-line="25" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Player.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret line="484" column="35" selection-start-line="484" selection-start-column="35" selection-end-line="484" selection-end-column="35" />
+            <state relative-caret-position="113">
+              <caret line="701" column="39" selection-start-line="701" selection-start-column="25" selection-end-line="701" selection-end-column="39" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#8425#8435#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/android/assets/screens/message.png">
-          <provider selected="true" editor-type-id="images" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Objects.java">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/android/assets/screens/buttons/buttons.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret line="42" column="25" selection-start-line="42" selection-start-column="25" selection-end-line="42" selection-end-column="25" />
+            <state relative-caret-position="188">
+              <caret line="15" column="120" selection-start-line="15" selection-start-column="120" selection-end-line="15" selection-end-column="120" />
             </state>
           </provider>
         </entry>
@@ -152,6 +126,25 @@
       <find>pla</find>
       <find>player</find>
       <find>objectDrawOrderGroup</find>
+      <find>window</find>
+      <find>setupwindow</find>
+      <find>cho</find>
+      <find>white</find>
+      <find>createbu</find>
+      <find>loadbu</find>
+      <find>buttondata</find>
+      <find>Crea</find>
+      <find>load</find>
+      <find>back</find>
+      <find>main</find>
+      <find>mai</find>
+      <find>optio</find>
+      <find>map</find>
+      <find>statsButton</find>
+      <find>open</find>
+      <find>work</find>
+      <find>BenchBu</find>
+      <find>deadliftButton</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -167,8 +160,19 @@
         <option value="$PROJECT_DIR$/core/src/com/mygdx/game/Foo.java" />
         <option value="$PROJECT_DIR$/core/src/com/mygdx/game/Message.java" />
         <option value="$PROJECT_DIR$/core/src/com/mygdx/game/Player.java" />
-        <option value="$PROJECT_DIR$/core/src/com/mygdx/game/MyGdxGame.java" />
         <option value="$PROJECT_DIR$/android/assets/screens/gym/objects/objects.json" />
+        <option value="$PROJECT_DIR$/core/src/com/mygdx/game/MyMethods.java" />
+        <option value="$PROJECT_DIR$/android/assets/screens/buttons/buttonText/buttonTextRU.json" />
+        <option value="$PROJECT_DIR$/android/assets/screens/windows/chouseSquatMenu/coord.json" />
+        <option value="$PROJECT_DIR$/android/assets/screens/windows/chouseSquatMenu/buttons.json" />
+        <option value="$PROJECT_DIR$/android/assets/screens/options/buttons/buttons.json" />
+        <option value="$PROJECT_DIR$/android/assets/screens/gym/buttons/buttons.json" />
+        <option value="$PROJECT_DIR$/android/assets/screens/map/buttons/buttons.json" />
+        <option value="$PROJECT_DIR$/android/assets/screens/room/buttons/buttons.json" />
+        <option value="$PROJECT_DIR$/android/assets/screens/work/buttons/buttons.json" />
+        <option value="$PROJECT_DIR$/core/src/com/mygdx/game/MyGdxGame.java" />
+        <option value="$PROJECT_DIR$/core/src/com/mygdx/game/Window.java" />
+        <option value="$PROJECT_DIR$/android/assets/screens/buttons/buttons.json" />
       </list>
     </option>
   </component>
@@ -196,20 +200,33 @@
             <path>
               <item name="T" type="b2602c69:ProjectViewProjectNode" />
               <item name="T" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="core" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="android" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+            <path>
+              <item name="T" type="b2602c69:ProjectViewProjectNode" />
+              <item name="T" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="android" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="T" type="b2602c69:ProjectViewProjectNode" />
+              <item name="T" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="android" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="screens" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="T" type="b2602c69:ProjectViewProjectNode" />
+              <item name="T" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="android" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="screens" type="462c0819:PsiDirectoryNode" />
+              <item name="buttons" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="T" type="b2602c69:ProjectViewProjectNode" />
               <item name="T" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="core" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="T" type="b2602c69:ProjectViewProjectNode" />
-              <item name="T" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="core" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="game" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -223,7 +240,7 @@
     <property name="TODO_SCOPE" value="Project Files" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="device.picker.selection" value="994948a2" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../ud851-Exercises/Lesson05a-Android-Lifecycle/T05a.01-Exercise-LogLifecycle" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/android/build/outputs/apk/debug/android-debug.apk" />
     <property name="not.eligible.for.single.variant.sync" value="true" />
     <property name="project.structure.last.edited" value="Suggestions" />
     <property name="project.structure.proportion" value="0.17" />
@@ -239,6 +256,9 @@
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.mygdx.game" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\User\Documents\GitHub\Titan\T\android\assets\screens\windows\chouseSquatMenu" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -352,28 +372,27 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
     <layout>
-      <window_info id="Captures" order="0" sideWeight="0.2905569" side_tool="true" visible="true" weight="0.1376702" />
-      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.7094431" visible="true" weight="0.1376702" />
-      <window_info id="Structure" order="2" sideWeight="0.2743561" side_tool="true" weight="0.3294621" />
-      <window_info id="Build Variants" order="3" sideWeight="0.2743561" side_tool="true" weight="0.3294621" />
+      <window_info id="Captures" order="0" sideWeight="0.5034642" side_tool="true" weight="0.3290469" />
+      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.70669746" visible="true" weight="0.1376702" />
+      <window_info id="Structure" order="2" sideWeight="0.29330254" side_tool="true" weight="0.1376702" />
+      <window_info id="Build Variants" order="3" sideWeight="0.5034642" side_tool="true" weight="0.3290469" />
       <window_info id="Image Layers" order="4" />
       <window_info id="Designer" order="5" />
-      <window_info id="Resources Explorer" order="6" sideWeight="0.4994206" weight="0.3294621" />
+      <window_info id="Resources Explorer" order="6" sideWeight="0.4965358" weight="0.3290469" />
       <window_info id="Capture Tool" order="7" />
       <window_info id="Favorites" order="8" sideWeight="0.2743561" side_tool="true" weight="0.3294621" />
-      <window_info anchor="bottom" id="Run" order="0" sideWeight="0.49924356" weight="0.18861789" />
+      <window_info anchor="bottom" id="Run" order="0" sideWeight="0.49924356" weight="0.17984496" />
       <window_info anchor="bottom" id="Logcat" order="1" weight="0.3284553" />
-      <window_info anchor="bottom" id="TODO" order="2" weight="0.32922733" />
+      <window_info anchor="bottom" id="TODO" order="2" sideWeight="0.49924356" weight="0.32868218" />
       <window_info anchor="bottom" id="Android Profiler" order="3" weight="0.32922733" />
-      <window_info anchor="bottom" id="Debug" order="4" />
+      <window_info anchor="bottom" id="Debug" order="4" weight="0.32868218" />
       <window_info anchor="bottom" id="Terminal" order="5" sideWeight="0.49938875" weight="0.3281075" />
-      <window_info active="true" anchor="bottom" id="Event Log" order="6" sideWeight="0.50075644" side_tool="true" visible="true" weight="0.3284553" />
+      <window_info anchor="bottom" id="Event Log" order="6" sideWeight="0.50075644" side_tool="true" weight="0.32868218" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Build" order="8" weight="0.22764228" />
-      <window_info anchor="bottom" id="Find" order="9" />
+      <window_info anchor="bottom" id="Build" order="8" weight="0.2263566" />
+      <window_info anchor="bottom" id="Find" order="9" weight="0.32868218" />
       <window_info anchor="bottom" id="Dependency Viewer" order="10" weight="0.32922733" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" weight="0.3294621" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
@@ -383,6 +402,7 @@
       <window_info anchor="right" id="Preview" order="5" weight="0.3294621" />
       <window_info anchor="right" id="Codota" order="6" />
       <window_info anchor="right" id="Assistant" order="7" weight="0.3294621" />
+      <window_info anchor="right" id="Coverage" order="8" side_tool="true" weight="0.32980332" />
     </layout>
   </component>
   <component name="VcsManagerConfiguration">
@@ -487,45 +507,140 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Message.java" />
-    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/MyMethods.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="25" column="22" selection-start-line="25" selection-start-column="22" selection-end-line="25" selection-end-column="22" />
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/android/assets/screens/message.png">
+      <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Player.java">
+    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Message.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="484" column="35" selection-start-line="484" selection-start-column="35" selection-end-line="484" selection-end-column="35" />
+        <state relative-caret-position="422">
+          <caret line="34" column="51" selection-start-line="34" selection-start-column="51" selection-end-line="34" selection-end-column="51" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/android/assets/screens/message.png">
-      <provider selected="true" editor-type-id="images" />
+    <entry file="file://$PROJECT_DIR$/android/assets/screens/windows/workMenu/coord.json">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Objects.java">
+    <entry file="file://$PROJECT_DIR$/android/assets/screens/buttons/buttonText/buttonTextRU.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="42" column="25" selection-start-line="42" selection-start-column="25" selection-end-line="42" selection-end-column="25" />
+        <state relative-caret-position="69">
+          <caret line="3" column="83" selection-start-line="3" selection-start-column="83" selection-end-line="3" selection-end-column="83" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/android/assets/screens/gym/objects/objects.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-7">
-          <caret line="25" selection-start-line="25" selection-end-line="25" />
+        <state relative-caret-position="161">
+          <caret line="7" column="3" selection-start-line="7" selection-start-column="3" selection-end-line="7" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Player.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="392">
+          <caret line="499" column="75" selection-start-line="499" selection-start-column="75" selection-end-line="499" selection-end-column="75" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Objects.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="392">
+          <caret line="42" column="25" selection-start-line="42" selection-start-column="25" selection-end-line="42" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/android/assets/screens/windows/chouseSquatMenu/coord.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="1" column="65" selection-start-line="1" selection-start-column="65" selection-end-line="1" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/MyMethods.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="422">
+          <caret line="108" column="37" selection-start-line="108" selection-start-column="37" selection-end-line="108" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/android/assets/screens/map/buttons/buttons.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="69">
+          <caret line="3" column="87" selection-start-line="3" selection-start-column="87" selection-end-line="3" selection-end-column="87" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/android/assets/screens/menu/buttons/buttons.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="4" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/android/assets/screens/options/buttons/buttons.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="46">
+          <caret line="2" column="52" selection-start-line="2" selection-start-column="52" selection-end-line="2" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/android/assets/screens/room/buttons/buttons.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="1" column="95" selection-start-line="1" selection-start-column="95" selection-end-line="1" selection-end-column="95" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/android/assets/screens/work/buttons/buttons.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="46">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/android/assets/screens/gym/buttons/buttons.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="46">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/android/assets/screens/stats/stats.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/android/assets/screens/windows/chouseSquatMenu/buttons.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="1" selection-start-line="1" selection-end-line="3" selection-end-column="106" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Window.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="32" selection-start-line="32" selection-end-line="32" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/MyGdxGame.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-406">
-          <caret line="457" column="13" selection-start-line="457" selection-start-column="13" selection-end-line="457" selection-end-column="13" />
+        <state relative-caret-position="113">
+          <caret line="701" column="39" selection-start-line="701" selection-start-column="25" selection-end-line="701" selection-end-column="39" />
+          <folding>
+            <element signature="e#8425#8435#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/android/assets/screens/buttons/buttons.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="188">
+          <caret line="15" column="120" selection-start-line="15" selection-start-column="120" selection-end-line="15" selection-end-column="120" />
         </state>
       </provider>
     </entry>

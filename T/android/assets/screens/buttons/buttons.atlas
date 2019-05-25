@@ -5,161 +5,168 @@ filter: Nearest,Nearest
 repeat: none
 backButton
   rotate: false
-  xy: 1, 455
+  xy: 1, 408
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 playButton
   rotate: false
-  xy: 1, 275
+  xy: 1, 228
   size: 373, 178
   orig: 373, 178
   offset: 0, 0
   index: -1
 quitButton
   rotate: false
-  xy: 515, 825
+  xy: 515, 778
   size: 397, 142
   orig: 397, 142
   offset: 0, 0
   index: -1
 mainMenuButton
   rotate: false
-  xy: 1, 127
+  xy: 1, 80
   size: 344, 146
   orig: 344, 146
   offset: 0, 0
   index: -1
 statsButton
   rotate: false
-  xy: 376, 356
+  xy: 376, 309
   size: 97, 97
   orig: 97, 97
   offset: 0, 0
   index: -1
 watchglass
   rotate: false
-  xy: 515, 726
+  xy: 515, 679
   size: 97, 97
   orig: 97, 97
   offset: 0, 0
   index: -1
-potato
+closeSquatMenu
   rotate: false
-  xy: 914, 903
-  size: 64, 64
-  orig: 64, 64
+  xy: 1, 64
+  size: 115, 14
+  orig: 115, 14
+  offset: 0, 0
+  index: -1
+closeWindow
+  rotate: false
+  xy: 1, 64
+  size: 115, 14
+  orig: 115, 14
   offset: 0, 0
   index: -1
 squatButton
   rotate: false
-  xy: 914, 903
-  size: 64, 64
-  orig: 64, 64
+  xy: 1, 64
+  size: 115, 14
+  orig: 115, 14
   offset: 0, 0
   index: -1
 technicSquatButton
   rotate: false
-  xy: 914, 903
+  xy: 1, 64
+  size: 115, 14
+  orig: 115, 14
+  offset: 0, 0
+  index: -1
+potato
+  rotate: false
+  xy: 914, 856
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 workProgressButton
   rotate: false
-  xy: 914, 903
+  xy: 914, 856
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 benchButton
   rotate: false
-  xy: 1, 62
+  xy: 376, 244
   size: 61, 63
   orig: 61, 63
   offset: 0, 0
   index: -1
 chouseSquatMenu
   rotate: false
-  xy: 1, 62
+  xy: 376, 244
   size: 61, 63
   orig: 61, 63
   offset: 0, 0
   index: -1
 deadliftButton
   rotate: false
-  xy: 1, 62
+  xy: 376, 244
   size: 61, 63
   orig: 61, 63
   offset: 0, 0
   index: -1
 girlButton
   rotate: false
-  xy: 1, 62
+  xy: 376, 244
   size: 61, 63
   orig: 61, 63
   offset: 0, 0
   index: -1
 openWindow
   rotate: false
-  xy: 376, 291
+  xy: 515, 614
   size: 61, 63
   orig: 61, 63
   offset: 0, 0
   index: -1
 workButton
   rotate: false
-  xy: 376, 291
+  xy: 515, 614
   size: 61, 63
   orig: 61, 63
   offset: 0, 0
   index: -1
 optionButton
   rotate: false
-  xy: 515, 661
+  xy: 614, 713
   size: 61, 63
   orig: 61, 63
   offset: 0, 0
   index: -1
-closeWindow
-  rotate: false
-  xy: 614, 760
-  size: 60, 63
-  orig: 60, 63
-  offset: 0, 0
-  index: -1
 sleepButton
   rotate: false
-  xy: 914, 840
+  xy: 1, 1
   size: 61, 61
   orig: 61, 61
   offset: 0, 0
   index: -1
 gym
   rotate: false
-  xy: 64, 81
+  xy: 914, 810
   size: 63, 44
   orig: 63, 44
   offset: 0, 0
   index: -1
 sportSupShop
   rotate: false
-  xy: 676, 782
+  xy: 677, 735
   size: 64, 41
   orig: 64, 41
   offset: 0, 0
   index: -1
 room
   rotate: false
-  xy: 1, 1
+  xy: 979, 795
   size: 44, 59
   orig: 44, 59
   offset: 0, 0
   index: -1
 map
   rotate: false
-  xy: 515, 609
+  xy: 515, 562
   size: 50, 50
   orig: 50, 50
   offset: 0, 0

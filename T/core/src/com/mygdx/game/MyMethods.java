@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -17,6 +18,7 @@ import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.XmlWriter;
 
 
+import java.awt.Font;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -98,10 +100,13 @@ public abstract class MyMethods {
         String json = file.readString();
         return json;
     }
-
+    //Add possible to add colors from json
     public static TextButton.TextButtonStyle getTextButtonStyleFromFile(Skin skin, String name){
         final TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.font = FontFactory.font;
+        textButtonStyle.fontColor = Color.BLACK;
+
+        textButtonStyle.downFontColor = Color.BLUE;
         textButtonStyle.up = skin.getDrawable(name);
         textButtonStyle.down = skin.getDrawable(name);
         skin.dispose();
@@ -119,6 +124,7 @@ public abstract class MyMethods {
         FontFactory.getInstance().getFont(MyGdxGame.locale).setColor(color);
         FontFactory.getInstance().getFont(MyGdxGame.locale).draw(batch, str, x,y);
         FontFactory.getInstance().getFont(MyGdxGame.locale).getData().setScale(1);
+        FontFactory.getInstance().getFont(MyGdxGame.locale).setColor(Color.BLACK);
     }
 
     public static String format(String format, Object var){

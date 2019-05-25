@@ -19,25 +19,27 @@ public class Window extends Actor{
     public Group thisGroup;
 
     Window(float x, float y, float width, float height, String name) {
+        //TODO Make window label
         thisGroup=new Group();
         setBounds(x,y,width,height);
         animation=createAnimation("screens/windows/window.png",1,1,1);
     }
 
     public void loadButtons(String name, ArrayList<TextButton> list) {
-       // TextureAtlas buttonAtlas = new TextureAtlas(Gdx.files.internal(getPath() + "screens/windows/" + name +"/buttons.atlas"));
-        String buttonList = getJson( "screens/windows/" + name +"/buttons.json");
+      /* // TextureAtlas buttonAtlas = new TextureAtlas(Gdx.files.internal(getPath() + "screens/windows/" + name +"/buttons.atlas"));
+      //  String buttonList = getJson( "screens/windows/" + name +"/buttons.json");
 
-        final ArrayList<MyGdxGame.ButtonData> buttonDataArrayList= json.fromJson(  ArrayList.class, buttonList);
+      //  final ArrayList<MyGdxGame.ButtonData> buttonDataArrayList= json.fromJson(  ArrayList.class, buttonList);
 
-        for (final MyGdxGame.ButtonData buttonData : buttonDataArrayList) {
+       / for (final MyGdxGame.ButtonData buttonData : buttonDataArrayList) {
             for (TextButton textButton : list) {
                 if(buttonData.name.equals(textButton.getName())){
-                    textButton.setBounds(buttonData.x,buttonData.y,buttonData.width,buttonData.height);
+                    //TODO Don't forget to change it to buttonDataArrayList data from MyGdxGame
+                    textButton.setBounds(0,0,0,0);
                     thisGroup.addActor(textButton);
                 }
             }
-        }
+        }*/
     }
 
     @Override
