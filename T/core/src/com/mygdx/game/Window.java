@@ -1,7 +1,9 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -12,40 +14,32 @@ import java.util.ArrayList;
 import static com.badlogic.gdx.net.HttpRequestBuilder.json;
 import static com.mygdx.game.MyMethods.createAnimation;
 import static com.mygdx.game.MyMethods.getJson;
+import static com.mygdx.game.MyMethods.textDrawing;
 
 public class Window extends Actor{
 
     private final Animation animation;
-    public Group thisGroup;
+    private final GlyphLayout layout;
+    Group thisGroup;
+    private String label;
 
     Window(float x, float y, float width, float height, String name) {
         //TODO Make window label
-        thisGroup=new Group();
-        setBounds(x,y,width,height);
-        animation=createAnimation("screens/windows/window.png",1,1,1);
-    }
+        thisGroup = new Group();
+        //TODO unhardcore it
+        label = "Выбирай!";
+        layout = new GlyphLayout();
+        layout.setText(FontFactory.font, label);
 
-    public void loadButtons(String name, ArrayList<TextButton> list) {
-      /* // TextureAtlas buttonAtlas = new TextureAtlas(Gdx.files.internal(getPath() + "screens/windows/" + name +"/buttons.atlas"));
-      //  String buttonList = getJson( "screens/windows/" + name +"/buttons.json");
-
-      //  final ArrayList<MyGdxGame.ButtonData> buttonDataArrayList= json.fromJson(  ArrayList.class, buttonList);
-
-       / for (final MyGdxGame.ButtonData buttonData : buttonDataArrayList) {
-            for (TextButton textButton : list) {
-                if(buttonData.name.equals(textButton.getName())){
-                    //TODO Don't forget to change it to buttonDataArrayList data from MyGdxGame
-                    textButton.setBounds(0,0,0,0);
-                    thisGroup.addActor(textButton);
-                }
-            }
-        }*/
+        set((int)x, (int)y, (int)width, (int)height,name);
+        animation = createAnimation("screens/windows/window.png",1,1,1);
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         batch.draw((TextureRegion) animation.getKeyFrame(1),getX(),getY(),getWidth(),getHeight());
+        textDrawing(batch, label, getX() + getWidth() / 2 - layout.width / 2, getY() +getHeight() * 0.85f,  1, Color.BLACK);
     }
 
     @Override
@@ -55,6 +49,12 @@ public class Window extends Actor{
 
     public void dispose(){
 
+    }
+
+    public void set(int x, int y, int width, int height, String name) {
+        thisGroup.clear();
+        setBounds(x, y, width, height);
+        setName(name);
     }
 
 }

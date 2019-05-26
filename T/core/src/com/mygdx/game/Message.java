@@ -34,7 +34,6 @@ public class Message extends Actor{
             textX = (int) (x + (this.width * 0.95f) * mult / 2 - width / 2);
         else textX = (int) (x + (this.width * 1.05f) * mult / 2 - width / 2);
         textY = (int) (y + (this.heigth ) * mult / 2 + height / 2);
-
     }
 
     @Override

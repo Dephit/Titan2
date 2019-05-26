@@ -194,14 +194,6 @@ public class Player extends Actor {
         super.draw(batch, parentAlpha);
         TextureRegion currentFrame = (TextureRegion) animation.getKeyFrame(animationTime, true);
         batch.draw(currentFrame,getX()-getWidth()/2,getY()/*-getHeight()*0.25f*/,getWidth(),getHeight());
-
-        textDrawing( batch,format("Жим: %.0f",bench_f),1700,1000,1, Color.WHITE);
-        textDrawing( batch,format("Тяга: %.0f",deadlift_f),1700,950,1, Color.WHITE);
-        textDrawing( batch,format("Вес: %.2f",body_weight)+format(": %.2f",body_lean_mass),1700,900,1, Color.WHITE);
-        textDrawing( batch,format("МП: %.5f",squat_multiply),1700,850,1, Color.WHITE);
-        textDrawing( batch,format("ЖП: %.5f",bench_multiply),1700,800,1, Color.WHITE);
-        textDrawing( batch,format("ТП: %.5f",deadlift_multiply),1700,750,1, Color.WHITE);
-        textDrawing( batch,format("Деньги: %.1f",money),1700,700,1, Color.WHITE);
         }
 
     @Override
@@ -218,12 +210,10 @@ public class Player extends Actor {
         time+=1f;
         if(time>=50){
             time=0;
-            minutesSecond.setLeveled(true,minutesSecond.getLevel()+1,minutesSecond.getMaxLevel());
-            if(minutesSecond.getLevel()>minutesSecond.getMaxLevel()){
-
-
-                minutesSecond.setLeveled(true,0,minutesSecond.getMaxLevel());
-                minutes.setLeveled(true,minutes.getLevel()+1,minutes.getMaxLevel());
+            minutesSecond.setLeveled(true,minutesSecond.getLevel() + 1, minutesSecond.getMaxLevel());
+            if(minutesSecond.getLevel() > minutesSecond.getMaxLevel()){
+                minutesSecond.setLeveled(true,0, minutesSecond.getMaxLevel());
+                minutes.setLeveled(true,minutes.getLevel() + 1,minutes.getMaxLevel());
             }
             if(minutes.getLevel()>minutes.getMaxLevel()){
                 minutes.setLeveled(true,0,minutes.getMaxLevel());

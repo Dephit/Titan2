@@ -11,7 +11,7 @@
 
    //gym
   //TODO Refactor gramaticly wrong names
-  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"chouseSquatMenu",   "screens": [["gym","chouseSquatMenu", 770, 200, 200, 100]]},
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"choseSquatMenu",   "screens": [["gym","choseSquatMenu", 770, 200, 200, 100]]},
   {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"benchButton",   "screens": [["gym","benchButton", 1250, 1, 200, 170]]},
   {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"deadliftButton",   "screens": [["gym","deadliftButton", 720, 1, 300, 70]]},
   {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"girlButton",   "screens": [["gym","girlButton",   919, 475, 185, 270]]},
@@ -47,20 +47,21 @@
   //TODO rename openWindow to refWindow or somthing like that
   //
 
-
-
   //refregiratorWindow
   {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"potato",   "screens": [["refregirator","potato",   250, 725, 125, 125]]},
-  //
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"refregirator",   "screens": [["null","refregirator",   100, 10, 615, 330]]},
+
+  //  //
 
   //squatMenu
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"choseSquatWindow",   "screens": [["null","choseSquatWindow",   1300, 10, 615, 400]]},
 
-  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"squatButton",   "screens": [["squatMenu","squatButton",   1320, 215, 575, 85]]},
-  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"technicSquatButton",   "screens": [["squatMenu","technicSquatButton",   1320, 125, 575, 85]]},
-  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"closeWindow",   "screens": [["squatMenu","closeWindow",   1320, 35, 575, 85]]},
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"squatButton",   "screens": [["choseSquatWindow","squatButton",   1320, 215, 575, 85]]},
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"technicSquatButton",   "screens": [["choseSquatWindow","technicSquatButton",   1320, 125, 575, 85]]},
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"closeWindow",   "screens": [["choseSquatWindow","closeWindow",   1320, 35, 575, 85]]},
    //
 
    //workMenu
   {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"workProgressButton",   "screens": [["workMenu","workProgressButton",   250, 725, 125, 125]]},
-
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"workMenu",   "screens": [["null","workMenu",   500, 10, 615, 330]]}
 ]
