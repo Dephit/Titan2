@@ -36,6 +36,8 @@ public class Player extends Actor {
     private final StatBar hours;
     private final StatBar hoursSecond;
     private final StatBar minutesSecond;
+    private final Animation walk;
+    private final Animation walkRev;
     private StatBar workProgress;
     public  StatBar energy, food;
     public  StatBar health;
@@ -64,6 +66,11 @@ public class Player extends Actor {
     private float money;
     private float time;
 
+    float at = 0;
+    private Animation stayPos;
+    private TextureRegion currentFrame = new TextureRegion();
+    private Animation upA;
+    private Animation downA;
 
     public enum PlayerCondition {
         stay, down, up, left, right, squat, bench, deadlift,squatTechnic,
@@ -173,11 +180,17 @@ public class Player extends Actor {
         deadlift_f=100;
 
         setParameters();
+        walk=MyMethods.createAnimation("walking.png",10,1,1f);
+        walkRev=MyMethods.createAnimation("walkingR.png",10,1,1f);
+        stayPos=MyMethods.createAnimation("hero.png",1,1,1f);
         animation=MyMethods.createAnimation("player.png",36,1,1f);
+        upA=MyMethods.createAnimation("up.png",8,1,1f);
+        downA=MyMethods.createAnimation("down.png",6,1,1f);
     }
 
-    public void setParameters() {
-        setBounds(400,100,140,220);
+    void setParameters() {
+        setBounds(400,100,145,245);
+
         animationTime=0;
         fat_level=10;
         playerCondition=stay;
@@ -192,7 +205,52 @@ public class Player extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        TextureRegion currentFrame = (TextureRegion) animation.getKeyFrame(animationTime, true);
+
+
+        if(playerCondition == right ) {
+
+          //  setBounds(getX(), getY(), 145/5*5.3f, 255/5*5.3f);
+            at += parentAlpha / 3.5f; // #15
+            if(at <0f || at >10f) at = 0;
+
+            currentFrame = (TextureRegion) walk.getKeyFrame(at, true);
+
+        }else  if(playerCondition == up ) {
+
+            //  setBounds(getX(), getY(), 145/5*5.3f, 255/5*5.3f);
+            at += parentAlpha / 3.5f; // #15
+            if(at <0f || at >7f) at = 0;
+
+            currentFrame = (TextureRegion) upA.getKeyFrame(at, true);
+
+        }else  if(playerCondition == down ) {
+
+            //  setBounds(getX(), getY(), 145/5*5.3f, 255/5*5.3f);
+            at += parentAlpha / (3.5f * 1.75f); // #15
+            if(at < 0f || at > 5f) at = 0;
+
+            currentFrame = (TextureRegion) downA.getKeyFrame(at, true);
+
+        }else   if(playerCondition == left ) {
+
+          //  setBounds(getX(), getY(), 145/5*5.3f, 255/5*5.3f);
+            at += parentAlpha / 3.5f; // #15
+            if(at <0f || at >10f) at = 0;
+
+            currentFrame = (TextureRegion) walkRev.getKeyFrame(at, true);
+
+        } else if(playerCondition == stay ) {
+          //  setBounds(getX(),getY(),110,275);
+
+            at += parentAlpha / 3.5f; // #15
+            if(at <0f || at >10f) at = 0;
+            currentFrame = (TextureRegion) stayPos.getKeyFrame(at, true);
+
+        } else {
+           // setBounds(getX(),getY(),110,275);
+
+            currentFrame = (TextureRegion) animation.getKeyFrame(animationTime, true);
+        }
         batch.draw(currentFrame,getX()-getWidth()/2,getY()/*-getHeight()*0.25f*/,getWidth(),getHeight());
         }
 
@@ -204,6 +262,10 @@ public class Player extends Actor {
        //calculateStats();
         Walk();
         calculateHours();
+    }
+
+    public void setPlayerCondition(PlayerCondition playerCondition) {
+        this.playerCondition = playerCondition;
     }
 
     private void calculateHours() {
@@ -395,6 +457,7 @@ public class Player extends Actor {
         if(MyGdxGame.path!=null)
             if(MyGdxGame.path.isEmpty()){
                 playerCondition=nextPlayerCondition;
+
                 if(nextX>0||nextY>0){
                     setPosition(nextX,nextY);
                 }

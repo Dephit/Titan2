@@ -437,6 +437,23 @@ public class MyGdxGame implements ApplicationListener {
         if (currentScreen == menu){
             if(Gdx.input.isKeyPressed(Input.Keys.ENTER))
                 setUpRoom(gym);
+        } else  if (currentScreen == gym){
+            if(Gdx.input.isKeyPressed(Input.Keys.UP)) {
+                player.setPosition(player.getX(), player.getY() + 5);
+                player.setPlayerCondition(Player.PlayerCondition.up);
+            }
+            if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+                player.setPosition(player.getX(), player.getY() - 5);
+                player.setPlayerCondition(Player.PlayerCondition.down);
+            }
+            if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+                player.setPosition(player.getX() - 5, player.getY());
+                player.setPlayerCondition(Player.PlayerCondition.left);
+            }
+            if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+                player.setPosition(player.getX() + 5, player.getY());
+                player.setPlayerCondition(Player.PlayerCondition.right);
+            }
         }
     }
 
