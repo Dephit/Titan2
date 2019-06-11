@@ -133,6 +133,7 @@ public abstract class MyMethods {
 
     public static Animation createAnimation(String path, int Collumns, int Rows, float Frame_duraction){
         Texture texture = MyMethods.LoadImg(path);
+       // System.out.println(path+ " " + texture.getWidth() + " " + texture.getHeight());
         TextureRegion[][] tmp = TextureRegion.split(texture,
                 texture.getWidth() / Collumns,
                 texture.getHeight() / Rows);
@@ -144,6 +145,19 @@ public abstract class MyMethods {
             }
         }
         return new Animation<TextureRegion>(Frame_duraction, walkFrames);
+
+        // TODO should be good to do it like it the example below
+      /*  TextureRegion[][] tmp = textureAtlas.findRegion(getName()).split((int) (getWidth() / 5), (int) (getHeight() / 5));
+
+        TextureRegion[] walkFrames = new TextureRegion[colls * rows];
+        int index = 0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < colls; j++) {
+                walkFrames[index++] = tmp[i][j];
+            }
+        }
+
+        animation = new Animation<TextureRegion>(1f, walkFrames);*/
     }
 
 }

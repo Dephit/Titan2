@@ -8,7 +8,7 @@
  //{class:com.mygdx.game.MyGdxGame$ObjectData,name:plate,x:975,y:125,width:115,height:160, rows:1, cols:1, time:0}
  //{class:com.mygdx.game.MyGdxGame$ObjectData,name:plate2,x:640,y:125,width:115,height:160, rows:1, cols:1, time:0}
  {class:com.mygdx.game.MyGdxGame$ObjectData,name:rack,x:730,y:130,width:270,height:285, rows:1, cols:1, time:0}
- {class:com.mygdx.game.MyGdxGame$ObjectData,name:run,x:1442,y:340,width:355,height:340, rows:1, cols:11, time:15, animations: [[ 1, 10, 15,100]]}
+ {class:com.mygdx.game.MyGdxGame$ObjectData,name:run,x:1442,y:340,width:355,height:340, rows:1, cols:11, time:15, animations: [[ 1, 10, 15,100]]},
 
  {class:com.mygdx.game.MyGdxGame$ObjectData,name: benchesNearDumbs,x:220,y:325,width:305,height:195, rows:1, cols:30, time:5, animations: [[ 1, 5, 5,80], [5, 14, 4,6],[ 14, 21, 3,7],[ 21, 28, 3,7]]},
 

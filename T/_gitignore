@@ -28,7 +28,8 @@ www-test/
 *.ipr
 *.iws
 *.iml
-/android/out/
+/android/out/ 
+
 com_crashlytics_export_strings.xml
 
 ## Eclipse
@@ -62,7 +63,6 @@ com_crashlytics_export_strings.xml
 /ios-moe/nbproject/private/
 
 /build/
-/android/build/
 /core/build/
 /desktop/build/
 /html/build/
@@ -102,7 +102,7 @@ nb-configuration.xml
 .gradle/
 gradle-app.setting
 /build/
-/android/build/
+
 /core/build/
 /desktop/build/
 /html/build/

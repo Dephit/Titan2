@@ -71,6 +71,7 @@ public class Player extends Actor {
     private TextureRegion currentFrame = new TextureRegion();
     private Animation upA;
     private Animation downA;
+    private Animation squatA;
 
     public enum PlayerCondition {
         stay, down, up, left, right, squat, bench, deadlift,squatTechnic,
@@ -184,8 +185,12 @@ public class Player extends Actor {
         walkRev=MyMethods.createAnimation("walkingR.png",10,1,1f);
         stayPos=MyMethods.createAnimation("hero.png",1,1,1f);
         animation=MyMethods.createAnimation("player.png",36,1,1f);
-        upA=MyMethods.createAnimation("up.png",8,1,1f);
-        downA=MyMethods.createAnimation("down.png",6,1,1f);
+        upA=MyMethods.createAnimation("up.png",6,1,1f);
+        downA=MyMethods.createAnimation("down.png",8,1,1f);
+        squatA=MyMethods.createAnimation("squat.png",5,1,1f);
+
+        //TODO Make animation work with Texture atlas like it told here https://github.com/libgdx/libgdx/wiki/2D-Animation
+        //It'll be much better
     }
 
     void setParameters() {
@@ -205,53 +210,47 @@ public class Player extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-
-
+        if(playerCondition != squat)
+            setSize(145, 245);
         if(playerCondition == right ) {
-
-          //  setBounds(getX(), getY(), 145/5*5.3f, 255/5*5.3f);
             at += parentAlpha / 3.5f; // #15
             if(at <0f || at >10f) at = 0;
-
             currentFrame = (TextureRegion) walk.getKeyFrame(at, true);
 
         }else  if(playerCondition == up ) {
-
-            //  setBounds(getX(), getY(), 145/5*5.3f, 255/5*5.3f);
-            at += parentAlpha / 3.5f; // #15
-            if(at <0f || at >7f) at = 0;
-
+            at += parentAlpha / (3.5f * 1.75f); // #15
+            if(at <0f || at >5f) at = 0;
             currentFrame = (TextureRegion) upA.getKeyFrame(at, true);
 
         }else  if(playerCondition == down ) {
 
-            //  setBounds(getX(), getY(), 145/5*5.3f, 255/5*5.3f);
-            at += parentAlpha / (3.5f * 1.75f); // #15
-            if(at < 0f || at > 5f) at = 0;
-
+            at += parentAlpha / (3.5f * 1.25f); // #15
+            if(at < 0f || at > 7f) at = 0;
             currentFrame = (TextureRegion) downA.getKeyFrame(at, true);
 
         }else   if(playerCondition == left ) {
 
-          //  setBounds(getX(), getY(), 145/5*5.3f, 255/5*5.3f);
             at += parentAlpha / 3.5f; // #15
             if(at <0f || at >10f) at = 0;
-
             currentFrame = (TextureRegion) walkRev.getKeyFrame(at, true);
 
         } else if(playerCondition == stay ) {
-          //  setBounds(getX(),getY(),110,275);
 
             at += parentAlpha / 3.5f; // #15
             if(at <0f || at >10f) at = 0;
             currentFrame = (TextureRegion) stayPos.getKeyFrame(at, true);
 
-        } else {
-           // setBounds(getX(),getY(),110,275);
+        } else if(playerCondition == squat ) {
+            //79 45
+              setSize(79*5, 45*5);
+            at += parentAlpha / (3.5f * 4); // #15
+            //if(at <0f || at >10f) at = 0;
+            currentFrame = (TextureRegion) squatA.getKeyFrame(at, true);
+        } else  {
 
             currentFrame = (TextureRegion) animation.getKeyFrame(animationTime, true);
         }
-        batch.draw(currentFrame,getX()-getWidth()/2,getY()/*-getHeight()*0.25f*/,getWidth(),getHeight());
+        batch.draw(currentFrame,getX() - getWidth()/2, getY(), getWidth(), getHeight());
         }
 
     @Override

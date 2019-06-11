@@ -11,7 +11,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -22,6 +24,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScalingViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 import java.util.ArrayList;
@@ -48,10 +55,15 @@ import static com.mygdx.game.MyMethods.getTextButtonStyleFromFile;
 import static com.mygdx.game.MyMethods.textDrawing;
 
 public class MyGdxGame implements ApplicationListener {
+
+    static int W;
+
+
     private OrthographicCamera camera;
     private Vector3 touchPos;
     private Player player;
     private static int mapSize;
+
     public static int mapCoorinateCorrector;
 
     private Texture tex2, tex3, tex4;
@@ -73,8 +85,8 @@ public class MyGdxGame implements ApplicationListener {
     private ArrayList<ButtonData> buttonDataArrayList;
     private String language;
     private Window windowActor;
-    private AssetManager manager;
-
+    private boolean manager;
+    private Texture loadTex;
 
     public enum Screens {
         gym, room, map, work, shop, menu, options, stats
@@ -103,8 +115,6 @@ public class MyGdxGame implements ApplicationListener {
         public ArrayList<String[]> screens = new ArrayList<String[]>(); // There are should be 5 items in an array: name, x, y, width, height
         //in same order, and all String, so you should consider parsing to int
         public ButtonData() {
-
-
         }
     }
 
@@ -113,8 +123,7 @@ public class MyGdxGame implements ApplicationListener {
         public int x, y, width, height, rows, cols, time;
         public List<int[]> animations = new ArrayList<int[]>();
 
-        public ObjectData(String name, int x, int y, int width, int height, int rows, int cols, int time,
-                          List<int[]> animations) {
+        public ObjectData(String name, int x, int y, int width, int height, int rows, int cols, int time, List<int[]> animations) {
             this.name = name;
             this.x = x;
             this.y = y;
@@ -149,25 +158,20 @@ public class MyGdxGame implements ApplicationListener {
 
     @Override
     public void create() {
-        FontFactory.getInstance().initialize();
-        choseLanguage("ru");
-        manager = new AssetManager();
-        stage = new Stage(new StretchViewport(1920, 1080));
+
+        stage = new Stage(new FitViewport(1920,1080));
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1920, 1080);
         touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
 
-        createButtons();
-        player = new Player();
-        setUpRoom(menu);
-        //TODO Try to make it simple
-        for (StatBar stat : player.stats) {
-            hudGroup.addActor(stat);
-        }
-        stage.addActor(hudGroup);
-        stage.addActor(windowGroup);
+        loadTex = MyMethods.LoadImg("arny.png");
 
-        //This is for debugging, delete it after release or don't
+        FontFactory.getInstance().initialize();
+        choseLanguage("ru");
+
+        loadStuff();
+
+        //This is for debugging, delete it before release or don't
         pix2 = createProceduralPixmap(1, 1, 1, 0, 0);
         tex2 = new Texture(pix2);
         pix3 = createProceduralPixmap(1, 1, 0, 1, 0);
@@ -177,6 +181,23 @@ public class MyGdxGame implements ApplicationListener {
 
         Gdx.input.setInputProcessor(stage);
     }
+
+    private void loadStuff() {
+
+        player = new Player();
+
+        createButtons();
+        setUpRoom(menu);
+
+        //TODO Try to make it simple
+        for (StatBar stat : player.stats) {
+            hudGroup.addActor(stat);
+        }
+
+        stage.addActor(hudGroup);
+        stage.addActor(windowGroup);
+    }
+
 
     private void choseLanguage(String language) {
         this.language = language;
@@ -268,19 +289,14 @@ public class MyGdxGame implements ApplicationListener {
     }
 
     private void setUpRoom(Screens string) {
+        manager = false;
         previousScreen = currentScreen;
         currentScreen = string;
         setUpWindow(none);
 
         clearStage();
         //TODO Make asynk loader
-     //   manager.load(getPath()+"screens/" + string + "/" + string + ".png", Texture.class);
-        //System.out.println(manager.);
-       // if(manager.update())
-       // if(manager.isFinished())
-        //    background = manager.get(getPath()+"screens/" + string + "/" + string + ".png", Texture.class);
-      //  else
-            background = MyMethods.LoadImg("screens/" + string + "/" + string + ".png");
+        background = MyMethods.LoadImg("screens/" + string + "/" + string + ".png");
 
         try {
             createObjects(string.toString());
@@ -306,10 +322,14 @@ public class MyGdxGame implements ApplicationListener {
             }
         }
         createMap();
+        manager =true;
     }
 
     private void createObjects(String string) {
         String objectList = getJson("screens/" + string + "/objects/objects.json");
+
+        TextureAtlas textureAtlas = new TextureAtlas(getPath() + "screens/" + string + "/objects/objects.atlas" );
+
         final ArrayList<ObjectData> objectDataArrayList = json.fromJson(ArrayList.class, objectList);
 
         for (final ObjectData objectData : objectDataArrayList) {
@@ -322,7 +342,7 @@ public class MyGdxGame implements ApplicationListener {
                 }
             }*/
             if(!needLoad) {
-                Objects objects = new Objects("screens/" + string + "/objects/", objectData);
+                Objects objects = new Objects("screens/" + string + "/objects/", objectData, textureAtlas);
                 playObjects.add(objects);
                 allObjects.add(objects);
             }
@@ -383,26 +403,37 @@ public class MyGdxGame implements ApplicationListener {
             windowGroup.addActor(windowActor.thisGroup);
         }
     }
-
+    
     @Override
     public void resize(int width, int height) {
-
+        //stage.setViewport(new FitViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight()));
+        stage.getViewport().update(width,height);
+        camera.update();
+       // camera.setToOrtho(false, Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
     }
 
     @Override
     public void render() {
+        camera.update();
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        camera.update();
+
         keyPressing();
         touches();
+        //
         stage.getBatch().setProjectionMatrix(camera.combined);
+       // stage.getBatch().setTransformMatrix(camera.view);
+        //stage.getBatch().setProjectionMatrix(camera.projection);
+
         stage.getBatch().begin();
-        stage.getBatch().draw(background, 0, 0, 1920, 1080);
+        if(manager) {
+            stage.getBatch().draw(background, 0, 0, stage.getWidth(), stage.getHeight());
+        }else {
+            stage.getBatch().draw(loadTex, 0, 0, stage.getWidth(), stage.getHeight());
+        }
 
         drawOrder();
         stage.getBatch().end();
-
         stage.draw();
 
         if (currentWindow == none)

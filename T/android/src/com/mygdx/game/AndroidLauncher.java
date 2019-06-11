@@ -12,7 +12,9 @@ public class AndroidLauncher extends AndroidApplication {
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
+
 		initialize(new MyGdxGame(), config);
+
 		Toast toast=Toast.makeText(this,"this is toast", Toast.LENGTH_LONG);
 		toast.show();
 	}
