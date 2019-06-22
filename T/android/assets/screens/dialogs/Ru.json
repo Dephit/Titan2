@@ -1,0 +1,21 @@
+[
+	{"class":"com.mygdx.game.Message$MessageData",
+		"buttonName":"talkToBicepsGuy",
+		"x":  300,
+		"y": 500 ,
+		"flip": true,
+		"dialogTree": [""],
+		"RandomText": ["Надо \n тренероваться!", "Здарова", "Тренеруюсь в понедельник,\n среду и пятницу", "Как дела?"]},
+
+	{"class":"com.mygdx.game.Message$MessageData",
+		"buttonName":"talkToArmGirl",
+		"x":  1020,
+		"y": 670,
+		"flip": false,
+		"dialogTree": ["Привет", "Там борятся на руках", "Но тебе туда нельзя, \n там и так полно народу", "Возможно позже"],
+		"RandomText": ["Отстань!", "Отвали!", "Не мешай!"]}
+
+]
+
+
+

@@ -122,6 +122,13 @@ girlButton
   orig: 61, 63
   offset: 0, 0
   index: -1
+pullUpsButton
+  rotate: false
+  xy: 376, 298
+  size: 61, 63
+  orig: 61, 63
+  offset: 0, 0
+  index: -1
 openWindow
   rotate: false
   xy: 515, 668

@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -12,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.mygdx.game.MyGdxGame.Screens.gym;
 import static com.mygdx.game.MyMethods.*;
 
 public class Objects extends Actor
@@ -25,11 +27,12 @@ public class Objects extends Actor
     private TextureRegion currentFrame;
     private List<int[]> animations=new ArrayList<int[]>();
     private int randomTime;
+    private boolean isCertainFrame = false;
 
-    Objects(String path, MyGdxGame.ObjectData objectData) {
+    Objects(String path, MyGdxGame.ObjectData objectData, TextureAtlas textureAtlas) {
         String imgName = getDirectoryFiles(path, objectData.name)[0];
         setName(objectData.name);
-        setBounds((int)objectData.x, (int)objectData.y, (int)objectData.width , (int)objectData.height );
+
         int rows = objectData.rows;
         int colls = objectData.cols;
         int time = objectData.time;
@@ -37,36 +40,15 @@ public class Objects extends Actor
 
         try{
             animations = objectData.animations;
-            randomTime=randomAnim();
+            randomTime = randomAnim();
         }catch (IllegalArgumentException e){
             animations.add(new int[]{0, rows * colls, time, 100});
-            randomTime=randomAnim();
-        }
-       // Animation<TextureRegion> animation = new Animation<TextureRegion>(0.033f, atlas.findRegions("running"),true);
-
-
-        animation=MyMethods.createAnimation(path + imgName, colls, rows,1f);
-        currentFrame = (TextureRegion) animation.getKeyFrame(animationTime);
-    }
-
-    public Objects(String path, MyGdxGame.ObjectData objectData, TextureAtlas textureAtlas) {
-        String imgName = getDirectoryFiles(path, objectData.name)[0];
-        setName(objectData.name);
-        setBounds((int)objectData.x, (int)objectData.y, (int)objectData.width , (int)objectData.height );
-        int rows = objectData.rows;
-        int colls = objectData.cols;
-        int time = objectData.time;
-        animationTime=0;
-
-        try{
-            animations = objectData.animations;
-            randomTime=randomAnim();
-        }catch (IllegalArgumentException e){
-            animations.add(new int[]{0, rows * colls, time, 100});
-            randomTime=randomAnim();
+            randomTime = randomAnim();
         }
 
-        TextureRegion[][] tmp = textureAtlas.findRegion(getName()).split((int) (getWidth() / 5), (int) (getHeight() / 5));
+        TextureRegion[][] tmp = textureAtlas.findRegion(getName()).split(
+                (textureAtlas.findRegion(getName()).originalWidth / colls),
+                (textureAtlas.findRegion(getName()).originalHeight/ rows));
 
         TextureRegion[] walkFrames = new TextureRegion[colls * rows];
         int index = 0;
@@ -75,19 +57,16 @@ public class Objects extends Actor
                 walkFrames[index++] = tmp[i][j];
             }
         }
-
         animation = new Animation<TextureRegion>(1f, walkFrames);
-        currentFrame = (TextureRegion) animation.getKeyFrame(animationTime);
+        currentFrame = (TextureRegion) animation.getKeyFrame(animationTime,true);
+        setBounds((int)objectData.x, (int)objectData.y, currentFrame.getRegionWidth() * 5, currentFrame.getRegionHeight() * 5);
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        currentFrame.setRegion((TextureRegion) animation.getKeyFrame(animationTime,true));
+
         batch.draw(currentFrame, getX(), getY() , getWidth() ,getHeight() );
-       /* System.out.println(getName() + ' ' + getX()+ ' ' + getX()+ ' ' + getWidth()+ ' ' + getHeight()+ ' '  );
-        System.out.println("w "+getStage().getWidth()+ " h" + getStage().getHeight()+ ' ');
-        System.out.println("rw "+Gdx.graphics.getWidth()+ " rh" + Gdx.graphics.getHeight()+ ' ');*/
     }
 
     @Override
@@ -107,15 +86,24 @@ public class Objects extends Actor
     }
 
     private void doRandomAnim(float delta) {
-        animationTime += delta* animations.get(randomTime)[2] ;
-        if(animationTime > animations.get(randomTime)[1] || animationTime < animations.get(randomTime)[0]){
-            randomTime = randomAnim();
-            animationTime = animations.get(randomTime)[0];
-       }
-    }
+        if(!isCertainFrame) {
+            animationTime += delta * animations.get(randomTime)[2];
+            if (animationTime <= animations.get(randomTime)[1]  && animationTime >= animations.get(randomTime)[0]){}else {
+                randomTime = randomAnim();
+                animationTime = animations.get(randomTime)[0];
+            }
+        }else {
+            animationTime = animation.getAnimationDuration() - animation.getFrameDuration() / 2;
+        }
+         currentFrame.setRegion((TextureRegion) animation.getKeyFrame(animationTime, true));
+     }
 
     public void dispose()
     {if( currentFrame.getTexture()!= null)
         currentFrame.getTexture().dispose();
+    }
+
+    void setCertainFrame(boolean certainFrame) {
+        isCertainFrame = certainFrame;
     }
 }

@@ -95,13 +95,14 @@ public abstract class MyMethods {
             return "android/assets/";
     }
 
-    public static String getJson(String path){
+    static String getJson(String path){
         FileHandle file = Gdx.files.internal(getPath()+path);
-        String json = file.readString();
-        return json;
+        return file.readString();
     }
+
     //Add possible to add colors from json
-    public static TextButton.TextButtonStyle getTextButtonStyleFromFile(Skin skin, String name){
+    static TextButton.TextButtonStyle getTextButtonStyleFromFile(Skin skin, String name){
+
         final TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.font = FontFactory.font;
         textButtonStyle.fontColor = Color.BLACK;
@@ -119,7 +120,7 @@ public abstract class MyMethods {
         }
     }
 
-    public static void textDrawing(Batch batch, String str, float x, float y, float scale,Color color) {
+    static void textDrawing(Batch batch, String str, float x, float y, float scale, Color color) {
         FontFactory.getInstance().getFont(MyGdxGame.locale).getData().setScale(scale);
         FontFactory.getInstance().getFont(MyGdxGame.locale).setColor(color);
         FontFactory.getInstance().getFont(MyGdxGame.locale).draw(batch, str, x,y);

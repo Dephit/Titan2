@@ -10,11 +10,21 @@
   //
 
    //gym
+  //TODO Optimize it by making more reusing
   //TODO Refactor gramaticly wrong names
   {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"choseSquatMenu",   "screens": [["gym","choseSquatMenu", 770, 200, 200, 100]]},
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"pullUpsOpenWin",   "screens": [["gym","girlButton", 720, 450, 210, 320]]},
+
   {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"benchButton",   "screens": [["gym","benchButton", 1250, 1, 200, 170]]},
-  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"deadliftButton",   "screens": [["gym","deadliftButton", 720, 1, 300, 70]]},
-  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"girlButton",   "screens": [["gym","girlButton",   919, 475, 185, 270]]},
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"deadliftButton",   "screens": [["gym","deadliftButton", 720, 10, 300, 70]]},
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"girlButton",   "screens": [["gym","girlButton",   930, 475, 185, 270]]},
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"talkToBicGuy",   "screens": [["gym","girlButton",   235,300, 150, 200]]},
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"legPressButton",   "screens": [["gym","girlButton",   1600,-50, 325, 225]]},
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"sittingButton",   "screens": [["gym","girlButton",   140,230, 75, 150]]},
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"hiperBut",   "screens": [["gym","girlButton",   470,0, 130, 200]]},
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"sittingRevButton",   "screens": [["gym","girlButton",   1740,230, 75, 150]]},
+
+
   //TODO Add the whole exercieses list
  // {class:com.mygdx.game.MyGdxGame$ButtonData,name:technicSquatButton,x:770,y:300,width:200,height:100}
  // {class:com.mygdx.game.MyGdxGame$ButtonData,name:technicBenchButton,x:1250,y:100,width:200,height:170}
@@ -60,6 +70,12 @@
   {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"technicSquatButton",   "screens": [["choseSquatWindow","technicSquatButton",   1320, 125, 575, 85]]},
   {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"closeWindow",   "screens": [["choseSquatWindow","closeWindow",   1320, 35, 575, 85]]},
    //
+
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"pullUpsWin",   "screens": [["null","choseSquatWindow",   1300, 10, 615, 400]]},
+
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"pushupsButtom",   "screens": [["pullUpsWin","squatButton",   1320,215, 575, 85]]},
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"pullUpsButton",   "screens": [["pullUpsWin","squatButton", 1320, 125, 575, 85]]},
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"closeWindow",   "screens": [["pullUpsWin","closeWindow",   1320, 35, 575, 85]]},
 
    //workMenu
   {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"workProgressButton",   "screens": [["workMenu","workProgressButton",   250, 725, 125, 125]]},

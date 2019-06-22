@@ -13,7 +13,7 @@ public class FontFactory {
 
     // Font names
     public static final String SPANISH_FONT_NAME = "font/goodfish rg.ttf";
-    public static final String RUSSIAN_FONT_NAME = "font/ImperialWeb.ttf";
+    public static final String RUSSIAN_FONT_NAME = "font/Furore.otf";
 
     // Russian cyrillic characters
     public static final String RUSSIAN_CHARACTERS = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"

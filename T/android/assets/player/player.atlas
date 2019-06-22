@@ -1,0 +1,103 @@
+
+player.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+deadlift
+  rotate: false
+  xy: 1, 201
+  size: 474, 42
+  orig: 474, 42
+  offset: 0, 0
+  index: -1
+bench
+  rotate: false
+  xy: 1, 168
+  size: 462, 31
+  orig: 462, 31
+  offset: 0, 0
+  index: -1
+squat
+  rotate: false
+  xy: 1, 118
+  size: 395, 48
+  orig: 395, 48
+  offset: 0, 0
+  index: -1
+legPress
+  rotate: false
+  xy: 1, 53
+  size: 345, 63
+  orig: 345, 63
+  offset: 0, 0
+  index: -1
+left
+  rotate: false
+  xy: 1, 1
+  size: 290, 50
+  orig: 290, 50
+  offset: 0, 0
+  index: -1
+right
+  rotate: false
+  xy: 477, 193
+  size: 290, 50
+  orig: 290, 50
+  offset: 0, 0
+  index: -1
+down
+  rotate: false
+  xy: 769, 193
+  size: 232, 50
+  orig: 232, 50
+  offset: 0, 0
+  index: -1
+pullUps
+  rotate: false
+  xy: 465, 131
+  size: 210, 60
+  orig: 210, 60
+  offset: 0, 0
+  index: -1
+pushups
+  rotate: false
+  xy: 677, 133
+  size: 186, 58
+  orig: 186, 58
+  offset: 0, 0
+  index: -1
+up
+  rotate: false
+  xy: 677, 80
+  size: 174, 51
+  orig: 174, 51
+  offset: 0, 0
+  index: -1
+hiper
+  rotate: false
+  xy: 398, 86
+  size: 170, 43
+  orig: 170, 43
+  offset: 0, 0
+  index: -1
+stay
+  rotate: false
+  xy: 293, 1
+  size: 29, 50
+  orig: 29, 50
+  offset: 0, 0
+  index: -1
+sitting
+  rotate: false
+  xy: 865, 150
+  size: 25, 41
+  orig: 25, 41
+  offset: 0, 0
+  index: -1
+sittingRev
+  rotate: false
+  xy: 348, 75
+  size: 25, 41
+  orig: 25, 41
+  offset: 0, 0
+  index: -1

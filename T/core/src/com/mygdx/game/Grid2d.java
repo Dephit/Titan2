@@ -122,12 +122,12 @@ public class Grid2d {
     }
 
     public List<MapNode> findPath(int xStart, int yStart, int xGoal, int yGoal) {
-        if(map[yStart][xStart]==-1){
-            xStart=this.xGoal;
-            yStart=this.yGoal;
-        }
-        this.xGoal=xGoal;
-        this.yGoal=yGoal;
+        /*if(map[yStart][xStart] == -1){
+            xStart = this.xGoal;
+            yStart = this.yGoal;
+        }*/
+        this.xGoal = xGoal;
+        this.yGoal = yGoal;
         return PathFinding.doAStar(new MapNode(xStart, yStart), new MapNode(
                 xGoal, yGoal));
     }

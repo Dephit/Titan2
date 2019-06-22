@@ -1,18 +1,24 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import java.util.AbstractMap;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
 
-import static com.mygdx.game.MyMethods.format;
-import static com.mygdx.game.MyMethods.textDrawing;
+import static com.badlogic.gdx.net.HttpRequestBuilder.json;
+import static com.mygdx.game.MyMethods.getJson;
+import static com.mygdx.game.MyMethods.getPath;
 import static com.mygdx.game.Player.PlayerCondition.archWorkout;
 import static com.mygdx.game.Player.PlayerCondition.bench;
 import static com.mygdx.game.Player.PlayerCondition.benchTechnic;
@@ -27,6 +33,7 @@ import static com.mygdx.game.Player.PlayerCondition.squat;
 import static com.mygdx.game.Player.PlayerCondition.squatTechnic;
 import static com.mygdx.game.Player.PlayerCondition.stay;
 import static com.mygdx.game.Player.PlayerCondition.talkToArmGirl;
+import static com.mygdx.game.Player.PlayerCondition.talkToBicepsGuy;
 import static com.mygdx.game.Player.PlayerCondition.up;
 import static com.mygdx.game.Player.PlayerCondition.working;
 
@@ -36,11 +43,14 @@ public class Player extends Actor {
     private final StatBar hours;
     private final StatBar hoursSecond;
     private final StatBar minutesSecond;
-    private final Animation walk;
-    private final Animation walkRev;
+
+    private final TextureAtlas textureAtlas;
+
+    private final ArrayList<Message> messages = new ArrayList<>();
+
     private StatBar workProgress;
-    public  StatBar energy, food;
-    public  StatBar health;
+    StatBar energy, food;
+    StatBar health;
     private StatBar legStrenght;
     private StatBar armStrenght;
     private StatBar backStrenght;
@@ -49,8 +59,7 @@ public class Player extends Actor {
     private StatBar squatTechnique;
     private StatBar benchTechnique;
     private StatBar deadliftTechnique;
-    public  ArrayList<StatBar> stats;
-    public  ArrayList<StatBar> showedStats;
+    ArrayList<StatBar> stats;
 
     private float squat_f;
     private float bench_f;
@@ -66,28 +75,37 @@ public class Player extends Actor {
     private float money;
     private float time;
 
-    float at = 0;
+    private float animationTime;
     private Animation stayPos;
     private TextureRegion currentFrame = new TextureRegion();
     private Animation upA;
     private Animation downA;
     private Animation squatA;
+    private Animation deadliftA;
+
+    private Map<String, Animation<TextureRegion>> aniimList;
+    Vector2 lastWalkeblePosition = new Vector2();
 
     public enum PlayerCondition {
-        stay, down, up, left, right, squat, bench, deadlift,squatTechnic,
-        benchTechnic, deadliftTechnic, gripWorkout, archWorkout, sleeping, working, talkToArmGirl
+        //Walk
+        stay, down, up, left, right,
+        //Exercise
+        squat, bench, deadlift, squatTechnic, pullUps,
+        benchTechnic, deadliftTechnic, gripWorkout, archWorkout, legPress, hiper, pushups,
+        //Other
+        sleeping, working, sitting, sittingRev,
+        //Dialog Triger
+        talkToArmGirl, talkToBicepsGuy,
     }
 
-    public PlayerCondition getPlayerCondition() {
-        return playerCondition;
-    }
+
 
     public PlayerCondition getNextPlayerCondition() {
         return nextPlayerCondition;
     }
 
     private PlayerCondition playerCondition, nextPlayerCondition;
-    private float animationTime,nextX,nextY;
+    private float nextX,nextY;
 
     Player() {
         setName("player");
@@ -156,7 +174,6 @@ public class Player extends Actor {
         workProgress.setCurrentAmount(0);
 
         stats = new ArrayList();
-        showedStats=new ArrayList<StatBar>();
 
         stats.add(energy);
         stats.add(food);
@@ -181,21 +198,48 @@ public class Player extends Actor {
         deadlift_f=100;
 
         setParameters();
-        walk=MyMethods.createAnimation("walking.png",10,1,1f);
-        walkRev=MyMethods.createAnimation("walkingR.png",10,1,1f);
-        stayPos=MyMethods.createAnimation("hero.png",1,1,1f);
-        animation=MyMethods.createAnimation("player.png",36,1,1f);
-        upA=MyMethods.createAnimation("up.png",6,1,1f);
-        downA=MyMethods.createAnimation("down.png",8,1,1f);
-        squatA=MyMethods.createAnimation("squat.png",5,1,1f);
+
+        textureAtlas =  new TextureAtlas(Gdx.files.internal(getPath() + "player/player.atlas"));;
+        animation = MyMethods.createAnimation("player.png",36,1,1f);
+
+        currentFrame.setRegion((TextureRegion) animation.getKeyFrame(0));
+
+        String dialogJson = getJson("screens/dialogs/Ru.json");
+        ArrayList<Message.MessageData> messageDataArrayList = json.fromJson(ArrayList.class, dialogJson);
+        for (Message.MessageData messageData: messageDataArrayList) {
+           try {
+                messages.add(new Message(messageData));
+            }catch (GdxRuntimeException ignored){}
+        }
+
+        String animJson = getJson("player/animation.json");
+        aniimList = new TreeMap<>();
+        ArrayList<PlayerAnimationData> animListData = json.fromJson(ArrayList.class, animJson);
+        for (PlayerAnimationData animListData1: animListData) {
+                aniimList.put(animListData1.name,getAnim(animListData1.name, animListData1.colls, animListData1.rows, animListData1.frameDur));
+        }
 
         //TODO Make animation work with Texture atlas like it told here https://github.com/libgdx/libgdx/wiki/2D-Animation
         //It'll be much better
+        animationTime = 0;
     }
+
+    private Animation getAnim(String walking, int colls, int rows, float frameDuraction) {
+        TextureRegion[][] tmp = textureAtlas.findRegion(walking).split((int) (textureAtlas.findRegion(walking).originalWidth / colls), (int) (textureAtlas.findRegion(walking).originalHeight/ rows));
+        TextureRegion[] walkFrames = new TextureRegion[colls * rows];
+        int index = 0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < colls; j++) {
+                walkFrames[index++] = tmp[i][j];
+            }
+        }
+        return   new Animation<TextureRegion>(frameDuraction, walkFrames);
+    }
+
 
     void setParameters() {
         setBounds(400,100,145,245);
-
+        lastWalkeblePosition.set(getX(), getY());
         animationTime=0;
         fat_level=10;
         playerCondition=stay;
@@ -204,66 +248,42 @@ public class Player extends Actor {
         nextX=0;
         nextY=0;
         body_weight=74;
-        body_lean_mass=body_weight*(1-fat_level/100);
+        body_lean_mass=body_weight*(1 - fat_level / 100);
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        if(playerCondition != squat)
-            setSize(145, 245);
-        if(playerCondition == right ) {
-            at += parentAlpha / 3.5f; // #15
-            if(at <0f || at >10f) at = 0;
-            currentFrame = (TextureRegion) walk.getKeyFrame(at, true);
-
-        }else  if(playerCondition == up ) {
-            at += parentAlpha / (3.5f * 1.75f); // #15
-            if(at <0f || at >5f) at = 0;
-            currentFrame = (TextureRegion) upA.getKeyFrame(at, true);
-
-        }else  if(playerCondition == down ) {
-
-            at += parentAlpha / (3.5f * 1.25f); // #15
-            if(at < 0f || at > 7f) at = 0;
-            currentFrame = (TextureRegion) downA.getKeyFrame(at, true);
-
-        }else   if(playerCondition == left ) {
-
-            at += parentAlpha / 3.5f; // #15
-            if(at <0f || at >10f) at = 0;
-            currentFrame = (TextureRegion) walkRev.getKeyFrame(at, true);
-
-        } else if(playerCondition == stay ) {
-
-            at += parentAlpha / 3.5f; // #15
-            if(at <0f || at >10f) at = 0;
-            currentFrame = (TextureRegion) stayPos.getKeyFrame(at, true);
-
-        } else if(playerCondition == squat ) {
-            //79 45
-              setSize(79*5, 45*5);
-            at += parentAlpha / (3.5f * 4); // #15
-            //if(at <0f || at >10f) at = 0;
-            currentFrame = (TextureRegion) squatA.getKeyFrame(at, true);
-        } else  {
-
-            currentFrame = (TextureRegion) animation.getKeyFrame(animationTime, true);
-        }
         batch.draw(currentFrame,getX() - getWidth()/2, getY(), getWidth(), getHeight());
-        }
+    }
 
     @Override
     public void act(float delta) {
         super.act(delta);
         playAnimation(delta);
         changePlayerCondition();
-       //calculateStats();
         Walk();
         calculateHours();
+        showDialogs();
     }
 
-    public void setPlayerCondition(PlayerCondition playerCondition) {
+    private void showDialogs() {
+        for (Message message : messages) {
+            if(playerCondition == talkToArmGirl && message.name.equals(talkToArmGirl.toString())){
+                message.nextDialog();
+                this.getStage().addActor(message);
+                setPlayersAction(stay,0,0);
+                break;
+            } if(playerCondition == talkToBicepsGuy && message.name.equals(talkToBicepsGuy.toString())){
+                message.nextDialog();
+                this.getStage().addActor(message);
+                setPlayersAction(stay,0,0);
+                break;
+            }
+        }
+    }
+
+    void setPlayerCondition(PlayerCondition playerCondition) {
         this.playerCondition = playerCondition;
     }
 
@@ -276,7 +296,7 @@ public class Player extends Actor {
                 minutesSecond.setLeveled(true,0, minutesSecond.getMaxLevel());
                 minutes.setLeveled(true,minutes.getLevel() + 1,minutes.getMaxLevel());
             }
-            if(minutes.getLevel()>minutes.getMaxLevel()){
+            if(minutes.getLevel() > minutes.getMaxLevel()){
                 minutes.setLeveled(true,0,minutes.getMaxLevel());
                 hoursSecond.setLeveled(true,hoursSecond.getLevel()+1,hoursSecond.getMaxLevel());
             }
@@ -405,11 +425,10 @@ public class Player extends Actor {
         for (AbstractMap.SimpleEntry<StatBar, Float> entry : pair) {
             entry.getKey().addProgress(entry.getValue()/100f);
             if(entry.getKey().isLeveled()){
-                entry.getKey().setPosition(0,0+entry.getKey().getHeight()*i);
+                entry.getKey().setPosition(0,0 + entry.getKey().getHeight()*i);
                 i++;
             }
             entry.getKey().setVisible(true);
-
         }
     }
 
@@ -445,123 +464,44 @@ public class Player extends Actor {
         else if(body_lean_mass<=66) res=1.2f;
         else if(body_lean_mass<=74) res=1.175f;
         else if(body_lean_mass<=83) res=1.15f;
-        else if (body_lean_mass<=93) res=1.125f;
-        else if (body_lean_mass<=105)res=1.1f;
-        else if (body_lean_mass<=120)res=1;
+        else if(body_lean_mass<=93) res=1.125f;
+        else if(body_lean_mass<=105)res=1.1f;
+        else if(body_lean_mass<=120)res=1;
         else res=1.05f;
         return res;
     }
 
     private void changePlayerCondition() {
-        if(MyGdxGame.path!=null)
+        if(MyGdxGame.path != null)
             if(MyGdxGame.path.isEmpty()){
-                playerCondition=nextPlayerCondition;
-
-                if(nextX>0||nextY>0){
-                    setPosition(nextX,nextY);
+                playerCondition = nextPlayerCondition;
+                if(nextX > 0 || nextY > 0){
+                    setPosition(nextX , nextY);
                 }
             }
-            else if(speed.x>0)playerCondition=right;
-            else if(speed.x<0)playerCondition=left;
-            else if(speed.y>0)playerCondition=up;
-            else if(speed.y<0)playerCondition=down;
+            else if(speed.x > 0) playerCondition = right;
+            else if(speed.x < 0) playerCondition = left;
+            else if(speed.y > 0) playerCondition = up;
+            else if(speed.y < 0) playerCondition = down;
+
     }
 
     private void playAnimation(float delta){
-        if(playerCondition==down){
-
-            animationTime += delta*10;
-            if(animationTime <8f || animationTime >11f) animationTime =8f;
-
-        }else
-        if(playerCondition==up){
-
-            animationTime +=delta*10;
-            if(animationTime <2f || animationTime >5f ) animationTime =2f;
-
-        }else
-        if(playerCondition==left){
-
-            animationTime +=delta*10;
-            if(animationTime <16f || animationTime >19f) animationTime =16f;
-
-        }else
-        if(playerCondition==right){
-
-            animationTime += delta*10; // #15
-            if(animationTime <12f || animationTime >15f) animationTime =12f;
-
-        }else
-            if(playerCondition==stay){
-
-            animationTime +=delta;
-            if(animationTime <6|| animationTime >7f){
-                calculateStats();
-                animationTime =6f;
-            }
-
-        }else
-            if(playerCondition==squat||playerCondition==squatTechnic){
-
-            animationTime +=delta*5;
-            if(animationTime <19|| animationTime >23f) {
-                calculateStats();
-                animationTime =19f;
-            }
-
-        }else
-            if(playerCondition==bench||playerCondition==benchTechnic||playerCondition == archWorkout){
-
-            animationTime +=delta*5;
-            if(animationTime <23|| animationTime >27f){
-                calculateStats();
-                animationTime =23f;
-            }
-
-        }else
-            if(playerCondition==deadlift||playerCondition==deadliftTechnic||playerCondition==gripWorkout){
-
-            animationTime +=delta*5;
-            if(animationTime <28|| animationTime >32f){
-                calculateStats();
-                animationTime =28f;
-            }
-        }
-        else if(playerCondition==sleeping){
-            animationTime +=delta;
-            if(animationTime <33){
-                setBounds(0,0,1920,1080);
-               // batch.draw(currentFrame,getX()-getWidth()/2,getY()/*-getHeight()*0.25f*/,getWidth(),getHeight());
-                animationTime =33f;
-            }else
-            if(animationTime >36f){
-                calculateStats();
-                setPlayersAction(stay,400,100);
-                setBounds(400,100,140,220);
-            }
-        }
-        else if(playerCondition==working){
-            if(workProgress.getCurrentAmount()>=1f || energy.getCurrentAmount()<=0 || health.getCurrentAmount()<=0){
-                if(workProgress.getCurrentAmount()>=1f)money+=1500;
-                setPlayersAction(stay,400,100);
-                setBounds(400,100,140,220);
-            }
-            animationTime +=delta;
-        }
-        else if(playerCondition==talkToArmGirl) {
-            this.getStage().addActor(new Message(800,700,"Пошел ты!", false));
-            setPlayersAction(stay,955,450);
-        }
+        animationTime += delta ;
+        try {
+            currentFrame.setRegion(aniimList.get(playerCondition.toString()).getKeyFrame(animationTime, true));
+            setSize(currentFrame.getRegionWidth() * 5, currentFrame.getRegionHeight() * 5);
+        }catch (NullPointerException ignored){}
     }
 
-    public void setPlayersAction(PlayerCondition playerCondition, int x, int y) {
+    void setPlayersAction(PlayerCondition playerCondition, int x, int y) {
         this.nextPlayerCondition = playerCondition;
-        nextX=x;
-        nextY=y;
+        nextX = x;
+        nextY = y;
         setStatVisible();
     }
 
-    public void setStatVisible() {
+    void setStatVisible() {
         for (StatBar stat : stats) {
             if(stat.isLeveled() && !stat.isShowAlways())
                 stat.setVisible(false);
@@ -587,7 +527,33 @@ public class Player extends Actor {
                 }
                 if (MyGdxGame.path.get(0).x == (int) getX() / MyGdxGame.mapCoorinateCorrector && MyGdxGame.path.get(0).y == (int) getY() / MyGdxGame.mapCoorinateCorrector) {
                     MyGdxGame.path.remove(0);
+                    lastWalkeblePosition.set(getX(), getY());
                 }
             }
     }
+
+
+    PlayerCondition getPlayerCondition() {
+        return this.playerCondition;
+
+    }
+
+    void ceilPos() {
+
+        if(getX() % 10 != 5f )
+           setX(getX() - getX() % 10 );
+        if(getY() % 10 != 5 && getY() % 10 != 0)
+            setY(getY() - getY() % 10 );
+    }
+
+    static class PlayerAnimationData{
+        String name;
+        int colls, rows;
+        float frameDur;
+
+        public PlayerAnimationData() {
+
+        }
+    }
 }
+
