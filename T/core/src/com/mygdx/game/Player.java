@@ -32,6 +32,7 @@ import static com.mygdx.game.Player.PlayerCondition.sleeping;
 import static com.mygdx.game.Player.PlayerCondition.squat;
 import static com.mygdx.game.Player.PlayerCondition.squatTechnic;
 import static com.mygdx.game.Player.PlayerCondition.stay;
+import static com.mygdx.game.Player.PlayerCondition.talkToCoach;
 import static com.mygdx.game.Player.PlayerCondition.talkToArmGirl;
 import static com.mygdx.game.Player.PlayerCondition.talkToBicepsGuy;
 import static com.mygdx.game.Player.PlayerCondition.up;
@@ -85,6 +86,7 @@ public class Player extends Actor {
 
     private Map<String, Animation<TextureRegion>> aniimList;
     Vector2 lastWalkeblePosition = new Vector2();
+    public int sizeMult = 5;
 
     public enum PlayerCondition {
         //Walk
@@ -95,7 +97,7 @@ public class Player extends Actor {
         //Other
         sleeping, working, sitting, sittingRev,
         //Dialog Triger
-        talkToArmGirl, talkToBicepsGuy,
+        talkToArmGirl, talkToBicepsGuy, talkToCoach
     }
 
 
@@ -275,6 +277,12 @@ public class Player extends Actor {
                 setPlayersAction(stay,0,0);
                 break;
             } if(playerCondition == talkToBicepsGuy && message.name.equals(talkToBicepsGuy.toString())){
+                message.nextDialog();
+                this.getStage().addActor(message);
+                setPlayersAction(stay,0,0);
+                break;
+            }
+            if(playerCondition == talkToCoach && message.name.equals(talkToCoach.toString())){
                 message.nextDialog();
                 this.getStage().addActor(message);
                 setPlayersAction(stay,0,0);
@@ -490,7 +498,7 @@ public class Player extends Actor {
         animationTime += delta ;
         try {
             currentFrame.setRegion(aniimList.get(playerCondition.toString()).getKeyFrame(animationTime, true));
-            setSize(currentFrame.getRegionWidth() * 5, currentFrame.getRegionHeight() * 5);
+            setSize(currentFrame.getRegionWidth() * sizeMult, currentFrame.getRegionHeight() * sizeMult );
         }catch (NullPointerException ignored){}
     }
 

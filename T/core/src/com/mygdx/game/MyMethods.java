@@ -71,9 +71,9 @@ public abstract class MyMethods {
     public static String[] getDirectoryFiles(String path, String Searcher) {
         String[] ReturnArray;
         FileHandle dirHandle;
-        dirHandle = Gdx.files.internal(getPath()+path);
+        dirHandle = Gdx.files.internal(getPath() + path);
 
-        int i=0;
+        int i = 0;
         for (FileHandle entry: dirHandle.list()) {
             if(entry.name().contains(Searcher)) i++;
         }

@@ -30,7 +30,7 @@ public class Objects extends Actor
     private boolean isCertainFrame = false;
 
     Objects(String path, MyGdxGame.ObjectData objectData, TextureAtlas textureAtlas) {
-        String imgName = getDirectoryFiles(path, objectData.name)[0];
+    //    String imgName = getDirectoryFiles(path, objectData.name)[0];
         setName(objectData.name);
 
         int rows = objectData.rows;

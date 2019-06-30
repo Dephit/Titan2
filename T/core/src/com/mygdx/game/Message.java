@@ -90,7 +90,7 @@ public class Message extends Actor{
 
     void nextDialog() {
         //if(showDialog) {
-            allDialogs = dialogTree.size() - 1;
+            allDialogs = dialogTree.size() ;
             if (curDialog < allDialogs)
                 text = dialogTree.get(curDialog);
             else

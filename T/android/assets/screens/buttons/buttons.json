@@ -12,13 +12,13 @@
    //gym
   //TODO Optimize it by making more reusing
   //TODO Refactor gramaticly wrong names
-  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"choseSquatMenu",   "screens": [["gym","choseSquatMenu", 770, 200, 200, 100]]},
-  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"pullUpsOpenWin",   "screens": [["gym","girlButton", 720, 450, 210, 320]]},
-
-  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"benchButton",   "screens": [["gym","benchButton", 1250, 1, 200, 170]]},
-  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"deadliftButton",   "screens": [["gym","deadliftButton", 720, 10, 300, 70]]},
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"choseSquatMenu",   "screens": [["gym","girlButton", 770, 140, 200, 100]]},
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"pullUpsOpenWin",   "screens": [["gym","girlButton", 740, 450, 160, 320]]},
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"benchButton",   "screens": [["gym","girlButton", 1250, 1, 200, 130]]},
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"deadliftButton",   "screens": [["gym","girlButton", 720, 10, 300, 100]]},
   {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"girlButton",   "screens": [["gym","girlButton",   930, 475, 185, 270]]},
   {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"talkToBicGuy",   "screens": [["gym","girlButton",   235,300, 150, 200]]},
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"talkToCoach",   "screens": [["gym","girlButton",   20,0, 220, 220]]},
   {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"legPressButton",   "screens": [["gym","girlButton",   1600,-50, 325, 225]]},
   {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"sittingButton",   "screens": [["gym","girlButton",   140,230, 75, 150]]},
   {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"hiperBut",   "screens": [["gym","girlButton",   470,0, 130, 200]]},
@@ -52,8 +52,8 @@
   {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"map",   "screens": [["room","map", 10, 830, 100, 100],
                                                                               ["gym","map", 10, 830, 100, 100],
                                                                               ["work","map", 10, 830, 100, 100]]},
-  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"sleepButton",   "screens": [["room","sleepButton",   1300, 400, 100, 100]]},
-  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"openWindow",   "screens": [["room","openWindow",   100, 350, 100, 100]]},
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"sleepButton",   "screens": [["room","girlButton",   1300, 400, 100, 100]]},
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"openWindow",   "screens": [["room","girlButton",   100, 350, 100, 100]]},
   //TODO rename openWindow to refWindow or somthing like that
   //
 

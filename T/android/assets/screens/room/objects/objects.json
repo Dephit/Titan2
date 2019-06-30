@@ -1,8 +1,9 @@
 [
-	{class:com.mygdx.game.MyGdxGame$ObjectData,name:kitchen,x:447,y:116,width:317,height:495, rows:1, cols:1, time:0} 
-	{class:com.mygdx.game.MyGdxGame$ObjectData,name:ref,x:213,y:324,width:192,height:351, rows:1, cols:1, time:0} 
-	{class:com.mygdx.game.MyGdxGame$ObjectData,name:sofa,x:1080,y:210,width:680,height:325, rows:1, cols:2, time:0} 
-	{class:com.mygdx.game.MyGdxGame$ObjectData,name:tv,x:1100,y:0,width:825,height:500, rows:1, cols:1, time:0} 
-	{class:com.mygdx.game.MyGdxGame$ObjectData,name:wall,x:2,y:444,width:1920,height:655, rows:1, cols:2, time:3} 
-
+ /*{"class":"com.mygdx.game.MyGdxGame$ObjectData","name":"wall","x":1008,"y":-10,"rows": 1, "cols": 1, "time":1, "animations": [[ 0,1, 1, 100]] },
+ {"class":"com.mygdx.game.MyGdxGame$ObjectData","name":"bed","x":1535,"y":80, "rows": 1, "cols": 1, "time":1, "animations": [[ 0,7, 1, 100]] },
+ {"class":"com.mygdx.game.MyGdxGame$ObjectData","name":"TV","x":995,"y":40, "rows": 1, "cols": 1, "time":1, "animations": [[ 0,7, 1, 100]] },
+ {"class":"com.mygdx.game.MyGdxGame$ObjectData","name":"kitchen","x":112,"y":406, "rows": 1, "cols": 1, "time":1, "animations": [[ 0,7, 1, 100]] },
+ {"class":"com.mygdx.game.MyGdxGame$ObjectData","name":"kitchen2","x":112,"y":206, "rows": 1, "cols": 1, "time":1, "animations": [[ 0,7, 1, 100]] },
+ {"class":"com.mygdx.game.MyGdxGame$ObjectData","name":"sofa","x":17,"y":0, "rows": 1, "cols": 1, "time":1, "animations": [[ 0,7, 1, 100]] },
+ {"class":"com.mygdx.game.MyGdxGame$ObjectData","name":"aquarium","x":1147,"y":380,"rows": 1, "cols": 9, "time":1, "animations": [[ 0,9, 4, 100]] }*/
 ]
