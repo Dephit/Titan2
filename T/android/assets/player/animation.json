@@ -12,5 +12,7 @@
  {"class":"com.mygdx.game.Player$PlayerAnimationData","name":"sitting", "colls":  1, "rows":  1, "frameDur":1},
   {"class":"com.mygdx.game.Player$PlayerAnimationData","name":"hiper", "colls":  5, "rows":  1, "frameDur":0.2},
   {"class":"com.mygdx.game.Player$PlayerAnimationData","name":"pushups", "colls":  6, "rows":  1, "frameDur": 0.2},
- {"class":"com.mygdx.game.Player$PlayerAnimationData","name":"sittingRev", "colls":  1, "rows":  1, "frameDur": 0.2}
+ {"class":"com.mygdx.game.Player$PlayerAnimationData","name":"sittingRev", "colls":  1, "rows":  1, "frameDur": 0.2},
+ {"class":"com.mygdx.game.Player$PlayerAnimationData","name":"pcSitting", "colls":  6, "rows":  1, "frameDur": 0.2},
+ {"class":"com.mygdx.game.Player$PlayerAnimationData","name":"sleeping", "colls":  2, "rows":  1, "frameDur": 0.5}
 ]

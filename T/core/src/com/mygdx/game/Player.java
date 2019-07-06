@@ -27,6 +27,7 @@ import static com.mygdx.game.Player.PlayerCondition.deadliftTechnic;
 import static com.mygdx.game.Player.PlayerCondition.down;
 import static com.mygdx.game.Player.PlayerCondition.gripWorkout;
 import static com.mygdx.game.Player.PlayerCondition.left;
+import static com.mygdx.game.Player.PlayerCondition.openRef;
 import static com.mygdx.game.Player.PlayerCondition.right;
 import static com.mygdx.game.Player.PlayerCondition.sleeping;
 import static com.mygdx.game.Player.PlayerCondition.squat;
@@ -49,58 +50,41 @@ public class Player extends Actor {
 
     private final ArrayList<Message> messages = new ArrayList<>();
 
-    private StatBar workProgress;
     StatBar energy, food;
     StatBar health;
-    private StatBar legStrenght;
-    private StatBar armStrenght;
-    private StatBar backStrenght;
-    private StatBar grip;
-    private StatBar arch;
-    private StatBar squatTechnique;
-    private StatBar benchTechnique;
-    private StatBar deadliftTechnique;
     ArrayList<StatBar> stats;
 
-    private float squat_f;
-    private float bench_f;
-    private float deadlift_f;
-    private Animation animation;
     private Vector2 speed;
-    private float body_lean_mass;
-    private float squat_multiply;
-    private float bench_multiply;
-    private float deadlift_multiply;
-    private float body_weight;
-    private float fat_level;
-    private float money;
+
     private float time;
 
     private float animationTime;
-    private Animation stayPos;
     private TextureRegion currentFrame = new TextureRegion();
-    private Animation upA;
-    private Animation downA;
-    private Animation squatA;
-    private Animation deadliftA;
-
     private Map<String, Animation<TextureRegion>> aniimList;
     Vector2 lastWalkeblePosition = new Vector2();
-    public int sizeMult = 5;
+    private int sizeMult = 5;
 
     public enum PlayerCondition {
         //Walk
         stay, down, up, left, right,
         //Exercise
         squat, bench, deadlift, squatTechnic, pullUps,
-        benchTechnic, deadliftTechnic, gripWorkout, archWorkout, legPress, hiper, pushups,
+        benchTechnic, deadliftTechnic, gripWorkout, archWorkout, legPress, pcSitting, hiper, pushups,
         //Other
-        sleeping, working, sitting, sittingRev,
+        sleeping, working, sitting, sittingRev, openRef,
         //Dialog Triger
         talkToArmGirl, talkToBicepsGuy, talkToCoach
     }
 
+    static class PlayerAnimationData{
+        String name;
+        int colls, rows;
+        float frameDur;
 
+        public PlayerAnimationData() {
+
+        }
+    }
 
     public PlayerCondition getNextPlayerCondition() {
         return nextPlayerCondition;
@@ -120,30 +104,30 @@ public class Player extends Actor {
         health = new StatBar("Здоровье", 1675,820,80,80);
         health.makeRadian(new Color(220/255f,20/255f,60/255f,1));
 
-        workProgress=new StatBar("Работа", 150,0,300,40);
+        StatBar workProgress = new StatBar("Работа", 150, 0, 300, 40);
 
-        legStrenght = new StatBar("Сила ног", 310,950,79*5,17*5);
+        StatBar legStrenght = new StatBar("Сила ног", 310, 950, 79 * 5, 17 * 5);
         legStrenght.setLeveled(true,0,10);
 
-        armStrenght = new StatBar("Сила рук", 620,950,79*5,17*5);
+        StatBar armStrenght = new StatBar("Сила рук", 620, 950, 79 * 5, 17 * 5);
         armStrenght.setLeveled(true,0,10);
 
-        backStrenght= new StatBar("Сила спины", 930,950,79*5,17*5);
+        StatBar backStrenght = new StatBar("Сила спины", 930, 950, 79 * 5, 17 * 5);
         backStrenght.setLeveled(true,0,10);
 
-        grip = new StatBar("Хват",310,900,79*5,17*5);
+        StatBar grip = new StatBar("Хват", 310, 900, 79 * 5, 17 * 5);
         grip.setLeveled(true,0,10);
 
-        arch = new StatBar("Мост", 620,900,79*5,17*5);
+        StatBar arch = new StatBar("Мост", 620, 900, 79 * 5, 17 * 5);
         arch.setLeveled(true,0,10);
 
-        squatTechnique = new StatBar("Техника приседа", 930,900,79*5,17*5);
+        StatBar squatTechnique = new StatBar("Техника приседа", 930, 900, 79 * 5, 17 * 5);
         squatTechnique.setLeveled(true,0,10);
 
-        benchTechnique = new StatBar("Техника жима", 310,850,79*5,17*5);
+        StatBar benchTechnique = new StatBar("Техника жима", 310, 850, 79 * 5, 17 * 5);
         benchTechnique.setLeveled(true,0,10);
 
-        deadliftTechnique = new StatBar("Техника тяги", 930,850,79*5,17*5);
+        StatBar deadliftTechnique = new StatBar("Техника тяги", 930, 850, 79 * 5, 17 * 5);
         deadliftTechnique.setLeveled(true,0,10);
 
         days=new StatBar("День", 0,0,0,0);
@@ -195,14 +179,11 @@ public class Player extends Actor {
         stats.add(hoursSecond);
         stats.add(minutesSecond);
 
-        squat_f=100;
-        bench_f=100;
-        deadlift_f=100;
 
         setParameters();
 
         textureAtlas =  new TextureAtlas(Gdx.files.internal(getPath() + "player/player.atlas"));;
-        animation = MyMethods.createAnimation("player.png",36,1,1f);
+        Animation animation = MyMethods.createAnimation("player.png", 36, 1, 1f);
 
         currentFrame.setRegion((TextureRegion) animation.getKeyFrame(0));
 
@@ -238,19 +219,17 @@ public class Player extends Actor {
         return   new Animation<TextureRegion>(frameDuraction, walkFrames);
     }
 
-
     void setParameters() {
         setBounds(400,100,145,245);
         lastWalkeblePosition.set(getX(), getY());
         animationTime=0;
-        fat_level=10;
+        float fat_level = 10;
         playerCondition=stay;
         setName("player");
         nextPlayerCondition=stay;
         nextX=0;
         nextY=0;
-        body_weight=74;
-        body_lean_mass=body_weight*(1 - fat_level / 100);
+        float body_weight = 74;
     }
 
     @Override
@@ -271,23 +250,18 @@ public class Player extends Actor {
 
     private void showDialogs() {
         for (Message message : messages) {
-            if(playerCondition == talkToArmGirl && message.name.equals(talkToArmGirl.toString())){
-                message.nextDialog();
-                this.getStage().addActor(message);
-                setPlayersAction(stay,0,0);
-                break;
-            } if(playerCondition == talkToBicepsGuy && message.name.equals(talkToBicepsGuy.toString())){
-                message.nextDialog();
-                this.getStage().addActor(message);
-                setPlayersAction(stay,0,0);
-                break;
-            }
-            if(playerCondition == talkToCoach && message.name.equals(talkToCoach.toString())){
-                message.nextDialog();
-                this.getStage().addActor(message);
-                setPlayersAction(stay,0,0);
-                break;
-            }
+            checkDialog(message, talkToArmGirl);
+            checkDialog(message, talkToBicepsGuy);
+            checkDialog(message, talkToCoach);
+        }
+
+    }
+
+    private void checkDialog(Message message, PlayerCondition condition) {
+        if(playerCondition == condition && message.name.equals(condition.toString())){
+            message.nextDialog();
+            this.getStage().addActor(message);
+            setPlayersAction(stay,0,0);
         }
     }
 
@@ -322,164 +296,7 @@ public class Player extends Actor {
         }
     }
 
-    private void calculateStats() {
-        squat_f=50 + ((legStrenght.getLevel() * 1.5f + backStrenght.getLevel() + squatTechnique.getLevel() * 0.5f) / 3 * 17.5f) * squat_multiply * (body_lean_mass / 100);
-        bench_f=50 + (15 * (armStrenght.getLevel() * 1.75f + arch.getLevel() + benchTechnique.getLevel() * 0.75f * 0.5f) / 3) * bench_multiply * (body_lean_mass / 100);
-        deadlift_f=50 + ((backStrenght.getLevel() * 1.5f + legStrenght.getLevel() + deadliftTechnique.getLevel() * 0.5f) / 3 * 22.5f) * deadlift_multiply * (body_lean_mass / 100);
-
-        squat_multiply= (1 + (0.3f - (0.03f * body_lean_mass / 140))) * get_squat_cat_coef();
-        bench_multiply= (1 + (0.3f - (0.03f * body_lean_mass / 140))) * get_bench_cat_coef();
-        deadlift_multiply= (1 + (0.3f - (0.03f * body_lean_mass / 140))) * get_deadlift_cat_coef();
-        body_weight=body_lean_mass+fat_level;
-
-        if(energy.getCurrentAmount()>0&&health.getCurrentAmount()>0){
-            if(playerCondition == squat){
-                countCurrAmount(new SimpleEntry[]{
-                        new SimpleEntry<StatBar, Float>(energy, -2.5f),
-                        new SimpleEntry<StatBar, Float>(health, -1f),
-                        new SimpleEntry<StatBar, Float>(legStrenght, 5f),
-                        new SimpleEntry<StatBar, Float>(backStrenght, 2.5f),
-                        new SimpleEntry<StatBar, Float>(squatTechnique, 1f)});
-            }
-            else if(playerCondition == bench){
-                countCurrAmount(new SimpleEntry[]{
-                        new SimpleEntry<StatBar, Float>(energy, -2.5f),
-                        new SimpleEntry<StatBar, Float>(health, -1f),
-                        new SimpleEntry<StatBar, Float>(armStrenght, 5f),
-                        new SimpleEntry<StatBar, Float>(arch, 0.5f),
-                        new SimpleEntry<StatBar, Float>(benchTechnique, 1f)});
-            }
-            else if(playerCondition == deadlift){
-                countCurrAmount(new SimpleEntry[]{
-                        new SimpleEntry<StatBar, Float>(energy, -2.5f),
-                        new SimpleEntry<StatBar, Float>(health, -1f),
-                        new SimpleEntry<StatBar, Float>(legStrenght, 2.5f),
-                        new SimpleEntry<StatBar, Float>(backStrenght, 5f),
-                        new SimpleEntry<StatBar, Float>(deadliftTechnique, 1f),
-                        new SimpleEntry<StatBar, Float>(grip, 0.5f) });
-            }
-            else if(playerCondition == squatTechnic){
-                countCurrAmount(new SimpleEntry[]{
-                        new SimpleEntry<StatBar, Float>(energy, -1f),
-                        new SimpleEntry<StatBar, Float>(health, -0.5f),
-                        new SimpleEntry<StatBar, Float>(legStrenght, 0.5f),
-                        new SimpleEntry<StatBar, Float>(backStrenght, 2.5f),
-                        new SimpleEntry<StatBar, Float>(squatTechnique, 5f)});
-            }
-            else if(playerCondition == benchTechnic){
-                countCurrAmount(new SimpleEntry[]{
-                        new SimpleEntry<StatBar, Float>(energy, -1f),
-                        new SimpleEntry<StatBar, Float>(health, -0.5f),
-                        new SimpleEntry<StatBar, Float>(armStrenght, 0.5f),
-                        new SimpleEntry<StatBar, Float>(arch, 0.5f),
-                        new SimpleEntry<StatBar, Float>(benchTechnique, 5f)});
-            }
-            else if(playerCondition == deadliftTechnic){
-                countCurrAmount(new SimpleEntry[]{
-                        new SimpleEntry<StatBar, Float>(legStrenght, 0.25f),
-                        new SimpleEntry<StatBar, Float>(backStrenght, 0.5f),
-                        new SimpleEntry<StatBar, Float>(deadliftTechnique, 5f),
-                        new SimpleEntry<StatBar, Float>(grip, 0.5f),
-                        new SimpleEntry<StatBar, Float>(energy, -1f),
-                        new SimpleEntry<StatBar, Float>(health, -0.5f)});
-                }
-            else if(playerCondition == gripWorkout){
-                countCurrAmount(new SimpleEntry[]{
-                        new SimpleEntry<StatBar, Float>(energy, -2.5f),
-                        new SimpleEntry<StatBar, Float>(health, -0.5f),
-                        new SimpleEntry<StatBar, Float>(grip, 5f)});
-            }
-            else if(playerCondition == archWorkout){
-                countCurrAmount(new SimpleEntry[]{
-                        new SimpleEntry<StatBar, Float>(energy, -2.5f),
-                        new SimpleEntry<StatBar, Float>(health, -0.5f),
-                        new SimpleEntry<StatBar, Float>(arch, 5f)});
-
-            }else if(playerCondition == working){
-                countCurrAmount(new SimpleEntry[]{
-                        new SimpleEntry<StatBar, Float>(workProgress, 10f),
-                        new SimpleEntry<StatBar, Float>(energy, -5f),
-                        new SimpleEntry<StatBar, Float>(health, -2.5f),
-                        new SimpleEntry<StatBar, Float>(legStrenght, -2f),
-                        new SimpleEntry<StatBar, Float>(backStrenght, -2f),
-                        new SimpleEntry<StatBar, Float>(armStrenght, -2f)});
-            }
-        }
-
-        if(playerCondition==sleeping){
-            countCurrAmount(new SimpleEntry[]{
-                    new SimpleEntry<StatBar, Float>(energy, 100f),
-                    new SimpleEntry<StatBar, Float>(health, 100f),
-                    new SimpleEntry<StatBar, Float>(legStrenght, -150f),
-                    new SimpleEntry<StatBar, Float>(legStrenght, -100f),
-                    new SimpleEntry<StatBar, Float>(legStrenght, -150f)});
-
-            if(food.getCurrentAmount()>=0.75f){
-                body_lean_mass+=0.5f;
-                fat_level+=0.75f;
-            }else  if(food.getCurrentAmount()>=0.5f){
-                body_lean_mass+=0.25f;
-                fat_level+=0.25f;
-            }else  if(food.getCurrentAmount()<0.5f){
-                body_lean_mass-=0.25f;
-                fat_level-=0.5f;
-            }
-            food.setCurrentAmount(0f);
-        }
-    }
-
-    private void countCurrAmount(AbstractMap.SimpleEntry<StatBar, Float>[] pair) {
-        int i=0;
-        for (AbstractMap.SimpleEntry<StatBar, Float> entry : pair) {
-            entry.getKey().addProgress(entry.getValue()/100f);
-            if(entry.getKey().isLeveled()){
-                entry.getKey().setPosition(0,0 + entry.getKey().getHeight()*i);
-                i++;
-            }
-            entry.getKey().setVisible(true);
-        }
-    }
-
-    private float get_bench_cat_coef(){
-        float res;
-        if (body_lean_mass<=59) res=1.05f;
-        else if(body_lean_mass<=66) res=1f;
-        else if(body_lean_mass<=74) res=1f;
-        else if(body_lean_mass<=83) res=0.99f;
-        else if (body_lean_mass<=93) res=0.994f;
-        else if (body_lean_mass<=105)res=0.9f;
-        else if (body_lean_mass<=120)res=0.95f;
-        else res=0.8f;
-        return res;
-    }
-
-    private float get_deadlift_cat_coef(){
-        float res;
-        if (body_lean_mass<=59) res=1.16f;
-        else if(body_lean_mass<=66) res=1.165f;
-        else if(body_lean_mass<=74) res=1.15f;
-        else if(body_lean_mass<=83) res=1.1f;
-        else if (body_lean_mass<=93) res=1.07f;
-        else if (body_lean_mass<=105)res=1.02f;
-        else if (body_lean_mass<=120)res=0.9f;
-        else res=0.85f;
-        return res;
-    }
-
-    private float get_squat_cat_coef(){
-        float res;
-        if (body_lean_mass<=59) res=1.175f;
-        else if(body_lean_mass<=66) res=1.2f;
-        else if(body_lean_mass<=74) res=1.175f;
-        else if(body_lean_mass<=83) res=1.15f;
-        else if(body_lean_mass<=93) res=1.125f;
-        else if(body_lean_mass<=105)res=1.1f;
-        else if(body_lean_mass<=120)res=1;
-        else res=1.05f;
-        return res;
-    }
-
-    private void changePlayerCondition() {
+     void changePlayerCondition() {
         if(MyGdxGame.path != null)
             if(MyGdxGame.path.isEmpty()){
                 playerCondition = nextPlayerCondition;
@@ -540,7 +357,6 @@ public class Player extends Actor {
             }
     }
 
-
     PlayerCondition getPlayerCondition() {
         return this.playerCondition;
 
@@ -552,16 +368,6 @@ public class Player extends Actor {
            setX(getX() - getX() % 10 );
         if(getY() % 10 != 5 && getY() % 10 != 0)
             setY(getY() - getY() % 10 );
-    }
-
-    static class PlayerAnimationData{
-        String name;
-        int colls, rows;
-        float frameDur;
-
-        public PlayerAnimationData() {
-
-        }
     }
 }
 

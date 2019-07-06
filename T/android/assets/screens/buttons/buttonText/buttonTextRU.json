@@ -1,5 +1,5 @@
 [
-	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"technicSquatButton","text":"Приседать технично(СН +, СС +, ТП ++)"}
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"technicSquatButton","text":"Приседать технично(СН +, СС +, ТП ++)"},
 	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"squatButton","text":"Приседать на силу(СН ++, СС ++, ТП +)"},
 	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"closeWindow","text":"Закрыть"},
 	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"technicBenchButton","text":"Пожми меня!"} ,
@@ -7,5 +7,16 @@
 	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"archButton","text":"Иди сюда!"},
 	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"gripButton","text":"Подережи это!"},
 	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"pushupsButtom","text":"Отжиматься на брусьях"},
-	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"pullUpsButton","text":"Подтягиваться"}
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"pullUpsButton","text":"Подтягиваться"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"text","text":"х30"},
+
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"potatoMenuDescription","text":"\"Котлетки с пюрешкой\" \n\n- Поторопись, у нас щас обед - котлетки! \n - С макарошками?  \n - . . . С пюрешкой!"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"potatoAnswer","text":"Вы хотите съесть?"},
+
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"nuggetsMenuDescription","text":"\"Круггетсы\" \n\n Сочная горячая штучка \n под хрустящей панировачной корочкой"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"potatoAnswer","text":"Вы хотите съесть?"},
+
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"agreePotatoButton","text":"Да"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"agreeNuggetsButton","text":"Да"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"declineFood","text":"Нет"}
 ]

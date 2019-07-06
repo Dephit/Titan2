@@ -1,0 +1,68 @@
+
+objects.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+roof
+  rotate: false
+  xy: 1, 25
+  size: 1600, 225
+  orig: 1600, 225
+  offset: 0, 0
+  index: -1
+cases
+  rotate: false
+  xy: 1603, 172
+  size: 330, 78
+  orig: 330, 78
+  offset: 0, 0
+  index: -1
+phones
+  rotate: false
+  xy: 1603, 82
+  size: 192, 88
+  orig: 192, 88
+  offset: 0, 0
+  index: -1
+condei
+  rotate: false
+  xy: 1603, 1
+  size: 171, 79
+  orig: 171, 79
+  offset: 0, 0
+  index: -1
+telega
+  rotate: false
+  xy: 1935, 181
+  size: 62, 69
+  orig: 62, 69
+  offset: 0, 0
+  index: -1
+staff
+  rotate: false
+  xy: 1797, 123
+  size: 60, 47
+  orig: 60, 47
+  offset: 0, 0
+  index: -1
+polochca
+  rotate: false
+  xy: 1999, 192
+  size: 39, 58
+  orig: 39, 58
+  offset: 0, 0
+  index: -1
+leftCamera
+  rotate: false
+  xy: 1, 5
+  size: 75, 18
+  orig: 75, 18
+  offset: 0, 0
+  index: -1
+rightCamera
+  rotate: false
+  xy: 78, 5
+  size: 75, 18
+  orig: 75, 18
+  offset: 0, 0
+  index: -1

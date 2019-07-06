@@ -1,9 +1,9 @@
 [
- /*{"class":"com.mygdx.game.MyGdxGame$ObjectData","name":"wall","x":1008,"y":-10,"rows": 1, "cols": 1, "time":1, "animations": [[ 0,1, 1, 100]] },
- {"class":"com.mygdx.game.MyGdxGame$ObjectData","name":"bed","x":1535,"y":80, "rows": 1, "cols": 1, "time":1, "animations": [[ 0,7, 1, 100]] },
- {"class":"com.mygdx.game.MyGdxGame$ObjectData","name":"TV","x":995,"y":40, "rows": 1, "cols": 1, "time":1, "animations": [[ 0,7, 1, 100]] },
- {"class":"com.mygdx.game.MyGdxGame$ObjectData","name":"kitchen","x":112,"y":406, "rows": 1, "cols": 1, "time":1, "animations": [[ 0,7, 1, 100]] },
- {"class":"com.mygdx.game.MyGdxGame$ObjectData","name":"kitchen2","x":112,"y":206, "rows": 1, "cols": 1, "time":1, "animations": [[ 0,7, 1, 100]] },
- {"class":"com.mygdx.game.MyGdxGame$ObjectData","name":"sofa","x":17,"y":0, "rows": 1, "cols": 1, "time":1, "animations": [[ 0,7, 1, 100]] },
- {"class":"com.mygdx.game.MyGdxGame$ObjectData","name":"aquarium","x":1147,"y":380,"rows": 1, "cols": 9, "time":1, "animations": [[ 0,9, 4, 100]] }*/
+  {"class":"com.mygdx.game.MyGdxGame$ObjectData","name":"pc","x":800,"y":142,"rows": 1, "cols": 1, "time":1, "animations": [[ 0,1, 1, 100]] },
+  {"class":"com.mygdx.game.MyGdxGame$ObjectData","name":"tv","x":400,"y":142,"rows": 1, "cols": 1, "time":1, "animations": [[ 0,1, 1, 100]] },
+  {"class":"com.mygdx.game.MyGdxGame$ObjectData","name":"chest","x":1062,"y":142,"rows": 1, "cols": 1, "time":1, "animations": [[ 0,1, 1, 100]] },
+  {"class":"com.mygdx.game.MyGdxGame$ObjectData","name":"wall","x":782,"y":390,"rows": 1, "cols": 1, "time":1, "animations": [[ 0,1, 1, 100]] },
+  //{"class":"com.mygdx.game.MyGdxGame$ObjectData","name":"kitchen","x":130,"y":500,"rows": 1, "cols": 1, "time":1, "animations": [[ 0,1, 1, 100]] },
+  //{"class":"com.mygdx.game.MyGdxGame$ObjectData","name":"sofa","x":47,"y":196,"rows": 1, "cols": 1, "time":1, "animations": [[ 0,1, 1, 100]] },
+  {"class":"com.mygdx.game.MyGdxGame$ObjectData","name":"rocket","x":377,"y":309, "rows": 1, "cols": 22, "time":1, "animations": [[ 1,6, 4, 90],[ 7,22, 6, 10]] }
 ]

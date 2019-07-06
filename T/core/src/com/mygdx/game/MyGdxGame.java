@@ -4,7 +4,6 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.AssetLoader;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -22,7 +21,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
-import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.Player.PlayerCondition;
 
@@ -30,8 +28,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.Callable;
-import java.util.function.Consumer;
+import java.util.Map;
+import java.util.TreeMap;
 
 import static com.badlogic.gdx.net.HttpRequestBuilder.json;
 import static com.mygdx.game.MyGdxGame.Screens.gym;
@@ -39,12 +37,15 @@ import static com.mygdx.game.MyGdxGame.Screens.map;
 import static com.mygdx.game.MyGdxGame.Screens.menu;
 import static com.mygdx.game.MyGdxGame.Screens.options;
 import static com.mygdx.game.MyGdxGame.Screens.room;
+import static com.mygdx.game.MyGdxGame.Screens.shop;
 import static com.mygdx.game.MyGdxGame.Screens.stats;
 import static com.mygdx.game.MyGdxGame.Screens.work;
 import static com.mygdx.game.MyGdxGame.Windows.choseSquatWindow;
 import static com.mygdx.game.MyGdxGame.Windows.none;
+import static com.mygdx.game.MyGdxGame.Windows.nuggetsMenu;
+import static com.mygdx.game.MyGdxGame.Windows.potatoMenu;
 import static com.mygdx.game.MyGdxGame.Windows.pullUpsWin;
-import static com.mygdx.game.MyGdxGame.Windows.refregirator;
+import static com.mygdx.game.MyGdxGame.Windows.refrigerator;
 import static com.mygdx.game.MyGdxGame.Windows.workMenu;
 import static com.mygdx.game.MyMethods.createProceduralPixmap;
 import static com.mygdx.game.MyMethods.getJson;
@@ -59,6 +60,8 @@ import static com.mygdx.game.Player.PlayerCondition.deadliftTechnic;
 import static com.mygdx.game.Player.PlayerCondition.gripWorkout;
 import static com.mygdx.game.Player.PlayerCondition.hiper;
 import static com.mygdx.game.Player.PlayerCondition.legPress;
+import static com.mygdx.game.Player.PlayerCondition.openRef;
+import static com.mygdx.game.Player.PlayerCondition.pcSitting;
 import static com.mygdx.game.Player.PlayerCondition.pullUps;
 import static com.mygdx.game.Player.PlayerCondition.pushups;
 import static com.mygdx.game.Player.PlayerCondition.sitting;
@@ -70,7 +73,6 @@ import static com.mygdx.game.Player.PlayerCondition.stay;
 import static com.mygdx.game.Player.PlayerCondition.talkToArmGirl;
 import static com.mygdx.game.Player.PlayerCondition.talkToBicepsGuy;
 import static com.mygdx.game.Player.PlayerCondition.talkToCoach;
-import static jdk.nashorn.internal.objects.NativeArray.pop;
 
 public class MyGdxGame implements ApplicationListener {
 
@@ -80,6 +82,7 @@ public class MyGdxGame implements ApplicationListener {
     private OrthographicCamera camera;
     private Vector3 touchPos;
     private Player player;
+    public static PlayerStats playerStats;
     private static int mapSize;
 
     public static int mapCoorinateCorrector;
@@ -96,7 +99,7 @@ public class MyGdxGame implements ApplicationListener {
     private static Group screenButtons = new Group();
 
     private Grid2d map2d;
-    private double[][] mapArr;
+    public static double[][] mapArr;
     private Group objectDrawOrderGroup = new Group(), hudGroup = new Group(), windowGroup = new Group();
 
     public static Locale locale = null;
@@ -107,26 +110,20 @@ public class MyGdxGame implements ApplicationListener {
     private Texture loadTex;
     //private TextureAtlas buttonAtlas;
     private Skin skin;
-    private TextureAtlas textureAtlas;
-    private Screens screen = menu;
     private boolean isLoaded =false;
+    public static Map<String, TextToDraw> textToDrawMap = new TreeMap<>();
 
     public enum Screens {
         gym, room, map, work, shop, menu, options, stats
     }
 
     public enum Windows {
-        none, refregirator, choseSquatWindow, workMenu, pullUpsWin
+        none, refrigerator, choseSquatWindow, workMenu, pullUpsWin, potatoMenu, nuggetsMenu
     }
 
     static class ButtonText {
         String buttonName;
         String text;
-
-        public ButtonText(String buttonName, String text) {
-            this.buttonName = buttonName;
-            this.text = text;
-        }
 
         public ButtonText() {
         }
@@ -135,7 +132,7 @@ public class MyGdxGame implements ApplicationListener {
     static class ButtonData {
         public String name;
         public int x, y, width, height;
-        public ArrayList<String[]> screens = new ArrayList<String[]>(); // There are should be 5 items in an array: name, x, y, width, height
+        ArrayList<String[]> screens = new ArrayList<String[]>(); // There are should be 5 items in an array: name, x, y, width, height
         //in same order, and all String, so you should consider parsing to int
         public ButtonData() {
         }
@@ -143,8 +140,8 @@ public class MyGdxGame implements ApplicationListener {
 
     static class ObjectData {
         public String name;
-        public int x, y, width, height, rows, cols, time;
-        public List<int[]> animations = new ArrayList<int[]>();
+        int x, y, width, height, rows, cols, time;
+        List<int[]> animations = new ArrayList<int[]>();
 
         public ObjectData() {
         }
@@ -167,8 +164,7 @@ public class MyGdxGame implements ApplicationListener {
     private Windows currentWindow = none;
     private Texture background;
 
-    AssetManager assetManager = new AssetManager();
-
+    private AssetManager assetManager = new AssetManager();
 
     @Override
     public void create() {
@@ -199,6 +195,7 @@ public class MyGdxGame implements ApplicationListener {
 
     private void loadStuff() {
         player = new Player();
+        playerStats = new PlayerStats();
 
         createButtons();
         setUpRoom(menu);
@@ -222,7 +219,7 @@ public class MyGdxGame implements ApplicationListener {
     }
 
     private void createMap() {
-        mapSize = 10;
+        mapSize = 14;
         mapCoorinateCorrector = 50;
         mapArr = new double[mapSize][mapSize * 4];
         // saveRoomMap();
@@ -309,7 +306,7 @@ public class MyGdxGame implements ApplicationListener {
         isLoaded = false;
         assetManager.clear();
         manager = false;
-        screen = string;
+        Screens screen = string;
         //setUpWindow(none);
 
         //clearStage();
@@ -318,14 +315,15 @@ public class MyGdxGame implements ApplicationListener {
         // assetManager.unload(getPath() + "screens/" + previousScreen + "/" + previousScreen + ".png");
 //        loading(string);
         setUpRoom2(string);
+
     }
 
     private void setUpRoom2(Screens string) {
 
 
-        if(string == room)
+       /* if(string == room)
             player.sizeMult = 6;
-        else player.sizeMult = 5;
+        else player.sizeMult = 5;*/
         isLoaded = true;
        // assetManager.clear();
        // manager = false;
@@ -334,6 +332,14 @@ public class MyGdxGame implements ApplicationListener {
         setUpWindow(none);
 
         clearStage();
+
+        if(string == room){
+            player.setPosition(1100, 300);
+            player.lastWalkeblePosition.set(1100,300);
+        }else   if(string == shop){
+            player.setPosition(1700, 100);
+            player.lastWalkeblePosition.set(1700,100);
+        }
 
         //TODO Make asynk loader
        // assetManager.unload(getPath() + "screens/" + previousScreen + "/" + previousScreen + ".png");
@@ -381,7 +387,7 @@ public class MyGdxGame implements ApplicationListener {
         String objectList = getJson("screens/" + string + "/objects/objects.json");
 
         //textureAtlas = assetManager.get(getPath() + "screens/" + string + "/objects/objects.atlas");
-        textureAtlas = new TextureAtlas(getPath() + "screens/" + string + "/objects/objects.atlas" );
+        TextureAtlas textureAtlas = new TextureAtlas(getPath() + "screens/" + string + "/objects/objects.atlas");
        // assetManager.load(getPath() + "screens/" + currentScreen + "/objects/objects.atlas", TextureAtlas.class);
         final ArrayList<ObjectData> objectDataArrayList = json.fromJson(ArrayList.class, objectList);
 
@@ -453,7 +459,12 @@ public class MyGdxGame implements ApplicationListener {
                     break;
                 }
             }
+
             loadButtons(currentWindow.toString(), windowActor.thisGroup);
+          //windowActor.makeList();
+            if(window == refrigerator)
+                windowActor.ordrIt();
+                   //windowActor.refStuff();
             windowGroup.addActor(windowActor);
             windowGroup.addActor(windowActor.thisGroup);
         }
@@ -477,7 +488,7 @@ public class MyGdxGame implements ApplicationListener {
         stage.getBatch().begin();
         //if(Gdx.input.isKeyPressed(Input.Keys.L))
 
-        System.out.println(assetManager.getProgress());
+        //System.out.println(assetManager.getProgress());
 
         if(assetManager.isFinished()) {
             //loading();
@@ -495,6 +506,8 @@ public class MyGdxGame implements ApplicationListener {
 
 
         drawOrder();
+
+
         stage.getBatch().end();
 
         if(assetManager.isFinished()){
@@ -507,10 +520,25 @@ public class MyGdxGame implements ApplicationListener {
 
         stage.getBatch().begin();
         hideStuff();
-
-       // showPath(); // Debug for showing cell which are walkable
+/*        for (Map.Entry<String, TextToDraw> textToDrawEntry : textToDrawMap.entrySet()) {
+            if(textToDrawEntry.getKey().equals(currentScreen.toString()) || textToDrawEntry.getKey().equals(currentWindow.toString())){
+                textDrawing(stage.getBatch(), textToDrawEntry.getValue().str, textToDrawEntry.getValue().x, textToDrawEntry.getValue().y,textToDrawEntry.getValue().scale,textToDrawEntry.getValue().color);
+                System.out.println("yes");
+            }
+        }*/
+        //showPath(); // Debug for showing cell which are walkable
         // textDrawing( stage.getBatch(),1+"",1825,990,1.5f, Color.WHITE);
         stage.getBatch().end();
+
+        waitForIt();
+    }
+
+    private void waitForIt() {
+        if(player.getPlayerCondition().equals(openRef)){
+            player.setPlayersAction(stay,0,0);
+            player.changePlayerCondition();
+            setUpWindow(refrigerator);
+        }
     }
 
     private void loading(Screens string) {
@@ -528,32 +556,25 @@ public class MyGdxGame implements ApplicationListener {
 
     private void hideStuff() {
         for (Objects playObject : playObjects) {
-            if(playObject.getName().equals("legpress")) {
-                if(player.getPlayerCondition() == legPress)
-                    playObject.setCertainFrame(true);
-                else
-                    playObject.setCertainFrame(false);
-            } else  if(playObject.getName().equals("rack")) {
-                if(player.getPlayerCondition() == squat)
-                    playObject.setCertainFrame(true);
-                else
-                    playObject.setCertainFrame(false);
-            }else   if(playObject.getName().equals("deadlift")) {
-                if(player.getPlayerCondition() == deadlift)
-                    playObject.setCertainFrame(true);
-                else
-                    playObject.setCertainFrame(false);
-            }else   if(playObject.getName().equals("bench")) {
-                if(player.getPlayerCondition() == bench)
-                    playObject.setCertainFrame(true);
-                else
-                    playObject.setCertainFrame(false);
-            }else   if(playObject.getName().equals("pullups")) {
-                if(player.getPlayerCondition() == pullUps || player.getPlayerCondition() == pushups)
-                    playObject.setCertainFrame(true);
-                else
-                    playObject.setCertainFrame(false);
+            hide(playObject,"legpress", new PlayerCondition[]{legPress});
+            hide(playObject, "rack", new PlayerCondition[]{squat});
+            hide(playObject, "deadlift", new PlayerCondition[]{deadlift});
+            hide(playObject, "bench", new PlayerCondition[]{bench});
+            hide(playObject, "pullups", new PlayerCondition[]{pullUps, pushups});
+        }
+    }
+
+    private void hide(Objects playObject, String objectName, PlayerCondition[] condition) {
+        if(playObject.getName().equals(objectName)) {
+            int i = 0;
+            for (PlayerCondition playerCondition : condition) {
+                if (player.getPlayerCondition() == playerCondition)
+                    i++;
             }
+            if (i > 0)
+                playObject.setCertainFrame(true);
+            else
+                playObject.setCertainFrame(false);
         }
     }
 
@@ -613,7 +634,8 @@ public class MyGdxGame implements ApplicationListener {
                         player.getPlayerCondition().equals(sitting) ||
                         player.getPlayerCondition().equals(sittingRev) ||
                         player.getPlayerCondition().equals(hiper) ||
-                        player.getPlayerCondition().equals(pushups)))
+                        player.getPlayerCondition().equals(pushups))||
+                        player.getPlayerCondition().equals(pcSitting))
                     objectDrawOrderGroup.getChildren().swap(i, objectDrawOrderGroup.getChildren().size - 1);
             }
         }
@@ -622,7 +644,7 @@ public class MyGdxGame implements ApplicationListener {
     }
 
     private void touches() {
-        if (Gdx.input.justTouched()) {
+        if (Gdx.input.isTouched()) {
             touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(touchPos);
             try {
@@ -639,6 +661,31 @@ public class MyGdxGame implements ApplicationListener {
             } catch (ArrayIndexOutOfBoundsException ignored) {
             }
         }
+    }
+
+    private void setPath(int xGoal, int yGoal, int xDestination, int yDestination, PlayerCondition playerCondition) {
+        int pX = (int) player.getX() / mapCoorinateCorrector, pY = (int) player.getY() / mapCoorinateCorrector;
+
+        if (path != null)
+            if (path.size() > 0)
+                if (MyGdxGame.path.get(0).x != (int) player.getX() / MyGdxGame.mapCoorinateCorrector
+                        || MyGdxGame.path.get(0).y != (int) player.getY() / MyGdxGame.mapCoorinateCorrector) {
+                    player.lastWalkeblePosition.set(player.getX(), player.getY());
+                }
+
+        if (xGoal / mapCoorinateCorrector != map2d.xGoal || yGoal / mapCoorinateCorrector != map2d.yGoal ){
+
+            player.setPosition(player.lastWalkeblePosition.x, player.lastWalkeblePosition.y);
+            player.ceilPos();
+
+
+            path = map2d.findPath(
+                    (int) player.getX() / mapCoorinateCorrector,
+                    (int) player.getY() / mapCoorinateCorrector,
+                    xGoal / mapCoorinateCorrector,
+                    yGoal / mapCoorinateCorrector);
+        }
+        player.setPlayersAction(playerCondition, xDestination, yDestination);
     }
 
     @Override
@@ -746,6 +793,20 @@ public class MyGdxGame implements ApplicationListener {
             };
         }
 
+        if (name.equals("shop")) {
+            listener = new InputListener() {
+                @Override
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                    setUpRoom(shop);
+                }
+
+                @Override
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    return true;
+                }
+            };
+        }
+
         // Room
         if (name.equals("room")) {
             listener = new InputListener() {
@@ -761,6 +822,7 @@ public class MyGdxGame implements ApplicationListener {
                 }
             };
         }
+
 
         // Options
         if (name.equals("optionButton")) {
@@ -1013,7 +1075,7 @@ public class MyGdxGame implements ApplicationListener {
             listener = new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                    setPath(1000, 300, 1920/2, -1, sleeping);
+                        setPath(560, 300, 561, 367, sleeping);
                 }
 
                 @Override
@@ -1024,11 +1086,12 @@ public class MyGdxGame implements ApplicationListener {
         }
 
         // OpenWindow
-        if (name.equals("openWindow")) {
+        if (name.equals("refButton")) {
             listener = new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                    setUpWindow(refregirator);
+                  setPath( 860, 560,  860, 500, openRef);
+                  // setUpWindow(refrigerator);
                 }
 
                 @Override
@@ -1037,15 +1100,70 @@ public class MyGdxGame implements ApplicationListener {
                 }
             };
         }
-        // Food
-        if (name.equals("potato")) {
+        // FoodpotatoMenu
+        if (name.equals("agreePotatoButton")) {
             listener = new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     player.energy.addProgress(0.25f);
                     player.food.addProgress(0.25f);
                     player.health.addProgress(0.25f);
-                    System.out.print(" Feed");
+                    playerStats.potatoAmount--;
+                    if(playerStats.potatoAmount == 0)
+                        setUpWindow(refrigerator);
+                }
+
+                @Override
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {return true;}
+            };
+        }
+
+        if (name.equals("agreeNuggetsButton")) {
+            listener = new InputListener() {
+                @Override
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                    player.energy.addProgress(0.15f);
+                    player.food.addProgress(0.50f);
+                    player.health.addProgress(0.5f);
+                    playerStats.nuggetsAmount--;
+                    if(playerStats.nuggetsAmount == 0)
+                        setUpWindow(refrigerator);
+                }
+
+                @Override
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {return true;}
+            };
+        }
+
+        if (name.equals("declineFood")) {
+            listener = new InputListener() {
+                @Override
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                    setUpWindow(refrigerator);
+                }
+
+                @Override
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {return true;}
+            };
+        }
+
+        if (name.equals("potato")) {
+            listener = new InputListener() {
+                @Override
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                  setUpWindow(potatoMenu);
+                }
+
+                @Override
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {return true;}
+            };
+        }
+
+        if (name.equals("nuggets")) {
+            listener = new InputListener() {
+                @Override
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                    setUpWindow(nuggetsMenu);
                 }
 
                 @Override
@@ -1113,7 +1231,7 @@ public class MyGdxGame implements ApplicationListener {
             listener = new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                    setPath(1550,160, 1748,-10, legPress);
+                    setPath(1550,160, 1695,65, legPress);
                     setUpWindow(none);
                 }
 
@@ -1121,7 +1239,7 @@ public class MyGdxGame implements ApplicationListener {
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){ return true; }
             };
         }
-//sitting
+        //sitting
         if (name.equals("sittingButton")) {
             listener = new InputListener() {
                 @Override
@@ -1148,6 +1266,19 @@ public class MyGdxGame implements ApplicationListener {
             };
         }
 
+        if (name.equals("pcSittingBut")) {
+            listener = new InputListener() {
+                @Override
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                    setPath(900,260, 905,187, pcSitting);
+                    //setUpWindow(none);
+                }
+
+                @Override
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){ return true; }
+            };
+        }
+
         if (name.equals("hiperBut")) {
             listener = new InputListener() {
                 @Override
@@ -1163,30 +1294,7 @@ public class MyGdxGame implements ApplicationListener {
         return listener;
     }
 
-    private void setPath(int xGoal, int yGoal, int xDestination, int yDestination, PlayerCondition playerCondition) {
-        int pX = (int) player.getX() / mapCoorinateCorrector, pY = (int) player.getY() / mapCoorinateCorrector;
 
-        if (path != null)
-            if (path.size() > 0)
-                if (MyGdxGame.path.get(0).x != (int) player.getX() / MyGdxGame.mapCoorinateCorrector
-                        || MyGdxGame.path.get(0).y != (int) player.getY() / MyGdxGame.mapCoorinateCorrector) {
-                    player.lastWalkeblePosition.set(player.getX(), player.getY());
-                }
-
-        if (xGoal / mapCoorinateCorrector != map2d.xGoal || yGoal / mapCoorinateCorrector != map2d.yGoal ){
-
-            player.setPosition(player.lastWalkeblePosition.x, player.lastWalkeblePosition.y);
-            player.ceilPos();
-
-
-            path = map2d.findPath(
-                    (int) player.getX() / mapCoorinateCorrector,
-                    (int) player.getY() / mapCoorinateCorrector,
-                    xGoal / mapCoorinateCorrector,
-                    yGoal / mapCoorinateCorrector);
-        }
-        player.setPlayersAction(playerCondition, xDestination, yDestination);
-    }
 }
 
 

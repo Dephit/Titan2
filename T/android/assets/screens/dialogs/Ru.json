@@ -1,15 +1,15 @@
 [
 	{"class":"com.mygdx.game.Message$MessageData",
 		"buttonName":"talkToBicepsGuy",
-		"x":  300,
-		"y": 500 ,
+		"x": 300,
+		"y": 500,
 		"flip": true,
 		"dialogTree": [""],
 		"RandomText": ["Надо \n тренероваться!", "Здарова", "Тренеруюсь в понедельник,\n среду и пятницу", "Как дела?"]},
 
 	{"class":"com.mygdx.game.Message$MessageData",
 		"buttonName":"talkToArmGirl",
-		"x":  1020,
+		"x": 1020,
 		"y": 670,
 		"flip": false,
 		"dialogTree": ["Привет", "Там борятся на руках", "Но тебе туда нельзя, \n там и так полно народу", "Возможно позже"],
@@ -17,12 +17,11 @@
 
 	{"class":"com.mygdx.game.Message$MessageData",
 		"buttonName":"talkToCoach",
-		"x":  100,
+		"x": 100,
 		"y": 240,
 		"flip": true,
 		"dialogTree": ["Привет", "Значит сегодня \n сделай следующее", "Потяни с плинтов 230 х 4", "И с пола пожми"],
 		"RandomText": ["Удачи!", "        ...!         ", "Сменка есть?", "Абонемент у тебя кончается!"]}
-
 ]
 
 

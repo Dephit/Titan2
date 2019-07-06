@@ -120,6 +120,11 @@ public abstract class MyMethods {
         }
     }
 
+    static TextToDraw makeTextToDraw(String str, float x, float y, float scale, Color color) {
+        return new TextToDraw(str, x , y , scale, color);
+    }
+
+
     static void textDrawing(Batch batch, String str, float x, float y, float scale, Color color) {
         FontFactory.getInstance().getFont(MyGdxGame.locale).getData().setScale(scale);
         FontFactory.getInstance().getFont(MyGdxGame.locale).setColor(color);
