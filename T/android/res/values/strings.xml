@@ -2,6 +2,14 @@
 <resources>
 
     <string name="app_name">TitanGym</string>
-
-
+    <string name="ad_id">ca-app-pub-7897643150196971/6672833995</string>
+    <string name="test_ad_id">ca-app-pub-3940256099942544/5224354917</string>
+    <string name="test_banner_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="banner_id">ca-app-pub-7897643150196971/2664966914</string>
+    <string name="loading">Loading</string>
+    <string name="auth_failed">Auth Failed Sorry</string>
+    <string name="emailpassword_status_fmt">emailstatus</string>
+    <string name="firebase_status_fmt">fbstatus</string>
+    <string name="signed_out">signed out</string>
+    <string name="log_in">Войти</string>
 </resources>

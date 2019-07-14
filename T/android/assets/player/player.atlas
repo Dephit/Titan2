@@ -94,24 +94,66 @@ sleeping
   orig: 116, 22
   offset: 0, 0
   index: -1
+watchShop
+  rotate: false
+  xy: 943, 209
+  size: 72, 45
+  orig: 72, 45
+  offset: 0, 0
+  index: -1
+watchCam
+  rotate: false
+  xy: 899, 152
+  size: 68, 52
+  orig: 68, 52
+  offset: 0, 0
+  index: -1
 stay
   rotate: false
-  xy: 899, 154
+  xy: 677, 152
   size: 29, 50
   orig: 29, 50
   offset: 0, 0
   index: -1
+watchLoli
+  rotate: false
+  xy: 398, 132
+  size: 30, 45
+  orig: 30, 45
+  offset: 0, 0
+  index: -1
+lookinUp
+  rotate: false
+  xy: 430, 132
+  size: 24, 45
+  orig: 24, 45
+  offset: 0, 0
+  index: -1
 sitting
   rotate: false
-  xy: 943, 213
+  xy: 639, 99
   size: 25, 41
   orig: 25, 41
   offset: 0, 0
   index: -1
 sittingRev
   rotate: false
-  xy: 677, 161
+  xy: 969, 166
   size: 25, 41
   orig: 25, 41
+  offset: 0, 0
+  index: -1
+lookinLeft
+  rotate: false
+  xy: 996, 162
+  size: 15, 45
+  orig: 15, 45
+  offset: 0, 0
+  index: -1
+lookinRight
+  rotate: false
+  xy: 666, 95
+  size: 15, 45
+  orig: 15, 45
   offset: 0, 0
   index: -1

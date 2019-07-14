@@ -27,15 +27,19 @@ import static com.mygdx.game.Player.PlayerCondition.deadliftTechnic;
 import static com.mygdx.game.Player.PlayerCondition.down;
 import static com.mygdx.game.Player.PlayerCondition.gripWorkout;
 import static com.mygdx.game.Player.PlayerCondition.left;
+import static com.mygdx.game.Player.PlayerCondition.lookinLeft;
+import static com.mygdx.game.Player.PlayerCondition.lookinUp;
 import static com.mygdx.game.Player.PlayerCondition.openRef;
 import static com.mygdx.game.Player.PlayerCondition.right;
 import static com.mygdx.game.Player.PlayerCondition.sleeping;
 import static com.mygdx.game.Player.PlayerCondition.squat;
 import static com.mygdx.game.Player.PlayerCondition.squatTechnic;
 import static com.mygdx.game.Player.PlayerCondition.stay;
+import static com.mygdx.game.Player.PlayerCondition.talkToCleaner;
 import static com.mygdx.game.Player.PlayerCondition.talkToCoach;
 import static com.mygdx.game.Player.PlayerCondition.talkToArmGirl;
 import static com.mygdx.game.Player.PlayerCondition.talkToBicepsGuy;
+import static com.mygdx.game.Player.PlayerCondition.talkToStaff;
 import static com.mygdx.game.Player.PlayerCondition.up;
 import static com.mygdx.game.Player.PlayerCondition.working;
 
@@ -71,9 +75,9 @@ public class Player extends Actor {
         squat, bench, deadlift, squatTechnic, pullUps,
         benchTechnic, deadliftTechnic, gripWorkout, archWorkout, legPress, pcSitting, hiper, pushups,
         //Other
-        sleeping, working, sitting, sittingRev, openRef,
+        sleeping, working, sitting, sittingRev, openRef, watchShop, watchLoli, watchCam, lookinLeft, lookinRight, lookinUp,
         //Dialog Triger
-        talkToArmGirl, talkToBicepsGuy, talkToCoach
+        talkToArmGirl, talkToBicepsGuy, talkToCoach, talkToStaff, talkToCleaner
     }
 
     static class PlayerAnimationData{
@@ -224,7 +228,7 @@ public class Player extends Actor {
         lastWalkeblePosition.set(getX(), getY());
         animationTime=0;
         float fat_level = 10;
-        playerCondition=stay;
+        playerCondition = stay;
         setName("player");
         nextPlayerCondition=stay;
         nextX=0;
@@ -250,18 +254,19 @@ public class Player extends Actor {
 
     private void showDialogs() {
         for (Message message : messages) {
-            checkDialog(message, talkToArmGirl);
-            checkDialog(message, talkToBicepsGuy);
-            checkDialog(message, talkToCoach);
+            checkDialog(message, talkToArmGirl, lookinUp);
+            checkDialog(message, talkToBicepsGuy, lookinLeft);
+            checkDialog(message, talkToCoach, lookinLeft);
+            checkDialog(message, talkToCleaner, lookinLeft);
+            checkDialog(message, talkToStaff, lookinLeft);
         }
-
     }
 
-    private void checkDialog(Message message, PlayerCondition condition) {
+    private void checkDialog(Message message, PlayerCondition condition, PlayerCondition nextPlayerCondition) {
         if(playerCondition == condition && message.name.equals(condition.toString())){
             message.nextDialog();
             this.getStage().addActor(message);
-            setPlayersAction(stay,0,0);
+            setPlayersAction(nextPlayerCondition,0,0);
         }
     }
 

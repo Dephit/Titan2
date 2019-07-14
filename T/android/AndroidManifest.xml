@@ -4,6 +4,8 @@
 
     package="com.mygdx.game" >
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -12,9 +14,14 @@
 
         android:label="@string/app_name"
         android:theme="@style/GdxTheme" >
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-7897643150196971~4904881784"/>
+
         <activity
             android:name="com.mygdx.game.AndroidLauncher"
-            android:label="@string/app_name" 
+            android:label="@string/app_name"
             android:screenOrientation="sensorLandscape"
             android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize|screenLayout">
 
@@ -23,6 +30,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

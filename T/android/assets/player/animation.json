@@ -14,5 +14,11 @@
   {"class":"com.mygdx.game.Player$PlayerAnimationData","name":"pushups", "colls":  6, "rows":  1, "frameDur": 0.2},
  {"class":"com.mygdx.game.Player$PlayerAnimationData","name":"sittingRev", "colls":  1, "rows":  1, "frameDur": 0.2},
  {"class":"com.mygdx.game.Player$PlayerAnimationData","name":"pcSitting", "colls":  6, "rows":  1, "frameDur": 0.2},
- {"class":"com.mygdx.game.Player$PlayerAnimationData","name":"sleeping", "colls":  2, "rows":  1, "frameDur": 0.5}
+ {"class":"com.mygdx.game.Player$PlayerAnimationData","name":"sleeping", "colls":  2, "rows":  1, "frameDur": 0.5},
+ {"class":"com.mygdx.game.Player$PlayerAnimationData","name":"watchShop", "colls":  3, "rows":  1, "frameDur": 0.8},
+ {"class":"com.mygdx.game.Player$PlayerAnimationData","name":"watchLoli", "colls":  2, "rows":  1, "frameDur": 0.9},
+ {"class":"com.mygdx.game.Player$PlayerAnimationData","name":"watchCam", "colls":  4, "rows":  1, "frameDur": 0.25},
+ {"class":"com.mygdx.game.Player$PlayerAnimationData","name":"lookinLeft", "colls":  1, "rows":  1, "frameDur": 1},
+ {"class":"com.mygdx.game.Player$PlayerAnimationData","name":"lookinRight", "colls":  1, "rows":  1, "frameDur": 1},
+ {"class":"com.mygdx.game.Player$PlayerAnimationData","name":"lookinUp", "colls":  1, "rows":  1, "frameDur": 1}
 ]

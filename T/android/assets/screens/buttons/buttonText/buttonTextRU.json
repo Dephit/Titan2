@@ -18,5 +18,12 @@
 
 	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"agreePotatoButton","text":"Да"},
 	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"agreeNuggetsButton","text":"Да"},
-	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"declineFood","text":"Нет"}
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"declineFood","text":"Нет"},
+
+
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"changeViewportToStretch","text":"Растянуть"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"changeViewportToFit","text":"Не растягивать"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"mainMenuButton","text":"В главное меню"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"showAdBut","text":"Скрыть рекламу"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"sighOut","text":"Выйти"}
 ]

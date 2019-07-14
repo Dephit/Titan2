@@ -1,3 +1,7 @@
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'io.fabric'
+apply plugin: 'com.google.firebase.firebase-perf'
+
 android {
     buildToolsVersion "28.0.3"
     compileSdkVersion 28
@@ -20,7 +24,7 @@ android {
     
     defaultConfig {
         applicationId "com.mygdx.game"
-        minSdkVersion 14
+        minSdkVersion 16
         targetSdkVersion 28
         versionCode 1 
         versionName "1.0"
@@ -97,7 +101,15 @@ task run(type: Exec) {
 }
 
 dependencies {
-    implementation 'com.google.android.gms:play-services:12.0.1'
+    implementation 'com.google.android.gms:play-services-ads:18.1.0'
+    implementation 'com.google.android.gms:play-services-auth:17.0.0'
+    implementation 'com.google.firebase:firebase-ads:18.1.0'
+    implementation 'com.google.firebase:firebase-auth:18.0.0'
+    implementation 'com.google.firebase:firebase-core:17.0.0'
+    implementation 'com.google.firebase:firebase-perf:18.0.1'
+    // Add dependency
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+    implementation 'com.android.support:support-annotations:28.0.0'
 }
 
 
@@ -135,6 +147,7 @@ eclipse {
         repositories {
             google()
 
+
             // If you're using a version of Gradle lower than 4.1, you must instead use:
             // maven {
             //     url 'https://maven.google.com'
@@ -142,4 +155,3 @@ eclipse {
         }
     }
 }
-
