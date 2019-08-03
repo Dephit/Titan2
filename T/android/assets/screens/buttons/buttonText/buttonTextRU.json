@@ -1,0 +1,47 @@
+[
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"technicSquatButton","text":"Приседать технично(СН +, СС +, ТП ++)"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"squatButton","text":"Приседать на силу(СН ++, СС ++, ТП +)"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"closeWindow","text":"Закрыть"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"technicBenchButton","text":"Пожми меня!"} ,
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"technicDeadliftButton","text":"Потяни меня!"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"archButton","text":"Иди сюда!"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"gripButton","text":"Подережи это!"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"pushupsButtom","text":"Отжиматься на брусьях"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"pullUpsButton","text":"Подтягиваться"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"text","text":"х30"},
+
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"potatoMenuDescription","text":"\"Котлетки с пюрешкой\" \n\n- Поторопись, у нас щас обед - котлетки! \n - С макарошками?  \n - . . . С пюрешкой!"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"potatoAnswer","text":"Вы хотите съесть?"},
+
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"nuggetsMenuDescription","text":"\"Круггетсы\" \n\n Сочная горячая штучка \n под хрустящей панировачной корочкой"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"potatoAnswer","text":"Вы хотите съесть?"},
+
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"agreePotatoButton","text":"Да"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"agreeNuggetsButton","text":"Да"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"declineFood","text":"Нет"},
+
+
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"changeViewportToStretch","text":"Растянуть"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"changeViewportToFit","text":"Не растягивать"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"mainMenuButton","text":"В главное меню"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"showAdBut","text":"Скрыть рекламу"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"sighOut","text":"Выйти"},
+
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"playButton","text":"Играть"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"quitButton","text":"Выйти"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"optionButtonMenu","text":"Настройки"},
+
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"firstSquatAttempt","text":"Присед"},
+
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"squat1","text":"Присед #1"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"category","text":"-74кг Юниоры    Присед   место с 1 на 1"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"name","text":"Сергеенко Алексей"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"weight","text":"230"},
+
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"firstBenchAttempt","text":"Жим"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"firstDeadliftAttempt","text":"Тяга"},
+
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"gotToRes","text":"Дальше"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"loadFromCloudButton","text":"Загрузить из облака"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"resetProgress","text":"Сбросить прогресс"}
+]

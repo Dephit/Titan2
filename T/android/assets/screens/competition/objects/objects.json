@@ -1,0 +1,3 @@
+[
+  {"class":"com.mygdx.game.MyGdxGame$ObjectData","name":"goodliftInfoTab","x":1340,"y":30, "rows": 1, "cols": 1, "time":1, "animations": [[ 1,2, 1, 100]] }
+]
