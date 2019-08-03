@@ -164,8 +164,8 @@ class PlayerStats {
                     for (StatBar stat : mainStats) {
                         stat.loadFromCloud(data);
                     }
-                    nuggetsAmount =  ((Long) data.get("nuggetsAmount")).intValue();
-                    potatoAmount =  ((Long) data.get("potatoAmount")).intValue();
+                    nuggetsAmount = ((Long) data.get("nuggetsAmount")).intValue();
+                    potatoAmount = ((Long) data.get("potatoAmount")).intValue();
                     money =  ((Long) data.get("money")).intValue();
                 }catch (NullPointerException e){
                     System.out.println("Не получилось");

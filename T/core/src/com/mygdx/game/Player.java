@@ -18,14 +18,18 @@ import static com.badlogic.gdx.net.HttpRequestBuilder.json;
 import static com.mygdx.game.MyGdxGame.playerStats;
 import static com.mygdx.game.MyMethods.getJson;
 import static com.mygdx.game.MyMethods.getPath;
+import static com.mygdx.game.Player.PlayerCondition.bench;
 import static com.mygdx.game.Player.PlayerCondition.compBench;
 import static com.mygdx.game.Player.PlayerCondition.compDeadlift;
 import static com.mygdx.game.Player.PlayerCondition.compSquat;
+import static com.mygdx.game.Player.PlayerCondition.deadlift;
 import static com.mygdx.game.Player.PlayerCondition.down;
 import static com.mygdx.game.Player.PlayerCondition.left;
 import static com.mygdx.game.Player.PlayerCondition.lookinLeft;
 import static com.mygdx.game.Player.PlayerCondition.lookinUp;
+import static com.mygdx.game.Player.PlayerCondition.pcSitting;
 import static com.mygdx.game.Player.PlayerCondition.right;
+import static com.mygdx.game.Player.PlayerCondition.squat;
 import static com.mygdx.game.Player.PlayerCondition.stay;
 import static com.mygdx.game.Player.PlayerCondition.talkToCleaner;
 import static com.mygdx.game.Player.PlayerCondition.talkToCoach;
@@ -56,6 +60,7 @@ public class Player extends Actor {
     private Map<String, Animation<TextureRegion>> aniimList;
     Vector2 lastWalkeblePosition = new Vector2();
     private int sizeMult = 5;
+    boolean doExercise = true;
 
     public enum PlayerCondition {
         //Walk
@@ -257,14 +262,34 @@ public class Player extends Actor {
     }
 
     private void playAnimation(float delta){
+
         if(aniimList.get(playerCondition.toString()) != null)
             if (aniimList.get(playerCondition.toString()).getAnimationDuration() < animationTime) {
             //if (aniimList.get(playerCondition.toString()).getKeyFrames().length -1 == aniimList.get(playerCondition.toString()).getKeyFrameIndex(animationTime)) {
+
                 animationTime = 0;
                 float statVal = 0.075f * playerStats.stress.getCurrentAmount() * playerStats.food.getCurrentAmount();
                 float mStatVal = 0.0125f;
                 switch (playerCondition){
+                    case working:{
+                        playerStats.money ++;
+                        playerStats.energy.addProgress(-mStatVal);
+                        playerStats.stress.addProgress( 0.5f * -mStatVal );
+
+                        playerStats.deadliftTechnic.addProgress( -mStatVal);
+                        playerStats.squatTechnic.addProgress( -mStatVal);
+                        playerStats.benchTechnic.addProgress( -mStatVal);
+                        playerStats.backStrenght.addProgress( -mStatVal);
+                        playerStats.legStrenght.addProgress(-mStatVal);
+                        playerStats.gripStrenght.addProgress( -mStatVal);
+                        playerStats.archStrenght.addProgress( -mStatVal);
+                        playerStats.armStrenght.addProgress( -mStatVal);
+                        playerStats.food.addProgress(-0.5f * mStatVal);
+
+                    break;}
                     case squat:{
+                        doExercise = false;
+
                         playerStats.legStrenght.addProgress(0.5f * statVal);
                         playerStats.backStrenght.addProgress( 0.5f * statVal);
                         playerStats.squatTechnic.addProgress(statVal);
@@ -272,8 +297,9 @@ public class Player extends Actor {
                         playerStats.energy.addProgress(-mStatVal);
                         playerStats.food.addProgress(-mStatVal);
                         playerStats.stress.addProgress(-2 * mStatVal);
-                    }break;
+                        break;}
                     case bench:{
+                        doExercise = false;
                         playerStats.armStrenght.addProgress( 0.5f * statVal);
                         playerStats.archStrenght.addProgress( 0.25f * statVal);
                         playerStats.benchTechnic.addProgress(statVal);
@@ -281,8 +307,9 @@ public class Player extends Actor {
                         playerStats.energy.addProgress(-mStatVal);
                         playerStats.food.addProgress(-mStatVal);
                         playerStats.stress.addProgress(-2 * mStatVal);
-                    }break;
+                        break;}
                     case deadlift:{
+                        doExercise = false;
                         playerStats.deadliftTechnic.addProgress(statVal);
                         playerStats.backStrenght.addProgress(0.5f * statVal);
                         playerStats.gripStrenght.addProgress(0.5f * statVal);
@@ -290,8 +317,9 @@ public class Player extends Actor {
                         playerStats.energy.addProgress(-mStatVal);
                         playerStats.food.addProgress(-mStatVal);
                         playerStats.stress.addProgress(-2 * mStatVal);
-                    }break;
+                        break;}
                     case hiper:{
+                        doExercise = false;
                         playerStats.backStrenght.addProgress(statVal);
                         playerStats.energy.addProgress(0.5f * -mStatVal);
                         playerStats.stress.addProgress(0.25f * -mStatVal);
@@ -300,8 +328,9 @@ public class Player extends Actor {
                         playerStats.deadliftTechnic.addProgress(0.5f * -mStatVal);
                         playerStats.squatTechnic.addProgress(0.5f * -mStatVal);
                         playerStats.benchTechnic.addProgress(0.5f * -mStatVal);
-                    }break;
+                        break;}
                     case pullUps:{
+                        doExercise = false;
                         playerStats.backStrenght.addProgress(statVal);
                         playerStats.energy.addProgress(0.5f * -mStatVal);
                         playerStats.stress.addProgress(0.25f * -mStatVal);
@@ -310,8 +339,7 @@ public class Player extends Actor {
                         playerStats.deadliftTechnic.addProgress(0.5f * -mStatVal);
                         playerStats.squatTechnic.addProgress(0.5f * -mStatVal);
                         playerStats.benchTechnic.addProgress(0.5f * -mStatVal);
-                    }break;
-
+                        break;}
                     case sleeping:{
                         playerStats.energy.addProgress(2 * mStatVal );
                         playerStats.stress.addProgress( mStatVal );
@@ -325,8 +353,9 @@ public class Player extends Actor {
                         playerStats.archStrenght.addProgress( -mStatVal);
                         playerStats.armStrenght.addProgress( -mStatVal);
                         playerStats.food.addProgress(-0.5f * mStatVal);
-                    } break;
+                        break;}
                     case pushups: {
+                        doExercise = false;
                         playerStats.armStrenght.addProgress(statVal);
 
                         playerStats.energy.addProgress(0.5f * -mStatVal);
@@ -336,8 +365,9 @@ public class Player extends Actor {
                         playerStats.deadliftTechnic.addProgress(0.2f * -mStatVal);
                         playerStats.squatTechnic.addProgress(0.2f * -mStatVal);
                         playerStats.benchTechnic.addProgress(0.2f * -mStatVal);
-                    }break;
+                        break;}
                     case legPress:{
+                        doExercise = false;
                         playerStats.legStrenght.addProgress(statVal);
 
                         playerStats.energy.addProgress(0.5f * -mStatVal);
@@ -347,12 +377,12 @@ public class Player extends Actor {
                         playerStats.deadliftTechnic.addProgress(0.5f * -mStatVal);
                         playerStats.squatTechnic.addProgress(0.5f * -mStatVal);
                         playerStats.benchTechnic.addProgress(0.5f * -mStatVal);
-                    }break;
+                        break;}
                     case sitting:{
                         playerStats.energy.addProgress(0.2f * mStatVal);
                         playerStats.stress.addProgress(0.1f * mStatVal);
 
-                    }break;
+                        break;}
                     case pcSitting:{
                         playerStats.energy.addProgress(0.5f * -mStatVal);
                         playerStats.stress.addProgress(2 * mStatVal);
@@ -365,28 +395,29 @@ public class Player extends Actor {
                         playerStats.deadliftTechnic.addProgress( -mStatVal);
                         playerStats.squatTechnic.addProgress( -mStatVal);
                         playerStats.benchTechnic.addProgress( -mStatVal);
-                    }break;
+                        break;}
                     case archWorkout: {
                         playerStats.energy.addProgress(0.25f * -mStatVal);
                         playerStats.stress.addProgress(0.1f * -mStatVal);
                         playerStats.food.addProgress(-mStatVal);
                         playerStats.archStrenght.addProgress(statVal);
-                        }break;
+                        break;}
                     case gripWorkout:{
                         playerStats.energy.addProgress(0.25f * -mStatVal);
                         playerStats.stress.addProgress(0.1f * -mStatVal);
                         playerStats.food.addProgress(-mStatVal);
                         playerStats.gripStrenght.addProgress(statVal);
-                    }break;
+                        break;}
                     case sittingRev:{
                         playerStats.energy.addProgress(0.2f * mStatVal);
                         playerStats.stress.addProgress(0.1f * mStatVal);
 
-                    }break;
+                        break;}
                 }
                 playerStats.calcRes();
             }
-        animationTime += delta ;
+        if(doExercise)
+            animationTime += delta ;
 
         try {
             currentFrame.setRegion(aniimList.get(playerCondition.toString()).getKeyFrame(animationTime, true));

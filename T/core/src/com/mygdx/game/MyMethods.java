@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.XmlWriter;
 
@@ -89,10 +90,15 @@ public abstract class MyMethods {
     }
 
     public static String getPath(){
-        if (Gdx.app.getType() == Application.ApplicationType.Android)
-            return "";
-        else
-            return "android/assets/";
+        return Gdx.app.getType() == Application.ApplicationType.Android ? "" : "android/assets/";
+    }
+
+    static Actor findActorByName(Array<Actor> array, String name){
+        int index = 0;
+        for (Actor actor : array) {
+            index = actor.getName().equals(name) ? array.indexOf(actor, true): 0;
+        }
+        return array.get(index);
     }
 
     static String getJson(String path){

@@ -115,6 +115,13 @@ closeRef
   orig: 70, 12
   offset: 0, 0
   index: -1
+vertButton
+  rotate: false
+  xy: 985, 458
+  size: 26, 53
+  orig: 26, 53
+  offset: 0, 0
+  index: -1
 champ
   rotate: false
   xy: 1, 1
@@ -138,14 +145,14 @@ room
   index: -1
 nuggets
   rotate: false
-  xy: 985, 486
+  xy: 67, 63
   size: 33, 25
   orig: 33, 25
   offset: 0, 0
   index: -1
 potato
   rotate: false
-  xy: 67, 63
+  xy: 67, 36
   size: 33, 25
   orig: 33, 25
   offset: 0, 0
@@ -173,21 +180,21 @@ backButton
   index: -1
 shop
   rotate: false
-  xy: 985, 463
+  xy: 985, 435
   size: 22, 21
   orig: 22, 21
   offset: 0, 0
   index: -1
 workButton
   rotate: false
-  xy: 67, 40
+  xy: 317, 136
   size: 22, 21
   orig: 22, 21
   offset: 0, 0
   index: -1
 gym
   rotate: false
-  xy: 317, 137
+  xy: 347, 287
   size: 22, 20
   orig: 22, 20
   offset: 0, 0

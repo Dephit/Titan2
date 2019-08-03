@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
@@ -55,8 +57,10 @@ import static com.mygdx.game.MyGdxGame.Windows.nuggetsMenu;
 import static com.mygdx.game.MyGdxGame.Windows.potatoMenu;
 import static com.mygdx.game.MyGdxGame.Windows.pullUpsWin;
 import static com.mygdx.game.MyGdxGame.Windows.refrigerator;
+import static com.mygdx.game.MyGdxGame.Windows.showExrButton;
 import static com.mygdx.game.MyGdxGame.Windows.workMenu;
 import static com.mygdx.game.MyMethods.createProceduralPixmap;
+import static com.mygdx.game.MyMethods.findActorByName;
 import static com.mygdx.game.MyMethods.getJson;
 import static com.mygdx.game.MyMethods.getPath;
 import static com.mygdx.game.MyMethods.getTextButtonStyleFromFile;
@@ -91,6 +95,7 @@ import static com.mygdx.game.Player.PlayerCondition.talkToStaff;
 import static com.mygdx.game.Player.PlayerCondition.watchCam;
 import static com.mygdx.game.Player.PlayerCondition.watchLoli;
 import static com.mygdx.game.Player.PlayerCondition.watchShop;
+import static com.mygdx.game.Player.PlayerCondition.working;
 
 public class MyGdxGame implements ApplicationListener {
 
@@ -129,6 +134,9 @@ public class MyGdxGame implements ApplicationListener {
     private boolean isLoaded =false;
     public static Map<String, TextToDraw> textToDrawMap = new TreeMap<>();
     private Window windowInfoActor;
+    private int drwaExerciseMultiplayer = 0;
+    private boolean drawExerciseBool;
+    private Windows infoWindow;
 
     public enum Screens {
         gym, map, menu, options, room, shop, stats, work,
@@ -141,6 +149,8 @@ public class MyGdxGame implements ApplicationListener {
 
     public enum Windows {
         none, refrigerator, choseSquatWindow, workMenu, pullUpsWin, potatoMenu, nuggetsMenu, buyFoodMenu,
+
+        showExrButton,
 
         //compAttempts
         firstSquatAttempt
@@ -246,7 +256,11 @@ public class MyGdxGame implements ApplicationListener {
     private void loadStuff() {
         player = new Player();
         playerStats = new PlayerStats();
-        playerStats.loadFromCloud(myRequestHandler);
+
+        if(Gdx.app.getType() == Application.ApplicationType.Android)
+            playerStats.loadFromCloud(myRequestHandler);
+        else
+            playerStats.load();
 
         createButtons();
         setUpRoom(menu);
@@ -498,6 +512,7 @@ public class MyGdxGame implements ApplicationListener {
     }
 
     private void setUpWindow(Windows window) {
+        setUpInfoWindow(none);
         currentWindow = window;
         windowGroup.clear();
         if (window != none) {
@@ -514,26 +529,26 @@ public class MyGdxGame implements ApplicationListener {
             loadButtons(currentWindow.toString(), windowActor.thisGroup);
           //windowActor.makeList();
             windowActor.ordrIt();
-                   //windowActor.refStuff();
             windowGroup.addActor(windowActor);
             windowGroup.addActor(windowActor.thisGroup);
         }
     }
 
-    private void setUpInfoWindow(Windows firstSquatAttempt) {
+    private void setUpInfoWindow(Windows windows) {
         windowInfoGroup.clear();
-        if (firstSquatAttempt != none) {
+        infoWindow = windows;
+        if (windows != none) {
             if (windowInfoActor == null)
-                windowInfoActor = new Window(0, 0, 0, 0, firstSquatAttempt.toString());
+                windowInfoActor = new Window(0, 0, 0, 0, windows.toString());
             for (final ButtonData buttonData : buttonDataArrayList) {
-                if (buttonData.name.equals(firstSquatAttempt.toString())) {
+                if (buttonData.name.equals(windows.toString())) {
                     windowInfoActor.set(Integer.valueOf(buttonData.screens.get(0)[2]), Integer.valueOf(buttonData.screens.get(0)[3]),
                             Integer.valueOf(buttonData.screens.get(0)[4]), Integer.valueOf(buttonData.screens.get(0)[5]), currentWindow.toString());
                     break;
                 }
             }
 
-            loadButtons(firstSquatAttempt.toString(), windowInfoActor.thisGroup);
+            loadButtons(windows.toString(), windowInfoActor.thisGroup);
             windowInfoGroup.addActor(windowInfoActor);
             windowInfoGroup.addActor(windowInfoActor.thisGroup);
         }
@@ -600,6 +615,7 @@ public class MyGdxGame implements ApplicationListener {
             }
             playerStats.showBars(stage.getBatch());
         }
+        drawExerciseBar(stage.getBatch());
         stage.getBatch().end();
 
         waitForIt();
@@ -697,6 +713,7 @@ public class MyGdxGame implements ApplicationListener {
                 player.setPlayerCondition(PlayerCondition.right);
             }
         }
+
     }
 
     private void drawOrder() {
@@ -719,6 +736,20 @@ public class MyGdxGame implements ApplicationListener {
         }
         stage.getActors().swap(stage.getActors().indexOf(hudGroup, true), stage.getActors().indexOf(windowGroup, true));
         stage.getActors().swap(stage.getActors().indexOf(windowGroup, true), stage.getActors().size - 1);
+    }
+
+    private void drawExerciseBar(Batch batch){
+        int speed = 7;
+        drwaExerciseMultiplayer += drawExerciseBool ? speed : -speed;
+        if(drwaExerciseMultiplayer < 0 )
+            drawExerciseBool = true;
+        else if(drwaExerciseMultiplayer > 500 )
+            drawExerciseBool = false;
+        if(infoWindow == showExrButton) {
+            //batch.draw(tex2, 1900, 100, 100, 500);
+            batch.draw(tex3, 1810, 165, 80, 500 * (playerStats.squatRes / 200));
+            batch.draw(tex4, 1810, 165 + drwaExerciseMultiplayer - 50, 80, 30);
+        }
     }
 
     private void touches() {
@@ -762,7 +793,8 @@ public class MyGdxGame implements ApplicationListener {
                     xGoal / mapCoorinateCorrector,
                     yGoal / mapCoorinateCorrector);
         }
-
+        setUpInfoWindow(none);
+        player.doExercise = true;
         player.setPlayersAction(playerCondition, xDestination, yDestination);
     }
 
@@ -782,10 +814,9 @@ public class MyGdxGame implements ApplicationListener {
     }
 
     private InputListener getListener(String name) {
-        InputListener listener = new InputListener();
         // QUIT
         if (name.equals("quitButton")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     playerStats.save(myRequestHandler);
@@ -800,7 +831,7 @@ public class MyGdxGame implements ApplicationListener {
         }
 
         if (name.equals("resetProgress")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 int count = 0;
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
@@ -819,7 +850,7 @@ public class MyGdxGame implements ApplicationListener {
 
         // Stats
         if (name.equals("statsButton")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setUpRoom(stats);
@@ -833,7 +864,7 @@ public class MyGdxGame implements ApplicationListener {
         }
         // Play
         if (name.equals("playButton")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setUpRoom(gym);
@@ -847,22 +878,19 @@ public class MyGdxGame implements ApplicationListener {
         }
         // Back
         if (name.equals("backButton")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setUpRoom(previousScreen);
-
                 }
 
                 @Override
-                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                    return true;
-                }
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) { return true; }
             };
         }
 
         if (name.equals("changeViewportToStretch")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                    stage.setViewport(new StretchViewport(1920,1080));
@@ -877,7 +905,7 @@ public class MyGdxGame implements ApplicationListener {
         }
 
         if (name.equals("changeViewportToFit")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     stage.setViewport(new FitViewport(1920,1080));
@@ -894,7 +922,7 @@ public class MyGdxGame implements ApplicationListener {
 
         // MAp
         if (name.equals("map")) {
-            listener = new InputListener() {
+            return  new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setUpRoom(map);
@@ -909,7 +937,7 @@ public class MyGdxGame implements ApplicationListener {
 
         // Gym
         if (name.equals("gym")) {
-            listener = new InputListener() {
+            return  new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setUpRoom(gym);
@@ -923,7 +951,7 @@ public class MyGdxGame implements ApplicationListener {
         }
 
         if (name.equals("shop")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setUpRoom(shop);
@@ -938,11 +966,10 @@ public class MyGdxGame implements ApplicationListener {
 
         // Room
         if (name.equals("room")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setUpRoom(room);
-                    
                 }
 
                 @Override
@@ -952,10 +979,9 @@ public class MyGdxGame implements ApplicationListener {
             };
         }
 
-
         // Options
         if (name.equals("optionButton") || name.equals("optionButtonMenu")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setUpRoom(options);
@@ -970,7 +996,7 @@ public class MyGdxGame implements ApplicationListener {
 
         // MainMenu
         if (name.equals("mainMenuButton")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setUpRoom(menu);
@@ -982,14 +1008,15 @@ public class MyGdxGame implements ApplicationListener {
                 }
             };
         }
-
+        //TODO Maybe you should remove those squat menu
         // Squat
-        if (name.equals("squatButton")) {
-            listener = new InputListener() {
+        if (name.equals("choseSquatMenu")) {//"squatButton"
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setPath(890 , 125, 865, 125, squat);
                     setUpWindow(none);
+                    setUpInfoWindow(showExrButton);
                     }
 
                 @Override
@@ -1001,7 +1028,7 @@ public class MyGdxGame implements ApplicationListener {
 
         // SquatTechnic
         if (name.equals("technicSquatButton")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setPath(890, 175, 865, 150, squatTechnic);
@@ -1016,8 +1043,8 @@ public class MyGdxGame implements ApplicationListener {
         }
 
         // choseSquatMenu
-        if (name.equals("choseSquatMenu")) {
-            listener = new InputListener() {
+        if (name.equals("qewqwwedsdsfdgsdf")) {//choseSquatMenu
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setUpWindow(choseSquatWindow);
@@ -1032,7 +1059,7 @@ public class MyGdxGame implements ApplicationListener {
 
         // choseSquatMenu
         if (name.equals("pullUpsOpenWin")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setUpWindow(pullUpsWin);
@@ -1047,7 +1074,7 @@ public class MyGdxGame implements ApplicationListener {
 
         // MainMenu
         if (name.equals("watchAlc") || name.equals("watchAlc2") || name.equals("watchAlc3") || name.equals("watchAlc4")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     switch (name) {
@@ -1074,7 +1101,7 @@ public class MyGdxGame implements ApplicationListener {
         }
 
         if (name.equals("watchLoli")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setPath(320, 300, 320, 300, watchLoli);
@@ -1088,7 +1115,7 @@ public class MyGdxGame implements ApplicationListener {
         }
 
         if (name.equals("watchCam")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setPath(400, 400, 400, 400, watchCam);
@@ -1103,10 +1130,11 @@ public class MyGdxGame implements ApplicationListener {
 
         // Bench
         if (name.equals("benchButton")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setPath(1337, 160, 1353, 75, bench);
+                    setUpInfoWindow(showExrButton);
                 }
 
                 @Override
@@ -1118,7 +1146,7 @@ public class MyGdxGame implements ApplicationListener {
 
         // BenchTechnic
         if (name.equals("technicBenchButton")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setPath(1300, 150, 1337, 75, benchTechnic);
@@ -1132,11 +1160,12 @@ public class MyGdxGame implements ApplicationListener {
         }
         //PullUps
         if (name.equals("pullUpsButton")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setPath(800, 430, 820, 440, pullUps);
                     setUpWindow(none);
+                    setUpInfoWindow(showExrButton);
                 }
 
                 @Override
@@ -1148,11 +1177,12 @@ public class MyGdxGame implements ApplicationListener {
 
         //PullUps
         if (name.equals("pushupsButtom")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setPath(800, 430, 818, 440, pushups);
                     setUpWindow(none);
+                    setUpInfoWindow(showExrButton);
                 }
 
                 @Override
@@ -1164,10 +1194,11 @@ public class MyGdxGame implements ApplicationListener {
 
         // Deadlift
         if (name.equals("deadliftButton")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setPath(890, 100, 865, 70, deadlift);
+                    setUpInfoWindow(showExrButton);
                 }
 
                 @Override
@@ -1179,7 +1210,7 @@ public class MyGdxGame implements ApplicationListener {
 
         // DeadliftTechnic
         if (name.equals("technicDeadliftButton")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setPath(890, 100, 865, 70, deadliftTechnic);
@@ -1194,7 +1225,7 @@ public class MyGdxGame implements ApplicationListener {
 
         // GripButton
         if (name.equals("gripButton")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setPath(1000, 350, 1000, 350, gripWorkout);
@@ -1209,7 +1240,7 @@ public class MyGdxGame implements ApplicationListener {
 
         // Arch
         if (name.equals("archButton")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setPath(1200, 350, 1200,350,archWorkout);
@@ -1224,7 +1255,7 @@ public class MyGdxGame implements ApplicationListener {
 
         // WORK
         if (name.equals("workButton")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setUpRoom(work);
@@ -1240,11 +1271,24 @@ public class MyGdxGame implements ApplicationListener {
 
         // WORK
         if (name.equals("workProgressButton")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                    player.setPlayersAction(PlayerCondition.working, 0, 0);
                     setUpWindow(none);
+                    playerStats.money += 1000;
+                    playerStats.energy.addProgress(-1);
+                    playerStats.stress.addProgress( -0.5f);
+
+                    playerStats.deadliftTechnic.addProgress( -0.25f);
+                    playerStats.squatTechnic.addProgress( -0.25f);
+                    playerStats.benchTechnic.addProgress( -0.25f);
+                    playerStats.backStrenght.addProgress( -0.25f);
+                    playerStats.legStrenght.addProgress(-0.25f);
+                    playerStats.gripStrenght.addProgress( -0.25f);
+                    playerStats.archStrenght.addProgress( -0.25f);
+                    playerStats.armStrenght.addProgress( -0.25f);
+                    playerStats.food.addProgress(-0.5f);
+                    //setPath((int)player.getX(), (int)player.getY(), (int)player.getX(), (int)player.getY(), working);
                 }
 
                 @Override
@@ -1256,10 +1300,26 @@ public class MyGdxGame implements ApplicationListener {
 
         // Sleeping
         if (name.equals("sleepButton")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                        setPath(560, 300, 561, 367, sleeping);
+                    setPath(560, 300, 561, 367, sleeping);
+                }
+
+                @Override
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    return true;
+                }
+            };
+        }
+
+        // Sleeping
+        if (name.equals("actExercise")) {
+            return new InputListener() {
+                @Override
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                  player.doExercise = drwaExerciseMultiplayer < 500 * (playerStats.squatRes / 100);
+                    //  setPath(560, 300, 561, 367, sleeping);
                 }
 
                 @Override
@@ -1271,7 +1331,7 @@ public class MyGdxGame implements ApplicationListener {
 
         // OpenWindow
         if (name.equals("refButton")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setPath( 860, 560,  860, 500, openRef);
@@ -1287,7 +1347,7 @@ public class MyGdxGame implements ApplicationListener {
 
         // OpenWindow
         if (name.equals("buyMenuBut")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setPath( 1000, 280,  1000, 280, goBuying);
@@ -1303,7 +1363,7 @@ public class MyGdxGame implements ApplicationListener {
 
         // FoodpotatoMenu
         if (name.equals("agreePotatoButton")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     if(currentScreen.equals(room)) {
@@ -1325,7 +1385,7 @@ public class MyGdxGame implements ApplicationListener {
         }
 
         if (name.equals("agreeNuggetsButton")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     if(currentScreen.equals(room)) {
@@ -1347,7 +1407,7 @@ public class MyGdxGame implements ApplicationListener {
         }
 
         if (name.equals("declineFood")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     if(currentScreen.equals(room)) {
@@ -1361,7 +1421,7 @@ public class MyGdxGame implements ApplicationListener {
         }
 
         if (name.contains("potato")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                   setUpWindow(potatoMenu);
@@ -1373,7 +1433,7 @@ public class MyGdxGame implements ApplicationListener {
         }
 
         if (name.equals("nuggets")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setUpWindow(nuggetsMenu);
@@ -1386,7 +1446,7 @@ public class MyGdxGame implements ApplicationListener {
 
         // CloseWindow
         if (name.equals("closeWindow")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setUpWindow(none);
@@ -1402,7 +1462,7 @@ public class MyGdxGame implements ApplicationListener {
 
         // CloseWindow
         if (name.equals("showAdBut")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     if(myRequestHandler.isAdShown())
@@ -1422,7 +1482,7 @@ public class MyGdxGame implements ApplicationListener {
         }
 
         if (name.equals("sighOut")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                         myRequestHandler.signOut();
@@ -1438,7 +1498,7 @@ public class MyGdxGame implements ApplicationListener {
         //TalkToGirl
 
         if (name.equals("girlButton")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setPath(1025, 450, 0, 0, talkToArmGirl);
@@ -1452,7 +1512,7 @@ public class MyGdxGame implements ApplicationListener {
         //TalkToCoach
 
         if (name.equals("talkToCleanerBut")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setPath(1440, 420, 0, 0, talkToCleaner);
@@ -1465,7 +1525,7 @@ public class MyGdxGame implements ApplicationListener {
         }
 
         if (name.equals("talkToStaffBut")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setPath(392, 450, 0, 0, talkToStaff);
@@ -1478,7 +1538,7 @@ public class MyGdxGame implements ApplicationListener {
         }
 
         if (name.equals("talkToCoach")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setPath(350, 50, 0, 0, talkToCoach);
@@ -1491,7 +1551,7 @@ public class MyGdxGame implements ApplicationListener {
         }
         //TalkToGuy
         if (name.equals("talkToBicGuy")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setPath(400,300, 0,0, talkToBicepsGuy);
@@ -1504,11 +1564,12 @@ public class MyGdxGame implements ApplicationListener {
         }
         //LegPress
         if (name.equals("legPressButton")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setPath(1550,160, 1695,65, legPress);
                     setUpWindow(none);
+                    setUpInfoWindow(showExrButton);
                 }
 
                 @Override
@@ -1517,7 +1578,7 @@ public class MyGdxGame implements ApplicationListener {
         }
         //sitting
         if (name.equals("sittingButton")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setPath(260,240, 210,280, sitting);
@@ -1530,7 +1591,7 @@ public class MyGdxGame implements ApplicationListener {
         }
 
         if (name.equals("loadFromCloudButton")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     //playerStats.loadFromCloud(myRequestHandler);
@@ -1544,7 +1605,7 @@ public class MyGdxGame implements ApplicationListener {
         }
 
         if (name.equals("sittingRevButton")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setPath(1680,260, 1720,280, sittingRev);
@@ -1557,7 +1618,7 @@ public class MyGdxGame implements ApplicationListener {
         }
 
         if (name.equals("pcSittingBut")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setPath(900,260, 905,187, pcSitting);
@@ -1570,7 +1631,7 @@ public class MyGdxGame implements ApplicationListener {
         }
 
         if (name.equals("hiperBut")) {
-            listener = new InputListener() {
+            return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setPath(565,160, 555,50, hiper);
@@ -1587,7 +1648,7 @@ public class MyGdxGame implements ApplicationListener {
 
             // MainMenu
             if (name.equals("competition")) {
-                listener = new InputListener() {
+                return new InputListener() {
                     @Override
                     public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                         setUpRoom(weightIn);
@@ -1602,7 +1663,7 @@ public class MyGdxGame implements ApplicationListener {
             }
 
             if (name.equals("gotToRes")) {
-                listener = new InputListener() {
+                return new InputListener() {
                     @Override
                     public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                         switch (playerStats.competitionEvent){
@@ -1669,7 +1730,7 @@ public class MyGdxGame implements ApplicationListener {
 
             // firstSquatAttempt
             if (name.equals("firstSquatAttempt")) {
-                listener = new InputListener() {
+                return new InputListener() {
                     @Override
                     public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                         setUpRoom(competition);
@@ -1687,7 +1748,7 @@ public class MyGdxGame implements ApplicationListener {
 
             // firstBenchAttempt
             if (name.equals("firstBenchAttempt")) {
-                listener = new InputListener() {
+                return new InputListener() {
                     @Override
                     public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                         setUpRoom(competition);
@@ -1705,7 +1766,7 @@ public class MyGdxGame implements ApplicationListener {
 
             // firstBenchAttempt
             if (name.equals("firstDeadliftAttempt")) {
-                listener = new InputListener() {
+                return new InputListener() {
                     @Override
                     public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                         setUpRoom(competition);
@@ -1721,7 +1782,7 @@ public class MyGdxGame implements ApplicationListener {
                 };
             }
         }
-        return listener;
+        return new InputListener();
     }
 
     private void addApponList() {

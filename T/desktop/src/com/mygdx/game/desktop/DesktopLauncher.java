@@ -5,6 +5,8 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.mygdx.game.IActivityRequestHandler;
 import com.mygdx.game.MyGdxGame;
 
+import java.util.Map;
+
 public class DesktopLauncher implements IActivityRequestHandler {
 
 	private static DesktopLauncher application;
@@ -36,5 +38,15 @@ public class DesktopLauncher implements IActivityRequestHandler {
 	@Override
 	public void signOut() {
 
+	}
+
+	@Override
+	public void saveData(Map value) {
+
+	}
+
+	@Override
+	public Map loadData() {
+		return null;
 	}
 }
