@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.sergeenko.alexey.titangym;
 
 import android.app.Activity;
 import android.content.Intent;

@@ -1,6 +1,7 @@
 [
 	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"technicSquatButton","text":"Приседать технично(СН +, СС +, ТП ++)"},
-	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"squatButton","text":"Приседать на силу(СН ++, СС ++, ТП +)"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"squatButton","text":"Приседать 50кг"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"squatButton1","text":"Приседать 100кг"},
 	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"closeWindow","text":"Закрыть"},
 	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"technicBenchButton","text":"Пожми меня!"} ,
 	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"technicDeadliftButton","text":"Потяни меня!"},

@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.sergeenko.alexey.titangym;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -33,10 +33,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
+import com.mygdx.game.IActivityRequestHandler;
+import com.mygdx.game.MyGdxGame;
 
 import java.util.Map;
 

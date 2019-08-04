@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.sergeenko.alexey.titangym;
 
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;

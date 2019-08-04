@@ -74,6 +74,7 @@ import static com.mygdx.game.Player.PlayerCondition.compSquat;
 import static com.mygdx.game.Player.PlayerCondition.deadlift;
 import static com.mygdx.game.Player.PlayerCondition.deadliftTechnic;
 import static com.mygdx.game.Player.PlayerCondition.goBuying;
+import static com.mygdx.game.Player.PlayerCondition.goToSquatRack;
 import static com.mygdx.game.Player.PlayerCondition.gripWorkout;
 import static com.mygdx.game.Player.PlayerCondition.hiper;
 import static com.mygdx.game.Player.PlayerCondition.legPress;
@@ -105,7 +106,6 @@ public class MyGdxGame implements ApplicationListener {
     private Vector3 touchPos;
     private Player player;
     static PlayerStats playerStats;
-    GameManager gameManager;
     private static int mapSize;
 
     static int mapCoorinateCorrector;
@@ -631,7 +631,13 @@ public class MyGdxGame implements ApplicationListener {
             player.setPlayersAction(stay,0,0);
             player.changePlayerCondition();
             setUpWindow(buyFoodMenu);
+        }else  if(player.getPlayerCondition().equals(goToSquatRack)){
+            player.setPlayersAction(stay,0,0);
+            player.changePlayerCondition();
+            setUpWindow(choseSquatWindow);
         }
+
+
 
     }
 
@@ -747,7 +753,7 @@ public class MyGdxGame implements ApplicationListener {
             drawExerciseBool = false;
         if(infoWindow == showExrButton) {
             //batch.draw(tex2, 1900, 100, 100, 500);
-            batch.draw(tex3, 1810, 165, 80, 500 * (playerStats.squatRes / 200));
+            batch.draw(tex3, 1810, 165, 80, 500 * (playerStats.squatRes / (player.barWeight * 2)));
             batch.draw(tex4, 1810, 165 + drwaExerciseMultiplayer - 50, 80, 30);
         }
     }
@@ -1010,11 +1016,13 @@ public class MyGdxGame implements ApplicationListener {
         }
         //TODO Maybe you should remove those squat menu
         // Squat
-        if (name.equals("choseSquatMenu")) {//"squatButton"
+        if (name.equals("squatButton")) {//"squatButton"
             return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setPath(890 , 125, 865, 125, squat);
+                    player.doExercise = false;
+                    player.barWeight = 50;
                     setUpWindow(none);
                     setUpInfoWindow(showExrButton);
                     }
@@ -1027,12 +1035,15 @@ public class MyGdxGame implements ApplicationListener {
         }
 
         // SquatTechnic
-        if (name.equals("technicSquatButton")) {
+        if (name.equals("squatButton1")) {
             return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                    setPath(890, 175, 865, 150, squatTechnic);
+                    setPath(890 , 125, 865, 125, squat);
+                    player.doExercise = false;
+                    player.barWeight = 100;
                     setUpWindow(none);
+                    setUpInfoWindow(showExrButton);
                 }
 
                 @Override
@@ -1043,11 +1054,11 @@ public class MyGdxGame implements ApplicationListener {
         }
 
         // choseSquatMenu
-        if (name.equals("qewqwwedsdsfdgsdf")) {//choseSquatMenu
+        if (name.equals("choseSquatMenu")) {//choseSquatMenu
             return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                    setUpWindow(choseSquatWindow);
+                    setPath(890 , 125, 865, 125, goToSquatRack);
                 }
 
                 @Override
@@ -1318,7 +1329,7 @@ public class MyGdxGame implements ApplicationListener {
             return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                  player.doExercise = drwaExerciseMultiplayer < 500 * (playerStats.squatRes / 100);
+                  player.doExercise = drwaExerciseMultiplayer < 500 * (playerStats.squatRes / (player.barWeight * 2));
                     //  setPath(560, 300, 561, 367, sleeping);
                 }
 

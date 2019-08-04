@@ -48,6 +48,7 @@ public class Player extends Actor {
     private final TextureAtlas textureAtlas;
 
     private final ArrayList<Message> messages = new ArrayList<>();
+    public int barWeight;
 
     ArrayList<StatBar> stats;
 
@@ -73,7 +74,9 @@ public class Player extends Actor {
         //Other
         sleeping, working, sitting, sittingRev, openRef, watchShop, watchLoli, watchCam, lookinLeft, lookinRight, lookinUp, goBuying,
         //Dialog Triger
-        talkToArmGirl, talkToBicepsGuy, talkToCoach, talkToStaff, talkToCleaner
+        talkToArmGirl, talkToBicepsGuy, talkToCoach, talkToStaff, talkToCleaner,
+        //goTo
+        goToSquatRack
     }
 
     static class PlayerAnimationData{

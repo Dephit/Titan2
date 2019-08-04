@@ -8,18 +8,18 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1030672161053:android:a29c971dfc44c526",
+        "mobilesdk_app_id": "1:1030672161053:android:547117192badf302",
         "android_client_info": {
-          "package_name": "com.mygdx.game"
+          "package_name": "com.sergeenko.alexey.titangym"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1030672161053-gkregnsv3h9ac3l56t1jc5e9qoq5rbcr.apps.googleusercontent.com",
+          "client_id": "1030672161053-r7jq9pc1jhguqe1ilf71bh8cfvc3gfeg.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.mygdx.game",
-            "certificate_hash": "17134c091f40a19e2b0686d61e8081bca0a0fcec"
+            "package_name": "com.sergeenko.alexey.titangym",
+            "certificate_hash": "5f45779bc15c871846704580d0eec61854d99db8"
           }
         },
         {

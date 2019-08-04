@@ -43,6 +43,7 @@
   {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"agreePotatoButton",       "screens": [["potatoMenu","yesButton",   650, 118, 287, 84]]},
   {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"declineFood",             "screens": [["potatoMenu","yesButton",   1060, 118, 287, 84]]},
 
+
   //gym
   //TODO Optimize it by making more reusing
   //TODO Refactor gramaticly wrong names
@@ -57,7 +58,8 @@
   {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"sittingButton",    "screens": [["gym","empty",   140,230, 75, 150]]},
   {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"hiperBut",         "screens": [["gym","empty",   470,0, 130, 200]]},
   {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"sittingRevButton", "screens": [["gym","empty",   1740,230, 75, 150]]},
-  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"actExercise", "screens": [["showExrButton","yesButton",   1740,-50, 150, 150]]},
+
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"actExercise", "screens": [["showExrButton","yesButton",   1640,-50, 250, 150]]},
   {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"exrImage", "screens": [["showExrButton","vertButton",   1800,150, 100, 500]]},
 
 
@@ -131,11 +133,10 @@
   {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"agreePotatoButton",       "screens": [["potatoMenu","yesButton",   650, 118, 287, 84]]},
   {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"declineFood",             "screens": [["potatoMenu","yesButton",   1060, 118, 287, 84]]},
   //  //
-
   //squatMenu
   {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"choseSquatWindow",   "screens": [["choseSquatWindow","window",   1300, 10, 615, 400]]},
   {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"squatButton",        "screens": [["choseSquatWindow","windowButton",   1320, 215, 575, 85]]},
-  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"technicSquatButton", "screens": [["choseSquatWindow","windowButton",   1320, 125, 575, 85]]},
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"squatButton1",       "screens": [["choseSquatWindow","windowButton",   1320, 125, 575, 85]]},
   {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"closeWindow",        "screens": [["choseSquatWindow","windowButton",   1320, 35, 575, 85]]},
    //
   //pullUpsMenu
