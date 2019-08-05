@@ -1,7 +1,12 @@
 [
-	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"technicSquatButton","text":"Приседать технично(СН +, СС +, ТП ++)"},
-	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"squatButton","text":"Приседать 50кг"},
-	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"squatButton1","text":"Приседать 100кг"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"actExercise","text":"Выполнить"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"squatMenuLabel","text":"Выберете вес на штанге"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"squatButton","text":"Подтвердить"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"benchButton","text":"Подтвердить"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"deadliftButton","text":"Подтвердить"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"addWeight","text":"+ 2.5кг"},
+	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"reduceWeight","text":"- 2.5кг"},
+
 	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"closeWindow","text":"Закрыть"},
 	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"technicBenchButton","text":"Пожми меня!"} ,
 	{"class":"com.mygdx.game.MyGdxGame$ButtonText","buttonName":"technicDeadliftButton","text":"Потяни меня!"},

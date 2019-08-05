@@ -3,16 +3,19 @@ package com.mygdx.game;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.mygdx.game.MyMethods.LoadImg;
 import static com.mygdx.game.MyMethods.format;
+import static com.mygdx.game.MyMethods.getPath;
 import static com.mygdx.game.MyMethods.textDrawing;
 
 public class StatBar extends Actor {
@@ -44,6 +47,11 @@ public class StatBar extends Actor {
     private boolean showAlways;
     int timer = 100;
     private Texture texUp;
+    private String text = "";
+    private Animation animation;
+    private TextureRegion currentFrame;
+    private float time;
+    private Animation animationR;
 
     StatBar(String name) {
         createTextures();
@@ -74,6 +82,9 @@ public class StatBar extends Actor {
         mid = new Sprite(texMid);
         texBot = LoadImg("statBot.png");
         setColor(Color.CORAL);
+        animation = MyMethods.createAnimation("screens/addAnim.png", 4, 1, 1f);
+        animationR = MyMethods.createAnimation("screens/reduceAnim.png", 4, 1, 1f);
+        currentFrame = ((TextureRegion) animation.getKeyFrame(0));
     }
 
     @Override
@@ -156,6 +167,7 @@ public class StatBar extends Actor {
     void addProgress(float num) {
         timer = 0;
         float difference = 0;
+        text = num > 0 ? "+++" : num < 0 ? "---" : "";
         if(isLeveled){
             if(num > 0){
                 while (num > 0 && 1f - currentAmount >= 0){
@@ -198,6 +210,17 @@ public class StatBar extends Actor {
                 mid.draw(batch);
                 mid.setBounds( getX() + 5, getY() + 5, ((getWidth()  - 10) * currentAmount), getHeight() - 10);
                 batch.draw(texUp, getX(), getY(), getWidth(), getHeight());
+                time+=parentAlpha / 10;
+                currentFrame.setRegion((TextureRegion) animation.getKeyFrame(time, true));
+                System.out.println(parentAlpha);
+                if(text.equals("+++"))
+                    currentFrame.setRegion((TextureRegion) animation.getKeyFrame(time, true));
+                else if(text.equals("---"))
+                    currentFrame.setRegion((TextureRegion) animationR.getKeyFrame(time, true));
+                if(!text.equals(""))
+                    batch.draw(currentFrame, getX() + getWidth() - 60, getY() + 10, currentFrame.getRegionWidth() * 5, currentFrame.getRegionHeight() * 5);
+
+                //textDrawing(batch, text, getX() + getWidth() - 60, getY() + 25, 1, text.equals("+++") ? Color.GREEN : Color.RED);
             }
 
             if (isLeveled && doTextLevel) {
