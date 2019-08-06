@@ -15,7 +15,6 @@ android {
             assets.srcDirs = ['assets']
             jniLibs.srcDirs = ['libs']
         }
-
     }
 
     lintOptions {
@@ -26,13 +25,12 @@ android {
         exclude 'META-INF/robovm/ios/robovm.xml'
     } 
 
-
     defaultConfig {
         applicationId "com.sergeenko.alexey.titangym"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 1
-        versionName "0.001"
+        versionCode 01
+        versionName "0.0.1"
         multiDexEnabled true
      }
     buildTypes {

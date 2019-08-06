@@ -59,9 +59,9 @@
   {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"choseBenchMenu",   "screens": [["gym","empty",   1250, 1, 200, 130]]},
   {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"choseDeadliftMenu","screens": [["gym","empty",   650, 25, 450, 85]]},
 
-  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"actExercise", "screens": [["showExrButton","yesButton",   1580,0, 300, 100]]},
-  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"exrImage", "screens": [["showExrButton","vertButton",   1700,150, 200, 560]]},
-
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"closeWindow", "screens": [["showExrButton","yesButton",   1100,0, 400, 135]]},
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"actExercise", "screens": [["showExrButton","yesButton",   1500,0, 400, 135]]},
+  {"class":"com.mygdx.game.MyGdxGame$ButtonData", "name":"exrImage",    "screens": [["showExrButton","vertButton",  1700,150, 200, 560]]},
 
   //TODO Add the whole exercieses list
  // {class:com.mygdx.game.MyGdxGame$ButtonData,name:technicSquatButton,x:770,y:300,width:200,height:100}
