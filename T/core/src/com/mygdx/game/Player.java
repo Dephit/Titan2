@@ -30,7 +30,7 @@ import static com.mygdx.game.Player.PlayerCondition.legPress;
 import static com.mygdx.game.Player.PlayerCondition.lookinLeft;
 import static com.mygdx.game.Player.PlayerCondition.lookinUp;
 import static com.mygdx.game.Player.PlayerCondition.pullUps;
-import static com.mygdx.game.Player.PlayerCondition.pushups;
+import static com.mygdx.game.Player.PlayerCondition.pushUps;
 import static com.mygdx.game.Player.PlayerCondition.right;
 import static com.mygdx.game.Player.PlayerCondition.squat;
 import static com.mygdx.game.Player.PlayerCondition.stay;
@@ -69,20 +69,20 @@ public class Player extends Actor {
     boolean doExercise = true;
 
     float getHeight(PlayerCondition condition) {
-        if(condition == PlayerCondition.squat)
+        if(condition == PlayerCondition.squat )
             return 500 * (playerStats.squatRes / (barWeight * 4)) * (playerStats.stress.getCurrentAmount());
-        else if(condition == bench)
+        else if(condition == bench )
             return 500 * (playerStats.benchRes / (barWeight * 4)) * (playerStats.stress.getCurrentAmount());
-        else if(condition == deadlift)
+        else if(condition == deadlift )
             return 500 * (playerStats.deadliftRes / (barWeight * 4)) * (playerStats.stress.getCurrentAmount());
         else if(condition == legPress)
-            return 500 * (playerStats.legStrenght.getLevel() / (barWeight)) * (playerStats.stress.getCurrentAmount());
+            return 500 * ((playerStats.legStrenght.getLevel() + 1) / (barWeight * 4)) * (playerStats.stress.getCurrentAmount());
         else if(condition == pullUps)
-            return 500 * (playerStats.backStrenght.getLevel() / (barWeight)) * (playerStats.stress.getCurrentAmount());
-        else if(condition == pushups)
-            return 500 * (playerStats.archStrenght.getLevel() / (barWeight)) * (playerStats.stress.getCurrentAmount());
+            return 500 * ((playerStats.backStrenght.getLevel() + 1)/ (barWeight * 4)) * (playerStats.stress.getCurrentAmount());
+        else if(condition == pushUps)
+            return 500 * ((playerStats.armStrenght.getLevel() + 1) / (barWeight * 4)) * (playerStats.stress.getCurrentAmount());
         else if(condition == hiper)
-            return 500 * (playerStats.backStrenght.getLevel() / (barWeight)) * (playerStats.stress.getCurrentAmount());
+            return 500 * ((playerStats.backStrenght.getLevel() + 1) / (barWeight * 4)) * (playerStats.stress.getCurrentAmount());
         return 0;
     }
 
@@ -94,7 +94,7 @@ public class Player extends Actor {
             case hiper: return playerStats.backStrenght.getLevel();
             case legPress: return playerStats.legStrenght.getLevel();
             case pullUps: return playerStats.backStrenght.getLevel();
-            case pushups: return playerStats.armStrenght.getLevel();
+            case pushUps: return playerStats.armStrenght.getLevel();
         }
         return 0;
     }
@@ -107,13 +107,13 @@ public class Player extends Actor {
         else   if(playerCondition == deadlift)
             return (int) (8 * (barWeight * 4) / playerStats.deadliftRes * (1.5f - playerStats.stress.getCurrentAmount()));
         else   if(playerCondition == legPress)
-            return (int) (8 * (barWeight * 4) / playerStats.legStrenght.getLevel() * (1.5f - playerStats.stress.getCurrentAmount()));
+            return (int) (8 * (barWeight * 4) / (playerStats.legStrenght.getLevel() + 1) * (1.5f - playerStats.stress.getCurrentAmount()));
         else   if(playerCondition == pullUps)
-            return (int) (8 * (barWeight * 4) / playerStats.backStrenght.getLevel() * (1.5f - playerStats.stress.getCurrentAmount()));
-        else   if(playerCondition == pushups)
-            return (int) (8 * (barWeight * 4) / playerStats.armStrenght.getLevel() * (1.5f - playerStats.stress.getCurrentAmount()));
+            return (int) (8 * (barWeight * 4) / (playerStats.backStrenght.getLevel() + 1) * (1.5f - playerStats.stress.getCurrentAmount()));
+        else   if(playerCondition == pushUps)
+            return (int) (8 * (barWeight * 4) / (playerStats.armStrenght.getLevel() + 1) * (1.5f - playerStats.stress.getCurrentAmount()));
         else   if(playerCondition == hiper)
-            return (int) (8 * (barWeight * 4) / playerStats.backStrenght.getLevel() * (1.5f - playerStats.stress.getCurrentAmount()));
+            return (int) (8 * (barWeight * 4) / (playerStats.backStrenght.getLevel() + 1) * (1.5f - playerStats.stress.getCurrentAmount()));
         return 0;
     }
 
@@ -122,7 +122,7 @@ public class Player extends Actor {
         stay, down, up, left, right,
         //Exercise
         squat, bench, deadlift, squatTechnic, pullUps,
-        benchTechnic, deadliftTechnic, gripWorkout, archWorkout, legPress, pcSitting, hiper, pushups,
+        benchTechnic, deadliftTechnic, gripWorkout, archWorkout, legPress, pcSitting, hiper, pushUps,
         //Competition
        compSquat, compBench, compDeadlift,
         //Other
@@ -130,7 +130,7 @@ public class Player extends Actor {
         //Dialog Triger
         talkToArmGirl, talkToBicepsGuy, talkToCoach, talkToStaff, talkToCleaner,
         //goTo
-        goToSquatRack, goToBenchRack, goToDeadliftRack
+        goToSquatRack, goToBenchRack, goToDeadliftRack, goToLegPress, goToPullUps, goToPushUps, goToHiper
     }
 
     static class PlayerAnimationData{
@@ -245,6 +245,7 @@ public class Player extends Actor {
     @Override
     public void act(float delta) {
         super.act(delta);
+
         if (isAnimationFinished()) {
             animationTime = 0;
             calculateProgress();
@@ -370,7 +371,7 @@ public class Player extends Actor {
 
                 playerStats.legStrenght.addProgress(0.25f * positiveValue);
                 playerStats.backStrenght.addProgress( 0.25f * positiveValue);
-                playerStats.squatTechnic.addProgress(positiveValue);
+                playerStats.squatTechnic.addProgress(0.5f * positiveValue);
 
                 playerStats.energy.addProgress(- negativeValue * playerStats.food.getCurrentAmount());
                 playerStats.food.addProgress(- negativeValue);
@@ -378,27 +379,27 @@ public class Player extends Actor {
                 break;}
             case bench:{
                 doExercise = false;
-                playerStats.armStrenght.addProgress( 0.5f * positiveValue);
-                playerStats.archStrenght.addProgress( 0.25f * positiveValue);
-                playerStats.benchTechnic.addProgress(positiveValue);
+                playerStats.armStrenght.addProgress( 0.25f * positiveValue);
+                playerStats.archStrenght.addProgress( 0.125f * positiveValue);
+                playerStats.benchTechnic.addProgress(0.5f * positiveValue);
 
-                playerStats.energy.addProgress(-negativeValue);
+                playerStats.energy.addProgress(-negativeValue * playerStats.food.getCurrentAmount());
                 playerStats.food.addProgress(-negativeValue);
-                playerStats.stress.addProgress(-2 * negativeValue);
+                playerStats.stress.addProgress(-1.5f * negativeValue);
                 break;}
             case deadlift:{
                 doExercise = false;
-                playerStats.deadliftTechnic.addProgress(positiveValue);
-                playerStats.backStrenght.addProgress(0.5f * positiveValue);
-                playerStats.gripStrenght.addProgress(0.5f * positiveValue);
+                playerStats.deadliftTechnic.addProgress(0.5f * positiveValue);
+                playerStats.backStrenght.addProgress(0.25f * positiveValue);
+                playerStats.gripStrenght.addProgress(0.25f * positiveValue);
 
-                playerStats.energy.addProgress(-negativeValue);
+                playerStats.energy.addProgress(-negativeValue * playerStats.food.getCurrentAmount());
                 playerStats.food.addProgress(-negativeValue);
-                playerStats.stress.addProgress(-2 * negativeValue);
+                playerStats.stress.addProgress(-1.5f * negativeValue);
                 break;}
             case hiper:{
                 doExercise = false;
-                playerStats.backStrenght.addProgress(positiveValue);
+                playerStats.backStrenght.addProgress(0.5f * positiveValue);
                 playerStats.energy.addProgress(0.5f * -negativeValue);
                 playerStats.stress.addProgress(0.25f * -negativeValue);
                 playerStats.food.addProgress(-negativeValue);
@@ -409,7 +410,7 @@ public class Player extends Actor {
                 break;}
             case pullUps:{
                 doExercise = false;
-                playerStats.backStrenght.addProgress(positiveValue);
+                playerStats.backStrenght.addProgress(0.5f * positiveValue);
                 playerStats.energy.addProgress(0.5f * -negativeValue);
                 playerStats.stress.addProgress(0.25f * -negativeValue);
                 playerStats.food.addProgress(-negativeValue);
@@ -419,7 +420,7 @@ public class Player extends Actor {
                 playerStats.benchTechnic.addProgress(0.5f * -negativeValue);
                 break;}
             case sleeping:{
-                playerStats.energy.addProgress(2 * negativeValue );
+                playerStats.energy.addProgress(1.5f * negativeValue );
                 playerStats.stress.addProgress( negativeValue );
 
                 playerStats.deadliftTechnic.addProgress( -negativeValue);
@@ -432,7 +433,7 @@ public class Player extends Actor {
                 playerStats.armStrenght.addProgress( -negativeValue);
                 playerStats.food.addProgress(-0.5f * negativeValue);
                 break;}
-            case pushups: {
+            case pushUps: {
                 doExercise = false;
                 playerStats.armStrenght.addProgress(positiveValue);
 
@@ -459,7 +460,6 @@ public class Player extends Actor {
             case sitting:{
                 playerStats.energy.addProgress(0.2f * negativeValue);
                 playerStats.stress.addProgress(0.1f * negativeValue);
-
                 break;}
             case pcSitting:{
                 playerStats.energy.addProgress(0.5f * -negativeValue);
