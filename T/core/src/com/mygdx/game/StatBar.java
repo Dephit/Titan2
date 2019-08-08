@@ -212,7 +212,7 @@ public class StatBar extends Actor {
                 batch.draw(texUp, getX(), getY(), getWidth(), getHeight());
                 time+=parentAlpha / 10;
                 currentFrame.setRegion((TextureRegion) animation.getKeyFrame(time, true));
-                System.out.println(parentAlpha);
+               // System.out.println(parentAlpha);
                 if(text.equals("+++"))
                     currentFrame.setRegion((TextureRegion) animation.getKeyFrame(time, true));
                 else if(text.equals("---"))

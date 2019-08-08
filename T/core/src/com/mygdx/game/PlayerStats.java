@@ -157,7 +157,7 @@ class PlayerStats {
                 }
 
                 try {
-                    System.out.println("Получилось" + data);
+                   // System.out.println("Получилось" + data);
                     for (StatBar stat : stats) {
                         stat.loadFromCloud(data);
                     }
@@ -168,7 +168,7 @@ class PlayerStats {
                     potatoAmount = ((Long) data.get("potatoAmount")).intValue();
                     money =  ((Long) data.get("money")).intValue();
                 }catch (NullPointerException e){
-                    System.out.println("Не получилось");
+                  //  System.out.println("Не получилось");
                 }
             }
         };

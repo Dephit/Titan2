@@ -102,6 +102,7 @@ import static com.mygdx.game.Player.PlayerCondition.talkToStaff;
 import static com.mygdx.game.Player.PlayerCondition.watchCam;
 import static com.mygdx.game.Player.PlayerCondition.watchLoli;
 import static com.mygdx.game.Player.PlayerCondition.watchShop;
+import static com.mygdx.game.Player.PlayerCondition.working;
 
 public class MyGdxGame implements ApplicationListener {
 
@@ -406,10 +407,10 @@ public class MyGdxGame implements ApplicationListener {
 
         if(string == room){
             player.setPosition(1100, 300);
-            player.lastWalkeblePosition.set(1100,300);
+            player.lastWalkablePosition.set(1100,300);
         }else   if(string == shop){
             player.setPosition(1700, 100);
-            player.lastWalkeblePosition.set(1700,100);
+            player.lastWalkablePosition.set(1700,100);
         }
 
         //TODO Make asynk loader
@@ -631,7 +632,7 @@ public class MyGdxGame implements ApplicationListener {
             setUpWindow(choseSquatWindow);
             //TODO finish this: showWeight should show 70% of player's max result in exercise
             for (TextButton textButton : buttonsArr) {
-                textButton.setText(textButton.getName().equals("showWeight") ? playerStats.squatRes * 0.7f +"" : textButton.getText().toString());
+                //textButton.setText(textButton.getName().equals("showWeight") ? player.getResPercent(0.7f, playerStats.squatRes) +"" : textButton.getText().toString());
             }
         }
         else if(player.getPlayerCondition().equals(goToBenchRack)){
@@ -804,12 +805,12 @@ public class MyGdxGame implements ApplicationListener {
         if(infoWindow == showExrButton) {
             speedOfExercise = player.getSpeed();
             batch.draw(tex3, 1710, posExerciseY, 180, height);
-            batch.draw(tex4, 1710, 165 + drwaExerciseMultiplayer , 180, 30);
+            batch.draw(tex4, 1710, 165 + drwaExerciseMultiplayer , 180, 10);
         }
         if(currentWindow == choseSquatWindow || currentWindow == choseBenchWindow || currentWindow == choseDeadliftWindow){
             for (TextButton textButton : buttonsArr) {
                 if(textButton.getName().contains("showWeight")) {
-                    player.barWeight = player.getProgerss(player.getPlayerCondition()) * 0.7f;
+                    //player.barWeight = player.getResPercent(0.7f, player.getProgerss(player.getPlayerCondition()));
                     textButton.setText(player.barWeight + " кг");
                 }
             }
@@ -822,11 +823,11 @@ public class MyGdxGame implements ApplicationListener {
         if (path != null)
             if (path.size() > 0)
                 if (MyGdxGame.path.get(0).x != pX || MyGdxGame.path.get(0).y != pY) {
-                    player.lastWalkeblePosition.set(player.getX(), player.getY());
+                    player.lastWalkablePosition.set(player.getX(), player.getY());
                 }
 
         if (xGoal / mapCoorinateCorrector != map2d.xGoal || yGoal / mapCoorinateCorrector != map2d.yGoal ){
-            player.setPosition(player.lastWalkeblePosition.x, player.lastWalkeblePosition.y);
+            player.setPosition(player.lastWalkablePosition.x, player.lastWalkablePosition.y);
             player.ceilPos();
 
             path = map2d.findPath(
@@ -1375,21 +1376,8 @@ public class MyGdxGame implements ApplicationListener {
             return new InputListener() {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                    setPath((int)player.getX(), (int)player.getY(), (int)player.getX(), (int)player.getY(), sitting);
                     setUpWindow(none);
-                    playerStats.money += 1000;
-                    playerStats.energy.addProgress(-1);
-                    playerStats.stress.addProgress( -0.5f);
-
-                    playerStats.deadliftTechnic.addProgress( -0.25f);
-                    playerStats.squatTechnic.addProgress( -0.25f);
-                    playerStats.benchTechnic.addProgress( -0.25f);
-                    playerStats.backStrenght.addProgress( -0.25f);
-                    playerStats.legStrenght.addProgress(-0.25f);
-                    playerStats.gripStrenght.addProgress( -0.25f);
-                    playerStats.archStrenght.addProgress( -0.25f);
-                    playerStats.armStrenght.addProgress( -0.25f);
-                    playerStats.food.addProgress(-0.5f);
-                    //setPath((int)player.getX(), (int)player.getY(), (int)player.getX(), (int)player.getY(), working);
                 }
 
                 @Override
@@ -1405,6 +1393,7 @@ public class MyGdxGame implements ApplicationListener {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     setPath(560, 300, 561, 367, sleeping);
+                    player.barWeight = 20;
                 }
 
                 @Override
@@ -1420,7 +1409,7 @@ public class MyGdxGame implements ApplicationListener {
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     if(player.isAnimationFinished() || !player.isAnimationStarted()){
-                         if(drwaExerciseMultiplayer + 165  <= height + posExerciseY - 30
+                         if(drwaExerciseMultiplayer + 165  <= height + posExerciseY
                                 && drwaExerciseMultiplayer + 165 >= posExerciseY) {
                              player.doExercise = true;
                          }else {

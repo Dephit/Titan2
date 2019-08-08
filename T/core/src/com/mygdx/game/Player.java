@@ -42,29 +42,25 @@ import static com.mygdx.game.Player.PlayerCondition.talkToStaff;
 import static com.mygdx.game.Player.PlayerCondition.up;
 
 public class Player extends Actor {
-    private final StatBar days;
-    private final StatBar minutes;
-    private final StatBar hours;
-    private final StatBar hoursSecond;
-    private final StatBar minutesSecond;
 
     private final TextureAtlas textureAtlas;
 
     private final ArrayList<Message> messages = new ArrayList<>();
     final float minBarWeight = 20;
     final float maxBarWeight = 500;
+    private final Clock clock;
     float barWeight = 20;
 
     ArrayList<StatBar> stats;
 
     private Vector2 speed;
 
-    private float time;
+
 
     float animationTime;
     private TextureRegion currentFrame = new TextureRegion();
     private Map<String, Animation<TextureRegion>> aniimList;
-    Vector2 lastWalkeblePosition = new Vector2();
+    Vector2 lastWalkablePosition = new Vector2();
     private int sizeMult = 5;
     boolean doExercise = true;
 
@@ -95,6 +91,7 @@ public class Player extends Actor {
             case legPress: return playerStats.legStrenght.getLevel();
             case pullUps: return playerStats.backStrenght.getLevel();
             case pushUps: return playerStats.armStrenght.getLevel();
+            case sleeping: return barWeight / 0.6f;
         }
         return 0;
     }
@@ -115,6 +112,20 @@ public class Player extends Actor {
         else   if(playerCondition == hiper)
             return (int) (8 * (barWeight * 4) / (playerStats.backStrenght.getLevel() + 1) * (1.5f - playerStats.stress.getCurrentAmount()));
         return 0;
+    }
+
+    public float getResPercent(float v, float squatRes) {
+        float res = squatRes * v;
+        if(res % 10 >= 7.5){
+            res -= res % 10 + 7.5f;
+        }else if(res % 10 >= 5){
+            res -= res % 10 + 5f;
+        }else if(res % 10 >= 2.5){
+            res -= res % 10 + 2.5f;
+        }else if(res % 10 >= 0){
+            res -= res % 10;
+        }
+        return res;
     }
 
     public enum PlayerCondition {
@@ -154,44 +165,11 @@ public class Player extends Actor {
         setName("player");
         speed = new Vector2();
 
-        days=new StatBar("День", 0,0,0,0);
-        days.setLeveled(true, 1,1000);
-        days.makeLevelTextDrawning(true, 1825,990,1.3f,Color.WHITE);
-        days.setShowAlways(true);
-
-        minutes=new StatBar("Минута", 0,0,0,0);
-        minutes.setLeveled(true,0,5);
-        minutes.makeLevelTextDrawning(true,1820,950,1f,Color.WHITE);
-        minutes.setShowAlways(true);
-
-        minutesSecond=new StatBar("Минута2", 0,0,0,0);
-        minutesSecond.setLeveled(true,0,9);
-        minutesSecond.makeLevelTextDrawning(true,1840,950,1f,Color.WHITE);
-        minutesSecond.setShowAlways(true);
-
-        hours=new StatBar("Час", 0,0,0,0);
-        hours.setLeveled(true,1,2);
-        hours.makeLevelTextDrawning(true,1775,950,1f,Color.WHITE);
-        hours.setShowAlways(true);
-
-        hoursSecond=new StatBar("Час2", 0,0,0,0);
-        hoursSecond.setLeveled(true,2,9);
-        hoursSecond.makeLevelTextDrawning(true,1790,950,1f,Color.WHITE);
-        hoursSecond.setShowAlways(true);
-
-        stats = new ArrayList();
-        stats.add(days);
-        stats.add(minutes);
-        stats.add(hours);
-        stats.add(hoursSecond);
-        stats.add(minutesSecond);
+        clock = new Clock();
+        stats = clock.getClock();
 
         setParameters();
-
         textureAtlas =  new TextureAtlas(Gdx.files.internal(getPath() + "player/player.atlas"));;
-        Animation animation = MyMethods.createAnimation("player.png", 36, 1, 1f);
-
-        currentFrame.setRegion((TextureRegion) animation.getKeyFrame(0));
 
         String dialogJson = getJson("screens/dialogs/Ru.json");
         ArrayList<Message.MessageData> messageDataArrayList = json.fromJson(ArrayList.class, dialogJson);
@@ -213,21 +191,21 @@ public class Player extends Actor {
         animationTime = 0;
     }
 
-    private Animation getAnim(String walking, int colls, int rows, float frameDuraction) {
-        TextureRegion[][] tmp = textureAtlas.findRegion(walking).split((int) (textureAtlas.findRegion(walking).originalWidth / colls), (int) (textureAtlas.findRegion(walking).originalHeight/ rows));
-        TextureRegion[] walkFrames = new TextureRegion[colls * rows];
+    private Animation getAnim(String name, int colls, int rows, float frameDuraction) {
+        TextureRegion[][] tmp = textureAtlas.findRegion(name).split((textureAtlas.findRegion(name).originalWidth / colls), (textureAtlas.findRegion(name).originalHeight/ rows));
+        TextureRegion[] animation = new TextureRegion[colls * rows];
         int index = 0;
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < colls; j++) {
-                walkFrames[index++] = tmp[i][j];
+                animation[index++] = tmp[i][j];
             }
         }
-        return   new Animation<TextureRegion>(frameDuraction, walkFrames);
+        return new Animation(frameDuraction, animation);
     }
 
     void setParameters() {
         setBounds(400,100,145,245);
-        lastWalkeblePosition.set(getX(), getY());
+        lastWalkablePosition.set(getX(), getY());
         animationTime=0;
         playerCondition = stay;
         setName("player");
@@ -257,9 +235,10 @@ public class Player extends Actor {
             playCompAnimation(delta);
         else
             playAnimation(delta);
+
         changePlayerCondition();
         walk();
-        calculateHours();
+        clock.calculateHours();
         showDialogs();
     }
 
@@ -281,38 +260,11 @@ public class Player extends Actor {
         }
     }
 
-    void setPlayerCondition(PlayerCondition playerCondition) {
+    void     setPlayerCondition(PlayerCondition playerCondition) {
         this.playerCondition = playerCondition;
     }
 
-    private void calculateHours() {
-        time+=1f;
-        if(time>=50){
-            time=0;
-            minutesSecond.setLeveled(true,minutesSecond.getLevel() + 1, minutesSecond.getMaxLevel());
-            if(minutesSecond.getLevel() > minutesSecond.getMaxLevel()){
-                minutesSecond.setLeveled(true,0, minutesSecond.getMaxLevel());
-                minutes.setLeveled(true,minutes.getLevel() + 1,minutes.getMaxLevel());
-            }
-            if(minutes.getLevel() > minutes.getMaxLevel()){
-                minutes.setLeveled(true,0,minutes.getMaxLevel());
-                hoursSecond.setLeveled(true,hoursSecond.getLevel()+1,hoursSecond.getMaxLevel());
-            }
-            if(hoursSecond.getLevel()>hoursSecond.getMaxLevel()){
-                hoursSecond.setLeveled(true,0,hoursSecond.getMaxLevel());
-                hours.setLeveled(true,hours.getLevel()+1,hours.getMaxLevel());
-            }
-            if(hours.getLevel() == hours.getMaxLevel() && hoursSecond.getLevel() > 3){
-                minutesSecond.setLeveled(true,0,minutesSecond.getMaxLevel());
-                minutes.setLeveled(true,0,minutes.getMaxLevel());
-                hoursSecond.setLeveled(true,0,hoursSecond.getMaxLevel());
-                hours.setLeveled(true,0,hours.getMaxLevel());
-                days.setLeveled(true,days.getLevel()+1,days.getMaxLevel());
-            }
-        }
-    }
-
-     void changePlayerCondition() {
+    void changePlayerCondition() {
         if(MyGdxGame.path != null)
             if(MyGdxGame.path.isEmpty()){
                 playerCondition = nextPlayerCondition;
@@ -341,31 +293,39 @@ public class Player extends Actor {
     }
 
     private void calculateProgress() {
-        float positiveValue =   barWeight / getProgerss(playerCondition) <= 0.7f ? 0.1f * playerStats.energy.getCurrentAmount() :
-                                barWeight / getProgerss(playerCondition) <= 0.8f ? 0.2f * playerStats.energy.getCurrentAmount() :
-                                barWeight / getProgerss(playerCondition) <= 0.9f ? 0.4f * playerStats.energy.getCurrentAmount() :
-                                                                           0.5f * playerStats.energy.getCurrentAmount();
-        float negativeValue =   barWeight / getProgerss(playerCondition) <= 0.7f ? 0.01f * playerStats.energy.getCurrentAmount() :
-                                barWeight / getProgerss(playerCondition) <= 0.8f ? 0.1f * playerStats.energy.getCurrentAmount() :
-                                barWeight / getProgerss(playerCondition) <= 0.9f ? 0.15f * playerStats.energy.getCurrentAmount() :
-                                                                            0.2f * playerStats.energy.getCurrentAmount();
+        float variable = barWeight / getProgerss(playerCondition);
+        float positiveValue =  variable <= 0.7f ? 0.1f :
+                               variable <= 0.8f ? 0.2f :
+                               variable <= 0.9f ? 0.4f :
+                                       0.5f ;
+        float negativeValue =  variable <= 0.7f ? 0.05f :
+                               variable <= 0.8f ? 0.1f :
+                               variable <= 0.9f ? 0.15f :
+                                       0.2f ;
         switch (playerCondition){
-            case working:{
-                playerStats.money ++;
-                playerStats.energy.addProgress(-negativeValue);
-                playerStats.stress.addProgress( 0.5f * -negativeValue );
+            //TODO not sitting, working, need an animation for this on too
+            case sitting:{
+                float variable2 = -0.125f;
+                if(playerStats.energy.getCurrentAmount() >= 2 * variable2 * negativeValue &&
+                        playerStats.stress.getCurrentAmount() >= variable2 * negativeValue &&
+                        playerStats.food.getCurrentAmount() >= variable2 * negativeValue) {
+                    playerStats.money += 10;
+                    playerStats.energy.addProgress(2 * variable2 * negativeValue);
+                    playerStats.stress.addProgress(variable2 * negativeValue);
+                    playerStats.food.addProgress(variable2 * negativeValue);
 
-                playerStats.deadliftTechnic.addProgress( -negativeValue);
-                playerStats.squatTechnic.addProgress( -negativeValue);
-                playerStats.benchTechnic.addProgress( -negativeValue);
-                playerStats.backStrenght.addProgress( -negativeValue);
-                playerStats.legStrenght.addProgress(-negativeValue);
-                playerStats.gripStrenght.addProgress( -negativeValue);
-                playerStats.archStrenght.addProgress( -negativeValue);
-                playerStats.armStrenght.addProgress( -negativeValue);
-                playerStats.food.addProgress(-0.5f * negativeValue);
+                    playerStats.deadliftTechnic.addProgress(variable2 * negativeValue);
+                    playerStats.squatTechnic.addProgress(variable2 * negativeValue);
+                    playerStats.benchTechnic.addProgress(variable2 * negativeValue);
+                    playerStats.backStrenght.addProgress(variable2 * negativeValue);
+                    playerStats.legStrenght.addProgress(variable2 * negativeValue);
+                    playerStats.gripStrenght.addProgress(variable2 * negativeValue);
+                    playerStats.archStrenght.addProgress(variable2 * negativeValue);
+                    playerStats.armStrenght.addProgress(variable2 * negativeValue);
 
-                break;}
+                }
+                break;
+            }
             case squat:{
                 doExercise = false;
 
@@ -403,10 +363,6 @@ public class Player extends Actor {
                 playerStats.energy.addProgress(0.5f * -negativeValue);
                 playerStats.stress.addProgress(0.25f * -negativeValue);
                 playerStats.food.addProgress(-negativeValue);
-
-                playerStats.deadliftTechnic.addProgress(0.5f * -negativeValue);
-                playerStats.squatTechnic.addProgress(0.5f * -negativeValue);
-                playerStats.benchTechnic.addProgress(0.5f * -negativeValue);
                 break;}
             case pullUps:{
                 doExercise = false;
@@ -414,24 +370,24 @@ public class Player extends Actor {
                 playerStats.energy.addProgress(0.5f * -negativeValue);
                 playerStats.stress.addProgress(0.25f * -negativeValue);
                 playerStats.food.addProgress(-negativeValue);
-
-                playerStats.deadliftTechnic.addProgress(0.5f * -negativeValue);
-                playerStats.squatTechnic.addProgress(0.5f * -negativeValue);
-                playerStats.benchTechnic.addProgress(0.5f * -negativeValue);
                 break;}
             case sleeping:{
-                playerStats.energy.addProgress(1.5f * negativeValue );
-                playerStats.stress.addProgress( negativeValue );
+                //doExercise = false;
+                float variable2 = -0.25f;
+                if(playerStats.energy.getCurrentAmount() <= 1) {
+                    playerStats.energy.addProgress(1.5f * positiveValue);
+                    playerStats.stress.addProgress(positiveValue);
 
-                playerStats.deadliftTechnic.addProgress( -negativeValue);
-                playerStats.squatTechnic.addProgress( -negativeValue);
-                playerStats.benchTechnic.addProgress( -negativeValue);
-                playerStats.backStrenght.addProgress( -negativeValue);
-                playerStats.legStrenght.addProgress(-negativeValue);
-                playerStats.gripStrenght.addProgress( -negativeValue);
-                playerStats.archStrenght.addProgress( -negativeValue);
-                playerStats.armStrenght.addProgress( -negativeValue);
-                playerStats.food.addProgress(-0.5f * negativeValue);
+                    playerStats.deadliftTechnic.addProgress(variable2 * negativeValue);
+                    playerStats.squatTechnic.addProgress(variable2 * negativeValue);
+                    playerStats.benchTechnic.addProgress(variable2 * negativeValue);
+                    playerStats.backStrenght.addProgress(variable2 * negativeValue);
+                    playerStats.legStrenght.addProgress(variable2 * negativeValue);
+                    playerStats.gripStrenght.addProgress(variable2 * negativeValue);
+                    playerStats.archStrenght.addProgress(variable2 * negativeValue);
+                    playerStats.armStrenght.addProgress(variable2 * negativeValue);
+                    playerStats.food.addProgress(variable2 * negativeValue);
+                }
                 break;}
             case pushUps: {
                 doExercise = false;
@@ -440,10 +396,6 @@ public class Player extends Actor {
                 playerStats.energy.addProgress(0.5f * -negativeValue);
                 playerStats.stress.addProgress(0.25f * -negativeValue);
                 playerStats.food.addProgress(-negativeValue);
-
-                playerStats.deadliftTechnic.addProgress(0.2f * -negativeValue);
-                playerStats.squatTechnic.addProgress(0.2f * -negativeValue);
-                playerStats.benchTechnic.addProgress(0.2f * -negativeValue);
                 break;}
             case legPress:{
                 doExercise = false;
@@ -453,26 +405,21 @@ public class Player extends Actor {
                 playerStats.stress.addProgress(0.25f * -negativeValue);
                 playerStats.food.addProgress(-negativeValue);
 
-                playerStats.deadliftTechnic.addProgress(0.5f * -negativeValue);
-                playerStats.squatTechnic.addProgress(0.5f * -negativeValue);
-                playerStats.benchTechnic.addProgress(0.5f * -negativeValue);
-                break;}
-            case sitting:{
-                playerStats.energy.addProgress(0.2f * negativeValue);
-                playerStats.stress.addProgress(0.1f * negativeValue);
                 break;}
             case pcSitting:{
-                playerStats.energy.addProgress(0.5f * -negativeValue);
-                playerStats.stress.addProgress(2 * negativeValue);
-                playerStats.food.addProgress(0.25f * -negativeValue);
+                float variable2 = -0.25f;
+                playerStats.energy.addProgress( positiveValue );
+                playerStats.stress.addProgress( 1.5f * positiveValue );
 
-                playerStats.archStrenght.addProgress( -negativeValue);
-                playerStats.armStrenght.addProgress( -negativeValue);
-                playerStats.legStrenght.addProgress( -negativeValue);
-                playerStats.backStrenght.addProgress( -negativeValue);
-                playerStats.deadliftTechnic.addProgress( -negativeValue);
-                playerStats.squatTechnic.addProgress( -negativeValue);
-                playerStats.benchTechnic.addProgress( -negativeValue);
+                playerStats.deadliftTechnic.addProgress( variable2 * negativeValue);
+                playerStats.squatTechnic.addProgress( variable2 * negativeValue);
+                playerStats.benchTechnic.addProgress( variable2 * negativeValue);
+                playerStats.backStrenght.addProgress( variable2 * negativeValue);
+                playerStats.legStrenght.addProgress(variable2 * negativeValue);
+                playerStats.gripStrenght.addProgress( variable2 * negativeValue);
+                playerStats.archStrenght.addProgress( variable2 * negativeValue);
+                playerStats.armStrenght.addProgress( variable2 * negativeValue);
+                playerStats.food.addProgress(variable2 *  negativeValue);
                 break;}
             case archWorkout: {
                 playerStats.energy.addProgress(0.25f * -negativeValue);
@@ -485,11 +432,6 @@ public class Player extends Actor {
                 playerStats.stress.addProgress(0.1f * -negativeValue);
                 playerStats.food.addProgress(-negativeValue);
                 playerStats.gripStrenght.addProgress(positiveValue);
-                break;}
-            case sittingRev:{
-                playerStats.energy.addProgress(0.2f * negativeValue);
-                playerStats.stress.addProgress(0.1f * negativeValue);
-
                 break;}
         }
     }
@@ -536,7 +478,7 @@ public class Player extends Actor {
                 }
                 if (MyGdxGame.path.get(0).x == (int) getX() / MyGdxGame.mapCoorinateCorrector && MyGdxGame.path.get(0).y == (int) getY() / MyGdxGame.mapCoorinateCorrector) {
                     MyGdxGame.path.remove(0);
-                    lastWalkeblePosition.set(getX(), getY());
+                    lastWalkablePosition.set(getX(), getY());
                 }
             }
     }
@@ -547,11 +489,7 @@ public class Player extends Actor {
     }
 
     void ceilPos() {
-
-        if(getX() % 10 != 5f )
-           setX(getX() - getX() % 10 );
-        if(getY() % 10 != 5 && getY() % 10 != 0)
-            setY(getY() - getY() % 10 );
+           setPosition(getX() % 10 != 5f ? getX() - getX() % 10 : getX(), getY() % 10 != 5 && getY() % 10 != 0 ? getY() - getY() % 10 : getY());
     }
 }
 
