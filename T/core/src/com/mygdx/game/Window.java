@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+/*
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -209,7 +210,9 @@ public class Window extends Actor{
             int idx = allList.indexOf(shownList.get(shownList.size() - 1));
             shownList.clear();
 
-            while (idx + 1 < allList.size() /*&& shownList.size() < capacity*/){
+            while (idx + 1 < allList.size() */
+/*&& shownList.size() < capacity*//*
+){
                 System.out.println(allList.size());
                 System.out.println(shownList.size());
                 shownList.add(allList.get(idx + 1));
@@ -223,3 +226,4 @@ public class Window extends Actor{
 
 }
 
+*/

@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+/*
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -281,3 +282,4 @@ public class StatBar extends Actor {
 
     }
 }
+*/

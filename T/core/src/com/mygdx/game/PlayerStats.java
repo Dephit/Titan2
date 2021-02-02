@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+/*
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Color;
@@ -240,3 +241,4 @@ class PlayerStats {
         }
     }
 }
+*/

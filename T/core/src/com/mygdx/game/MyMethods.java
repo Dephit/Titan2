@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Locale;
+/*
 
 public abstract class MyMethods {
 
@@ -159,7 +160,8 @@ public abstract class MyMethods {
         return new Animation<TextureRegion>(Frame_duraction, walkFrames);
 
         // TODO should be good to do it like it the example below
-      /*  TextureRegion[][] tmp = textureAtlas.findRegion(getName()).split((int) (getWidth() / 5), (int) (getHeight() / 5));
+      */
+/*  TextureRegion[][] tmp = textureAtlas.findRegion(getName()).split((int) (getWidth() / 5), (int) (getHeight() / 5));
 
         TextureRegion[] walkFrames = new TextureRegion[colls * rows];
         int index = 0;
@@ -169,7 +171,9 @@ public abstract class MyMethods {
             }
         }
 
-        animation = new Animation<TextureRegion>(1f, walkFrames);*/
+        animation = new Animation<TextureRegion>(1f, walkFrames);*//*
+
     }
 
 }
+*/

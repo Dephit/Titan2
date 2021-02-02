@@ -99,12 +99,13 @@ public class AndroidLauncher extends AndroidApplication implements IActivityRequ
 
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		gameLayout = createGameLayout(config);
+		launchGame();
 
-		if(mAuth.getCurrentUser() != null){
+		/*if(mAuth.getCurrentUser() != null){
 			account = GoogleSignIn.getLastSignedInAccount(this);
 			launchGame();
 		} else
-			setContentView(R.layout.login_activity);
+			setContentView(R.layout.login_activity);*/
 	}
 
 	private void launchGame() {
@@ -280,6 +281,16 @@ public class AndroidLauncher extends AndroidApplication implements IActivityRequ
 	@Override
 	public Map<String, Object> loadData() {
 		return data;
+	}
+
+	@Override
+	public void showToast(final String s) {
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				Toast.makeText(AndroidLauncher.this.getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+			}
+		});
 	}
 
 	@Override

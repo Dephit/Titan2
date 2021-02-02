@@ -1,7 +1,5 @@
 package com.mygdx.game;
 
-import static com.mygdx.game.MyMethods.getPath;
-
 import java.util.Locale;
 
 import com.badlogic.gdx.Gdx;
@@ -40,7 +38,6 @@ public class FontFactory {
     }
 
     public void initialize() {
-        // If fonts are already generated, dispose it!
         if (esFont != null) esFont.dispose();
         if (ruFont != null) ruFont.dispose();
 
@@ -48,32 +45,17 @@ public class FontFactory {
         ruFont = generateFont(RUSSIAN_FONT_NAME, RUSSIAN_CHARACTERS);
     }
 
-    /**
-     * Generate a BitmapFont with font name and characters received as params
-     *
-     * @param fontName    Font name
-     * @param characters  Characters to generate
-     *
-     * @return Generated BitmapFont
-     */
     private BitmapFont generateFont(String fontName, String characters) {
 
-        // Configure font parameters
         parameter = new FreeTypeFontParameter();
         parameter.characters = characters;
         parameter.size = 24;
 
-        // Generate font
-        String path;
-            path=getPath()+fontName;
+        String path = Preffics.getInstance().getPath() + fontName;
 
         generator = new FreeTypeFontGenerator( Gdx.files.internal(path) );
-       // FreeTypeFontGenerator generator = new FreeTypeFontGenerator( Gdx.files.internal(fontName) );
         font = generator.generateFont(parameter);
-
-        // Dispose resources
         generator.dispose();
-
         return font;
     }
 

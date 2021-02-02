@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+/*
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -15,7 +16,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import static com.badlogic.gdx.net.HttpRequestBuilder.json;
-import static com.mygdx.game.MyGdxGame.playerStats;
 import static com.mygdx.game.MyMethods.getJson;
 import static com.mygdx.game.MyMethods.getPath;
 import static com.mygdx.game.Player.PlayerCondition.bench;
@@ -54,8 +54,6 @@ public class Player extends Actor {
     ArrayList<StatBar> stats;
 
     private Vector2 speed;
-
-
 
     float animationTime;
     private TextureRegion currentFrame = new TextureRegion();
@@ -302,138 +300,6 @@ public class Player extends Actor {
                                variable <= 0.8f ? 0.1f :
                                variable <= 0.9f ? 0.15f :
                                        0.2f ;
-        switch (playerCondition){
-            //TODO not sitting, working, need an animation for this on too
-            case sitting:{
-                float variable2 = -0.125f;
-                if(playerStats.energy.getCurrentAmount() >= 2 * variable2 * negativeValue &&
-                        playerStats.stress.getCurrentAmount() >= variable2 * negativeValue &&
-                        playerStats.food.getCurrentAmount() >= variable2 * negativeValue) {
-                    playerStats.money += 10;
-                    playerStats.energy.addProgress(2 * variable2 * negativeValue);
-                    playerStats.stress.addProgress(variable2 * negativeValue);
-                    playerStats.food.addProgress(variable2 * negativeValue);
-
-                    playerStats.deadliftTechnic.addProgress(variable2 * negativeValue);
-                    playerStats.squatTechnic.addProgress(variable2 * negativeValue);
-                    playerStats.benchTechnic.addProgress(variable2 * negativeValue);
-                    playerStats.backStrenght.addProgress(variable2 * negativeValue);
-                    playerStats.legStrenght.addProgress(variable2 * negativeValue);
-                    playerStats.gripStrenght.addProgress(variable2 * negativeValue);
-                    playerStats.archStrenght.addProgress(variable2 * negativeValue);
-                    playerStats.armStrenght.addProgress(variable2 * negativeValue);
-
-                }
-                break;
-            }
-            case squat:{
-                doExercise = false;
-
-                playerStats.legStrenght.addProgress(0.25f * positiveValue);
-                playerStats.backStrenght.addProgress( 0.25f * positiveValue);
-                playerStats.squatTechnic.addProgress(0.5f * positiveValue);
-
-                playerStats.energy.addProgress(- negativeValue * playerStats.food.getCurrentAmount());
-                playerStats.food.addProgress(- negativeValue);
-                playerStats.stress.addProgress(-1.5f * negativeValue);
-                break;}
-            case bench:{
-                doExercise = false;
-                playerStats.armStrenght.addProgress( 0.25f * positiveValue);
-                playerStats.archStrenght.addProgress( 0.125f * positiveValue);
-                playerStats.benchTechnic.addProgress(0.5f * positiveValue);
-
-                playerStats.energy.addProgress(-negativeValue * playerStats.food.getCurrentAmount());
-                playerStats.food.addProgress(-negativeValue);
-                playerStats.stress.addProgress(-1.5f * negativeValue);
-                break;}
-            case deadlift:{
-                doExercise = false;
-                playerStats.deadliftTechnic.addProgress(0.5f * positiveValue);
-                playerStats.backStrenght.addProgress(0.25f * positiveValue);
-                playerStats.gripStrenght.addProgress(0.25f * positiveValue);
-
-                playerStats.energy.addProgress(-negativeValue * playerStats.food.getCurrentAmount());
-                playerStats.food.addProgress(-negativeValue);
-                playerStats.stress.addProgress(-1.5f * negativeValue);
-                break;}
-            case hiper:{
-                doExercise = false;
-                playerStats.backStrenght.addProgress(0.5f * positiveValue);
-                playerStats.energy.addProgress(0.5f * -negativeValue);
-                playerStats.stress.addProgress(0.25f * -negativeValue);
-                playerStats.food.addProgress(-negativeValue);
-                break;}
-            case pullUps:{
-                doExercise = false;
-                playerStats.backStrenght.addProgress(0.5f * positiveValue);
-                playerStats.energy.addProgress(0.5f * -negativeValue);
-                playerStats.stress.addProgress(0.25f * -negativeValue);
-                playerStats.food.addProgress(-negativeValue);
-                break;}
-            case sleeping:{
-                //doExercise = false;
-                float variable2 = -0.25f;
-                if(playerStats.energy.getCurrentAmount() <= 1) {
-                    playerStats.energy.addProgress(1.5f * positiveValue);
-                    playerStats.stress.addProgress(positiveValue);
-
-                    playerStats.deadliftTechnic.addProgress(variable2 * negativeValue);
-                    playerStats.squatTechnic.addProgress(variable2 * negativeValue);
-                    playerStats.benchTechnic.addProgress(variable2 * negativeValue);
-                    playerStats.backStrenght.addProgress(variable2 * negativeValue);
-                    playerStats.legStrenght.addProgress(variable2 * negativeValue);
-                    playerStats.gripStrenght.addProgress(variable2 * negativeValue);
-                    playerStats.archStrenght.addProgress(variable2 * negativeValue);
-                    playerStats.armStrenght.addProgress(variable2 * negativeValue);
-                    playerStats.food.addProgress(variable2 * negativeValue);
-                }
-                break;}
-            case pushUps: {
-                doExercise = false;
-                playerStats.armStrenght.addProgress(positiveValue);
-
-                playerStats.energy.addProgress(0.5f * -negativeValue);
-                playerStats.stress.addProgress(0.25f * -negativeValue);
-                playerStats.food.addProgress(-negativeValue);
-                break;}
-            case legPress:{
-                doExercise = false;
-                playerStats.legStrenght.addProgress(positiveValue);
-
-                playerStats.energy.addProgress(0.5f * -negativeValue);
-                playerStats.stress.addProgress(0.25f * -negativeValue);
-                playerStats.food.addProgress(-negativeValue);
-
-                break;}
-            case pcSitting:{
-                float variable2 = -0.25f;
-                playerStats.energy.addProgress( positiveValue );
-                playerStats.stress.addProgress( 1.5f * positiveValue );
-
-                playerStats.deadliftTechnic.addProgress( variable2 * negativeValue);
-                playerStats.squatTechnic.addProgress( variable2 * negativeValue);
-                playerStats.benchTechnic.addProgress( variable2 * negativeValue);
-                playerStats.backStrenght.addProgress( variable2 * negativeValue);
-                playerStats.legStrenght.addProgress(variable2 * negativeValue);
-                playerStats.gripStrenght.addProgress( variable2 * negativeValue);
-                playerStats.archStrenght.addProgress( variable2 * negativeValue);
-                playerStats.armStrenght.addProgress( variable2 * negativeValue);
-                playerStats.food.addProgress(variable2 *  negativeValue);
-                break;}
-            case archWorkout: {
-                playerStats.energy.addProgress(0.25f * -negativeValue);
-                playerStats.stress.addProgress(0.1f * -negativeValue);
-                playerStats.food.addProgress(-negativeValue);
-                playerStats.archStrenght.addProgress(positiveValue);
-                break;}
-            case gripWorkout:{
-                playerStats.energy.addProgress(0.25f * -negativeValue);
-                playerStats.stress.addProgress(0.1f * -negativeValue);
-                playerStats.food.addProgress(-negativeValue);
-                playerStats.gripStrenght.addProgress(positiveValue);
-                break;}
-        }
     }
 
     private void playCompAnimation(float delta){
@@ -493,3 +359,4 @@ public class Player extends Actor {
     }
 }
 
+*/

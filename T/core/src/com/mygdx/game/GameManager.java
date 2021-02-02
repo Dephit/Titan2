@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Json;
 
 import java.util.Map;
 
+/*
 public class GameManager {
     private static GameManager ourInstance = new GameManager();
 
@@ -39,3 +40,4 @@ public class GameManager {
         return ourInstance;
     }
 }
+*/

@@ -8,4 +8,5 @@ public interface IActivityRequestHandler {
     public void signOut();
     public void saveData(Map value);
     public Map loadData();
+    public void showToast(String s);
 }

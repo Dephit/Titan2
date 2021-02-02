@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+/*
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -80,11 +81,15 @@ public class Message extends Actor{
     public void draw(Batch batch, float parentAlpha) {
         if(!flip){
             batch.draw(message, x - (width * mult) , y,  width * mult, height * mult );
-            textDrawing(batch, /*util.format(text)*/ text, textX - (width * mult), textY,1f, Color.BLACK);
+            textDrawing(batch, */
+/*util.format(text)*//*
+ text, textX - (width * mult), textY,1f, Color.BLACK);
         }
         else{
             batch.draw(message, x + width * mult, y ,  -width * mult, height * mult );
-            textDrawing(batch, /*util.format(text)*/ text, textX, textY,1f, Color.BLACK);
+            textDrawing(batch, */
+/*util.format(text)*//*
+ text, textX, textY,1f, Color.BLACK);
         }
     }
 
@@ -120,4 +125,4 @@ public class Message extends Actor{
     }
 
 
-}
+}*/
