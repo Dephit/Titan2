@@ -38,6 +38,7 @@ public class Player extends Npc {
     private final TextureRegion currentFrame = new TextureRegion();
     private float animationTime = 0;
     private float nextX,nextY;
+    private boolean playAnim = false;
 
     Player() {
         Preffics preffics = Preffics.getInstance();
@@ -82,7 +83,7 @@ public class Player extends Npc {
         nextY = 0;
     }
 
-    void     setPlayerCondition(PlayerCondition playerCondition) {
+    void setPlayerCondition(PlayerCondition playerCondition) {
         this.playerCondition = playerCondition;
     }
 
@@ -97,19 +98,18 @@ public class Player extends Npc {
     public void act(float delta) {
         super.act(delta);
 
-        /*if (isAnimationFinished()) {
+        if (isAnimationFinished()) {
             animationTime = 0;
-            calculateProgress();
-            playerStats.calcRes();
+            //  calculateProgress();
+            //playerStats.calcRes();
         }
-        if(doExercise)
-            animationTime += delta ;
+        /*
         if(playerCondition == compSquat || playerCondition == compBench || playerCondition == compDeadlift)
             playCompAnimation(delta);
         else
             */
-        animationTime += delta ;
-
+        if(playAnim)
+            animationTime += delta ;
         playAnimation(delta);
 
         changePlayerCondition();
@@ -148,7 +148,7 @@ public class Player extends Npc {
         setX(getX() + speed.x);
         setY(getY() + speed.y);
         speed.setZero();
-        if(path!=null)
+        if(path != null)
             if(!path.isEmpty()) {
                 if (path.get(0).x > getX() / preffics.mapCoordinateCorrector) {
                     speed.x = 5f;
@@ -190,8 +190,7 @@ public class Player extends Npc {
                     xGoal / preffics.mapCoordinateCorrector,
                     yGoal / preffics.mapCoordinateCorrector);
         }
-        //player.doExercise = true;
-
+        playAnim = true;
         setPlayersAction(PlayerCondition.stay, xDestination, yDestination);
     }
 }

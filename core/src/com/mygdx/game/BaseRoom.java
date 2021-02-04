@@ -85,8 +85,10 @@ public class BaseRoom extends Stage {
 
     public void onTouchDown(InputEvent event, float x, float y, int pointer, int button) {
         touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-        player.setPath((int)touchPos.x, (int)touchPos.y, 0, 0);
         camera.unproject(touchPos);
+        if (Preffics.getInstance().mapArr[(int) touchPos.y / Preffics.getInstance().mapCoordinateCorrector][(int) touchPos.x / Preffics.getInstance().mapCoordinateCorrector] != -1) {
+            player.setPath((int)touchPos.x, (int)touchPos.y, 0, 0);
+        }
     }
 
     public void resize(int width, int height) {
@@ -106,7 +108,6 @@ public class BaseRoom extends Stage {
         }
 
         showPath(preffics);
-
         getBatch().end();
         draw();
         act(Gdx.graphics.getDeltaTime());

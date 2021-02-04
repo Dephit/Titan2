@@ -28,19 +28,19 @@ com/mygdx/game/ObjectData.java
  com.mygdx.game.ObjectData
 com/mygdx/game/FontFactory.java
  com.mygdx.game.FontFactory
+com/mygdx/game/TextToDraw.java
+ com.mygdx.game.TextView
+com/mygdx/game/Preffics.java
+ com.mygdx.game.Preffics
+com/mygdx/game/Npc.java
+ com.mygdx.game.Npc
 com/mygdx/game/Player.java
  com.mygdx.game.Player
  com.mygdx.game.PlayerCondition
-com/mygdx/game/Preffics.java
- com.mygdx.game.Preffics
 com/mygdx/game/MyGdxGame.java
  com.mygdx.game.MyGdxGame
  com.mygdx.game.MyGdxGame$1
-com/mygdx/game/Npc.java
- com.mygdx.game.Npc
 com/mygdx/game/GymRoom.java
  com.mygdx.game.GymRoom
 com/mygdx/game/BaseRoom.java
  com.mygdx.game.BaseRoom
-com/mygdx/game/TextToDraw.java
- com.mygdx.game.TextView
