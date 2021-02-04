@@ -1,0 +1,75 @@
+
+objects.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+aquarium
+  rotate: false
+  xy: 1, 78
+  size: 1080, 23
+  orig: 1080, 23
+  offset: 0, 0
+  index: -1
+rocket
+  rotate: false
+  xy: 1, 43
+  size: 440, 33
+  orig: 440, 33
+  offset: 0, 0
+  index: -1
+kitchen
+  rotate: false
+  xy: 443, 5
+  size: 132, 71
+  orig: 132, 71
+  offset: 0, 0
+  index: -1
+chest
+  rotate: false
+  xy: 577, 8
+  size: 113, 68
+  orig: 113, 68
+  offset: 0, 0
+  index: -1
+kitchen2
+  rotate: false
+  xy: 1, 1
+  size: 103, 40
+  orig: 103, 40
+  offset: 0, 0
+  index: -1
+bed
+  rotate: false
+  xy: 692, 31
+  size: 65, 45
+  orig: 65, 45
+  offset: 0, 0
+  index: -1
+pc
+  rotate: false
+  xy: 759, 35
+  size: 46, 41
+  orig: 46, 41
+  offset: 0, 0
+  index: -1
+tv
+  rotate: false
+  xy: 106, 9
+  size: 50, 32
+  orig: 50, 32
+  offset: 0, 0
+  index: -1
+sofa
+  rotate: false
+  xy: 807, 41
+  size: 38, 35
+  orig: 38, 35
+  offset: 0, 0
+  index: -1
+wall
+  rotate: false
+  xy: 847, 41
+  size: 21, 35
+  orig: 21, 35
+  offset: 0, 0
+  index: -1

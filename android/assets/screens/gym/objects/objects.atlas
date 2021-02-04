@@ -1,0 +1,145 @@
+
+objects.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+benchesNearDumbs
+  rotate: false
+  xy: 1, 449
+  size: 1891, 38
+  orig: 1891, 38
+  offset: 0, 0
+  index: -1
+coach
+  rotate: false
+  xy: 1, 391
+  size: 1581, 56
+  orig: 1581, 56
+  offset: 0, 0
+  index: -1
+bike
+  rotate: false
+  xy: 1, 177
+  size: 904, 212
+  orig: 904, 212
+  offset: 0, 0
+  index: -1
+run
+  rotate: false
+  xy: 1, 108
+  size: 660, 67
+  orig: 660, 67
+  offset: 0, 0
+  index: -1
+mirror
+  rotate: false
+  xy: 907, 229
+  size: 490, 160
+  orig: 490, 160
+  offset: 0, 0
+  index: -1
+armwrestlers
+  rotate: false
+  xy: 1, 52
+  size: 370, 54
+  orig: 370, 54
+  offset: 0, 0
+  index: -1
+bench
+  rotate: false
+  xy: 1584, 400
+  size: 264, 47
+  orig: 264, 47
+  offset: 0, 0
+  index: -1
+rack
+  rotate: false
+  xy: 663, 113
+  size: 237, 62
+  orig: 237, 62
+  offset: 0, 0
+  index: -1
+deadlift
+  rotate: false
+  xy: 907, 199
+  size: 243, 28
+  orig: 243, 28
+  offset: 0, 0
+  index: -1
+plates
+  rotate: false
+  xy: 1, 1
+  size: 220, 49
+  orig: 220, 49
+  offset: 0, 0
+  index: -1
+legpress
+  rotate: false
+  xy: 373, 48
+  size: 207, 58
+  orig: 207, 58
+  offset: 0, 0
+  index: -1
+secret
+  rotate: false
+  xy: 1399, 335
+  size: 136, 54
+  orig: 136, 54
+  offset: 0, 0
+  index: -1
+pullups
+  rotate: false
+  xy: 1399, 271
+  size: 114, 62
+  orig: 114, 62
+  offset: 0, 0
+  index: -1
+dumbels
+  rotate: false
+  xy: 223, 11
+  size: 101, 39
+  orig: 101, 39
+  offset: 0, 0
+  index: -1
+plate
+  rotate: false
+  xy: 582, 45
+  size: 48, 61
+  orig: 48, 61
+  offset: 0, 0
+  index: -1
+plate2
+  rotate: false
+  xy: 1537, 328
+  size: 48, 61
+  orig: 48, 61
+  offset: 0, 0
+  index: -1
+hiper
+  rotate: false
+  xy: 1850, 406
+  size: 35, 41
+  orig: 35, 41
+  offset: 0, 0
+  index: -1
+benchNearCoach
+  rotate: false
+  xy: 632, 61
+  size: 26, 45
+  orig: 26, 45
+  offset: 0, 0
+  index: -1
+benchNearTreads
+  rotate: false
+  xy: 1399, 224
+  size: 26, 45
+  orig: 26, 45
+  offset: 0, 0
+  index: -1
+magnesium
+  rotate: false
+  xy: 1894, 450
+  size: 18, 37
+  orig: 18, 37
+  offset: 0, 0
+  index: -1
