@@ -82,8 +82,8 @@ public class Player extends Npc {
         nextY = 0;
     }
 
-    boolean isAnimationFinished(){
-        return animMap.get(playerCondition.toString()) != null && animMap.get(playerCondition.toString()).getAnimationDuration() < animationTime;
+    void     setPlayerCondition(PlayerCondition playerCondition) {
+        this.playerCondition = playerCondition;
     }
 
     private void playAnimation(float delta){
@@ -108,6 +108,7 @@ public class Player extends Npc {
             playCompAnimation(delta);
         else
             */
+        animationTime += delta ;
 
         playAnimation(delta);
 
@@ -115,6 +116,12 @@ public class Player extends Npc {
         walk();
     }
 
+    boolean isAnimationFinished(){
+        return animMap.get(playerCondition.toString()) != null && animMap.get(playerCondition.toString()).getAnimationDuration() < animationTime;
+    }
+    boolean isAnimationStarted(){
+        return animationTime > 0;
+    }
 
     void changePlayerCondition() {
         if(path != null)
@@ -130,24 +137,29 @@ public class Player extends Npc {
             else if(speed.y < 0) playerCondition = PlayerCondition.down;
     }
 
-
+    void setPlayersAction(PlayerCondition playerCondition, int x, int y) {
+        this.nextPlayerCondition = playerCondition;
+        nextX = x;
+        nextY = y;
+    }
 
     private void walk() {
+        Preffics preffics = Preffics.getInstance();
         setX(getX() + speed.x);
         setY(getY() + speed.y);
         speed.setZero();
         if(path!=null)
             if(!path.isEmpty()) {
-                if (path.get(0).x > getX() / mapCoordinateCorrector) {
+                if (path.get(0).x > getX() / preffics.mapCoordinateCorrector) {
                     speed.x = 5f;
-                } if (path.get(0).x < getX() / mapCoordinateCorrector) {
+                } if (path.get(0).x < getX() / preffics.mapCoordinateCorrector) {
                     speed.x = -5f;
-                } if (path.get(0).y > getY() / mapCoordinateCorrector) {
+                } if (path.get(0).y > getY() / preffics.mapCoordinateCorrector) {
                     speed.y = 5f;
-                } if (path.get(0).y < getY() / mapCoordinateCorrector) {
+                } if (path.get(0).y < getY() / preffics.mapCoordinateCorrector) {
                     speed.y = -5f;
                 }
-                if (path.get(0).x == (int) getX() / mapCoordinateCorrector && path.get(0).y == (int) getY() / mapCoordinateCorrector) {
+                if (path.get(0).x == (int) getX() / preffics.mapCoordinateCorrector && path.get(0).y == (int) getY() / preffics.mapCoordinateCorrector) {
                     path.remove(0);
                     lastWalkablePosition.set(getX(), getY());
                 }
@@ -156,6 +168,31 @@ public class Player extends Npc {
 
     void log(String msg){
         System.out.println("PLAYER" + ": " + msg);
+    }
+
+    public void setPath(int xGoal, int yGoal, int xDestination, int yDestination) {
+        Preffics preffics = Preffics.getInstance();
+        int pX = (int) getX() / preffics.mapCoordinateCorrector, pY = (int) getY() / preffics.mapCoordinateCorrector;
+
+        if (path != null)
+            if (path.size() > 0)
+                if (path.get(0).x != pX || path.get(0).y != pY) {
+                    lastWalkablePosition.set(getX(), getY());
+                }
+
+        if (xGoal / preffics.mapCoordinateCorrector != map2d.xGoal || yGoal / preffics.mapCoordinateCorrector != map2d.yGoal ){
+            setPosition(lastWalkablePosition.x, lastWalkablePosition.y);
+            ceilPos();
+
+            path = map2d.findPath(
+                    pX,
+                    pY,
+                    xGoal / preffics.mapCoordinateCorrector,
+                    yGoal / preffics.mapCoordinateCorrector);
+        }
+        //player.doExercise = true;
+
+        setPlayersAction(PlayerCondition.stay, xDestination, yDestination);
     }
 }
 

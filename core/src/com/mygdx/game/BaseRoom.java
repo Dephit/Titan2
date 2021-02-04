@@ -22,8 +22,6 @@ import static com.badlogic.gdx.net.HttpRequestBuilder.json;
 
 public class BaseRoom extends Stage {
 
-    public static List<Grid2d.MapNode> path = new LinkedList<Grid2d.MapNode>();
-
     private Player player;
     protected String ROOM_TAG = "";
     protected String BACKGROUND_PATH_TAG;
@@ -36,9 +34,6 @@ public class BaseRoom extends Stage {
 
     private OrthographicCamera camera;
     private Vector3 touchPos;
-    private int mapCoorinateCorrector;
-    private double[][] mapArr;
-    private Grid2d map2d;
 
     public BaseRoom(String tag) {
         super(new FitViewport(Preffics.SCREEN_WIDTH, Preffics.SCREEN_HEIGHT));
@@ -53,32 +48,7 @@ public class BaseRoom extends Stage {
         ROOM_TAG = tag;
         BACKGROUND_PATH_TAG = "screens/" + ROOM_TAG + "/" + ROOM_TAG + ".png";
         init();
-        player.setPath(path);
         addActor(player);
-    }
-
-    private void createMap() {
-        int mapSize = 14;
-        mapCoorinateCorrector = 50;
-        mapArr = new double[mapSize][mapSize * 4];
-        // saveRoomMap();
-        RestoreMap();
-
-        map2d = new Grid2d(mapArr, false);
-        if (path != null)
-            path.clear();
-    }
-
-    private void RestoreMap() {
-        try {
-            ArrayList<Coordinates> coordinates = Preffics.getInstance().fromObjectFromJson("screens/" + ROOM_TAG + "/" + ROOM_TAG + ".json", ArrayList.class);
-            for (Coordinates coordinate : coordinates) {
-                log(coordinate.x + " : " + coordinate.y);
-                mapArr[coordinate.x][coordinate.y] = -1;
-            }
-        } catch (GdxRuntimeException ignored) {
-
-        }
     }
 
     public void init() {
@@ -97,7 +67,8 @@ public class BaseRoom extends Stage {
         tex4 = new Texture(pix4);
 
         Gdx.input.setInputProcessor(this);
-        createMap();
+        Preffics.getInstance().createMap(ROOM_TAG);
+        player.clearPath();
     }
 
     public Pixmap createProceduralPixmap (int width, int height, float r, float g, float b) {
@@ -114,7 +85,7 @@ public class BaseRoom extends Stage {
 
     public void onTouchDown(InputEvent event, float x, float y, int pointer, int button) {
         touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-        setPath((int)touchPos.x, (int)touchPos.y, 0, 0);
+        player.setPath((int)touchPos.x, (int)touchPos.y, 0, 0);
         camera.unproject(touchPos);
     }
 
@@ -133,10 +104,32 @@ public class BaseRoom extends Stage {
         } else {
             onLoading(preffics);
         }
+
+        showPath(preffics);
+
         getBatch().end();
         draw();
         act(Gdx.graphics.getDeltaTime());
     }
+
+    private void showPath(Preffics preffics) {
+        for(int i = 0; i < preffics.mapSize; i++) {
+            for (int j = 0; j < preffics.mapSize * 4; j++) {
+                if (preffics.mapArr[i][j] == 0)
+                    getBatch().draw(tex3, j * preffics.mapCoordinateCorrector, i * preffics.mapCoordinateCorrector, 8, 8);
+                else
+                    getBatch().draw(tex4, j * preffics.mapCoordinateCorrector, i * preffics.mapCoordinateCorrector, 8, 8);
+            }
+            getBatch().draw(tex2, (int) player.getX() / preffics.mapCoordinateCorrector, (int) player.getY() / preffics.mapCoordinateCorrector, 8, 8);
+            try {
+                for (Grid2d.MapNode mapNode : player.path) {
+                    getBatch().draw(tex2, mapNode.x * preffics.mapCoordinateCorrector, mapNode.y * preffics.mapCoordinateCorrector, 8, 8);
+                }
+            } catch (NullPointerException ignored) {
+            }
+        }
+    }
+
 
     private void onLoading(Preffics preffics) {
         preffics.updateLoading();
@@ -192,29 +185,6 @@ public class BaseRoom extends Stage {
 
     void log(String msg){
         System.out.println(ROOM_TAG + ": " + msg);
-    }
-
-    private void setPath(int xGoal, int yGoal, int xDestination, int yDestination) {
-        int pX = (int) player.getX() / mapCoorinateCorrector, pY = (int) player.getY() / mapCoorinateCorrector;
-
-        if (path != null)
-            if (path.size() > 0)
-                if (path.get(0).x != pX || path.get(0).y != pY) {
-                    player.lastWalkablePosition.set(player.getX(), player.getY());
-                }
-
-        if (xGoal / mapCoorinateCorrector != map2d.xGoal || yGoal / mapCoorinateCorrector != map2d.yGoal ){
-            player.setPosition(player.lastWalkablePosition.x, player.lastWalkablePosition.y);
-            player.ceilPos();
-
-            path = map2d.findPath(
-                    pX,
-                    pY,
-                    xGoal / mapCoorinateCorrector,
-                    yGoal / mapCoorinateCorrector);
-        }
-        /*player.doExercise = true;
-        player.setPlayersAction(playerCondition, xDestination, yDestination);*/
     }
 
 }

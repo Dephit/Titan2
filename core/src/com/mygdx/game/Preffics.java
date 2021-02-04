@@ -4,6 +4,7 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -17,9 +18,13 @@ public class Preffics {
 
     private final AssetManager assetManager = new AssetManager();
 
+    protected int mapCoordinateCorrector = 50;
+
     private static Preffics instance;
     private Locale locale = null;
     private Language language;
+    public double[][] mapArr;
+    public int mapSize;
 
     static Preffics getInstance(){
         if(instance == null){
@@ -91,5 +96,26 @@ public class Preffics {
 
     public void clearAssets() {
         assetManager.clear();
+    }
+
+
+
+    public void createMap(String tag) {
+        mapSize = 14;
+        mapCoordinateCorrector = 50;
+        mapArr = new double[mapSize][mapSize * 4];
+        // saveRoomMap();
+        RestoreMap(tag);
+    }
+
+    public void RestoreMap(String tag) {
+        try {
+            ArrayList<Coordinates> coordinates = Preffics.getInstance().fromObjectFromJson("screens/" + tag + "/" + tag + ".json", ArrayList.class);
+            for (Coordinates coordinate : coordinates) {
+                mapArr[coordinate.x][coordinate.y] = -1;
+            }
+        } catch (GdxRuntimeException ignored) {
+
+        }
     }
 }
