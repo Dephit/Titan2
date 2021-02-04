@@ -9,7 +9,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -20,9 +23,9 @@ import java.util.List;
 
 import static com.badlogic.gdx.net.HttpRequestBuilder.json;
 
-public class BaseRoom extends Stage {
+public abstract class BaseRoom extends Stage {
 
-    private Player player;
+    public Player player;
     protected String ROOM_TAG = "";
     protected String BACKGROUND_PATH_TAG;
 
@@ -86,8 +89,10 @@ public class BaseRoom extends Stage {
     public void onTouchDown(InputEvent event, float x, float y, int pointer, int button) {
         touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         camera.unproject(touchPos);
-        if (Preffics.getInstance().mapArr[(int) touchPos.y / Preffics.getInstance().mapCoordinateCorrector][(int) touchPos.x / Preffics.getInstance().mapCoordinateCorrector] != -1) {
-            player.setPath((int)touchPos.x, (int)touchPos.y, 0, 0);
+        Preffics preffics = Preffics.getInstance();
+        double[][] mapArr = preffics.mapArr;
+        if (mapArr[(int) touchPos.y / preffics.mapCoordinateCorrector][(int) touchPos.x / preffics.mapCoordinateCorrector] != -1) {
+            player.setPath((int)touchPos.x, (int)touchPos.y, 0, 0, PlayerCondition.stay);
         }
     }
 
@@ -170,6 +175,7 @@ public class BaseRoom extends Stage {
         final ArrayList<ObjectData> objectList = preffics.fromObjectFromJson("screens/" + ROOM_TAG + "/objects/objects.json", ArrayList.class);
         for (ObjectData object: objectList){
             object.setAtlas(textureAtlas);
+            object.addListener(getEventListener(object.name));
             log(object.name + ", " + object.x + ", " + object.y);
             addActor(object);
         }
@@ -188,5 +194,6 @@ public class BaseRoom extends Stage {
         System.out.println(ROOM_TAG + ": " + msg);
     }
 
+    protected abstract InputListener getEventListener(String name);
 }
 

@@ -34,13 +34,16 @@ com/mygdx/game/Preffics.java
  com.mygdx.game.Preffics
 com/mygdx/game/Npc.java
  com.mygdx.game.Npc
+ com.mygdx.game.PlayerCondition
 com/mygdx/game/Player.java
  com.mygdx.game.Player
- com.mygdx.game.PlayerCondition
+com/mygdx/game/MyInputListener.java
+ com.mygdx.game.MyInputListener
 com/mygdx/game/MyGdxGame.java
  com.mygdx.game.MyGdxGame
  com.mygdx.game.MyGdxGame$1
 com/mygdx/game/GymRoom.java
  com.mygdx.game.GymRoom
+ com.mygdx.game.GymRoom$1
 com/mygdx/game/BaseRoom.java
  com.mygdx.game.BaseRoom
