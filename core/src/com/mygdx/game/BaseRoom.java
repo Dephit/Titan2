@@ -119,7 +119,7 @@ public abstract class BaseRoom extends Stage  {
             onLoading(preffics);
         }
 
-        showPath(preffics);
+        //showPath(preffics);
         getBatch().end();
         draw();
         act(Gdx.graphics.getDeltaTime());

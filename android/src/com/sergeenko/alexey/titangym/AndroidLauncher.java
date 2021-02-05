@@ -110,7 +110,7 @@ public class AndroidLauncher extends AndroidApplication implements IActivityRequ
 
 	private void launchGame() {
 		user = mAuth.getCurrentUser();
-		dataBase();
+		//dataBase();
 		setContentView(gameLayout);
 	}
 
