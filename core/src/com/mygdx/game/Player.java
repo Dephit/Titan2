@@ -16,6 +16,8 @@ public class Player extends Npc {
         super("player");
     }
 
+    int currentGirlDialogProgress = 0;
+    int coachDialogProgress = 0;
 
 
 }

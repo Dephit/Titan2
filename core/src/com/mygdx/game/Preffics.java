@@ -16,7 +16,7 @@ public class Preffics {
     static int SCREEN_WIDTH = 1920;
     static int SCREEN_HEIGHT = 1080;
 
-    private final AssetManager assetManager = new AssetManager();
+    public final AssetManager assetManager = new AssetManager();
 
     protected int mapCoordinateCorrector = 50;
 

@@ -116,9 +116,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,6 +124,7 @@ import java.util.Random;
 
 public class Message extends BaseActor {
 
+    private Runnable runnable;
     String name;
     private Texture texture;
     private float width, height, mult = 1.5f;
@@ -139,13 +138,12 @@ public class Message extends BaseActor {
     private int textX, textY;
     private int currentDialog = 0;
 
-
-
-    public Message() {
-        init();
-    }
-
-    private void init() {
+    private void init(int x, int y, boolean flip, List<String> tree, List<String> random) {
+        this.x = x;
+        this.y = y;
+        dialogTree = tree;
+        randomText = random;
+        this.flip = flip;
         setName("message");
         name = getName();
         util = new StringAlignUtils(50, StringAlignUtils.Alignment.LEFT);
@@ -169,18 +167,27 @@ public class Message extends BaseActor {
     }
 
     public Message(int x, int y, boolean flip, List<String> tree, List<String> random) {
-        this.x = x;
-        this.y = y;
-        dialogTree = tree;
-        randomText = random;
-        this.flip = flip;
-        init();
+        init(x,y,flip, tree, random);
+    }
+
+    public Message(int x, int y, boolean flip, List<String> tree, List<String> random, int currentDialog, Runnable afterClickRunnable) {
+        this.currentDialog = currentDialog;
+        this.runnable = afterClickRunnable;
+        init(x, y, flip, tree, random);
+    }
+
+    @Override
+    public boolean remove() {
+        runnable = null;
+        return super.remove();
     }
 
     private void manageSize() {
         if(dialogTree.size() > 0 && currentDialog < dialogTree.size()){
             setData(dialogTree.get(currentDialog));
             currentDialog ++;
+            if(runnable != null)
+                runnable.run();
         }else if(randomText.size() > 0){
             setData(randomText.get(new Random().nextInt(randomText.size())));
         }

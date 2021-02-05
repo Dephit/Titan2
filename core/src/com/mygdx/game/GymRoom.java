@@ -4,7 +4,6 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import static com.mygdx.game.PlayerCondition.lookinLeft;
 import static com.mygdx.game.PlayerCondition.lookinUp;
@@ -93,7 +92,11 @@ public class GymRoom extends BaseRoom{
         player.setPath(1025, 450, 0, 0, lookinUp, () -> {
             Message message = new Message(1070, 670, true,
                     preffics.getLanguage().armGirlDialogTree,
-                    preffics.getLanguage().armGirlRandomText
+                    preffics.getLanguage().armGirlRandomText,
+                    player.currentGirlDialogProgress,
+                    () -> {
+                        player.currentGirlDialogProgress++;
+                    }
             );
             if (!getActors().contains(message, false))
                 addActor(message);
@@ -115,7 +118,9 @@ public class GymRoom extends BaseRoom{
         player.setPath(350, 50, 0, 0, lookinLeft, () -> {
             Message message = new Message(100, 240, true,
                     preffics.getLanguage().coachDialogTree,
-                    preffics.getLanguage().coachRandomText
+                    preffics.getLanguage().coachRandomText,
+                    player.coachDialogProgress,
+                    () -> player.coachDialogProgress++
             );
             if (!getActors().contains(message, false))
                 addActor(message);
