@@ -1,7 +1,6 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -9,21 +8,18 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.Event;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
-import static com.badlogic.gdx.net.HttpRequestBuilder.json;
+public abstract class BaseRoom extends Stage  {
 
-public abstract class BaseRoom extends Stage {
+    ArrayList<Npc> npcs = new ArrayList<>();
 
     public Player player;
     protected String ROOM_TAG = "";
@@ -36,7 +32,7 @@ public abstract class BaseRoom extends Stage {
 
 
     private OrthographicCamera camera;
-    private Vector3 touchPos;
+    protected Vector3 touchPos;
 
     public BaseRoom(String tag) {
         super(new FitViewport(Preffics.SCREEN_WIDTH, Preffics.SCREEN_HEIGHT));
@@ -48,6 +44,7 @@ public abstract class BaseRoom extends Stage {
     public BaseRoom(String tag, Player _player) {
         super(new FitViewport(Preffics.SCREEN_WIDTH, Preffics.SCREEN_HEIGHT));
         player = _player;
+        npcs.add(player);
         ROOM_TAG = tag;
         BACKGROUND_PATH_TAG = "screens/" + ROOM_TAG + "/" + ROOM_TAG + ".png";
         init();
@@ -155,6 +152,19 @@ public abstract class BaseRoom extends Stage {
             background = preffics.getByPath(BACKGROUND_PATH_TAG, Texture.class);
             createObjects(preffics);
         }else {
+            for(Actor objectData: getActors()){
+                if(objectData.getClass() == ObjectData.class){
+                    ObjectData obj = ((ObjectData) objectData);
+                    boolean oneFrame = false;
+                    for (Npc npc: npcs){
+                        if (obj.name.toLowerCase().equals(npc.playerCondition.name().toLowerCase())) {
+                            oneFrame = true;
+                            break;
+                        }
+                    }
+                    obj.setCertainFrame(oneFrame);
+                }
+            }
             getBatch().draw(background, 0, 0, getWidth(), getHeight());
             drawOrder();
         }
@@ -175,25 +185,33 @@ public abstract class BaseRoom extends Stage {
         final ArrayList<ObjectData> objectList = preffics.fromObjectFromJson("screens/" + ROOM_TAG + "/objects/objects.json", ArrayList.class);
         for (ObjectData object: objectList){
             object.setAtlas(textureAtlas);
-            object.addListener(getEventListener(object.name));
+            object.addListener(getEventListener(object.name, () -> object.setCertainFrame(true)));
+
             log(object.name + ", " + object.x + ", " + object.y);
             addActor(object);
         }
     }
 
-    private void drawOrder() {
+    protected void drawOrder() {
         for (int j = 0; j < getActors().size; j++) {
             for (int i = 0; i < getActors().size - 1; i++) {
-                if (getActors().get(i).getY() < getActors().get(i + 1).getY())
+                Actor iActor = getActors().get(i);
+                Actor iActorNext = getActors().get(i + 1);
+                if (iActor.getY() < getActors().get(i + 1).getY())
                     getActors().swap(i, i + 1);
+
+                orderExceptions(i, j);
             }
         }
+    }
+
+    protected void orderExceptions(int i, int j) {
     }
 
     void log(String msg){
         System.out.println(ROOM_TAG + ": " + msg);
     }
 
-    protected abstract InputListener getEventListener(String name);
+    protected abstract InputListener getEventListener(String name, Runnable runnable);
 }
 

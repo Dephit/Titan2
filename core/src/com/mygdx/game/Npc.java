@@ -11,7 +11,10 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.TreeMap;
+
+import static com.mygdx.game.PlayerCondition.legPress;
 
 enum PlayerCondition {
     //Walk
@@ -33,8 +36,8 @@ public class Npc extends Actor {
 
     private int sizeMult = 5;
 
-    protected PlayerCondition playerCondition;
-    private PlayerCondition nextPlayerCondition;
+    protected PlayerCondition playerCondition = PlayerCondition.stay;
+    private PlayerCondition nextPlayerCondition = PlayerCondition.stay;
 
     private final Vector2 speed;
     Vector2 lastWalkablePosition = new Vector2();
@@ -51,11 +54,12 @@ public class Npc extends Actor {
     public Npc(String name) {
         Preffics preffics = Preffics.getInstance();
         setName(name);
+        String name2 = "player";
         speed = new Vector2();
-        textureAtlas =  new TextureAtlas(preffics.getPath()+ name + "/" + name + ".atlas");
+        textureAtlas =  new TextureAtlas(preffics.getPath()+ name2 + "/" + name2 + ".atlas");
         animMap = new TreeMap<>();
 
-        final ArrayList<PlayerAnimationData> objectList = preffics.fromObjectFromJson(name + "/animation.json", ArrayList.class);
+        final ArrayList<PlayerAnimationData> objectList = preffics.fromObjectFromJson(name2 + "/animation.json", ArrayList.class);
         for (PlayerAnimationData animationData: objectList) {
             log(animationData.name + " " + animationData.colls + " " + animationData.frameDur + " " + animationData.rows);
             animMap.put(animationData.name, getAnim(animationData.name, animationData.colls, animationData.rows, animationData.frameDur));
@@ -87,13 +91,14 @@ public class Npc extends Actor {
         animationTime = 0;
         playerCondition = PlayerCondition.stay;
         nextPlayerCondition = PlayerCondition.stay;
-        nextX = 0;
-        nextY = 0;
+        lastWalkablePosition.set(getX(), getY());
+        nextX = 400;
+        nextY = 100;
     }
 
     private void playAnimation(float delta){
         try {
-            currentFrame.setRegion(animMap.get(playerCondition.toString().toLowerCase()).getKeyFrame(animationTime, true));
+            currentFrame.setRegion(animMap.get(playerCondition.toString()).getKeyFrame(animationTime, true));
             setSize(currentFrame.getRegionWidth() * sizeMult, currentFrame.getRegionHeight() * sizeMult);
         }catch (NullPointerException ignored){}
     }
@@ -101,21 +106,14 @@ public class Npc extends Actor {
     @Override
     public void act(float delta) {
         super.act(delta);
-
         if (isAnimationFinished()) {
             animationTime = 0;
-            //  calculateProgress();
-            //playerStats.calcRes();
         }
-        /*
-        if(playerCondition == compSquat || playerCondition == compBench || playerCondition == compDeadlift)
-            playCompAnimation(delta);
-        else
-            */
+
         if(playAnim)
             animationTime += delta ;
-        playAnimation(delta);
 
+        playAnimation(delta);
         changePlayerCondition();
         walk();
     }
@@ -172,6 +170,7 @@ public class Npc extends Actor {
 
     public void setPath(int xGoal, int yGoal, int xDestination, int yDestination, PlayerCondition playerCondition) {
         Preffics preffics = Preffics.getInstance();
+        checkIfInWalkableZone();
         int pX = (int) getX() / preffics.mapCoordinateCorrector, pY = (int) getY() / preffics.mapCoordinateCorrector;
 
         if (path != null)
@@ -214,6 +213,76 @@ public class Npc extends Actor {
         if (path != null)
             path.clear();
         map2d = new Grid2d(Preffics.getInstance().mapArr, false);
+    }
+
+    public void setSquatExercise() { setPath(890 , 125, 865, 125, PlayerCondition.squat); }
+
+    public void setDeadliftExercise() {
+        setPath(890, 100, 865, 70, PlayerCondition.deadlift);
+    }
+
+    public void setBenchExercise() { setPath(1337, 160, 1353, 75, PlayerCondition.bench); }
+
+    public void setHyperExercise() { setPath(565,160, 555,50, PlayerCondition.hiper); }
+
+    public void set1BenchSitting() {
+        setPath(260,240, 210,280, PlayerCondition.sitting);
+    }
+
+    public void set2BenchSitting() { setPath(1680,260, 1720,280, PlayerCondition.sittingRev); }
+
+    public void setDumbellExercise() {
+    }
+
+    public void setPullUps() {
+        setPath(800, 430, 820, 440, PlayerCondition.pullUps);
+    }
+
+    public void setLegPress() {
+        setPath(1550,160, 1695,65, legPress);
+    }
+
+    public void checkIfInWalkableZone() {
+        Preffics preffics = Preffics.getInstance();
+        double[][] mapArr = preffics.mapArr;
+        int pX = (int) getX() / preffics.mapCoordinateCorrector, pY = (int) getY() / preffics.mapCoordinateCorrector;
+        if(mapArr[pY][pX] == -1) {
+            setPosition(lastWalkablePosition.x, lastWalkablePosition.y);
+            setPlayerCondition(PlayerCondition.stay);
+        }
+    }
+
+    public void setPeriodicEvent(){
+        Thread thread = new Thread(
+                () -> {
+                    while (true){
+                        int rnd = new Random().nextInt(10);
+                        if(rnd == 0 ) {
+                            setSquatExercise();
+                        }else if(rnd == 1 ) {
+                            setDeadliftExercise();
+                        }else if(rnd == 2 ) {
+                            setBenchExercise();
+                        }else if(rnd == 3 ) {
+                            setHyperExercise();
+                        }else if(rnd == 4 ) {
+                            set1BenchSitting();
+                        }else if(rnd == 5 ) {
+                            set2BenchSitting();
+                        }else if(rnd == 6 ) {
+                            setPullUps();
+                        }else if(rnd == 7 ) {
+                            setLegPress();
+                        }
+                        try {
+                            Thread.sleep(10000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+        );
+        thread.start();
     }
 }
 

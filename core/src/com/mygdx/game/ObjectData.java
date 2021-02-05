@@ -46,6 +46,7 @@ public class ObjectData extends Actor {
                 walkFrames[index++] = tmp[i][j];
             }
         }
+
         animation = new Animation<>(1f, walkFrames);
         currentFrame = (TextureRegion) animation.getKeyFrame(animationTime,true);
         setBounds((int)x, (int)y, currentFrame.getRegionWidth() * 5, currentFrame.getRegionHeight() * 5);

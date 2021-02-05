@@ -1,23 +1,31 @@
 com/mygdx/game/Grid2d.java
  com.mygdx.game.Grid2d
  com.mygdx.game.Grid2d$MapNode
-com/mygdx/game/Coordinates.java
- com.mygdx.game.Coordinates
 com/mygdx/game/PlayerAnimationData.java
  com.mygdx.game.PlayerAnimationData
+com/mygdx/game/Preffics.java
+ com.mygdx.game.Preffics
+com/mygdx/game/Coordinates.java
+ com.mygdx.game.Coordinates
+com/mygdx/game/PathFinding.java
+ com.mygdx.game.PathFinding
+ com.mygdx.game.PathFinding$1
 com/mygdx/game/SimpleDirectionGestureDetector.java
  com.mygdx.game.SimpleDirectionGestureDetector
  com.mygdx.game.SimpleDirectionGestureDetector$DirectionGestureListener
  com.mygdx.game.SimpleDirectionGestureDetector$DirectionListener
 com/mygdx/game/Language.java
  com.mygdx.game.Language
-com/mygdx/game/Message.java
- com.mygdx.game.Message
+com/mygdx/game/FontFactory.java
+ com.mygdx.game.FontFactory
 com/mygdx/game/Node.java
  com.mygdx.game.Node
-com/mygdx/game/PathFinding.java
- com.mygdx.game.PathFinding
- com.mygdx.game.PathFinding$1
+com/mygdx/game/MyInputListener.java
+ com.mygdx.game.MyInputListener
+com/mygdx/game/Message.java
+ com.mygdx.game.Message
+com/mygdx/game/TextToDraw.java
+ com.mygdx.game.TextView
 com/mygdx/game/IActivityRequestHandler.java
  com.mygdx.game.IActivityRequestHandler
 com/mygdx/game/StringAlignUtils.java
@@ -26,24 +34,16 @@ com/mygdx/game/StringAlignUtils.java
  com.mygdx.game.StringAlignUtils$Alignment
 com/mygdx/game/ObjectData.java
  com.mygdx.game.ObjectData
-com/mygdx/game/FontFactory.java
- com.mygdx.game.FontFactory
-com/mygdx/game/TextToDraw.java
- com.mygdx.game.TextView
-com/mygdx/game/Preffics.java
- com.mygdx.game.Preffics
+com/mygdx/game/Player.java
+ com.mygdx.game.Player
 com/mygdx/game/Npc.java
  com.mygdx.game.Npc
  com.mygdx.game.PlayerCondition
-com/mygdx/game/Player.java
- com.mygdx.game.Player
-com/mygdx/game/MyInputListener.java
- com.mygdx.game.MyInputListener
+com/mygdx/game/BaseRoom.java
+ com.mygdx.game.BaseRoom
 com/mygdx/game/MyGdxGame.java
  com.mygdx.game.MyGdxGame
  com.mygdx.game.MyGdxGame$1
 com/mygdx/game/GymRoom.java
  com.mygdx.game.GymRoom
  com.mygdx.game.GymRoom$1
-com/mygdx/game/BaseRoom.java
- com.mygdx.game.BaseRoom
