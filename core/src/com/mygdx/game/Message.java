@@ -65,7 +65,7 @@ public class Message extends Actor{
             textX = (int) (x + (width * 0.95f) * mult / 2 - width / 2);
         else textX = (int) (x + (width * 1.05f) * mult / 2 - width / 2);
         textY = (int) (y + (height / 3) + height / 2);
-       // util = new StringAlignUtils(20, StringAlignUtils.Alignment.RIGHT);
+       //private StringAlignUtils util; util = new StringAlignUtils(20, StringAlignUtils.Alignment.RIGHT);
     }
 
     @Override
@@ -112,17 +112,112 @@ public class Message extends Actor{
 }*/
 
 
-import java.util.ArrayList;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public class Message {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+public class Message extends BaseActor {
+
+    String name;
+    private Texture texture;
+    private float width, height, mult = 1.5f;
     String buttonName;
     int x,y;
     boolean flip;
-    ArrayList< String > dialogTree = new ArrayList < String > ();
-    ArrayList < String> RandomText = new ArrayList< String>();
+    List<String> dialogTree = new ArrayList<String> ();
+    List <String> randomText = new ArrayList<String> ();
+    private StringAlignUtils util;
+    private String text;
+    private int textX, textY;
+    private int currentDialog = 0;
+
+
 
     public Message() {
-
+        init();
     }
 
+    private void init() {
+        setName("message");
+        name = getName();
+        util = new StringAlignUtils(50, StringAlignUtils.Alignment.LEFT);
+        texture = Preffics.getInstance().getByPath("screens/dialogs/message.png", Texture.class);
+        manageSize();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Message message = (Message) o;
+
+        return name.equals(message.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
+
+    public Message(int x, int y, boolean flip, List<String> tree, List<String> random) {
+        this.x = x;
+        this.y = y;
+        dialogTree = tree;
+        randomText = random;
+        this.flip = flip;
+        init();
+    }
+
+    private void manageSize() {
+        if(dialogTree.size() > 0 && currentDialog < dialogTree.size()){
+            setData(dialogTree.get(currentDialog));
+            currentDialog ++;
+        }else if(randomText.size() > 0){
+            setData(randomText.get(new Random().nextInt(randomText.size())));
+        }
+    }
+
+    private void setData(String dialog) {
+        //width = dialog.messageWidth;
+        text = dialog;
+        GlyphLayout layout = new GlyphLayout();
+        layout.setText(FontFactory.font, text);
+        width = layout.width * 1.45f;
+        textX = (int) (x + (width / 5));
+        height = width / 2;
+        textY = y + (int) (height / 2);
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
+        if(!flip){
+            batch.draw(texture, x, y,  width, height);
+        } else{
+            batch.draw(texture, x + width, y ,  -width, height);
+        }
+        showText(batch, util.format(text), textX, textY,1f, Color.BLACK);
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        if(Gdx.input.isTouched()){
+            if(currentDialog < dialogTree.size()){
+                manageSize();
+            }else
+                remove();
+        }
+    }
 }
+
+

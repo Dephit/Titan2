@@ -14,7 +14,10 @@ import java.util.Map;
 import java.util.Random;
 import java.util.TreeMap;
 
+import static com.mygdx.game.PlayerCondition.bench;
+import static com.mygdx.game.PlayerCondition.deadlift;
 import static com.mygdx.game.PlayerCondition.legPress;
+import static com.mygdx.game.PlayerCondition.squat;
 
 enum PlayerCondition {
     //Walk
@@ -50,6 +53,7 @@ public class Npc extends Actor {
 
     public List<Grid2d.MapNode> path = new LinkedList<Grid2d.MapNode>();
     protected Grid2d map2d;
+    private Runnable nextAction;
 
     public Npc(String name) {
         Preffics preffics = Preffics.getInstance();
@@ -110,12 +114,31 @@ public class Npc extends Actor {
             animationTime = 0;
         }
 
-        if(playAnim)
-            animationTime += delta ;
-
+        if(playAnim){
+            manageExericeseAnim(delta);
+        }
         playAnimation(delta);
         changePlayerCondition();
         walk();
+    }
+
+    private void manageExericeseAnim(float delta) {
+        if(playerCondition == squat || playerCondition == bench || playerCondition == deadlift){
+            if(animationTime == 0) {
+                if(new Random().nextInt(500) > 450)
+                    animationTime += delta / 1.5f;
+                else {
+                    animationTime = 0;
+                }
+            } else {
+                if(playerCondition == squat)
+                    animationTime += delta / 1.5f;
+                else
+                    animationTime += delta ;
+            }
+        }else {
+            animationTime += delta ;
+        }
     }
 
     boolean isAnimationFinished(){
@@ -128,6 +151,9 @@ public class Npc extends Actor {
     void changePlayerCondition() {
         if(path != null)
             if(path.isEmpty()){
+                if(nextAction != null){
+                    nextAction.run();
+                }
                 playerCondition = nextPlayerCondition;
                 if(nextX > 0 || nextY > 0){
                     setPosition(nextX , nextY);
@@ -139,7 +165,8 @@ public class Npc extends Actor {
             else if(speed.y < 0) playerCondition = PlayerCondition.down;
     }
 
-    void setPlayersAction(PlayerCondition playerCondition, int x, int y) {
+    void setPlayersAction(PlayerCondition playerCondition, int x, int y, Runnable runnable) {
+        this.nextAction = runnable;
         this.nextPlayerCondition = playerCondition;
         nextX = x;
         nextY = y;
@@ -169,6 +196,10 @@ public class Npc extends Actor {
     }
 
     public void setPath(int xGoal, int yGoal, int xDestination, int yDestination, PlayerCondition playerCondition) {
+        setPath(xGoal, yGoal, xDestination, yDestination, playerCondition, null);
+    }
+
+    public void setPath(int xGoal, int yGoal, int xDestination, int yDestination, PlayerCondition playerCondition, Runnable runnable) {
         Preffics preffics = Preffics.getInstance();
         checkIfInWalkableZone();
         int pX = (int) getX() / preffics.mapCoordinateCorrector, pY = (int) getY() / preffics.mapCoordinateCorrector;
@@ -190,7 +221,7 @@ public class Npc extends Actor {
                     yGoal / preffics.mapCoordinateCorrector);
         }
         playAnim = true;
-        setPlayersAction(playerCondition, xDestination, yDestination);
+        setPlayersAction(playerCondition, xDestination, yDestination, runnable);
     }
 
     void setPlayerCondition(PlayerCondition playerCondition) {

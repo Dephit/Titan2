@@ -54,7 +54,9 @@ public abstract class BaseRoom extends Stage  {
     public void init() {
         Preffics.getInstance().clearAssets();
         Preffics.getInstance()
-                .load(BACKGROUND_PATH_TAG, Texture.class);
+                .load(BACKGROUND_PATH_TAG, Texture.class)
+                .load("screens/dialogs/message.png", Texture.class);
+
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Preffics.SCREEN_WIDTH, Preffics.SCREEN_HEIGHT);
         touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -88,8 +90,12 @@ public abstract class BaseRoom extends Stage  {
         camera.unproject(touchPos);
         Preffics preffics = Preffics.getInstance();
         double[][] mapArr = preffics.mapArr;
-        if (mapArr[(int) touchPos.y / preffics.mapCoordinateCorrector][(int) touchPos.x / preffics.mapCoordinateCorrector] != -1) {
-            player.setPath((int)touchPos.x, (int)touchPos.y, 0, 0, PlayerCondition.stay);
+        try{
+            if (mapArr[(int) touchPos.y / preffics.mapCoordinateCorrector][(int) touchPos.x / preffics.mapCoordinateCorrector] != -1) {
+                player.setPath((int)touchPos.x, (int)touchPos.y, 0, 0, PlayerCondition.stay);
+            }
+        }catch (Exception e){
+
         }
     }
 
@@ -133,13 +139,12 @@ public abstract class BaseRoom extends Stage  {
         }
     }
 
-
     private void onLoading(Preffics preffics) {
         preffics.updateLoading();
         showText( preffics.getLanguage().loading + ": " + preffics.getLoadingProgress(), 500, 500, 2, Color.CORAL);
     }
 
-    private void showText(String str, int x, int y, int scale, Color color) {
+    protected void showText(String str, int x, int y, int scale, Color color) {
         BitmapFont textFont = FontFactory.getInstance().getFont(Preffics.getInstance().getLocale());
         textFont.getData().setScale(scale);
         textFont.setColor(color);
@@ -206,6 +211,11 @@ public abstract class BaseRoom extends Stage  {
     }
 
     protected void orderExceptions(int i, int j) {
+        if (getActors().get(i).getName() != null) {
+            if (getActors().get(i).getName().contains("message")) {
+                getActors().swap(i, getActors().size - 1);
+            }
+        }
     }
 
     void log(String msg){
