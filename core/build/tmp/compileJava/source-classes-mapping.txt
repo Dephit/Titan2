@@ -3,48 +3,48 @@ com/mygdx/game/Grid2d.java
  com.mygdx.game.Grid2d$MapNode
 com/mygdx/game/PlayerAnimationData.java
  com.mygdx.game.PlayerAnimationData
-com/mygdx/game/StringAlignUtils.java
- com.mygdx.game.StringAlignUtils
- com.mygdx.game.StringAlignUtils$1
- com.mygdx.game.StringAlignUtils$Alignment
-com/mygdx/game/IActivityRequestHandler.java
- com.mygdx.game.IActivityRequestHandler
+com/mygdx/game/Preffics.java
+ com.mygdx.game.Preffics
 com/mygdx/game/Coordinates.java
  com.mygdx.game.Coordinates
+com/mygdx/game/TextToDraw.java
+ com.mygdx.game.TextView
 com/mygdx/game/Dialog.java
  com.mygdx.game.Dialog
 com/mygdx/game/SimpleDirectionGestureDetector.java
  com.mygdx.game.SimpleDirectionGestureDetector
  com.mygdx.game.SimpleDirectionGestureDetector$DirectionGestureListener
  com.mygdx.game.SimpleDirectionGestureDetector$DirectionListener
+com/mygdx/game/Language.java
+ com.mygdx.game.Language
+com/mygdx/game/FontFactory.java
+ com.mygdx.game.FontFactory
 com/mygdx/game/PathFinding.java
  com.mygdx.game.PathFinding
  com.mygdx.game.PathFinding$1
-com/mygdx/game/Language.java
- com.mygdx.game.Language
-com/mygdx/game/Node.java
- com.mygdx.game.Node
-com/mygdx/game/Player.java
- com.mygdx.game.Player
-com/mygdx/game/MyInputListener.java
- com.mygdx.game.MyInputListener
-com/mygdx/game/ObjectData.java
- com.mygdx.game.ObjectData
-com/mygdx/game/FontFactory.java
- com.mygdx.game.FontFactory
-com/mygdx/game/Preffics.java
- com.mygdx.game.Preffics
 com/mygdx/game/BaseActor.java
  com.mygdx.game.BaseActor
+com/mygdx/game/MyInputListener.java
+ com.mygdx.game.MyInputListener
 com/mygdx/game/Message.java
  com.mygdx.game.Message
-com/mygdx/game/TextToDraw.java
- com.mygdx.game.TextView
+com/mygdx/game/Node.java
+ com.mygdx.game.Node
+com/mygdx/game/ButtonData.java
+ com.mygdx.game.ButtonData
+com/mygdx/game/ObjectData.java
+ com.mygdx.game.ObjectData
+com/mygdx/game/StringAlignUtils.java
+ com.mygdx.game.StringAlignUtils
+ com.mygdx.game.StringAlignUtils$1
+ com.mygdx.game.StringAlignUtils$Alignment
+com/mygdx/game/IActivityRequestHandler.java
+ com.mygdx.game.IActivityRequestHandler
 com/mygdx/game/Npc.java
  com.mygdx.game.Npc
  com.mygdx.game.PlayerCondition
-com/mygdx/game/ButtonData.java
- com.mygdx.game.ButtonData
+com/mygdx/game/Player.java
+ com.mygdx.game.Player
 com/mygdx/game/MyGdxGame.java
  com.mygdx.game.MyGdxGame
  com.mygdx.game.MyGdxGame$1

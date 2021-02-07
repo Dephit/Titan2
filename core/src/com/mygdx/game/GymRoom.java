@@ -2,6 +2,8 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 import java.util.ArrayList;
 
@@ -68,10 +70,15 @@ public class GymRoom extends BaseRoom{
                                 break;
                             }
                             case "pullups":
-                                player.setPullUps();
+                                //setPushPullUps(preffics);
+                                pause = true;
+                                addPullPushChouser();
                                 break;
                             case "legpress":
                                 player.setLegPress();
+                                break;
+                            default:
+                                onFinish.run();
                                 break;
                         }
                     }
@@ -88,15 +95,18 @@ public class GymRoom extends BaseRoom{
         };
     }
 
+    private void setPushPullUps(Preffics preffics) {
+        player.setPath(800, 430, 820, 440, lookinUp, this::addPullPushChouser);
+    }
+
+
     private void setTalkingToAGirl(Preffics preffics) {
         player.setPath(1025, 450, 0, 0, lookinUp, () -> {
             Message message = new Message(1070, 670, true,
                     preffics.getLanguage().armGirlDialogTree,
                     preffics.getLanguage().armGirlRandomText,
                     player.currentGirlDialogProgress,
-                    () -> {
-                        player.currentGirlDialogProgress++;
-                    }
+                    () -> player.currentGirlDialogProgress++
             );
             if (!getActors().contains(message, false))
                 addActor(message);
@@ -147,6 +157,46 @@ public class GymRoom extends BaseRoom{
             }
             super.orderExceptions(i,j);
         }
+    }
+
+    @Override
+    protected void makeButtons(Skin skin) {
+    }
+
+    private void addPullPushChouser() {
+        final TextButton textButton = new TextButton("", getTextButtonStyleFromFile(skin, "window"));
+        textButton.setName("pullUpOrPushUp");
+        textButton.addListener(getEventListener(textButton.getName(), ()->{
+            pause = false;
+            textButton.remove();
+        }));
+        textButton.setText("SDSD");
+        textButton.getLabel().setFontScale(0.9f);
+        textButton.setBounds(1000, 500, 600, 300);
+
+        final TextButton yes = new TextButton("", getTextButtonStyleFromFile(skin, "window"));
+        yes.setName("pullUpButton");
+        yes.addListener(getEventListener(yes.getName(), ()->{
+            player.setPullUps();
+            yes.remove();
+        }));
+        yes.setText("Подтягивания");
+        yes.getLabel().setFontScale(0.9f);
+        yes.setBounds(50, 550, 200, 100);
+
+        final TextButton no = new TextButton("", getTextButtonStyleFromFile(skin, "window"));
+        no.setName("pushUpButton");
+        no.addListener(getEventListener(no.getName(), ()->{
+            player.setPushUps();
+            no.remove();
+        }));
+        no.setText("Брусья");
+        no.getLabel().setFontScale(0.9f);
+        no.setBounds(400, 550, 200, 100);
+
+        textButton.add(yes, no);
+
+        addActor(textButton);
     }
 }
 

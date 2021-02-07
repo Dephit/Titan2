@@ -66,7 +66,7 @@ public class Npc extends Actor {
         final ArrayList<PlayerAnimationData> objectList = preffics.fromObjectFromJson(name2 + "/animation.json", ArrayList.class);
         for (PlayerAnimationData animationData: objectList) {
             log(animationData.name + " " + animationData.colls + " " + animationData.frameDur + " " + animationData.rows);
-            animMap.put(animationData.name, getAnim(animationData.name, animationData.colls, animationData.rows, animationData.frameDur));
+            animMap.put(animationData.name.toLowerCase(), getAnim(animationData.name, animationData.colls, animationData.rows, animationData.frameDur));
         }
         setParameters();
     }
@@ -102,7 +102,7 @@ public class Npc extends Actor {
 
     private void playAnimation(float delta){
         try {
-            currentFrame.setRegion(animMap.get(playerCondition.toString()).getKeyFrame(animationTime, true));
+            currentFrame.setRegion(animMap.get(playerCondition.toString().toLowerCase()).getKeyFrame(animationTime, true));
             setSize(currentFrame.getRegionWidth() * sizeMult, currentFrame.getRegionHeight() * sizeMult);
         }catch (NullPointerException ignored){}
     }
@@ -267,6 +267,10 @@ public class Npc extends Actor {
 
     public void setPullUps() {
         setPath(800, 430, 820, 440, PlayerCondition.pullUps);
+    }
+
+    public void setPushUps() {
+        setPath(800, 430, 820, 440, PlayerCondition.pushUps);
     }
 
     public void setLegPress() {

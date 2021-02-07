@@ -36,6 +36,8 @@ public abstract class BaseRoom extends Stage  {
 
     private OrthographicCamera camera;
     protected Vector3 touchPos;
+    protected Skin skin;
+    protected boolean pause = false;
 
     public BaseRoom(String tag) {
         super(new FitViewport(Preffics.SCREEN_WIDTH, Preffics.SCREEN_HEIGHT));
@@ -112,17 +114,19 @@ public abstract class BaseRoom extends Stage  {
         Preffics preffics = Preffics.getInstance();
         camera.update();
         getBatch().setProjectionMatrix(camera.combined);
-        getBatch().begin();
-        if(preffics.isLoaded()) {
-            onLoaded(preffics);
-        } else {
-            onLoading(preffics);
-        }
 
+        getBatch().begin();
+        if (preffics.isLoaded()) {
+                onLoaded(preffics);
+            } else {
+                onLoading(preffics);
+            }
         //showPath(preffics);
         getBatch().end();
         draw();
-        act(Gdx.graphics.getDeltaTime());
+        if(!pause) {
+            act(Gdx.graphics.getDeltaTime());
+        }
     }
 
     private void showPath(Preffics preffics) {
@@ -160,7 +164,7 @@ public abstract class BaseRoom extends Stage  {
         if(background == null) {
             background = preffics.getByPath(BACKGROUND_PATH_TAG, Texture.class);
             createObjects(preffics);
-            //createButtons();
+            createButtons();
         }else {
             for(Actor objectData: getActors()){
                 if(objectData.getClass() == ObjectData.class){
@@ -222,7 +226,7 @@ public abstract class BaseRoom extends Stage  {
         }
     }
 
-    static TextButton.TextButtonStyle getTextButtonStyleFromFile(Skin skin, String name){
+    TextButton.TextButtonStyle getTextButtonStyleFromFile(Skin skin, String name){
 
         final TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.font = FontFactory.font;
@@ -236,23 +240,14 @@ public abstract class BaseRoom extends Stage  {
     }
 
     private void createButtons() {
-        Skin skin = new Skin();
+        skin = new Skin();
 
         TextureAtlas buttonAtlas = Preffics.getInstance().getByPath("screens/buttons/buttons.atlas", TextureAtlas.class);
         skin.addRegions(buttonAtlas);
-        ArrayList<ButtonData> buttonDataArrayList = Preffics.getInstance().fromObjectFromJson("screens/buttons/buttons.json", ArrayList.class);
-
-        for (ButtonData buttonData : buttonDataArrayList) {
-            final TextButton textButton = new TextButton("", getTextButtonStyleFromFile(skin, "map"));
-            textButton.setName(buttonData.name);
-            textButton.addListener(getEventListener(textButton.getName(), ()->{}));
-            textButton.setText("SDSD");
-            textButton.getLabel().setFontScale(0.9f);
-            textButton.setBounds(buttonData.x, buttonData.y, buttonData.width, buttonData.height);
-            addActor(textButton);
-        }
-        skin.dispose();
+        makeButtons(skin);
     }
+
+    protected abstract void makeButtons(Skin skin);
 
     void log(String msg){
         System.out.println(ROOM_TAG + ": " + msg);

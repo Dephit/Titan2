@@ -1,208 +1,215 @@
-
 buttons.png
+size: 966, 1126
 format: RGBA8888
-filter: Nearest,Nearest
+filter: Linear,Linear
 repeat: none
-playButton
+backButton
   rotate: false
-  xy: 1, 325
-  size: 373, 178
-  orig: 373, 178
+  xy: 750, 886
+  size: 44, 44
+  orig: 44, 44
   offset: 0, 0
   index: -1
-quitButton
-  rotate: false
-  xy: 376, 361
-  size: 397, 142
-  orig: 397, 142
+champ
+  rotate: true
+  xy: 924, 260
+  size: 44, 42
+  orig: 44, 42
+  offset: 0, 0
+  index: -1
+closeRef
+  rotate: true
+  xy: 942, 592
+  size: 140, 24
+  orig: 140, 24
+  offset: 0, 0
+  index: -1
+empty
+  rotate: true
+  xy: 822, 470
+  size: 122, 126
+  orig: 122, 126
+  offset: 0, 0
+  index: -1
+gym
+  rotate: true
+  xy: 926, 840
+  size: 44, 40
+  orig: 44, 40
+  offset: 0, 0
+  index: -1
+label
+  rotate: true
+  xy: 926, 0
+  size: 230, 28
+  orig: 230, 28
   offset: 0, 0
   index: -1
 mainMenuButton
   rotate: false
-  xy: 1, 177
-  size: 344, 146
-  orig: 344, 146
-  offset: 0, 0
-  index: -1
-refWindow
-  rotate: false
-  xy: 775, 373
-  size: 90, 130
-  orig: 90, 130
-  offset: 0, 0
-  index: -1
-nuggetsMenu
-  rotate: false
-  xy: 1, 82
-  size: 116, 93
-  orig: 116, 93
-  offset: 0, 0
-  index: -1
-potatoMenu
-  rotate: false
-  xy: 867, 410
-  size: 116, 93
-  orig: 116, 93
-  offset: 0, 0
-  index: -1
-statsButton
-  rotate: false
-  xy: 119, 78
-  size: 97, 97
-  orig: 97, 97
-  offset: 0, 0
-  index: -1
-watchglass
-  rotate: false
-  xy: 218, 78
-  size: 97, 97
-  orig: 97, 97
-  offset: 0, 0
-  index: -1
-window
-  rotate: false
-  xy: 376, 293
-  size: 123, 66
-  orig: 123, 66
-  offset: 0, 0
-  index: -1
-label
-  rotate: false
-  xy: 867, 394
-  size: 115, 14
-  orig: 115, 14
-  offset: 0, 0
-  index: -1
-windowButton
-  rotate: false
-  xy: 1, 66
-  size: 115, 14
-  orig: 115, 14
-  offset: 0, 0
-  index: -1
-workProgressButton
-  rotate: false
-  xy: 501, 295
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-empty
-  rotate: false
-  xy: 1, 1
-  size: 61, 63
-  orig: 61, 63
-  offset: 0, 0
-  index: -1
-openWindow
-  rotate: false
-  xy: 567, 296
-  size: 61, 63
-  orig: 61, 63
-  offset: 0, 0
-  index: -1
-sleepButton
-  rotate: false
-  xy: 630, 298
-  size: 61, 61
-  orig: 61, 61
-  offset: 0, 0
-  index: -1
-sportSupShop
-  rotate: false
-  xy: 693, 318
-  size: 64, 41
-  orig: 64, 41
-  offset: 0, 0
-  index: -1
-closeRef
-  rotate: false
-  xy: 867, 380
-  size: 70, 12
-  orig: 70, 12
-  offset: 0, 0
-  index: -1
-vertButton
-  rotate: false
-  xy: 985, 450
-  size: 26, 53
-  orig: 26, 53
-  offset: 0, 0
-  index: -1
-nuggets
-  rotate: false
-  xy: 64, 39
-  size: 33, 25
-  orig: 33, 25
-  offset: 0, 0
-  index: -1
-potato
-  rotate: false
-  xy: 64, 12
-  size: 33, 25
-  orig: 33, 25
-  offset: 0, 0
-  index: -1
-yesButton
-  rotate: false
-  xy: 693, 304
-  size: 41, 12
-  orig: 41, 12
+  xy: 0, 640
+  size: 688, 292
+  orig: 688, 292
   offset: 0, 0
   index: -1
 map
   rotate: false
-  xy: 317, 151
-  size: 24, 24
-  orig: 24, 24
+  xy: 918, 892
+  size: 48, 48
+  orig: 48, 48
   offset: 0, 0
   index: -1
-backButton
+message
   rotate: false
-  xy: 347, 301
-  size: 22, 22
-  orig: 22, 22
+  xy: 688, 886
+  size: 62, 32
+  orig: 62, 32
   offset: 0, 0
   index: -1
-champ
+nuggets
+  rotate: true
+  xy: 874, 260
+  size: 66, 50
+  orig: 66, 50
+  offset: 0, 0
+  index: -1
+nuggetsMenu
   rotate: false
-  xy: 985, 427
-  size: 22, 21
-  orig: 22, 21
+  xy: 0, 932
+  size: 232, 186
+  orig: 232, 186
+  offset: 0, 0
+  index: -1
+openWindow
+  rotate: false
+  xy: 820, 592
+  size: 122, 126
+  orig: 122, 126
   offset: 0, 0
   index: -1
 optionButton
   rotate: false
-  xy: 317, 128
-  size: 22, 21
-  orig: 22, 21
+  xy: 852, 942
+  size: 44, 42
+  orig: 44, 42
+  offset: 0, 0
+  index: -1
+playButton
+  rotate: false
+  xy: 0, 0
+  size: 746, 356
+  orig: 746, 356
+  offset: 0, 0
+  index: -1
+potato
+  rotate: false
+  xy: 852, 892
+  size: 66, 50
+  orig: 66, 50
+  offset: 0, 0
+  index: -1
+potatoMenu
+  rotate: false
+  xy: 232, 932
+  size: 232, 186
+  orig: 232, 186
+  offset: 0, 0
+  index: -1
+quitButton
+  rotate: false
+  xy: 0, 356
+  size: 794, 284
+  orig: 794, 284
+  offset: 0, 0
+  index: -1
+refWindow
+  rotate: false
+  xy: 746, 0
+  size: 180, 260
+  orig: 180, 260
   offset: 0, 0
   index: -1
 room
   rotate: false
-  xy: 347, 278
-  size: 22, 21
-  orig: 22, 21
+  xy: 852, 984
+  size: 44, 42
+  orig: 44, 42
   offset: 0, 0
   index: -1
 shop
   rotate: false
-  xy: 317, 105
-  size: 22, 21
-  orig: 22, 21
+  xy: 852, 1026
+  size: 44, 42
+  orig: 44, 42
+  offset: 0, 0
+  index: -1
+sleepButton
+  rotate: false
+  xy: 820, 718
+  size: 122, 122
+  orig: 122, 122
+  offset: 0, 0
+  index: -1
+sportSupShop
+  rotate: false
+  xy: 746, 260
+  size: 128, 82
+  orig: 128, 82
+  offset: 0, 0
+  index: -1
+statsButton
+  rotate: false
+  xy: 464, 932
+  size: 194, 194
+  orig: 194, 194
+  offset: 0, 0
+  index: -1
+vertButton
+  rotate: true
+  xy: 820, 840
+  size: 52, 106
+  orig: 52, 106
+  offset: 0, 0
+  index: -1
+watchglass
+  rotate: false
+  xy: 658, 932
+  size: 194, 194
+  orig: 194, 194
+  offset: 0, 0
+  index: -1
+window
+  rotate: true
+  xy: 688, 640
+  size: 246, 132
+  orig: 246, 132
+  offset: 0, 0
+  index: -1
+windowButton
+  rotate: true
+  xy: 794, 342
+  size: 230, 28
+  orig: 230, 28
   offset: 0, 0
   index: -1
 workButton
   rotate: false
-  xy: 347, 255
-  size: 22, 21
-  orig: 22, 21
+  xy: 852, 1068
+  size: 44, 42
+  orig: 44, 42
   offset: 0, 0
   index: -1
-gym
+workProgressButton
   rotate: false
-  xy: 317, 83
-  size: 22, 20
-  orig: 22, 20
+  xy: 822, 342
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+yesButton
+  rotate: true
+  xy: 942, 732
+  size: 82, 24
+  orig: 82, 24
   offset: 0, 0
   index: -1
