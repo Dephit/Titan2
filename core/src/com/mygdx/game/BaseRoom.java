@@ -15,11 +15,9 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public abstract class BaseRoom extends Stage  {
 
@@ -109,7 +107,7 @@ public abstract class BaseRoom extends Stage  {
             if (mapArr[(int) touchPos.y / preffics.mapCoordinateCorrector][(int) touchPos.x / preffics.mapCoordinateCorrector] != -1) {
                 player.setPath((int)touchPos.x, (int)touchPos.y, 0, 0, PlayerCondition.stay);
             }
-        }catch (Exception e){
+        }catch (Exception ignored){
 
         }
     }
@@ -227,13 +225,7 @@ public abstract class BaseRoom extends Stage  {
         }
     }
 
-    protected void orderExceptions(int i, int j) {
-        if (objectGroup.getChildren().get(i).getName() != null) {
-            /*if (objectGroup.getChildren().get(i).getName().contains("message")) {
-                objectGroup.getChildren().swap(i, getActors().size - 1);
-            }*/
-        }
-    }
+    protected void orderExceptions(int i, int j) { }
 
     TextButton.TextButtonStyle getTextButtonStyleFromFile(Skin skin, String name){
 
@@ -267,9 +259,7 @@ public abstract class BaseRoom extends Stage  {
     protected TextButton getTextButton(String name, String styleName, String text, int x, int y, int w, int h, float scale, Runnable onClick) {
         final TextButton textButton = new TextButton(text, getTextButtonStyleFromFile(skin, styleName));
         textButton.setName(name);
-        textButton.addListener(getEventListener(textButton.getName(), ()->{
-            onClick.run();
-        }));
+        textButton.addListener(getEventListener(textButton.getName(), onClick));
         textButton.getLabel().setFontScale(scale);
         textButton.setBounds(x, y, w, h);
         return textButton;

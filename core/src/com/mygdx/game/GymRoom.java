@@ -220,10 +220,7 @@ public class GymRoom extends BaseRoom{
         buttonGroup.addActor(group);
     }
 
-    private void addExerciseChoseMenuPushChooser(
-            String title,
-        Map<String, Runnable> map
-    ) {
+    private void addExerciseChoseMenuPushChooser(String title, Map<String, Runnable> map) {
         pause = true;
         Group group = new Group();
         Runnable runnable = ()->{
