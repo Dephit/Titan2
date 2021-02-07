@@ -11,6 +11,22 @@ import static com.badlogic.gdx.net.HttpRequestBuilder.json;
 class Language{
 
     public String loading;
+    public String heavySquat;
+    public String moderateSquat;
+    public String easySquat;
+    public String mockSquat;
+
+    public String heavyBench;
+    public String moderateBench;
+    public String easyBench;
+    public String mockBench;
+
+    public String heavyDeadlift;
+    public String moderateDeadlift;
+    public String easyDeadlift;
+    public String mockDeadlift;
+
+
     public List<String> dumbelGuyRandomText;
     public List<String> armGirlDialogTree;
     public List<String> armGirlRandomText;
@@ -18,6 +34,7 @@ class Language{
     public List<String> coachRandomText;
     public List<String> sanitarRandomText;
     public List<String> stuffRandomText;
+    public String chooseYourExercise;
 
     Language(){
 

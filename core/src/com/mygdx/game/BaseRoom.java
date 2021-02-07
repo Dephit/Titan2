@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -23,6 +24,8 @@ import java.util.List;
 public abstract class BaseRoom extends Stage  {
 
     ArrayList<Npc> npcs = new ArrayList<>();
+
+    protected Group objectGroup, buttonGroup, hudGroup = new Group();
 
     public Player player;
     protected String ROOM_TAG = "";
@@ -53,7 +56,10 @@ public abstract class BaseRoom extends Stage  {
         ROOM_TAG = tag;
         BACKGROUND_PATH_TAG = "screens/" + ROOM_TAG + "/" + ROOM_TAG + ".png";
         init();
-        addActor(player);
+        objectGroup.addActor(player);
+        addActor(objectGroup);
+        addActor(hudGroup);
+        addActor(buttonGroup);
     }
 
     public void init() {
@@ -77,6 +83,9 @@ public abstract class BaseRoom extends Stage  {
         Gdx.input.setInputProcessor(this);
         Preffics.getInstance().createMap(ROOM_TAG);
         player.clearPath();
+        objectGroup = new Group();
+        hudGroup = new Group();
+        buttonGroup = new Group();
     }
 
     public Pixmap createProceduralPixmap (int width, int height, float r, float g, float b) {
@@ -166,7 +175,7 @@ public abstract class BaseRoom extends Stage  {
             createObjects(preffics);
             createButtons();
         }else {
-            for(Actor objectData: getActors()){
+            for(Actor objectData: objectGroup.getChildren()){
                 if(objectData.getClass() == ObjectData.class){
                     ObjectData obj = ((ObjectData) objectData);
                     boolean oneFrame = false;
@@ -202,27 +211,27 @@ public abstract class BaseRoom extends Stage  {
             object.addListener(getEventListener(object.name, () -> object.setCertainFrame(true)));
 
             log(object.name + ", " + object.x + ", " + object.y);
-            addActor(object);
+            objectGroup.addActor(object);
         }
     }
 
     protected void drawOrder() {
-        for (int j = 0; j < getActors().size; j++) {
-            for (int i = 0; i < getActors().size - 1; i++) {
-                Actor iActor = getActors().get(i);
-                Actor iActorNext = getActors().get(i + 1);
-                if (iActor.getY() < getActors().get(i + 1).getY())
-                    getActors().swap(i, i + 1);
+        for (int j = 0; j < objectGroup.getChildren().size; j++) {
+            for (int i = 0; i < objectGroup.getChildren().size - 1; i++) {
+                Actor iActor = objectGroup.getChildren().get(i);
+                Actor iActorNext = objectGroup.getChildren().get(i + 1);
+                if (iActor.getY() < objectGroup.getChildren().get(i + 1).getY())
+                    objectGroup.getChildren().swap(i, i + 1);
                 orderExceptions(i, j);
             }
         }
     }
 
     protected void orderExceptions(int i, int j) {
-        if (getActors().get(i).getName() != null) {
-            if (getActors().get(i).getName().contains("message")) {
-                getActors().swap(i, getActors().size - 1);
-            }
+        if (objectGroup.getChildren().get(i).getName() != null) {
+            /*if (objectGroup.getChildren().get(i).getName().contains("message")) {
+                objectGroup.getChildren().swap(i, getActors().size - 1);
+            }*/
         }
     }
 
@@ -254,6 +263,17 @@ public abstract class BaseRoom extends Stage  {
     }
 
     protected abstract InputListener getEventListener(String name, Runnable runnable);
+
+    protected TextButton getTextButton(String name, String styleName, String text, int x, int y, int w, int h, float scale, Runnable onClick) {
+        final TextButton textButton = new TextButton(text, getTextButtonStyleFromFile(skin, styleName));
+        textButton.setName(name);
+        textButton.addListener(getEventListener(textButton.getName(), ()->{
+            onClick.run();
+        }));
+        textButton.getLabel().setFontScale(scale);
+        textButton.setBounds(x, y, w, h);
+        return textButton;
+    }
 }
 
 

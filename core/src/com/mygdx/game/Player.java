@@ -20,5 +20,20 @@ public class Player extends Npc {
     int coachDialogProgress = 0;
 
 
+    public void setHeavySquat() {
+        setSquatExercise();
+    }
+
+    public void setModerateSquat() {
+        setSquatExercise();
+    }
+
+    public void setEasySquat() {
+        setSquatExercise();
+    }
+
+    public void setMockSquat() {
+        setSquatExercise();
+    }
 }
 
