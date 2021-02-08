@@ -121,6 +121,6 @@ public class Preffics {
     }
 
     public Texture loadImg(String s) {
-        return new Texture(Preffics.getInstance().getPath() + "radend.png");
+        return new Texture(Preffics.getInstance().getPath() + s);
     }
 }

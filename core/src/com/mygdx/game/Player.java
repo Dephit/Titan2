@@ -4,16 +4,24 @@ import com.badlogic.gdx.graphics.Color;
 
 public class Player extends Npc {
 
+    StatBar squat = new StatBar("Присед");
+    StatBar health = new StatBar("health");
+    StatBar energy = new StatBar("energy");
+
     Player() {
         super("player");
-        squat.setProgressAndCapacity(100, 50);
-        squat.setBounds(50,50, 400, 400);
+        health.setBounds(1920 - 400 - 50, 1080 - 65 - 50, 400, 65);
+        health.setProgressAndCapacity(100, 100);
+        health.setColor(Color.RED);
+
+        energy.setBounds(1920 - 400 - 50, 1080 - 65 * 2 - 25 - 50, 400, 65);
+        energy.setProgressAndCapacity(100, 100);
+        energy.setColor(Color.YELLOW);
+        squat.setBounds(50,50, 400, 75);
     }
 
     int currentGirlDialogProgress = 0;
     int coachDialogProgress = 0;
-
-    StatBar squat = new StatBar("Присед");
 
     public void setHeavySquat() {
         setSquatExercise();
@@ -23,7 +31,7 @@ public class Player extends Npc {
     public void act(float delta) {
         super.act(delta);
         if(playerCondition == PlayerCondition.squat){
-            squat.updateProgress(delta);
+            squat.updateProgress(delta * 5);
         }
     }
 
@@ -41,6 +49,12 @@ public class Player extends Npc {
 
     StatBar getSquatBar(){
         return squat;
+    }
+    StatBar getHealthBar(){
+        return health;
+    }
+    StatBar getEnergyBar(){
+        return energy;
     }
 
 

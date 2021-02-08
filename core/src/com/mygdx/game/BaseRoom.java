@@ -253,10 +253,10 @@ public abstract class BaseRoom extends Stage  {
     void setCommonButtons(){
         TextButton button = getTextButton("map", "map","", 10, 800, 125, 125, 1f, ()-> interScreenCommunication.showToast("map"));
         TextButton optionButton = getTextButton("optionButton", "optionButton","", 10,940, 125, 125, 1f, ()-> interScreenCommunication.showToast("options"));
-        TextButton statsButton = getTextButton("statsButton", "statsButton","", 1600, 750, 303, 303,1f, ()-> interScreenCommunication.showToast("options"));
+        //TextButton statsButton = getTextButton("statsButton", "statsButton","", 1600, 750, 303, 303,1f, ()-> interScreenCommunication.showToast("options"));
         buttonGroup.addActor(button);
         buttonGroup.addActor(optionButton);
-        buttonGroup.addActor(statsButton);
+        //buttonGroup.addActor(statsButton);
     }
 
     void log(String msg){

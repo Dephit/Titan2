@@ -49,7 +49,7 @@ public class StatBar extends BaseActor {
         progressImg = preffics.loadImg("statMid.png");
         foregroundImg = preffics.loadImg("statUp.png");
         progressSprite = new Sprite(progressImg);
-        //setColor(Color.CORAL);
+        setColor(Color.CORAL);
     }
 
     @Override
@@ -70,9 +70,9 @@ public class StatBar extends BaseActor {
         super.draw(batch, parentAlpha);
         batch.draw(backgroundImg, getX(), getY(), getWidth(), getHeight());
         //batch.draw(progressImg, getX(), getY(), getWidth() * currentAmount / capacity, getHeight());
-        //progressSprite.setBounds( getX() + 5, getY() + 5, getWidth() * currentAmount / capacity - 10, getHeight() - 10);
-        //progressSprite.draw(batch);
-        //batch.draw(foregroundImg, getX(), getY(), getWidth(), getHeight());
+        progressSprite.setBounds( getX() + 10, getY() + 5, getWidth() * currentAmount / capacity - 10, getHeight() - 10);
+        progressSprite.draw(batch);
+        batch.draw(foregroundImg, getX(), getY(), getWidth(), getHeight());
     }
 }
 

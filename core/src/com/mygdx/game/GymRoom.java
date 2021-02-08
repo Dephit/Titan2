@@ -27,6 +27,8 @@ public class GymRoom extends BaseRoom{
         npcs.add(npc);
         objectGroup.addActor(npc);
         hudGroup.addActor(player.getSquatBar());
+        hudGroup.addActor(player.getHealthBar());
+        hudGroup.addActor(player.getEnergyBar());
     }
 
     @Override
