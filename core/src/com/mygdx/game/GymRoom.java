@@ -19,13 +19,14 @@ public class GymRoom extends BaseRoom{
         super("gym");
     }
 
-    public GymRoom(Player player) {
-        super("gym", player);
+    public GymRoom(InterScreenCommunication _communication, Player player) {
+        super(_communication, "gym", player);
         Npc npc = new Npc("player2");
         npc.clearPath();
         npc.setPeriodicEvent();
         npcs.add(npc);
         objectGroup.addActor(npc);
+        hudGroup.addActor(player.getSquatBar());
     }
 
     @Override
@@ -181,10 +182,6 @@ public class GymRoom extends BaseRoom{
             }
             super.orderExceptions(i,j);
         }
-    }
-
-    @Override
-    protected void makeButtons(Skin skin) {
     }
 
     private void addPullPushChooser() {

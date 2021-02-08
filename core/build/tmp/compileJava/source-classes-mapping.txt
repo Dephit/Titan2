@@ -7,11 +7,12 @@ com/mygdx/game/IActivityRequestHandler.java
  com.mygdx.game.IActivityRequestHandler
 com/mygdx/game/MyTextButton.java
  com.mygdx.game.MyTextButton
-com/mygdx/game/Npc.java
- com.mygdx.game.Npc
- com.mygdx.game.PlayerCondition
-com/mygdx/game/TextToDraw.java
- com.mygdx.game.TextView
+com/mygdx/game/StringAlignUtils.java
+ com.mygdx.game.StringAlignUtils
+ com.mygdx.game.StringAlignUtils$1
+ com.mygdx.game.StringAlignUtils$Alignment
+com/mygdx/game/Node.java
+ com.mygdx.game.Node
 com/mygdx/game/Dialog.java
  com.mygdx.game.Dialog
 com/mygdx/game/SimpleDirectionGestureDetector.java
@@ -21,33 +22,37 @@ com/mygdx/game/SimpleDirectionGestureDetector.java
 com/mygdx/game/PathFinding.java
  com.mygdx.game.PathFinding
  com.mygdx.game.PathFinding$1
-com/mygdx/game/FontFactory.java
- com.mygdx.game.FontFactory
-com/mygdx/game/Coordinates.java
- com.mygdx.game.Coordinates
-com/mygdx/game/BaseActor.java
- com.mygdx.game.BaseActor
-com/mygdx/game/MyInputListener.java
- com.mygdx.game.MyInputListener
-com/mygdx/game/Message.java
- com.mygdx.game.Message
-com/mygdx/game/Node.java
- com.mygdx.game.Node
 com/mygdx/game/ButtonData.java
  com.mygdx.game.ButtonData
+com/mygdx/game/Coordinates.java
+ com.mygdx.game.Coordinates
 com/mygdx/game/ObjectData.java
  com.mygdx.game.ObjectData
-com/mygdx/game/StringAlignUtils.java
- com.mygdx.game.StringAlignUtils
- com.mygdx.game.StringAlignUtils$1
- com.mygdx.game.StringAlignUtils$Alignment
-com/mygdx/game/Player.java
- com.mygdx.game.Player
+com/mygdx/game/MyInputListener.java
+ com.mygdx.game.MyInputListener
 com/mygdx/game/Language.java
  com.mygdx.game.Language
+com/mygdx/game/FontFactory.java
+ com.mygdx.game.FontFactory
+com/mygdx/game/RadialSprite.java
+ com.mygdx.game.RadialSprite
+com/mygdx/game/Npc.java
+ com.mygdx.game.Npc
+ com.mygdx.game.PlayerCondition
 com/mygdx/game/Preffics.java
  com.mygdx.game.Preffics
+com/mygdx/game/BaseActor.java
+ com.mygdx.game.BaseActor
+com/mygdx/game/Message.java
+ com.mygdx.game.Message
+com/mygdx/game/TextToDraw.java
+ com.mygdx.game.TextView
+com/mygdx/game/StatBar.java
+ com.mygdx.game.StatBar
+com/mygdx/game/Player.java
+ com.mygdx.game.Player
 com/mygdx/game/MyGdxGame.java
+ com.mygdx.game.InterScreenCommunication
  com.mygdx.game.MyGdxGame
  com.mygdx.game.MyGdxGame$1
 com/mygdx/game/GymRoom.java

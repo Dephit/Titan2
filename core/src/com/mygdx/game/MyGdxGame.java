@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyGdxGame implements ApplicationListener {
+public class MyGdxGame implements ApplicationListener, InterScreenCommunication {
 
     BaseRoom stage;
 
@@ -23,7 +23,7 @@ public class MyGdxGame implements ApplicationListener {
     @Override
     public void create() {
         Preffics.getInstance();
-        stage = new GymRoom(new Player());
+        stage = new GymRoom(this, new Player());
         stage.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -60,5 +60,12 @@ public class MyGdxGame implements ApplicationListener {
 
     }
 
+    @Override
+    public void showToast(String msg) {
+        myRequestHandler.showToast(msg);
+    }
 }
 
+interface InterScreenCommunication{
+    void showToast(String msg);
+}

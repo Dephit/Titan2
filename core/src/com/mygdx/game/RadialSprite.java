@@ -1,6 +1,6 @@
 package com.mygdx.game;
 
-/*
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -10,10 +10,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
-import static com.mygdx.game.MyMethods.LoadImg;
 
-*/
-/** @author Xoppa *//*
+/** @author Xoppa */
 
 public class RadialSprite implements Drawable {
     private final static int TOPRIGHT1 = 0;
@@ -59,9 +57,7 @@ public class RadialSprite implements Drawable {
         this.width = textureRegion.getRegionWidth();
         this.height = textureRegion.getRegionHeight();
         setColor(Color.WHITE);
-        end=new Sprite(LoadImg("radend.png"));
-
-
+        end = new Sprite(Preffics.getInstance().loadImg("radend.png"));
     }
 
     public void setColor(float packedColor) {
@@ -302,4 +298,4 @@ public class RadialSprite implements Drawable {
         this.v2 = textureRegion.getV2();
         this.dirty = true;
     }
-}*/
+}

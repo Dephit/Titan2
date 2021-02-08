@@ -34,6 +34,7 @@ public abstract class BaseRoom extends Stage  {
     private Texture tex2, tex3, tex4;
     private Pixmap pix2, pix3, pix4;
 
+    InterScreenCommunication interScreenCommunication;
 
     private OrthographicCamera camera;
     protected Vector3 touchPos;
@@ -47,9 +48,10 @@ public abstract class BaseRoom extends Stage  {
         init();
     }
 
-    public BaseRoom(String tag, Player _player) {
+    public BaseRoom(InterScreenCommunication communication, String tag, Player _player) {
         super(new FitViewport(Preffics.SCREEN_WIDTH, Preffics.SCREEN_HEIGHT));
         player = _player;
+        interScreenCommunication = communication;
         npcs.add(player);
         ROOM_TAG = tag;
         BACKGROUND_PATH_TAG = "screens/" + ROOM_TAG + "/" + ROOM_TAG + ".png";
@@ -245,10 +247,17 @@ public abstract class BaseRoom extends Stage  {
 
         TextureAtlas buttonAtlas = Preffics.getInstance().getByPath("screens/buttons/buttons.atlas", TextureAtlas.class);
         skin.addRegions(buttonAtlas);
-        makeButtons(skin);
+        setCommonButtons();
     }
 
-    protected abstract void makeButtons(Skin skin);
+    void setCommonButtons(){
+        TextButton button = getTextButton("map", "map","", 10, 800, 125, 125, 1f, ()-> interScreenCommunication.showToast("map"));
+        TextButton optionButton = getTextButton("optionButton", "optionButton","", 10,940, 125, 125, 1f, ()-> interScreenCommunication.showToast("options"));
+        TextButton statsButton = getTextButton("statsButton", "statsButton","", 1600, 750, 303, 303,1f, ()-> interScreenCommunication.showToast("options"));
+        buttonGroup.addActor(button);
+        buttonGroup.addActor(optionButton);
+        buttonGroup.addActor(statsButton);
+    }
 
     void log(String msg){
         System.out.println(ROOM_TAG + ": " + msg);
