@@ -35,7 +35,7 @@ enum PlayerCondition {
     goToSquatRack, goToBenchRack, goToDeadliftRack, goToLegPress, goToPullUps, goToPushUps, goToHiper
 }
 
-public class Npc extends Actor {
+public class Npc extends BaseActor {
 
     private int sizeMult = 5;
 

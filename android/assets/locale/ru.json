@@ -4,6 +4,7 @@
   "heavySquat" :    "Тяжелый присед",
   "moderateSquat" : "Средний присед",
   "easySquat" :     "Легкий присед",
+  "squat" :     "Приседания",
   "mockSquat" :     "Проходка",
 
   "heavyBench" :    "Тяжелый жим",
@@ -15,6 +16,10 @@
   "moderateDeadlift" : "Средная тяга",
   "easyDeadlift" :     "Легкая тяга",
   "mockDeadlift" :     "Проходка",
+
+  "bestResult" :     "Рез.",
+  "level" :     "Ур.",
+
 
   "chooseYourExercise" : "Какое упражнение хотите сделать?",
 

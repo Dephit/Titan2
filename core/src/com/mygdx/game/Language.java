@@ -16,6 +16,11 @@ class Language{
     public String easySquat;
     public String mockSquat;
 
+    public String bestResult;
+    public String level;
+
+    public String squat;
+
     public String heavyBench;
     public String moderateBench;
     public String easyBench;

@@ -18,8 +18,11 @@ public class StatBar extends BaseActor {
 
     private float capacity = 100f;
     private float currentAmount;
+    public float secondCapacity = 100f;
+    public float secondCurrentAmount = 100;
     private Texture backgroundImg, progressImg, foregroundImg;
-    private Sprite progressSprite;
+    private Sprite progressSprite, secondProgressSprite;
+    private String str;
 
     StatBar(String name) {
         setName(name);
@@ -49,7 +52,9 @@ public class StatBar extends BaseActor {
         progressImg = preffics.loadImg("statMid.png");
         foregroundImg = preffics.loadImg("statUp.png");
         progressSprite = new Sprite(progressImg);
-        setColor(Color.CORAL);
+        secondProgressSprite = new Sprite(progressImg);
+        secondProgressSprite.setColor(Color.GREEN);
+        progressSprite.setColor(Color.CORAL );
     }
 
     @Override
@@ -61,18 +66,28 @@ public class StatBar extends BaseActor {
     @Override
     public void act(float delta) {
         super.act(delta);
-        if(currentAmount > capacity)
+        /*if(currentAmount > capacity)
             currentAmount = 0;
+        if(currentAmount > secondCurrentAmount)
+            currentAmount = 0;*/
+
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         batch.draw(backgroundImg, getX(), getY(), getWidth(), getHeight());
-        //batch.draw(progressImg, getX(), getY(), getWidth() * currentAmount / capacity, getHeight());
-        progressSprite.setBounds( getX() + 10, getY() + 5, getWidth() * currentAmount / capacity - 10, getHeight() - 10);
+        secondProgressSprite.setBounds( getX() + 10, getY() + 5, getWidth() * secondCurrentAmount / secondCapacity - 10, getHeight() - 10);
+        secondProgressSprite.draw(batch);
+        progressSprite.setBounds( getX() + 10, getY() + 5, Math.min(getWidth() * currentAmount / capacity - 10, secondProgressSprite.getWidth()), getHeight() - 10);
         progressSprite.draw(batch);
         batch.draw(foregroundImg, getX(), getY(), getWidth(), getHeight());
+        if(str != null)
+            showText(batch, str, (int) (getX() + 25), (int) (getY() + getHeight() / 1.5f), 1f, Color.BLACK);
+    }
+
+    public void drawText(String str) {
+        this.str = str;
     }
 }
 

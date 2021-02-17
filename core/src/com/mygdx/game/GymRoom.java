@@ -26,7 +26,6 @@ public class GymRoom extends BaseRoom{
         npc.setPeriodicEvent();
         npcs.add(npc);
         objectGroup.addActor(npc);
-        hudGroup.addActor(player.getSquatBar());
         hudGroup.addActor(player.getHealthBar());
         hudGroup.addActor(player.getEnergyBar());
     }
@@ -162,6 +161,17 @@ public class GymRoom extends BaseRoom{
             if (!hudGroup.getChildren().contains(message, false))
                 hudGroup.addActor(message);
         });
+    }
+
+    @Override
+    public void draw() {
+        super.draw();
+        StatBar bar = player.getSquatBar();
+        if(!bar.hasParent() && player.playerCondition == PlayerCondition.squat){
+            hudGroup.addActor(bar);
+        }else if(bar.hasParent() && player.playerCondition != PlayerCondition.squat){
+            bar.remove();
+        }
     }
 
     @Override
