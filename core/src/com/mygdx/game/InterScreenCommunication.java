@@ -1,0 +1,9 @@
+package com.mygdx.game;
+
+public interface InterScreenCommunication {
+    void showToast(String msg);
+
+    void openMap();
+
+    void openGym();
+}

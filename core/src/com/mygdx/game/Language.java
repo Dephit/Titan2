@@ -8,7 +8,7 @@ import java.util.List;
 
 import static com.badlogic.gdx.net.HttpRequestBuilder.json;
 
-class Language{
+public class Language{
 
     public String loading;
     public String heavySquat;

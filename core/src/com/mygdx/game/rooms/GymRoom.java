@@ -1,19 +1,27 @@
-package com.mygdx.game;
-
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+package com.mygdx.game.rooms;
 
 import static com.mygdx.game.PlayerCondition.lookinLeft;
 import static com.mygdx.game.PlayerCondition.lookinUp;
 
-public class GymRoom extends BaseRoom{
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.mygdx.game.BaseRoom;
+import com.mygdx.game.Exercise;
+import com.mygdx.game.InterScreenCommunication;
+import com.mygdx.game.Message;
+import com.mygdx.game.Npc;
+import com.mygdx.game.Player;
+import com.mygdx.game.PlayerCondition;
+import com.mygdx.game.Preffics;
+
+import java.util.ArrayList;
+import java.util.Map;
+
+public class GymRoom extends BaseRoom {
+
+    String tag = "gym";
 
     public GymRoom() {
         super("gym");

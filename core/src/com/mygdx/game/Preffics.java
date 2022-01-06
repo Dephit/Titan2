@@ -14,8 +14,8 @@ import static com.badlogic.gdx.net.HttpRequestBuilder.json;
 
 public class Preffics {
 
-    static int SCREEN_WIDTH = 1920;
-    static int SCREEN_HEIGHT = 1080;
+    public static int SCREEN_WIDTH = 1920;
+    public static int SCREEN_HEIGHT = 1080;
 
     public final AssetManager assetManager = new AssetManager();
 
@@ -27,7 +27,7 @@ public class Preffics {
     public double[][] mapArr;
     public int mapSize;
 
-    static Preffics getInstance(){
+    public static Preffics getInstance(){
         if(instance == null){
             instance = new Preffics();
             instance.choseLanguage("ru");

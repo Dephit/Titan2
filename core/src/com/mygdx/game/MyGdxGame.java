@@ -5,14 +5,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.mygdx.game.rooms.GymRoom;
+import com.mygdx.game.rooms.MapRoom;
 
 public class MyGdxGame implements ApplicationListener, InterScreenCommunication {
 
     BaseRoom stage;
+    Player player;
 
     private final IActivityRequestHandler myRequestHandler;
 
@@ -23,14 +22,8 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
     @Override
     public void create() {
         Preffics.getInstance();
-        stage = new GymRoom(this, new Player());
-        stage.addListener(new InputListener(){
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                stage.onTouchDown(event, x, y, pointer, button);
-                return super.touchDown(event, x, y, pointer, button);
-            }
-        });
+        player = new Player();
+        openGym();
     }
 
     @Override
@@ -64,8 +57,29 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
     public void showToast(String msg) {
         myRequestHandler.showToast(msg);
     }
+
+    @Override
+    public void openMap() {
+        stage = new MapRoom(this, null);
+        stage.addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                stage.onTouchDown(event, x, y, pointer, button);
+                return super.touchDown(event, x, y, pointer, button);
+            }
+        });
+    }
+
+    @Override
+    public void openGym() {
+        stage = new GymRoom(this, player);
+        stage.addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                stage.onTouchDown(event, x, y, pointer, button);
+                return super.touchDown(event, x, y, pointer, button);
+            }
+        });
+    }
 }
 
-interface InterScreenCommunication{
-    void showToast(String msg);
-}

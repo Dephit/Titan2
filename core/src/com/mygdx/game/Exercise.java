@@ -5,7 +5,7 @@ import java.util.Random;
 public class Exercise {
 
     PlayerCondition condition;
-    StatBar statBar;
+    public StatBar statBar;
 
     public Exercise(PlayerCondition statName) {
         condition = statName;

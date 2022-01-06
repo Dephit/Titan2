@@ -21,7 +21,8 @@ import java.util.ArrayList;
 
 public abstract class BaseRoom extends Stage  {
 
-    ArrayList<Npc> npcs = new ArrayList<>();
+
+    protected ArrayList<Npc> npcs = new ArrayList<>();
 
     protected Group objectGroup, buttonGroup, hudGroup = new Group();
 
@@ -34,7 +35,7 @@ public abstract class BaseRoom extends Stage  {
     private Texture tex2, tex3, tex4;
     private Pixmap pix2, pix3, pix4;
 
-    InterScreenCommunication interScreenCommunication;
+    public InterScreenCommunication interScreenCommunication;
 
     private OrthographicCamera camera;
     protected Vector3 touchPos;
@@ -50,13 +51,17 @@ public abstract class BaseRoom extends Stage  {
 
     public BaseRoom(InterScreenCommunication communication, String tag, Player _player) {
         super(new FitViewport(Preffics.SCREEN_WIDTH, Preffics.SCREEN_HEIGHT));
-        player = _player;
+        if(_player != null){
+            player = _player;
+            npcs.add(player);
+        }
         interScreenCommunication = communication;
-        npcs.add(player);
         ROOM_TAG = tag;
         BACKGROUND_PATH_TAG = "screens/" + ROOM_TAG + "/" + ROOM_TAG + ".png";
         init();
-        objectGroup.addActor(player);
+        if(_player != null){
+            objectGroup.addActor(player);
+        }
         addActor(objectGroup);
         addActor(hudGroup);
         addActor(buttonGroup);
@@ -82,7 +87,9 @@ public abstract class BaseRoom extends Stage  {
 
         Gdx.input.setInputProcessor(this);
         Preffics.getInstance().createMap(ROOM_TAG);
-        player.clearPath();
+        if(player != null){
+            player.clearPath();
+        }
         objectGroup = new Group();
         hudGroup = new Group();
         buttonGroup = new Group();
@@ -206,14 +213,18 @@ public abstract class BaseRoom extends Stage  {
     }
 
     private void createObjects(Preffics preffics) {
-        TextureAtlas textureAtlas = new TextureAtlas(preffics.getPath() + "screens/" + ROOM_TAG + "/objects/objects.atlas");
-        final ArrayList<ObjectData> objectList = preffics.fromObjectFromJson("screens/" + ROOM_TAG + "/objects/objects.json", ArrayList.class);
-        for (ObjectData object: objectList){
-            object.setAtlas(textureAtlas);
-            object.addListener(getEventListener(object.name, () -> object.setCertainFrame(true)));
+        try{
+            TextureAtlas textureAtlas = new TextureAtlas(preffics.getPath() + "screens/" + ROOM_TAG + "/objects/objects.atlas");
+            final ArrayList<ObjectData> objectList = preffics.fromObjectFromJson("screens/" + ROOM_TAG + "/objects/objects.json", ArrayList.class);
+            for (ObjectData object: objectList){
+                object.setAtlas(textureAtlas);
+                object.addListener(getEventListener(object.name, () -> object.setCertainFrame(true)));
 
-            log(object.name + ", " + object.x + ", " + object.y);
-            objectGroup.addActor(object);
+                log(object.name + ", " + object.x + ", " + object.y);
+                objectGroup.addActor(object);
+            }
+        }catch (Exception e){
+
         }
     }
 
@@ -252,8 +263,9 @@ public abstract class BaseRoom extends Stage  {
         setCommonButtons();
     }
 
-    void setCommonButtons(){
-        TextButton button = getTextButton("map", "map","", 10, 800, 125, 125, 1f, ()-> interScreenCommunication.showToast("map"));
+    public void setCommonButtons(){
+        TextButton button = getTextButton("map", "map","", 10, 800, 125, 125, 1f, ()-> interScreenCommunication.openMap());
+
         TextButton optionButton = getTextButton("optionButton", "optionButton","", 10,940, 125, 125, 1f, ()-> interScreenCommunication.showToast("options"));
         //TextButton statsButton = getTextButton("statsButton", "statsButton","", 1600, 750, 303, 303,1f, ()-> interScreenCommunication.showToast("options"));
         buttonGroup.addActor(button);

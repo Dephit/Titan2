@@ -35,8 +35,8 @@ public class Player extends Npc {
         energy.statBar.setColor(Color.YELLOW);
     }
 
-    int currentGirlDialogProgress = 0;
-    int coachDialogProgress = 0;
+    public int currentGirlDialogProgress = 0;
+    public int coachDialogProgress = 0;
 
     Variation variation;
 
@@ -152,10 +152,10 @@ public class Player extends Npc {
     StatBar getSquatBar(){
         return squatExr.statBar;
     }
-    StatBar getHealthBar(){
+    public StatBar getHealthBar(){
         return health.statBar;
     }
-    StatBar getEnergyBar(){
+    public StatBar getEnergyBar(){
         return energy.statBar;
     }
 
