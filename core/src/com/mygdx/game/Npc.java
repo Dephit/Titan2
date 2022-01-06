@@ -262,8 +262,7 @@ public class Npc extends BaseActor {
 
     public void set2BenchSitting() { setPath(1680,260, 1720,280, PlayerCondition.sittingRev); }
 
-    public void setDumbellExercise() {
-    }
+    public void setDumbellExercise() { }
 
     public void setPullUps() {
         setPath(800, 430, 820, 440, PlayerCondition.pullUps);

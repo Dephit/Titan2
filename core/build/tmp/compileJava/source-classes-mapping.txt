@@ -1,20 +1,20 @@
 com/mygdx/game/RadialSprite.java
  com.mygdx.game.RadialSprite
-com/mygdx/game/Variation.java
- com.mygdx.game.Variation
+com/mygdx/game/Preffics.java
+ com.mygdx.game.Preffics
 com/mygdx/game/MyTextButton.java
  com.mygdx.game.MyTextButton
 com/mygdx/game/Npc.java
  com.mygdx.game.Npc
  com.mygdx.game.PlayerCondition
-com/mygdx/game/StatBar.java
- com.mygdx.game.StatBar
+com/mygdx/game/TextToDraw.java
+ com.mygdx.game.TextView
 com/mygdx/game/BaseActor.java
  com.mygdx.game.BaseActor
 com/mygdx/game/Message.java
  com.mygdx.game.Message
-com/mygdx/game/TextToDraw.java
- com.mygdx.game.TextView
+com/mygdx/game/StatBar.java
+ com.mygdx.game.StatBar
 com/mygdx/game/StringAlignUtils.java
  com.mygdx.game.StringAlignUtils
  com.mygdx.game.StringAlignUtils$1
@@ -35,24 +35,31 @@ com/mygdx/game/PlayerAnimationData.java
  com.mygdx.game.PlayerAnimationData
 com/mygdx/game/ButtonData.java
  com.mygdx.game.ButtonData
-com/mygdx/game/Dialog.java
- com.mygdx.game.Dialog
+com/mygdx/game/Stat.java
+ com.mygdx.game.Stat
 com/mygdx/game/SimpleDirectionGestureDetector.java
  com.mygdx.game.SimpleDirectionGestureDetector
  com.mygdx.game.SimpleDirectionGestureDetector$DirectionGestureListener
  com.mygdx.game.SimpleDirectionGestureDetector$DirectionListener
-com/mygdx/game/ObjectData.java
- com.mygdx.game.ObjectData
-com/mygdx/game/FontFactory.java
- com.mygdx.game.FontFactory
-com/mygdx/game/MyInputListener.java
- com.mygdx.game.MyInputListener
+com/mygdx/game/Dialog.java
+ com.mygdx.game.Dialog
 com/mygdx/game/Language.java
  com.mygdx.game.Language
-com/mygdx/game/Preffics.java
- com.mygdx.game.Preffics
+com/mygdx/game/FontFactory.java
+ com.mygdx.game.FontFactory
+com/mygdx/game/Exercise.java
+ com.mygdx.game.Exercise
+com/mygdx/game/MyInputListener.java
+ com.mygdx.game.MyInputListener
+com/mygdx/game/Variation.java
+ com.mygdx.game.Variation
+com/mygdx/game/ObjectData.java
+ com.mygdx.game.ObjectData
 com/mygdx/game/Player.java
  com.mygdx.game.Player
+ com.mygdx.game.Player$1
+com/mygdx/game/BaseRoom.java
+ com.mygdx.game.BaseRoom
 com/mygdx/game/MyGdxGame.java
  com.mygdx.game.InterScreenCommunication
  com.mygdx.game.MyGdxGame
@@ -60,5 +67,3 @@ com/mygdx/game/MyGdxGame.java
 com/mygdx/game/GymRoom.java
  com.mygdx.game.GymRoom
  com.mygdx.game.GymRoom$1
-com/mygdx/game/BaseRoom.java
- com.mygdx.game.BaseRoom

@@ -40,6 +40,7 @@ public class DesktopLauncher implements IActivityRequestHandler {
 
 	}
 
+
 	@Override
 	public void saveData(Map value) {
 
@@ -49,4 +50,10 @@ public class DesktopLauncher implements IActivityRequestHandler {
 	public Map loadData() {
 		return null;
 	}
+
+	@Override
+	public void showToast(String s) {
+
+	}
+
 }

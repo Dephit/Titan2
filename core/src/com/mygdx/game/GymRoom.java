@@ -96,30 +96,33 @@ public class GymRoom extends BaseRoom{
     }
 
     private void setBench(Preffics preffics) {
-        HashMap<String, Runnable> map = new HashMap<>();
+        /*HashMap<String, Runnable> map = new HashMap<>();
         map.put(preffics.getLanguage().heavyBench, ()-> player.setBenchExercise());
         map.put(preffics.getLanguage().moderateBench, ()-> player.setBenchExercise());
         map.put(preffics.getLanguage().easyBench, ()-> player.setBenchExercise());
         map.put(preffics.getLanguage().mockBench, ()-> player.setBenchExercise());
-        addExerciseChoseMenuPushChooser(preffics.getLanguage().chooseYourExercise, map);
+        addExerciseChoseMenuPushChooser(preffics.getLanguage().chooseYourExercise, map);*/
+        player.setBenchExercise();
     }
 
     private void setDeadlift(Preffics preffics) {
-        HashMap<String, Runnable> map = new HashMap<>();
+        /*HashMap<String, Runnable> map = new HashMap<>();
         map.put(preffics.getLanguage().heavyDeadlift, ()-> player.setDeadliftExercise());
         map.put(preffics.getLanguage().moderateDeadlift, ()-> player.setDeadliftExercise());
         map.put(preffics.getLanguage().easyDeadlift, ()-> player.setDeadliftExercise());
         map.put(preffics.getLanguage().mockDeadlift, ()-> player.setDeadliftExercise());
-        addExerciseChoseMenuPushChooser(preffics.getLanguage().chooseYourExercise, map);
+        addExerciseChoseMenuPushChooser(preffics.getLanguage().chooseYourExercise, map);*/
+        player.setDeadliftExercise();
     }
 
     private void setUpSquat(Preffics preffics) {
-        HashMap<String, Runnable> map = new HashMap<>();
+        /*HashMap<String, Runnable> map = new HashMap<>();
         map.put(preffics.getLanguage().heavySquat, ()-> player.setHeavySquat());
         map.put(preffics.getLanguage().moderateSquat, ()-> player.setModerateSquat());
         map.put(preffics.getLanguage().easySquat, ()-> player.setEasySquat());
         map.put(preffics.getLanguage().mockSquat, ()-> player.setMockSquat());
-        addExerciseChoseMenuPushChooser(preffics.getLanguage().chooseYourExercise, map);
+        addExerciseChoseMenuPushChooser(preffics.getLanguage().chooseYourExercise, map);*/
+        player.setModerateSquat();
     }
 
     private void setPushPullUps(Preffics preffics) {
@@ -166,12 +169,10 @@ public class GymRoom extends BaseRoom{
     @Override
     public void draw() {
         super.draw();
-        StatBar bar = player.getSquatBar();
-        if(!bar.hasParent() && player.playerCondition == PlayerCondition.squat){
-            hudGroup.addActor(bar);
-        }else if(bar.hasParent() && player.playerCondition != PlayerCondition.squat){
-            bar.remove();
-        }
+        Exercise bar = player.isInExercise();
+        if(bar != null && !bar.statBar.hasParent()){
+            hudGroup.addActor(bar.statBar);
+        }//else player.clearExrercise();
     }
 
     @Override

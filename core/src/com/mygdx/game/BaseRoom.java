@@ -88,6 +88,8 @@ public abstract class BaseRoom extends Stage  {
         buttonGroup = new Group();
     }
 
+
+
     public Pixmap createProceduralPixmap (int width, int height, float r, float g, float b) {
         Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888);
         pixmap.setColor(r, g, b, 1);

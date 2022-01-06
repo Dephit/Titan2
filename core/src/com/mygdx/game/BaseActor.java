@@ -6,6 +6,11 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class BaseActor extends Actor {
+
+    Language getLanguage(){
+        return Preffics.getInstance().getLanguage();
+    }
+
     protected void showText(Batch batch, String str, int x, int y, float scale, Color color) {
         BitmapFont textFont = FontFactory.getInstance().getFont(Preffics.getInstance().getLocale());
         textFont.getData().setScale(scale);

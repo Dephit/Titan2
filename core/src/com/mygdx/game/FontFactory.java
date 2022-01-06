@@ -15,6 +15,8 @@ public class FontFactory {
 
     // Russian cyrillic characters
     public static final String RUSSIAN_CHARACTERS = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
+            + "abcdefghijklmnopqrstuvwxyz"
+            + "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
             + "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
             + "1234567890.,:;_¡!¿?\"'+-*/()[]={}";
 
