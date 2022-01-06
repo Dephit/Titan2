@@ -59,13 +59,12 @@ com/mygdx/game/MyInputListener.java
  com.mygdx.game.MyInputListener
 com/mygdx/game/Variation.java
  com.mygdx.game.Variation
+com/mygdx/game/rooms/RoomRoom.java
+ com.mygdx.game.rooms.RoomRoom
+ com.mygdx.game.rooms.RoomRoom$1
 com/mygdx/game/rooms/GymRoom.java
  com.mygdx.game.rooms.GymRoom
  com.mygdx.game.rooms.GymRoom$1
-com/mygdx/game/BaseRoom.java
- com.mygdx.game.BaseRoom
-com/mygdx/game/InterScreenCommunication.java
- com.mygdx.game.InterScreenCommunication
 com/mygdx/game/rooms/MapRoom.java
  com.mygdx.game.rooms.MapRoom
  com.mygdx.game.rooms.MapRoom$1
@@ -73,3 +72,8 @@ com/mygdx/game/MyGdxGame.java
  com.mygdx.game.MyGdxGame
  com.mygdx.game.MyGdxGame$1
  com.mygdx.game.MyGdxGame$2
+ com.mygdx.game.MyGdxGame$3
+com/mygdx/game/BaseRoom.java
+ com.mygdx.game.BaseRoom
+com/mygdx/game/InterScreenCommunication.java
+ com.mygdx.game.InterScreenCommunication

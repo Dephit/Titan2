@@ -1,55 +1,34 @@
 package com.mygdx.game.rooms;
 
-import static com.mygdx.game.PlayerCondition.lookinLeft;
-import static com.mygdx.game.PlayerCondition.lookinUp;
-
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.mygdx.game.BaseRoom;
-import com.mygdx.game.Exercise;
 import com.mygdx.game.InterScreenCommunication;
-import com.mygdx.game.Message;
-import com.mygdx.game.Npc;
 import com.mygdx.game.Player;
-import com.mygdx.game.PlayerCondition;
-import com.mygdx.game.Preffics;
 
-import java.util.ArrayList;
-import java.util.Map;
-
-public class MapRoom extends BaseRoom {
+public class RoomRoom extends BaseRoom {
 
 
-
-    public MapRoom() {
-        super("map");
+    public RoomRoom() {
+        super("room");
     }
 
-    public MapRoom(InterScreenCommunication _communication, Player player) {
-        super(_communication, "map", player);
+    public RoomRoom(InterScreenCommunication _communication, Player player) {
+        super(_communication, "room", player);
         //Npc npc = new Npc("player2");
         //npc.clearPath();
         //npc.setPeriodicEvent();
         /*npcs.add(npc);
-        objectGroup.addActor(npc);
+        objectGroup.addActor(npc);*/
         hudGroup.addActor(player.getHealthBar());
-        hudGroup.addActor(player.getEnergyBar());*/
+        hudGroup.addActor(player.getEnergyBar());
     }
 
-
-    public void setCommonButtons(){
-        super.setCommonButtons();
-        TextButton gym = getTextButton("gym", "gym","", 350, 800, 125, 125, 1f, ()-> interScreenCommunication.openGym());
-        TextButton room = getTextButton("room", "room","", 350, 300, 125, 125, 1f, ()-> interScreenCommunication.openRoom());
-        buttonGroup.addActor(gym);
-        buttonGroup.addActor(room);
-    }
 
     @Override
     protected InputListener getEventListener(String text, Runnable onFinish) {
-        return  new InputListener(){
+        return new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 onFinish.run();
@@ -89,5 +68,3 @@ public class MapRoom extends BaseRoom {
         }*/
     }
 }
-
-

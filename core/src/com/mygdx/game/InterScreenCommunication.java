@@ -6,4 +6,6 @@ public interface InterScreenCommunication {
     void openMap();
 
     void openGym();
+
+    void openRoom();
 }

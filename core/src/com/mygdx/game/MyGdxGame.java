@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.mygdx.game.rooms.GymRoom;
 import com.mygdx.game.rooms.MapRoom;
+import com.mygdx.game.rooms.RoomRoom;
 
 public class MyGdxGame implements ApplicationListener, InterScreenCommunication {
 
@@ -73,6 +74,18 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
     @Override
     public void openGym() {
         stage = new GymRoom(this, player);
+        stage.addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                stage.onTouchDown(event, x, y, pointer, button);
+                return super.touchDown(event, x, y, pointer, button);
+            }
+        });
+    }
+
+    @Override
+    public void openRoom() {
+        stage = new RoomRoom(this, player);
         stage.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
