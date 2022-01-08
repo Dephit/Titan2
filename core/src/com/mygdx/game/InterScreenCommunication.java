@@ -8,4 +8,6 @@ public interface InterScreenCommunication {
     void openGym();
 
     void openRoom();
+
+    void openShop();
 }

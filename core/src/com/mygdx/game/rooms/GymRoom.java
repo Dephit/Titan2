@@ -21,8 +21,6 @@ import java.util.Map;
 
 public class GymRoom extends BaseRoom {
 
-    String tag = "gym";
-
     public GymRoom() {
         super("gym");
     }
@@ -36,6 +34,7 @@ public class GymRoom extends BaseRoom {
         objectGroup.addActor(npc);
         hudGroup.addActor(player.getHealthBar());
         hudGroup.addActor(player.getEnergyBar());
+        player.setPlayerPostion(400,100);
     }
 
     @Override
@@ -188,14 +187,7 @@ public class GymRoom extends BaseRoom {
         if (objectGroup.getChildren().get(i).getName() != null){
             if(objectGroup.getChildren().get(i).getName().contains("player")) {
                 Npc pl = (Npc) objectGroup.getChildren().get(i);
-                if ((pl.playerCondition.equals(PlayerCondition.bench) ||
-                        pl.playerCondition.equals(PlayerCondition.pullUps) ||
-                        pl.playerCondition.equals(PlayerCondition.legPress) ||
-                        pl.playerCondition.equals(PlayerCondition.sitting) ||
-                        pl.playerCondition.equals(PlayerCondition.sittingRev) ||
-                        pl.playerCondition.equals(PlayerCondition.hiper) ||
-                        pl.playerCondition.equals(PlayerCondition.pushUps))||
-                        pl.playerCondition.equals(PlayerCondition.pcSitting))
+                if ((pl.playerCondition.equals(PlayerCondition.pcSitting)))
                     if(pl.getName().equals("player"))
                         objectGroup.getChildren().swap(i, objectGroup.getChildren().size - 1);
                     else

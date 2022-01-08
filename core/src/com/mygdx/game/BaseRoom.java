@@ -139,7 +139,11 @@ public abstract class BaseRoom extends Stage  {
             } else {
                 onLoading(preffics);
             }
-        //showPath(preffics);
+        try{
+            showPath(preffics);
+        }catch (Exception e){
+
+        }
         getBatch().end();
         draw();
         if(!pause) {
@@ -189,7 +193,7 @@ public abstract class BaseRoom extends Stage  {
                     ObjectData obj = ((ObjectData) objectData);
                     boolean oneFrame = false;
                     for (Npc npc: npcs){
-                        if (obj.name.toLowerCase().equals(npc.playerCondition.name().toLowerCase())) {
+                        if (obj.name.equalsIgnoreCase(npc.playerCondition.name())) {
                             oneFrame = true;
                             break;
                         }
@@ -264,13 +268,14 @@ public abstract class BaseRoom extends Stage  {
     }
 
     public void setCommonButtons(){
-        TextButton button = getTextButton("map", "map","", 10, 800, 125, 125, 1f, ()-> interScreenCommunication.openMap());
-
-        TextButton optionButton = getTextButton("optionButton", "optionButton","", 10,940, 125, 125, 1f, ()-> interScreenCommunication.showToast("options"));
+        addButton("map", "map","", 10, 800, 125, 125, 1f, ()-> interScreenCommunication.openMap());
+        addButton("optionButton", "optionButton","", 10,940, 125, 125, 1f, ()-> interScreenCommunication.showToast("options"));
         //TextButton statsButton = getTextButton("statsButton", "statsButton","", 1600, 750, 303, 303,1f, ()-> interScreenCommunication.showToast("options"));
-        buttonGroup.addActor(button);
-        buttonGroup.addActor(optionButton);
         //buttonGroup.addActor(statsButton);
+    }
+
+    public void addButton(String name, String style, String text, int x, int y, int w, int h, float scale, Runnable runnable) {
+        buttonGroup.addActor(getTextButton(name, style,text, x, y, w, h, scale, runnable));
     }
 
     void log(String msg){

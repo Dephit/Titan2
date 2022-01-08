@@ -27,12 +27,13 @@ public class Npc extends BaseActor {
     private PlayerCondition nextPlayerCondition = PlayerCondition.stay;
 
     private final Vector2 speed;
-    Vector2 lastWalkablePosition = new Vector2();
+    public Vector2 lastWalkablePosition = new Vector2();
     private final TextureAtlas textureAtlas;
     private Map<String, Animation<TextureRegion>> animMap;
     protected final TextureRegion currentFrame = new TextureRegion();
     protected float animationTime = 0;
-    private float nextX,nextY;
+    public float nextX;
+    public float nextY;
     private boolean playAnim = false;
 
     public List<Grid2d.MapNode> path = new LinkedList<Grid2d.MapNode>();
@@ -301,6 +302,13 @@ public class Npc extends BaseActor {
                 }
         );
         thread.start();
+    }
+
+    public void setPlayerPostion(int x, int y) {
+        lastWalkablePosition.set(x, y);
+        nextY = y;
+        nextX = x;
+        setPosition(x, y);
     }
 }
 
