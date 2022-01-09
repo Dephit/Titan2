@@ -54,6 +54,8 @@ public class Player extends Npc {
             case lookinLeft:
             case lookinRight:
             case stay:
+                break;
+            case sleeping:
                 calculateRecovery(delta);
                 break;
         }
@@ -65,8 +67,10 @@ public class Player extends Npc {
     }
 
     private void calculateExercise(Exercise exr, float delta) {
-        if(energy.value > 0){
-            energy.minusProgress(exr.calculateProgress(delta));
+        if(energy.value > 0 && health.value > 0){
+            Float value = exr.calculateProgress(delta);
+            energy.minusProgress(value);
+            health.minusProgress(value / 2);
         }else setPlayerCondition(PlayerCondition.stay);
     }
 
@@ -93,48 +97,10 @@ public class Player extends Npc {
         exercise.statBar.drawText(str);
     }
 
-    /*private void calculateSquat(float delta) {
-        squatExr.result = 80 + 20 * squatExr.LVL;
-        if(squatExr.progress > squatExr.limit){
-            squatExr.LVL++;
-            squatExr.limit = 100 + squatExr.LVL * 20;
-            squatExr.progress = 0;
-        }
-        if(squatExr.recovery <= 0){
-            setPushUps();
-            squatExr.recovery = fatigue;
-            //fatigue = 100;
-            if(variation == Variation.MOCK){
-                float random = 0.9f + new Random().nextFloat() * (0.95f - 0.9f);
-                squatExr.result = squatExr.result *= random;
-            }
-        }
-        squatExr.progress += delta * calculateByVariation(1.5f, 3.5f, 5.5f, 0.5f);
-        fatigue -= delta * calculateByVariation(0.5f, 2.5f, 4.5f, 6.5f);
-        squatExr.recovery -= delta * calculateByVariation(1.5f, 4.5f, 6.5f, 8.5f);
 
-        energy.setProgress(fatigue);
-        squat.secondCurrentAmount = fatigue;
-        squat.setProgress(squatExr.recovery);
-    }*/
-
-
-    private float calculateByVariation(float v, float v1, float v2, float v3) {
-        return variation == Variation.EASY ? v : variation == Variation.MODERATE ? v1 : variation == Variation.HEAVY ? v2 : v3;
-    }
-
-    public void setHeavySquat() {
-        variation = Variation.HEAVY;
-        setSquatExercise();
-    }
 
     public void setModerateSquat() {
         variation = Variation.MODERATE;
-        setSquatExercise();
-    }
-
-    public void setEasySquat() {
-        variation = Variation.EASY;
         setSquatExercise();
     }
 
@@ -144,14 +110,6 @@ public class Player extends Npc {
         super.setPlayerCondition(playerCondition);
     }
 
-    public void setMockSquat() {
-        variation = Variation.MOCK;
-        setSquatExercise();
-    }
-
-    StatBar getSquatBar(){
-        return squatExr.statBar;
-    }
     public StatBar getHealthBar(){
         return health.statBar;
     }
@@ -175,6 +133,14 @@ public class Player extends Npc {
                 exercise.statBar.remove();
             }
         }
+    }
+
+    public void eatPotato() {
+        health.addProgress(50);
+    }
+
+    public void eatNuggets() {
+        health.addProgress(25);
     }
 }
 

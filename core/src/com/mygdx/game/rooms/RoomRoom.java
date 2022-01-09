@@ -72,15 +72,79 @@ public class RoomRoom extends BaseRoom {
                 1300, 50, 450, 650, 1, runnable
         );
 
-        final TextButton yes = getTextButton("potato", "potato", "",
-                1350, 555, 165, 125, 1f, runnable);
-        final TextButton no = getTextButton("nuggets", "nuggets", "",
-                1300 + 450 - 215, 555, 165, 125, 1f, runnable);
+        final TextButton potato = getTextButton("potato", "potato", "",
+                1350, 555, 165, 125, 1f, this::showPotatoMenu);
+        final TextButton nuggets = getTextButton("nuggets", "nuggets", "",
+                1300 + 450 - 215, 555, 165, 125, 1f, this::showNuggetsMenu);
         final TextButton closeRef = getTextButton("closeRef", "closeRef", "Close me!!",
                 1350,65, 350, 60, 1f, runnable);
         group.addActor(textButton);
-        group.addActor(yes);
+        group.addActor(potato);
         group.addActor(closeRef);
+        group.addActor(nuggets);
+        buttonGroup.addActor(group);
+    }
+
+    private void showPotatoMenu() {
+        pause = true;
+        Group group = new Group();
+        Runnable runnable = ()->{
+            player.setPath(900 , 500, 900, 500, PlayerCondition.stay);
+            pause = false;
+            group.clear();
+            group.remove();
+        };
+        final TextButton textButton = getTextButton("potatoMenu", "potatoMenu", "Potato",
+                600, 100, 812, 651, 1, ()->{}
+        );
+
+        final TextButton yes = getTextButton("potatoMenuDescription", "empty", "The potato is a starchy tuber of the plant Solanum tuberosum and is a root vegetable native to the Americas. The plant is a perennial in the nightshade family Solanaceae",
+                1090, 635, 0, 0, 1f, ()->{});
+        final TextButton no = getTextButton("potatoAnswer", "empty", "",
+                1090, 300, 0, 0, 1f, ()->{});
+        final TextButton agreePotatoButton = getTextButton("agreePotatoButton", "yesButton", "Eat",
+                650, 118, 287, 84, 1f, ()->{
+                    player.eatPotato();
+                    runnable.run();
+                });
+        final TextButton declineFood = getTextButton("declineFood", "yesButton", "Put it back",
+                1060, 118, 287, 84, 1f, runnable);
+        group.addActor(textButton);
+        group.addActor(yes);
+        group.addActor(agreePotatoButton);
+        group.addActor(declineFood);
+        group.addActor(no);
+        buttonGroup.addActor(group);
+    }
+
+    private void showNuggetsMenu() {
+        pause = true;
+        Group group = new Group();
+        Runnable runnable = ()->{
+            player.setPath(900 , 500, 900, 500, PlayerCondition.stay);
+            pause = false;
+            group.clear();
+            group.remove();
+        };
+        final TextButton textButton = getTextButton("potatoMenu", "nuggetsMenu", "",
+                600, 100, 812, 651, 1, ()->{}
+        );
+
+        final TextButton yes = getTextButton("title", "empty", "Наггетсы",
+                1090, 635, 0, 0, 1f, ()->{});
+        final TextButton no = getTextButton("description", "empty", "блюдо американской кухни из филе куриной грудки в хрустящей панировке, обжаренной в масле. Изобретенные в 1950-х годах куриные наггетсы стали популярным блюдом ресторанов быстрого питания, а также широко продаются замороженными для домашнего использования",
+                1090, 300, 0, 0, 1f, ()->{});
+        final TextButton agreePotatoButton = getTextButton("eat", "yesButton", "Eat",
+                650, 118, 287, 84, 1f, ()->{
+                    player.eatNuggets();
+                    runnable.run();
+                });
+        final TextButton declineFood = getTextButton("declineFood", "yesButton", "Put it back",
+                1060, 118, 287, 84, 1f, runnable);
+        group.addActor(textButton);
+        group.addActor(yes);
+        group.addActor(agreePotatoButton);
+        group.addActor(declineFood);
         group.addActor(no);
         buttonGroup.addActor(group);
     }

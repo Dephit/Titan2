@@ -140,7 +140,7 @@ public abstract class BaseRoom extends Stage  {
                 onLoading(preffics);
             }
         try{
-            showPath(preffics);
+           // showPath(preffics);
         }catch (Exception e){
 
         }

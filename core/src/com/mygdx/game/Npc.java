@@ -180,6 +180,10 @@ public class Npc extends BaseActor {
             }
     }
 
+    public void setPath(int xGoal, int yGoal, PlayerCondition playerCondition) {
+        setPath(xGoal, yGoal, xGoal, yGoal, playerCondition, null);
+    }
+
     public void setPath(int xGoal, int yGoal, int xDestination, int yDestination, PlayerCondition playerCondition) {
         setPath(xGoal, yGoal, xDestination, yDestination, playerCondition, null);
     }
