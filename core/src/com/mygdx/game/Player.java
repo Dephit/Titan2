@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.mygdx.game.model.Refrigerator;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -18,6 +19,8 @@ public class Player extends Npc {
 
     Stat health = new Stat("health");
     Stat energy = new Stat("energy");
+
+    public Refrigerator refrigerator = new Refrigerator();
 
     Player() {
         super("player");
@@ -135,12 +138,8 @@ public class Player extends Npc {
         }
     }
 
-    public void eatPotato() {
-        health.addProgress(50);
-    }
-
-    public void eatNuggets() {
-        health.addProgress(25);
+    public void addHealth(int i) {
+        health.addProgress(i);
     }
 }
 
