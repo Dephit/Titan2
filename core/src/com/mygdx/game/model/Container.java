@@ -17,16 +17,20 @@ public class Container {
         return items;
     }
 
-    boolean addItem(Item item){
-        if(items.size() < totalCapacity){
+    public boolean addItem(Item item){
+        if(hasSpace()){
             items.add(item);
             return true;
         }
         return false;
     }
 
-    void removeItem(Item item){
+    public void removeItem(Item item){
         items.remove(item);
     }
 
+    public boolean hasSpace() {
+        return items.size() < totalCapacity;
+    }
 }
+

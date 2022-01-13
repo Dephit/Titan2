@@ -10,6 +10,7 @@ public class Potato extends Item {
         styleName = "potato";
         description = "Potato Description";
         menuStyleName = "potatoMenu";
+        cost = 100;
     }
 
     @Override

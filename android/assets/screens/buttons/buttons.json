@@ -24,7 +24,7 @@
   {"class":"com.mygdx.game.ButtonData", "name":"watchCam",         "screens": [["shop","empty",   244, 700, 75, 75]]},
   {"class":"com.mygdx.game.ButtonData", "name":"talkToStaffBut",   "screens": [["shop","empty",   230, 460, 75, 175]]},
   {"class":"com.mygdx.game.ButtonData", "name":"talkToCleanerBut", "screens": [["shop","empty",   1250, 430, 75, 155]]},
-  {"class":"com.mygdx.game.ButtonData", "name":"buyMenuBut",       "screens": [["shop","empty",   1100, 200, 200, 200]]},
+  {"class":"com.mygdx.game.ButtonData", "name":"buyMenuBut",       "screens": [["shop","map",   1100, 200, 200, 200]]},
 
   {"class":"com.mygdx.game.ButtonData", "name":"refrigerator",      "screens": [["refrigerator","refWindow",   1300, 50, 450, 650]]},
   {"class":"com.mygdx.game.ButtonData", "name":"potato",            "screens": [["refrigerator","potato", 1350, 555, 165, 125]]},

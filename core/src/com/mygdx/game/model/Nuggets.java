@@ -9,6 +9,7 @@ public class Nuggets extends Item {
         styleName = "nuggets";
         description = "Nuggets Description";
         menuStyleName = "potatoMenu";
+        cost = 50;
     }
 
     @Override

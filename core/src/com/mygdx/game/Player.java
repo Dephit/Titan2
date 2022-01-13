@@ -2,6 +2,9 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.mygdx.game.model.Container;
+import com.mygdx.game.model.Item;
+import com.mygdx.game.model.Pocket;
 import com.mygdx.game.model.Refrigerator;
 
 import java.util.ArrayList;
@@ -21,6 +24,7 @@ public class Player extends Npc {
     Stat energy = new Stat("energy");
 
     public Refrigerator refrigerator = new Refrigerator();
+    public Pocket pocket = new Pocket(75);
 
     Player() {
         super("player");
@@ -73,7 +77,6 @@ public class Player extends Npc {
         if(energy.value > 0 && health.value > 0){
             Float value = exr.calculateProgress(delta);
             energy.minusProgress(value);
-            health.minusProgress(value / 2);
         }else setPlayerCondition(PlayerCondition.stay);
     }
 
@@ -100,7 +103,12 @@ public class Player extends Npc {
         exercise.statBar.drawText(str);
     }
 
-
+    public boolean buyItem(Item item, Container container){
+        if(pocket.buy(item.cost) && container.hasSpace()){
+            refrigerator.addItem(item);
+            return true;
+        }else return false;
+    }
 
     public void setModerateSquat() {
         variation = Variation.MODERATE;

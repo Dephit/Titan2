@@ -40,6 +40,9 @@ public class Language{
     public List<String> sanitarRandomText;
     public List<String> stuffRandomText;
     public String chooseYourExercise;
+    public String refregiratorIsFull;
+    public String buyText;
+    public String no;
 
     Language(){
 

@@ -8,6 +8,8 @@ import java.util.Objects;
 
 public class Item extends BaseActor {
 
+    public int cost;
+
     public String title;
 
     public String styleName;
