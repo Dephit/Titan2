@@ -1,7 +1,16 @@
 package com.mygdx.game.rooms;
 
+import static com.mygdx.game.PlayerCondition.bench;
+import static com.mygdx.game.PlayerCondition.deadlift;
+import static com.mygdx.game.PlayerCondition.hiper;
+import static com.mygdx.game.PlayerCondition.legPress;
 import static com.mygdx.game.PlayerCondition.lookinLeft;
 import static com.mygdx.game.PlayerCondition.lookinUp;
+import static com.mygdx.game.PlayerCondition.pullUps;
+import static com.mygdx.game.PlayerCondition.pushUps;
+import static com.mygdx.game.PlayerCondition.sitting;
+import static com.mygdx.game.PlayerCondition.sittingRev;
+import static com.mygdx.game.PlayerCondition.squat;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -29,12 +38,20 @@ public class GymRoom extends BaseRoom {
         super(_communication, "gym", player);
         Npc npc = new Npc("player2");
         npc.clearPath();
-        npc.setPeriodicEvent();
+        npc.setPeriodicEvent(player);
         npcs.add(npc);
         objectGroup.addActor(npc);
         hudGroup.addActor(player.getHealthBar());
         hudGroup.addActor(player.getEnergyBar());
         player.setPlayerPostion(400,100);
+    }
+
+    @Override
+    public void dispose() {
+        for(Npc npc: npcs){
+            npc.isActive = false;
+        }
+        super.dispose();
     }
 
     @Override
@@ -47,23 +64,23 @@ public class GymRoom extends BaseRoom {
                     switch (text) {
                         case "squat":
                             if(x < 410) {
-                                setUpSquat(preffics);
+                                setExercise(()->setUpSquat(), squat);
                             }
                             break;
                         case "deadlift":
-                            setDeadlift(preffics);
+                            setExercise(()->setDeadlift(), deadlift);
                             break;
                         case "bench":
-                            setBench(preffics);
+                            setExercise(()->setBench(), bench);
                             break;
                         case "hiper":
-                            player.setHyperExercise();
+                            setExercise(player::setHyperExercise, hiper);
                             break;
                         case "benchNearCoach":
-                            player.set1BenchSitting();
+                            setExercise(player::set1BenchSitting, sitting);
                             break;
                         case "benchNearTreads":
-                            player.set2BenchSitting();
+                            setExercise(player::set2BenchSitting, sittingRev);
                             break;
                         case "benchesNearDumbs": {
                             if(x < 235) {
@@ -83,7 +100,7 @@ public class GymRoom extends BaseRoom {
                             addPullPushChooser();
                             break;
                         case "legpress":
-                            player.setLegPress();
+                            setExercise(player::setLegPress, legPress);
                             break;
                         default:
                             onFinish.run();
@@ -102,34 +119,39 @@ public class GymRoom extends BaseRoom {
         };
     }
 
-    private void setBench(Preffics preffics) {
-        /*HashMap<String, Runnable> map = new HashMap<>();
-        map.put(preffics.getLanguage().heavyBench, ()-> player.setBenchExercise());
-        map.put(preffics.getLanguage().moderateBench, ()-> player.setBenchExercise());
-        map.put(preffics.getLanguage().easyBench, ()-> player.setBenchExercise());
-        map.put(preffics.getLanguage().mockBench, ()-> player.setBenchExercise());
-        addExerciseChoseMenuPushChooser(preffics.getLanguage().chooseYourExercise, map);*/
+    private void setExercise(Runnable runnable, PlayerCondition playerCondition) {
+        if(!someoneDoingIt(playerCondition)) {
+            runnable.run();
+        }else{
+            interScreenCommunication.showToast(getLanguage().thisIsTaken);
+        }
+    }
+
+    private void setBench() {
         player.setBenchExercise();
     }
 
-    private void setDeadlift(Preffics preffics) {
-        /*HashMap<String, Runnable> map = new HashMap<>();
-        map.put(preffics.getLanguage().heavyDeadlift, ()-> player.setDeadliftExercise());
-        map.put(preffics.getLanguage().moderateDeadlift, ()-> player.setDeadliftExercise());
-        map.put(preffics.getLanguage().easyDeadlift, ()-> player.setDeadliftExercise());
-        map.put(preffics.getLanguage().mockDeadlift, ()-> player.setDeadliftExercise());
-        addExerciseChoseMenuPushChooser(preffics.getLanguage().chooseYourExercise, map);*/
+    private void setDeadlift() {
         player.setDeadliftExercise();
     }
 
-    private void setUpSquat(Preffics preffics) {
-        /*HashMap<String, Runnable> map = new HashMap<>();
-        map.put(preffics.getLanguage().heavySquat, ()-> player.setHeavySquat());
-        map.put(preffics.getLanguage().moderateSquat, ()-> player.setModerateSquat());
-        map.put(preffics.getLanguage().easySquat, ()-> player.setEasySquat());
-        map.put(preffics.getLanguage().mockSquat, ()-> player.setMockSquat());
-        addExerciseChoseMenuPushChooser(preffics.getLanguage().chooseYourExercise, map);*/
-        player.setModerateSquat();
+    private void setUpSquat() {
+        if(!someoneDoingIt(PlayerCondition.squat)) {
+            player.setModerateSquat();
+        }else{
+            interScreenCommunication.showToast(getLanguage().thisIsTaken);
+        }
+    }
+
+    private boolean someoneDoingIt(PlayerCondition squat) {
+        boolean isDoing = false;
+        for (Npc npc : npcs){
+            if (npc.playerCondition == squat) {
+                isDoing = true;
+                break;
+            }
+        }
+        return isDoing;
     }
 
     private void setPushPullUps(Preffics preffics) {
@@ -187,7 +209,14 @@ public class GymRoom extends BaseRoom {
         if (objectGroup.getChildren().get(i).getName() != null){
             if(objectGroup.getChildren().get(i).getName().contains("player")) {
                 Npc pl = (Npc) objectGroup.getChildren().get(i);
-                if ((pl.playerCondition.equals(PlayerCondition.pcSitting)))
+                if ((pl.playerCondition.equals(PlayerCondition.bench) ||
+                        pl.playerCondition.equals(PlayerCondition.pullUps) ||
+                        pl.playerCondition.equals(PlayerCondition.legPress) ||
+                        pl.playerCondition.equals(PlayerCondition.sitting) ||
+                        pl.playerCondition.equals(PlayerCondition.sittingRev) ||
+                        pl.playerCondition.equals(PlayerCondition.hiper) ||
+                        pl.playerCondition.equals(PlayerCondition.pushUps))||
+                        pl.playerCondition.equals(PlayerCondition.pcSitting))
                     if(pl.getName().equals("player"))
                         objectGroup.getChildren().swap(i, objectGroup.getChildren().size - 1);
                     else
@@ -213,13 +242,13 @@ public class GymRoom extends BaseRoom {
 
         final TextButton yes = getTextButton("pullUpButton", "yesButton", "Подтягивания",
                 Preffics.SCREEN_WIDTH / 2 - 450, Preffics.SCREEN_HEIGHT / 2 - 200, 400, 125, 1.5f, ()-> {
-            player.setPullUps();
-            runnable.run();
+                    setExercise(()->player.setPullUps(), pullUps);
+                    runnable.run();
         });
         final TextButton no = getTextButton("pushUpButton", "yesButton", "Брусья",
                 Preffics.SCREEN_WIDTH / 2 + 50, Preffics.SCREEN_HEIGHT / 2 - 200, 400, 125, 1.5f, ()-> {
-            player.setPushUps();
-            runnable.run();
+                    setExercise(()->player.setPushUps(), pushUps);
+                    runnable.run();
         });
         group.addActor(textButton);
         group.addActor(yes);

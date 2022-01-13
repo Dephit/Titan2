@@ -45,8 +45,6 @@ public class Player extends Npc {
     public int currentGirlDialogProgress = 0;
     public int coachDialogProgress = 0;
 
-    Variation variation;
-
     @Override
     public void act(float delta) {
         super.act(delta);
@@ -111,7 +109,6 @@ public class Player extends Npc {
     }
 
     public void setModerateSquat() {
-        variation = Variation.MODERATE;
         setSquatExercise();
     }
 

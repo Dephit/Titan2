@@ -275,27 +275,45 @@ public class Npc extends BaseActor {
         }
     }
 
-    public void setPeriodicEvent(){
+    public boolean isActive = true;
+
+    public void setPeriodicEvent(Player player){
         Thread thread = new Thread(
                 () -> {
-                    while (true){
+                    while (isActive){
                         int rnd = new Random().nextInt(10);
                         if(rnd == 0 ) {
-                            setSquatExercise();
+                            if(player.playerCondition != squat) {
+                                setSquatExercise();
+                            }
                         }else if(rnd == 1 ) {
-                            setDeadliftExercise();
+                            if(player.playerCondition != deadlift) {
+                                setDeadliftExercise();
+                            }
                         }else if(rnd == 2 ) {
-                            setBenchExercise();
+                            if(player.playerCondition != bench) {
+                                setBenchExercise();
+                            }
                         }else if(rnd == 3 ) {
-                            setHyperExercise();
+                            if(player.playerCondition != PlayerCondition.hiper) {
+                                setHyperExercise();
+                            }
                         }else if(rnd == 4 ) {
-                            set1BenchSitting();
+                            if(player.playerCondition != PlayerCondition.sitting) {
+                                set1BenchSitting();
+                            }
                         }else if(rnd == 5 ) {
-                            set2BenchSitting();
+                            if(player.playerCondition != PlayerCondition.sittingRev) {
+                                set2BenchSitting();
+                            }
                         }else if(rnd == 6 ) {
-                            setPullUps();
+                            if(player.playerCondition != PlayerCondition.pullUps) {
+                                setPullUps();
+                            }
                         }else if(rnd == 7 ) {
-                            setLegPress();
+                            if(player.playerCondition != legPress) {
+                                setLegPress();
+                            }
                         }
                         try {
                             Thread.sleep(10000);

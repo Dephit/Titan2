@@ -22,8 +22,7 @@ public class ObjectData extends Actor {
     private TextureRegion currentFrame;
     private int randomTime = 0;
 
-    public ObjectData() {
-    }
+    public ObjectData() { }
 
     public void setAtlas(TextureAtlas textureAtlas) {
         animationTime = 0;
@@ -49,7 +48,7 @@ public class ObjectData extends Actor {
 
         animation = new Animation<>(1f, walkFrames);
         currentFrame = (TextureRegion) animation.getKeyFrame(animationTime,true);
-        setBounds((int)x, (int)y, currentFrame.getRegionWidth() * 5, currentFrame.getRegionHeight() * 5);
+        setBounds(x, y, currentFrame.getRegionWidth() * 5, currentFrame.getRegionHeight() * 5);
     }
 
     @Override

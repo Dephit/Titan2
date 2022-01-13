@@ -43,6 +43,7 @@ public class Language{
     public String refregiratorIsFull;
     public String buyText;
     public String no;
+    public String thisIsTaken;
 
     Language(){
 
