@@ -24,16 +24,20 @@ public class StatBar extends BaseActor {
     private Sprite progressSprite, secondProgressSprite;
     private String str;
 
-    StatBar(String name) {
+    public StatBar(String name) {
         setName(name);
         createTextures();
+    }
+
+    public float getCurrentAmount() {
+        return currentAmount;
     }
 
     void setCapacity(int _capacity){
         capacity = _capacity;
     }
 
-    void setProgressAndCapacity(int _capacity, int _currentAmount){
+    public void setProgressAndCapacity(int _capacity, int _currentAmount){
         capacity = _capacity;
         currentAmount = _currentAmount;
     }
@@ -54,7 +58,7 @@ public class StatBar extends BaseActor {
         progressSprite = new Sprite(progressImg);
         secondProgressSprite = new Sprite(progressImg);
         secondProgressSprite.setColor(Color.GREEN);
-        progressSprite.setColor(Color.CORAL );
+        progressSprite.setColor(Color.CORAL);
     }
 
     @Override
@@ -89,5 +93,10 @@ public class StatBar extends BaseActor {
     public void drawText(String str) {
         this.str = str;
     }
+
+    public void addCurrentAmount(int i) {
+        currentAmount += i;
+    }
 }
+
 

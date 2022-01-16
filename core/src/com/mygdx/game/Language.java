@@ -44,6 +44,11 @@ public class Language{
     public String buyText;
     public String no;
     public String thisIsTaken;
+    public String wannaWork;
+    public String forThisWorkYouRecieve;
+    public String doWork;
+    public String cancel;
+    public String workInProgress;
 
     Language(){
 

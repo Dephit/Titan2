@@ -1,7 +1,5 @@
 package com.mygdx.game;
 
-import java.util.Random;
-
 public class Exercise {
 
     PlayerCondition condition;
@@ -21,6 +19,11 @@ public class Exercise {
     int LVL = 0;
     float progress = 0;
     float limit = 100;
+
+    public void minusPrgress(float value){
+        progress -=value;
+        statBar.setProgress(progress);
+    }
 
     public Float calculateProgress(float delta) {
         result = 80 + 20 * LVL;

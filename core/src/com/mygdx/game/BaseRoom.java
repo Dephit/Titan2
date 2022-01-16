@@ -61,6 +61,9 @@ public abstract class BaseRoom extends Stage  {
         init();
         if(_player != null){
             objectGroup.addActor(player);
+            hudGroup.addActor(player.getHealthBar());
+            hudGroup.addActor(player.getEnergyBar());
+            hudGroup.addActor(player.getPocketView());
         }
         addActor(objectGroup);
         addActor(hudGroup);
@@ -251,7 +254,6 @@ public abstract class BaseRoom extends Stage  {
     protected void orderExceptions(int i, int j) { }
 
     TextButton.TextButtonStyle getTextButtonStyleFromFile(Skin skin, String name){
-
         final TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.font = FontFactory.font;
         textButtonStyle.fontColor = Color.BLACK;
@@ -280,6 +282,10 @@ public abstract class BaseRoom extends Stage  {
 
     public void addButton(String name, String style, String text, int x, int y, int w, int h, float scale, Runnable runnable) {
         buttonGroup.addActor(getTextButton(name, style,text, x, y, w, h, scale, runnable));
+    }
+
+    public void addButton(String name, String style, String text, int x, int y, int w, int h, float scale, Group group, Runnable runnable) {
+        group.addActor(getTextButton(name, style,text, x, y, w, h, scale, runnable));
     }
 
     void log(String msg){

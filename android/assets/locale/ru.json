@@ -24,6 +24,11 @@
   "buyText" : "Buy",
   "no" : "No",
   "thisIsTaken": "This exercise is taken",
+  "wannaWork": "Хотите работать?",
+  "forThisWorkYouRecieve": "За эту работу вы получите:",
+  "doWork": "Работать",
+  "cancel": "Закрыть",
+  "workInProgress": "Работа в процессе",
 
   "chooseYourExercise" : "Какое упражнение хотите сделать?",
 

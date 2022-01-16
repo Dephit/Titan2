@@ -21,8 +21,6 @@ import java.util.Map;
 
 public class MapRoom extends BaseRoom {
 
-
-
     public MapRoom() {
         super("map");
     }
@@ -37,6 +35,7 @@ public class MapRoom extends BaseRoom {
         addButton("shop", "shop","", 710, 650, 125, 125, 1f, ()-> interScreenCommunication.openShop());
         addButton("gym", "gym","", 800, 860, 125, 125, 1f, ()-> interScreenCommunication.openGym());
         addButton("room", "room","", 500, 350, 125, 125, 1f, ()-> interScreenCommunication.openRoom());
+        addButton("work", "workButton","",  950, 200, 110, 105, 1f, ()-> interScreenCommunication.openWork());
 
     }
 
@@ -82,5 +81,6 @@ public class MapRoom extends BaseRoom {
         }*/
     }
 }
+
 
 

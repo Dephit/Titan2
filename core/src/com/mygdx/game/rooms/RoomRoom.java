@@ -28,8 +28,6 @@ public class RoomRoom extends BaseRoom {
         //npc.setPeriodicEvent();
         /*npcs.add(npc);
         objectGroup.addActor(npc);*/
-        hudGroup.addActor(player.getHealthBar());
-        hudGroup.addActor(player.getEnergyBar());
 
         player.setPlayerPostion(700, 250);
     }

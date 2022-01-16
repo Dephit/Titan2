@@ -10,4 +10,7 @@ public interface InterScreenCommunication {
     void openRoom();
 
     void openShop();
+
+    void openWork();
+
 }

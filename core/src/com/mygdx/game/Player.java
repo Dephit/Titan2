@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.model.Container;
 import com.mygdx.game.model.Item;
 import com.mygdx.game.model.Pocket;
@@ -38,6 +39,7 @@ public class Player extends Npc {
         health.statBar.setColor(Color.RED);
 
         energy.statBar.setBounds(1920 - 400 - 50, 1080 - 65 * 2 - 25 - 50, 400, 65);
+        pocket.getPocketView().setBounds(1920 - 400 - 50, 1080 - 65 * 2 - 25 - 100, 400, 65);
         energy.statBar.setProgressAndCapacity(100, 100);
         energy.statBar.setColor(Color.YELLOW);
     }
@@ -145,6 +147,18 @@ public class Player extends Npc {
 
     public void addHealth(int i) {
         health.addProgress(i);
+    }
+
+    public Actor getPocketView() {
+        return pocket.getPocketView();
+    }
+
+    public void onWork() {
+        health.minusProgress(1 / 2f);
+        energy.minusProgress(1);
+        for (Exercise exercise: exercises){
+            exercise.calculateProgress(1 / 5f);
+        }
     }
 }
 

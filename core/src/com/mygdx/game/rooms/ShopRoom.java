@@ -23,8 +23,6 @@ public class ShopRoom extends BaseRoom {
 
     public ShopRoom(InterScreenCommunication _communication, Player player) {
         super(_communication, "shop", player);
-        hudGroup.addActor(player.getHealthBar());
-        hudGroup.addActor(player.getEnergyBar());
 
         player.setPlayerPostion(1650, 100);
     }

@@ -41,8 +41,6 @@ public class GymRoom extends BaseRoom {
         npc.setPeriodicEvent(player);
         npcs.add(npc);
         objectGroup.addActor(npc);
-        hudGroup.addActor(player.getHealthBar());
-        hudGroup.addActor(player.getEnergyBar());
         player.setPlayerPostion(400,100);
     }
 
