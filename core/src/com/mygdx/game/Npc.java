@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -39,6 +38,8 @@ public class Npc extends BaseActor {
     public List<Grid2d.MapNode> path = new LinkedList<Grid2d.MapNode>();
     protected Grid2d map2d;
     private Runnable nextAction;
+
+    public OnPlayerConditionChangeListener onPlayerConditionChangeListener;
 
     public Npc(String name) {
         Preffics preffics = Preffics.getInstance();
@@ -85,7 +86,7 @@ public class Npc extends BaseActor {
         nextY = 100;
     }
 
-    private void playAnimation(float delta){
+    private void playAnimation(){
         try {
             currentFrame.setRegion(animMap.get(playerCondition.toString().toLowerCase()).getKeyFrame(animationTime, true));
             setSize(currentFrame.getRegionWidth() * sizeMult, currentFrame.getRegionHeight() * sizeMult);
@@ -95,16 +96,22 @@ public class Npc extends BaseActor {
     @Override
     public void act(float delta) {
         super.act(delta);
+
         if (isAnimationFinished()) {
+            onAnimationEnd();
             animationTime = 0;
         }
 
         if(playAnim){
             manageExericeseAnim(delta);
         }
-        playAnimation(delta);
+        playAnimation();
         changePlayerCondition();
         walk();
+    }
+
+    public void onAnimationEnd() {
+
     }
 
     private void manageExericeseAnim(float delta) {
@@ -127,7 +134,7 @@ public class Npc extends BaseActor {
     }
 
     boolean isAnimationFinished(){
-        return animMap.get(playerCondition.toString()) != null && animMap.get(playerCondition.toString()).getAnimationDuration() < animationTime;
+        return animMap.get(playerCondition.toString().toLowerCase()) != null && animMap.get(playerCondition.toString().toLowerCase()).getAnimationDuration() < animationTime;
     }
     boolean isAnimationStarted(){
         return animationTime > 0;
@@ -150,7 +157,7 @@ public class Npc extends BaseActor {
             else if(speed.y < 0) playerCondition = PlayerCondition.down;
     }
 
-    void setPlayersAction(PlayerCondition playerCondition, int x, int y, Runnable runnable) {
+   public void setPlayersAction(PlayerCondition playerCondition, int x, int y, Runnable runnable) {
         this.nextAction = runnable;
         this.nextPlayerCondition = playerCondition;
         nextX = x;
@@ -166,11 +173,14 @@ public class Npc extends BaseActor {
             if(!path.isEmpty()) {
                 if (path.get(0).x > getX() / preffics.mapCoordinateCorrector) {
                     speed.x = 5f;
-                } if (path.get(0).x < getX() / preffics.mapCoordinateCorrector) {
+                }
+                if (path.get(0).x < getX() / preffics.mapCoordinateCorrector) {
                     speed.x = -5f;
-                } if (path.get(0).y > getY() / preffics.mapCoordinateCorrector) {
+                }
+                if (path.get(0).y > getY() / preffics.mapCoordinateCorrector) {
                     speed.y = 5f;
-                } if (path.get(0).y < getY() / preffics.mapCoordinateCorrector) {
+                }
+                if (path.get(0).y < getY() / preffics.mapCoordinateCorrector) {
                     speed.y = -5f;
                 }
                 if (path.get(0).x == (int) getX() / preffics.mapCoordinateCorrector && path.get(0).y == (int) getY() / preffics.mapCoordinateCorrector) {
@@ -193,11 +203,9 @@ public class Npc extends BaseActor {
         checkIfInWalkableZone();
         int pX = (int) getX() / preffics.mapCoordinateCorrector, pY = (int) getY() / preffics.mapCoordinateCorrector;
 
-        if (path != null)
-            if (path.size() > 0)
-                if (path.get(0).x != pX || path.get(0).y != pY) {
-                    lastWalkablePosition.set(getX(), getY());
-                }
+        if (path != null && !path.isEmpty() && (path.get(0).x != pX || path.get(0).y != pY)){
+            lastWalkablePosition.set(getX(), getY());
+        }
 
         if (xGoal / preffics.mapCoordinateCorrector != map2d.xGoal || yGoal / preffics.mapCoordinateCorrector != map2d.yGoal ){
             setPosition(lastWalkablePosition.x, lastWalkablePosition.y);
@@ -214,6 +222,9 @@ public class Npc extends BaseActor {
     }
 
     void setPlayerCondition(PlayerCondition playerCondition) {
+        if(onPlayerConditionChangeListener != null){
+            onPlayerConditionChangeListener.onChange(this.playerCondition, playerCondition);
+        }
         this.playerCondition = playerCondition;
     }
 
@@ -326,11 +337,16 @@ public class Npc extends BaseActor {
         thread.start();
     }
 
-    public void setPlayerPostion(int x, int y) {
+    public void setPlayerPosition(int x, int y) {
         lastWalkablePosition.set(x, y);
         nextY = y;
         nextX = x;
         setPosition(x, y);
+    }
+
+    public void setPlayerPosition(int x, int y, PlayerCondition playerCondition) {
+        setPlayerPosition(x,y);
+        setPlayerCondition(playerCondition);
     }
 }
 

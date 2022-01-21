@@ -1,5 +1,7 @@
 package com.mygdx.game.rooms;
 
+import static com.mygdx.game.PlayerCondition.stay;
+
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -9,10 +11,8 @@ import com.mygdx.game.InterScreenCommunication;
 import com.mygdx.game.Npc;
 import com.mygdx.game.Player;
 import com.mygdx.game.PlayerCondition;
-import com.mygdx.game.Preffics;
+import com.mygdx.game.Style;
 import com.mygdx.game.model.Item;
-
-import java.util.Iterator;
 
 public class RoomRoom extends BaseRoom {
 
@@ -29,7 +29,7 @@ public class RoomRoom extends BaseRoom {
         /*npcs.add(npc);
         objectGroup.addActor(npc);*/
 
-        player.setPlayerPostion(700, 250);
+        player.setPlayerPosition(700, 250, stay);
     }
 
 
@@ -51,12 +51,12 @@ public class RoomRoom extends BaseRoom {
 
     public void setCommonButtons(){
         super.setCommonButtons();
-        addButton("sleepButton","empty", "",  420, 355, 250, 100, 1f,
+        addButton("sleepButton", Style.empty, "",  420, 355, 250, 100, 1f,
                 () -> player.setPath(550 , 300, 561, 366, PlayerCondition.sleeping));
-        addButton("pcSittingBut","empty",   "", 800, 120, 250, 150, 1f,
+        addButton("pcSittingBut",Style.empty,   "", 800, 120, 250, 150, 1f,
                 () -> player.setPath(800 , 250, 905, 188, PlayerCondition.pcSitting));
-        addButton("refButton","empty",   "",780, 580, 150, 200, 1f,
-                () -> player.setPath(900 , 500, 900, 500, PlayerCondition.stay, this::showRefrigerator));
+        addButton("refButton",Style.empty,   "",780, 580, 150, 200, 1f,
+                () -> player.setPath(900 , 500, 900, 500, stay, this::showRefrigerator));
 
     }
 
@@ -65,14 +65,14 @@ public class RoomRoom extends BaseRoom {
     private void showRefrigerator() {
         pause = true;
         Runnable runnable = ()->{
-            player.setPath(900 , 500, 900, 500, PlayerCondition.stay);
+            player.setPath(900 , 500, 900, 500, stay);
             pause = false;
             refPopupGroup.clear();
             refPopupGroup.remove();
         };
         int x = 1300;
         int y = 50;
-        final TextButton textButton = getTextButton("pullUpOrPushUp", "refWindow", "",
+        final TextButton textButton = getTextButton("pullUpOrPushUp", Style.refWindow, "",
                 x, y, 450, 650, 1, runnable
         );
         refPopupGroup.addActor(textButton);
@@ -98,7 +98,7 @@ public class RoomRoom extends BaseRoom {
         }
 
 
-        final TextButton closeRef = getTextButton("closeRef", "closeRef", "Close me!!",
+        final TextButton closeRef = getTextButton("closeRef", Style.closeRef, "Close me!!",
                 x + 50,y + 15, 350, 60, 1f, runnable);
         refPopupGroup.addActor(closeRef);
     }
@@ -107,7 +107,7 @@ public class RoomRoom extends BaseRoom {
         pause = true;
         Group group = new Group();
         Runnable runnable = ()->{
-            player.setPath(900 , 500, 900, 500, PlayerCondition.stay);
+            player.setPath(900 , 500, 900, 500, stay);
             pause = false;
             group.clear();
             refPopupGroup.clear();
@@ -118,16 +118,16 @@ public class RoomRoom extends BaseRoom {
                 600, 100, 812, 651, 1, ()->{}
         );
 
-        final TextButton yes = getTextButton("description", "empty", "The potato is a starchy tuber of the plant Solanum tuberosum and is a root vegetable native to the Americas. The plant is a perennial in the nightshade family Solanaceae",
+        final TextButton yes = getTextButton("description", Style.empty, "The potato is a starchy tuber of the plant Solanum tuberosum and is a root vegetable native to the Americas. The plant is a perennial in the nightshade family Solanaceae",
                 1090, 635, 0, 0, 1f, ()->{});
-        final TextButton no = getTextButton("potatoAnswer", "empty", "",
+        final TextButton no = getTextButton("potatoAnswer", Style.empty, "",
                 1090, 300, 0, 0, 1f, ()->{});
-        final TextButton agreePotatoButton = getTextButton("agreePotatoButton", "yesButton", "Eat",
+        final TextButton agreePotatoButton = getTextButton("agreePotatoButton", Style.yesButton, "Eat",
                 650, 118, 287, 84, 1f, ()->{
                     item.onUse(player);
                     runnable.run();
                 });
-        final TextButton declineFood = getTextButton("declineFood", "yesButton", "Put it back",
+        final TextButton declineFood = getTextButton("declineFood", Style.yesButton, "Put it back",
                 1060, 118, 287, 84, 1f, runnable);
         group.addActor(textButton);
         group.addActor(yes);

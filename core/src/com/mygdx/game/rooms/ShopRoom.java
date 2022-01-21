@@ -6,11 +6,10 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.mygdx.game.BaseRoom;
 import com.mygdx.game.InterScreenCommunication;
-import com.mygdx.game.Language;
 import com.mygdx.game.Npc;
 import com.mygdx.game.Player;
 import com.mygdx.game.PlayerCondition;
-import com.mygdx.game.Preffics;
+import com.mygdx.game.Style;
 import com.mygdx.game.model.Item;
 import com.mygdx.game.model.ShopMenu;
 
@@ -24,28 +23,28 @@ public class ShopRoom extends BaseRoom {
     public ShopRoom(InterScreenCommunication _communication, Player player) {
         super(_communication, "shop", player);
 
-        player.setPlayerPostion(1650, 100);
+        player.setPlayerPosition(1650, 100);
     }
 
     public void setCommonButtons(){
         super.setCommonButtons();
-        addButton("watchLoli","empty", "",  140, 280, 100, 200, 1f,
+        addButton("watchLoli", Style.empty, "",  140, 280, 100, 200, 1f,
                 () -> player.setPath(300 , 300, PlayerCondition.watchLoli));
-        addButton("watchAlc","empty", "",  585, 460, 200, 250, 1f,
+        addButton("watchAlc", Style.empty, "",  585, 460, 200, 250, 1f,
                 () -> player.setPath(685 , 410, PlayerCondition.watchShop));
-        addButton("watchAlc2","empty", "",  785, 460, 200, 250, 1f,
+        addButton("watchAlc2", Style.empty, "",  785, 460, 200, 250, 1f,
                 () -> player.setPath(885 , 410, PlayerCondition.watchShop));
-        addButton("watchAlc3","empty", "",  985, 460, 200, 250, 1f,
+        addButton("watchAlc3", Style.empty, "",  985, 460, 200, 250, 1f,
                 () -> player.setPath(1085 , 410, PlayerCondition.watchShop));
-        addButton("watchAlc3","empty", "",  1510, 360, 200, 250, 1f,
+        addButton("watchAlc3", Style.empty, "",  1510, 360, 200, 250, 1f,
                 () -> player.setPath(1610 , 310, PlayerCondition.watchShop));
-        addButton("watchCam","empty", "",   244, 700, 75, 75, 1f,
+        addButton("watchCam", Style.empty, "",   244, 700, 75, 75, 1f,
                 () -> player.setPath(360 , 385, PlayerCondition.watchCam));
-        addButton("talkToStaffBut","empty", "",   230, 460, 75, 175, 1f,
+        addButton("talkToStaffBut", Style.empty, "",   230, 460, 75, 175, 1f,
                 () -> player.setPath(340 , 420, PlayerCondition.lookinLeft));
-        addButton("talkToCleanerBut","empty", "",   1250, 430, 75, 155, 1f,
+        addButton("talkToCleanerBut", Style.empty, "",   1250, 430, 75, 155, 1f,
                 () -> player.setPath(1310 , 380, PlayerCondition.lookinUp));
-        addButton("buyMenuBut","empty", "",   1100, 200, 200, 200, 1f,
+        addButton("buyMenuBut", Style.empty, "",   1100, 200, 200, 200, 1f,
                 () -> player.setPath(1310 , 380,1310 , 380, PlayerCondition.stay, this::showBuyMenu));
     }
 
@@ -62,7 +61,7 @@ public class ShopRoom extends BaseRoom {
             };
             int x = 1300;
             int y = 50;
-            final TextButton textButton = getTextButton("pullUpOrPushUp", "refWindow", "",
+            final TextButton textButton = getTextButton("pullUpOrPushUp",  Style.refWindow, "",
                     x, y, 450, 650, 1, runnable
             );
             refPopupGroup.addActor(textButton);
@@ -81,7 +80,7 @@ public class ShopRoom extends BaseRoom {
         }
 
 
-        final TextButton closeRef = getTextButton("closeRef", "closeRef", "Close me!!",
+        final TextButton closeRef = getTextButton("closeRef", Style.closeRef, "Close me!!",
                 x + 50,y + 15, 350, 60, 1f, runnable);
         refPopupGroup.addActor(closeRef);
             buttonGroup.addActor(refPopupGroup);
@@ -101,18 +100,18 @@ public class ShopRoom extends BaseRoom {
                 600, 100, 812, 651, 1, ()->{}
         );
 
-        final TextButton yes = getTextButton("description", "empty", "The potato is a starchy tuber of the plant Solanum tuberosum and is a root vegetable native to the Americas. The plant is a perennial in the nightshade family Solanaceae",
+        final TextButton yes = getTextButton("description",  Style.empty, "The potato is a starchy tuber of the plant Solanum tuberosum and is a root vegetable native to the Americas. The plant is a perennial in the nightshade family Solanaceae",
                 1090, 635, 0, 0, 1f, ()->{});
-        final TextButton no = getTextButton("potatoAnswer", "empty", "",
+        final TextButton no = getTextButton("potatoAnswer",  Style.empty, "",
                 1090, 300, 0, 0, 1f, ()->{});
-        final TextButton agreePotatoButton = getTextButton("agreePotatoButton", "yesButton", getLanguage().buyText,
+        final TextButton agreePotatoButton = getTextButton("agreePotatoButton", Style.yesButton, getLanguage().buyText,
                 650, 118, 287, 84, 1f, ()->{
                     if(!player.buyItem(item, player.refrigerator)){
                         interScreenCommunication.showToast(getLanguage().refregiratorIsFull);
                         runnable.run();
                     }
                 });
-        final TextButton declineFood = getTextButton("declineFood", "yesButton", getLanguage().no,
+        final TextButton declineFood = getTextButton("declineFood", Style.yesButton, getLanguage().no,
                 1060, 118, 287, 84, 1f, runnable);
         group.addActor(textButton);
         group.addActor(yes);

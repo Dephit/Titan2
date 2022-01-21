@@ -1,19 +1,15 @@
 package com.mygdx.game.rooms;
 
-import static com.mygdx.game.PlayerCondition.pullUps;
-import static com.mygdx.game.PlayerCondition.pushUps;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.mygdx.game.BaseRoom;
 import com.mygdx.game.InterScreenCommunication;
 import com.mygdx.game.Player;
-import com.mygdx.game.PlayerCondition;
 import com.mygdx.game.Preffics;
 import com.mygdx.game.StatBar;
+import com.mygdx.game.Style;
 
 public class WorkRoom extends BaseRoom {
 
@@ -23,6 +19,7 @@ public class WorkRoom extends BaseRoom {
 
     public WorkRoom(InterScreenCommunication _communication, Player player) {
         super(_communication, "work", player);
+        player.setPlayerPosition(-200, 250);
     }
 
 
@@ -58,23 +55,23 @@ public class WorkRoom extends BaseRoom {
         int wokrReward = 1000;
 
         addButton(
-                "window", "window", "",
+                "window", Style.window, "",
                 Preffics.SCREEN_WIDTH / 2 - 500, Preffics.SCREEN_HEIGHT / 2 - 250, 1000, 500, 1, group, runnable
         );
         addButton(
-                "workTitle", "empty", getLanguage().wannaWork,
+                "workTitle", Style.empty, getLanguage().wannaWork,
                 Preffics.SCREEN_WIDTH / 2 - 500, Preffics.SCREEN_HEIGHT / 2 + 100, 1000, 100, 1.8f,  group, ()->{}
         );
         addButton(
-                "workDescription", "empty", getLanguage().forThisWorkYouRecieve + " " + wokrReward,
+                "workDescription", Style.empty, getLanguage().forThisWorkYouRecieve + " " + wokrReward,
                 Preffics.SCREEN_WIDTH / 2 - 500, Preffics.SCREEN_HEIGHT / 2 - 25, 1000, 100, 1.8f,  group, ()->{}
         );
         addButton(
-                "work", "yesButton", getLanguage().doWork,
+                "work", Style.yesButton, getLanguage().doWork,
                 Preffics.SCREEN_WIDTH / 2 - 450, Preffics.SCREEN_HEIGHT / 2 - 200, 400, 125, 1.5f, group, this::showWorkProgress
         );
         addButton(
-                "cancel", "yesButton", getLanguage().cancel,
+                "cancel", Style.yesButton, getLanguage().cancel,
                 Preffics.SCREEN_WIDTH / 2 + 50, Preffics.SCREEN_HEIGHT / 2 - 200, 400, 125, 1.5f, group, runnable::run
         );
         buttonGroup.addActor(group);
@@ -91,11 +88,11 @@ public class WorkRoom extends BaseRoom {
         int wokrReward = 1000;
 
         addButton(
-                "window", "window", "",
+                "window", Style.window, "",
                 Preffics.SCREEN_WIDTH / 2 - 500, Preffics.SCREEN_HEIGHT / 2 - 250, 1000, 500, 1, group, runnable
         );
         addButton(
-                "workTitle", "empty", getLanguage().workInProgress,
+                "workTitle", Style.empty, getLanguage().workInProgress,
                 Preffics.SCREEN_WIDTH / 2 - 500, Preffics.SCREEN_HEIGHT / 2 + 100, 1000, 100, 1.8f,  group, ()->{}
         );
         StatBar statBar = new StatBar("work");
@@ -104,7 +101,7 @@ public class WorkRoom extends BaseRoom {
         statBar.setColor(Color.RED);
         group.addActor(statBar);
         addButton(
-                "cancel", "yesButton", getLanguage().cancel,
+                "cancel", Style.yesButton, getLanguage().cancel,
                 Preffics.SCREEN_WIDTH / 2 - 200, Preffics.SCREEN_HEIGHT / 2 - 200, 400, 125, 1.5f, group, runnable::run
         );
         buttonGroup.addActor(group);
@@ -152,3 +149,5 @@ public class WorkRoom extends BaseRoom {
         }*/
     }
 }
+
+

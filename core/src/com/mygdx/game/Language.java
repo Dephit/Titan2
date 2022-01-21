@@ -49,6 +49,9 @@ public class Language{
     public String doWork;
     public String cancel;
     public String workInProgress;
+    public String comtetitionTitle;
+    public String squatTitle;
+    public String nextSet;
 
     Language(){
 

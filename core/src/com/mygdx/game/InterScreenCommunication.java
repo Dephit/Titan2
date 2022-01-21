@@ -13,4 +13,5 @@ public interface InterScreenCommunication {
 
     void openWork();
 
+    void openCompetition();
 }

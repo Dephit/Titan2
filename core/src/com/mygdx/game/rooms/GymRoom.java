@@ -24,6 +24,7 @@ import com.mygdx.game.Npc;
 import com.mygdx.game.Player;
 import com.mygdx.game.PlayerCondition;
 import com.mygdx.game.Preffics;
+import com.mygdx.game.Style;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -41,7 +42,7 @@ public class GymRoom extends BaseRoom {
         npc.setPeriodicEvent(player);
         npcs.add(npc);
         objectGroup.addActor(npc);
-        player.setPlayerPostion(400,100);
+        player.setPlayerPosition(400,100);
     }
 
     @Override
@@ -232,18 +233,18 @@ public class GymRoom extends BaseRoom {
             group.clear();
             group.remove();
         };
-        final TextButton textButton = getTextButton("pullUpOrPushUp", "window", "",
+        final TextButton textButton = getTextButton("pullUpOrPushUp", Style.window, "",
                 Preffics.SCREEN_WIDTH / 2 - 500, Preffics.SCREEN_HEIGHT / 2 - 250, 1000, 500, 1, runnable
         );
-        final TextButton text = getTextButton("text", "empty", "Какое упражнение хотите сделать?",
+        final TextButton text = getTextButton("text", Style.empty, "Какое упражнение хотите сделать?",
                 Preffics.SCREEN_WIDTH / 2 - 500, Preffics.SCREEN_HEIGHT / 2 + 100, 1000, 100, 1.8f,  ()->{});
 
-        final TextButton yes = getTextButton("pullUpButton", "yesButton", "Подтягивания",
+        final TextButton yes = getTextButton("pullUpButton", Style.yesButton, "Подтягивания",
                 Preffics.SCREEN_WIDTH / 2 - 450, Preffics.SCREEN_HEIGHT / 2 - 200, 400, 125, 1.5f, ()-> {
                     setExercise(()->player.setPullUps(), pullUps);
                     runnable.run();
         });
-        final TextButton no = getTextButton("pushUpButton", "yesButton", "Брусья",
+        final TextButton no = getTextButton("pushUpButton", Style.yesButton, "Брусья",
                 Preffics.SCREEN_WIDTH / 2 + 50, Preffics.SCREEN_HEIGHT / 2 - 200, 400, 125, 1.5f, ()-> {
                     setExercise(()->player.setPushUps(), pushUps);
                     runnable.run();
@@ -263,13 +264,13 @@ public class GymRoom extends BaseRoom {
             group.clear();
             group.remove();
         };
-        final TextButton textButton = getTextButton("pullUpOrPushUp", "window", "",
+        final TextButton textButton = getTextButton("pullUpOrPushUp", Style.window, "",
                 Preffics.SCREEN_WIDTH / 2 - 500, Preffics.SCREEN_HEIGHT / 2 - 150 - 150 * map.size() / 4, 1000, 300 + 150 *  map.size() / 2, 1, ()->{}
         );
-        final TextButton text = getTextButton("text", "empty", title,
+        final TextButton text = getTextButton("text", Style.empty, title,
                 Preffics.SCREEN_WIDTH / 2 - 500, Preffics.SCREEN_HEIGHT / 2 + 100, 1000, 100, 1.8f,  ()->{});
 
-        final TextButton bg = getTextButton("bg", "empty", "",
+        final TextButton bg = getTextButton("bg",  Style.empty, "",
                 0, 0, Preffics.SCREEN_WIDTH, Preffics.SCREEN_HEIGHT, 1.5f, runnable);
 
         group.addActor(bg);
@@ -281,7 +282,7 @@ public class GymRoom extends BaseRoom {
         for (String key: map.keySet()){
             int x = (i) % 2 == 0 ? Preffics.SCREEN_WIDTH / 2 - 450 :  Preffics.SCREEN_WIDTH / 2 + 50;
             int y = Preffics.SCREEN_HEIGHT / 2 - 100 - 150 * g;
-            final TextButton heavy = getTextButton("pullUpButton", "yesButton", key,
+            final TextButton heavy = getTextButton("pullUpButton",  Style.yesButton, key,
                     x, y, 400, 125, 1.5f, ()->{
                         map.get(key).run();
                         runnable.run();

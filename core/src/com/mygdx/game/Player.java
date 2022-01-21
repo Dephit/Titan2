@@ -73,6 +73,14 @@ public class Player extends Npc {
         }
     }
 
+    @Override
+    public void onAnimationEnd() {
+        log(playerCondition.name());
+        if(playerCondition == PlayerCondition.compSquat){
+            setPlayerCondition(PlayerCondition.stay);
+        }
+    }
+
     private void calculateExercise(Exercise exr, float delta) {
         if(energy.value > 0 && health.value > 0){
             Float value = exr.calculateProgress(delta);
@@ -123,10 +131,10 @@ public class Player extends Npc {
     public StatBar getHealthBar(){
         return health.statBar;
     }
+
     public StatBar getEnergyBar(){
         return energy.statBar;
     }
-
 
     public Exercise isInExercise() {
         for(Exercise exercise: exercises){
