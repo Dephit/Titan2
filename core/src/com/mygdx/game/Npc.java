@@ -30,7 +30,7 @@ public class Npc extends BaseActor {
     private final TextureAtlas textureAtlas;
     private Map<String, Animation<TextureRegion>> animMap;
     protected final TextureRegion currentFrame = new TextureRegion();
-    protected float animationTime = 0;
+    public float animationTime = 0;
     public float nextX;
     public float nextY;
     private boolean playAnim = false;

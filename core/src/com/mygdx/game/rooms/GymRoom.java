@@ -35,6 +35,8 @@ public class GymRoom extends BaseRoom {
         super("gym");
     }
 
+    Group exrGroup = new Group();
+
     public GymRoom(InterScreenCommunication _communication, Player player) {
         super(_communication, "gym", player);
         Npc npc = new Npc("player2");
@@ -43,6 +45,7 @@ public class GymRoom extends BaseRoom {
         npcs.add(npc);
         objectGroup.addActor(npc);
         player.setPlayerPosition(400,100);
+        hudGroup.addActor(exrGroup);
     }
 
     @Override
@@ -199,8 +202,12 @@ public class GymRoom extends BaseRoom {
         super.draw();
         Exercise bar = player.isInExercise();
         if(bar != null && !bar.statBar.hasParent()){
-            hudGroup.addActor(bar.statBar);
-        }//else player.clearExrercise();
+            exrGroup.clear();
+            exrGroup.addActor(bar.statBar);
+        }
+        if(bar == null && exrGroup.hasChildren()){
+            exrGroup.clear();
+        }
     }
 
     @Override
@@ -253,47 +260,6 @@ public class GymRoom extends BaseRoom {
         group.addActor(yes);
         group.addActor(text);
         group.addActor(no);
-        buttonGroup.addActor(group);
-    }
-
-    private void addExerciseChoseMenuPushChooser(String title, Map<String, Runnable> map) {
-        pause = true;
-        Group group = new Group();
-        Runnable runnable = ()->{
-            pause = false;
-            group.clear();
-            group.remove();
-        };
-        final TextButton textButton = getTextButton("pullUpOrPushUp", Style.window, "",
-                Preffics.SCREEN_WIDTH / 2 - 500, Preffics.SCREEN_HEIGHT / 2 - 150 - 150 * map.size() / 4, 1000, 300 + 150 *  map.size() / 2, 1, ()->{}
-        );
-        final TextButton text = getTextButton("text", Style.empty, title,
-                Preffics.SCREEN_WIDTH / 2 - 500, Preffics.SCREEN_HEIGHT / 2 + 100, 1000, 100, 1.8f,  ()->{});
-
-        final TextButton bg = getTextButton("bg",  Style.empty, "",
-                0, 0, Preffics.SCREEN_WIDTH, Preffics.SCREEN_HEIGHT, 1.5f, runnable);
-
-        group.addActor(bg);
-        group.addActor(textButton);
-        group.addActor(text);
-
-        int i = 1;
-        int g = 0;
-        for (String key: map.keySet()){
-            int x = (i) % 2 == 0 ? Preffics.SCREEN_WIDTH / 2 - 450 :  Preffics.SCREEN_WIDTH / 2 + 50;
-            int y = Preffics.SCREEN_HEIGHT / 2 - 100 - 150 * g;
-            final TextButton heavy = getTextButton("pullUpButton",  Style.yesButton, key,
-                    x, y, 400, 125, 1.5f, ()->{
-                        map.get(key).run();
-                        runnable.run();
-                    });
-            i++;
-            if((i) % 2 != 0){
-                g++;
-            }
-            group.addActor(heavy);
-        }
-
         buttonGroup.addActor(group);
     }
 }

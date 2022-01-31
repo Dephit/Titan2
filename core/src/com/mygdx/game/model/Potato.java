@@ -8,7 +8,16 @@ public class Potato extends Item {
     Potato(){
         title = "Potato";
         styleName = "potato";
-        description = "Potato Description";
+        description = "The potato is a\n" +
+                " starchy tuber of \n" +
+                "the plant Solanum \n" +
+                "tuberosum and is \n" +
+                "a root vegetable\n native to \n" +
+                "the Americas. \n" +
+                "The plant is \n" +
+                "a perennial in the \n" +
+                "nightshade family\n " +
+                "Solanaceae";
         menuStyleName = "potatoMenu";
         cost = 100;
     }

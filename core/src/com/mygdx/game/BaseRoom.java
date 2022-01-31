@@ -116,7 +116,7 @@ public abstract class BaseRoom extends Stage  {
         return Preffics.getInstance().getLanguage();
     }
 
-    public void onTouchDown(InputEvent event, float x, float y, int pointer, int button) {
+    public void onTouchDown() {
         touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         camera.unproject(touchPos);
         Preffics preffics = Preffics.getInstance();

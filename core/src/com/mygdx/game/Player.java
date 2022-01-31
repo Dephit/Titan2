@@ -76,7 +76,7 @@ public class Player extends Npc {
     @Override
     public void onAnimationEnd() {
         log(playerCondition.name());
-        if(playerCondition == PlayerCondition.compSquat){
+        if(playerCondition == PlayerCondition.compSquat || playerCondition == PlayerCondition.compBench || playerCondition == PlayerCondition.compDeadlift){
             setPlayerCondition(PlayerCondition.stay);
         }
     }

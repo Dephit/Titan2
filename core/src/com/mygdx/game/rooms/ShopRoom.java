@@ -96,16 +96,16 @@ public class ShopRoom extends BaseRoom {
             group.clear();
             group.remove();
         };
-        final TextButton textButton = getTextButton("menu", item.menuStyleName, item.title,
+        final TextButton textButton = getTextButton("menu", item.menuStyleName, "",
                 600, 100, 812, 651, 1, ()->{}
         );
 
-        final TextButton yes = getTextButton("description",  Style.empty, "The potato is a starchy tuber of the plant Solanum tuberosum and is a root vegetable native to the Americas. The plant is a perennial in the nightshade family Solanaceae",
-                1090, 635, 0, 0, 1f, ()->{});
+        final TextButton yes = getTextButton("description",  Style.empty, item.description,
+                1090, 470, 0, 0, 1.5f, ()->{});
         final TextButton no = getTextButton("potatoAnswer",  Style.empty, "",
-                1090, 300, 0, 0, 1f, ()->{});
+                1090, 300, 0, 0, 1.5f, ()->{});
         final TextButton agreePotatoButton = getTextButton("agreePotatoButton", Style.yesButton, getLanguage().buyText,
-                650, 118, 287, 84, 1f, ()->{
+                650, 118, 287, 84, 1.5f, ()->{
                     if(!player.buyItem(item, player.refrigerator)){
                         interScreenCommunication.showToast(getLanguage().refregiratorIsFull);
                         runnable.run();

@@ -1,0 +1,13 @@
+
+objects.png
+size: 2048, 512
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+wall
+  rotate: false
+  xy: 2, 2
+  size: 1584, 432
+  orig: 1584, 432
+  offset: 0, 0
+  index: -1

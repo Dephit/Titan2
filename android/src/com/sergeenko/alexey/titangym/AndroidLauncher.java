@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -58,7 +59,7 @@ public class AndroidLauncher extends AndroidApplication implements IActivityRequ
 	private RelativeLayout gameLayout;
 
 	@SuppressLint("HandlerLeak")
-	protected Handler handler = new Handler()
+	protected Handler handler = new Handler(Looper.myLooper())
 	{
 		@Override
 		public void handleMessage(android.os.Message msg) {
@@ -88,7 +89,7 @@ public class AndroidLauncher extends AndroidApplication implements IActivityRequ
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mAuth = FirebaseAuth.getInstance();
-		ad_id = getResources().getString(R.string.banner_id);
+		ad_id = getResources().getString(R.string.test_banner_id);
 		GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
 				.requestIdToken(getString(R.string.default_web_client_id))
 				.requestEmail()

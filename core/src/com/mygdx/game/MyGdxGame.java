@@ -68,7 +68,7 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
         stage.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                stage.onTouchDown(event, x, y, pointer, button);
+                stage.onTouchDown();
                 return super.touchDown(event, x, y, pointer, button);
             }
         });
@@ -80,7 +80,7 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
         stage.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                stage.onTouchDown(event, x, y, pointer, button);
+                stage.onTouchDown();
                 return super.touchDown(event, x, y, pointer, button);
             }
         });
@@ -92,7 +92,7 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
         stage.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                stage.onTouchDown(event, x, y, pointer, button);
+                stage.onTouchDown();
                 return super.touchDown(event, x, y, pointer, button);
             }
         });
@@ -104,7 +104,7 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
         stage.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                stage.onTouchDown(event, x, y, pointer, button);
+                stage.onTouchDown();
                 return super.touchDown(event, x, y, pointer, button);
             }
         });
@@ -116,7 +116,7 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
         stage.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                stage.onTouchDown(event, x, y, pointer, button);
+                stage.onTouchDown();
                 return super.touchDown(event, x, y, pointer, button);
             }
         });
@@ -128,7 +128,7 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
         stage.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                stage.onTouchDown(event, x, y, pointer, button);
+                //stage.onTouchDown();
                 return super.touchDown(event, x, y, pointer, button);
             }
         });
