@@ -36,6 +36,7 @@ public class MapRoom extends BaseRoom {
         addButton("gym", "gym","", 800, 860, 125, 125, 1f, ()-> interScreenCommunication.openGym());
         addButton("room", "room","", 500, 350, 125, 125, 1f, ()-> interScreenCommunication.openRoom());
         addButton("work", "workButton","",  950, 200, 110, 105, 1f, ()-> interScreenCommunication.openWork());
+        addButton("work", "map","",  450, 200, 110, 105, 1f, ()-> interScreenCommunication.openPark());
         addButton("competition", "champ","",   1600, 330, 110, 105, 1f, ()-> interScreenCommunication.openCompetition());
     }
 

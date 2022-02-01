@@ -1,11 +1,11 @@
-com/mygdx/game/PocketView.java
- com.mygdx.game.PocketView
+com/mygdx/game/TextToDraw.java
+ com.mygdx.game.TextView
 com/mygdx/game/RadialSprite.java
  com.mygdx.game.RadialSprite
-com/mygdx/game/Preffics.java
- com.mygdx.game.Preffics
-com/mygdx/game/StatBar.java
- com.mygdx.game.StatBar
+com/mygdx/game/Node.java
+ com.mygdx.game.Node
+com/mygdx/game/MyInputListener.java
+ com.mygdx.game.MyInputListener
 com/mygdx/game/StringAlignUtils.java
  com.mygdx.game.StringAlignUtils
  com.mygdx.game.StringAlignUtils$1
@@ -20,18 +20,19 @@ com/mygdx/game/InterScreenCommunication.java
  com.mygdx.game.InterScreenCommunication
 com/mygdx/game/Variation.java
  com.mygdx.game.Variation
-com/mygdx/game/Exercise.java
- com.mygdx.game.Exercise
-com/mygdx/game/MyInputListener.java
- com.mygdx.game.MyInputListener
-com/mygdx/game/BaseActor.java
- com.mygdx.game.BaseActor
-com/mygdx/game/Message.java
- com.mygdx.game.Message
+com/mygdx/game/OnPlayerConditionChangeListener.java
+ com.mygdx.game.OnPlayerConditionChangeListener
+com/mygdx/game/Grid2d.java
+ com.mygdx.game.Grid2d
+ com.mygdx.game.Grid2d$MapNode
+com/mygdx/game/PlayerAnimationData.java
+ com.mygdx.game.PlayerAnimationData
+com/mygdx/game/PlayerCondition.java
+ com.mygdx.game.PlayerCondition
 com/mygdx/game/FontFactory.java
  com.mygdx.game.FontFactory
-com/mygdx/game/Language.java
- com.mygdx.game.Language
+com/mygdx/game/ButtonData.java
+ com.mygdx.game.ButtonData
 com/mygdx/game/Style.java
  com.mygdx.game.Style
 com/mygdx/game/IActivityRequestHandler.java
@@ -45,64 +46,66 @@ com/mygdx/game/SimpleDirectionGestureDetector.java
  com.mygdx.game.SimpleDirectionGestureDetector$DirectionListener
 com/mygdx/game/Coordinates.java
  com.mygdx.game.Coordinates
-com/mygdx/game/Stat.java
- com.mygdx.game.Stat
-com/mygdx/game/Node.java
- com.mygdx.game.Node
-com/mygdx/game/OnPlayerConditionChangeListener.java
- com.mygdx.game.OnPlayerConditionChangeListener
-com/mygdx/game/PlayerCondition.java
- com.mygdx.game.PlayerCondition
-com/mygdx/game/Grid2d.java
- com.mygdx.game.Grid2d
- com.mygdx.game.Grid2d$MapNode
-com/mygdx/game/PlayerAnimationData.java
- com.mygdx.game.PlayerAnimationData
-com/mygdx/game/TextToDraw.java
- com.mygdx.game.TextView
-com/mygdx/game/ButtonData.java
- com.mygdx.game.ButtonData
-com/mygdx/game/rooms/CompetitionRoom.java
- com.mygdx.game.rooms.Comp
- com.mygdx.game.rooms.CompetitionRoom
- com.mygdx.game.rooms.CompetitionRoom$1
- com.mygdx.game.rooms.CompetitionRoom$2
+com/mygdx/game/PocketView.java
+ com.mygdx.game.PocketView
+com/mygdx/game/Preffics.java
+ com.mygdx.game.Preffics
+com/mygdx/game/model/Potato.java
+ com.mygdx.game.model.Potato
 com/mygdx/game/rooms/MapRoom.java
  com.mygdx.game.rooms.MapRoom
  com.mygdx.game.rooms.MapRoom$1
-com/mygdx/game/model/Pocket.java
- com.mygdx.game.model.Pocket
-com/mygdx/game/model/Item.java
- com.mygdx.game.model.Item
 com/mygdx/game/model/Container.java
  com.mygdx.game.model.Container
 com/mygdx/game/Npc.java
  com.mygdx.game.Npc
 com/mygdx/game/model/Nuggets.java
  com.mygdx.game.model.Nuggets
-com/mygdx/game/Player.java
- com.mygdx.game.Player
- com.mygdx.game.Player$1
-com/mygdx/game/rooms/GymRoom.java
- com.mygdx.game.rooms.GymRoom
- com.mygdx.game.rooms.GymRoom$1
-com/mygdx/game/rooms/RoomRoom.java
- com.mygdx.game.rooms.RoomRoom
- com.mygdx.game.rooms.RoomRoom$1
-com/mygdx/game/BaseRoom.java
- com.mygdx.game.BaseRoom
 com/mygdx/game/rooms/WorkRoom.java
  com.mygdx.game.rooms.WorkRoom
  com.mygdx.game.rooms.WorkRoom$1
-com/mygdx/game/model/ShopMenu.java
- com.mygdx.game.model.ShopMenu
-com/mygdx/game/model/Potato.java
- com.mygdx.game.model.Potato
+com/mygdx/game/Player.java
+ com.mygdx.game.Player
+ com.mygdx.game.Player$1
+com/mygdx/game/BaseActor.java
+ com.mygdx.game.BaseActor
+com/mygdx/game/Message.java
+ com.mygdx.game.Message
+com/mygdx/game/model/Item.java
+ com.mygdx.game.model.Item
+com/mygdx/game/model/Pocket.java
+ com.mygdx.game.model.Pocket
+com/mygdx/game/BaseRoom.java
+ com.mygdx.game.BaseRoom
 com/mygdx/game/model/Refrigerator.java
  com.mygdx.game.model.Refrigerator
+com/mygdx/game/model/ShopMenu.java
+ com.mygdx.game.model.ShopMenu
+com/mygdx/game/rooms/GymRoom.java
+ com.mygdx.game.rooms.GymRoom
+ com.mygdx.game.rooms.GymRoom$1
+com/mygdx/game/rooms/CompetitionRoom.java
+ com.mygdx.game.rooms.Comp
+ com.mygdx.game.rooms.CompetitionRoom
+ com.mygdx.game.rooms.CompetitionRoom$1
+ com.mygdx.game.rooms.CompetitionRoom$2
+com/mygdx/game/StatBar.java
+ com.mygdx.game.StatBar
+com/mygdx/game/Stat.java
+ com.mygdx.game.Stat
 com/mygdx/game/rooms/ShopRoom.java
  com.mygdx.game.rooms.ShopRoom
  com.mygdx.game.rooms.ShopRoom$1
+com/mygdx/game/Language.java
+ com.mygdx.game.Language
+com/mygdx/game/rooms/RoomRoom.java
+ com.mygdx.game.rooms.RoomRoom
+ com.mygdx.game.rooms.RoomRoom$1
+com/mygdx/game/Exercise.java
+ com.mygdx.game.Exercise
+com/mygdx/game/rooms/ParkRoom.java
+ com.mygdx.game.rooms.ParkRoom
+ com.mygdx.game.rooms.ParkRoom$1
 com/mygdx/game/MyGdxGame.java
  com.mygdx.game.MyGdxGame
  com.mygdx.game.MyGdxGame$1
@@ -111,3 +114,4 @@ com/mygdx/game/MyGdxGame.java
  com.mygdx.game.MyGdxGame$4
  com.mygdx.game.MyGdxGame$5
  com.mygdx.game.MyGdxGame$6
+ com.mygdx.game.MyGdxGame$7

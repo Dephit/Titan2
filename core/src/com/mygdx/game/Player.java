@@ -23,6 +23,7 @@ public class Player extends Npc {
 
     Stat health = new Stat("health");
     Stat energy = new Stat("energy");
+    Stat moral = new Stat("moral");
 
     public Refrigerator refrigerator = new Refrigerator();
     public Pocket pocket = new Pocket(75);
@@ -34,14 +35,23 @@ public class Player extends Npc {
         exercises.add(deadlift);
         exercises.add(pushUps);
         exercises.add(pullUps);
+
         health.statBar.setBounds(1920 - 400 - 50, 1080 - 65 - 50, 400, 65);
         health.statBar.setProgressAndCapacity(100, 100);
         health.statBar.setColor(Color.RED);
+        health.statBar.setBackgroundColor(Color.valueOf("042a2b"));
 
         energy.statBar.setBounds(1920 - 400 - 50, 1080 - 65 * 2 - 25 - 50, 400, 65);
-        pocket.getPocketView().setBounds(1920 - 400 - 50, 1080 - 65 * 2 - 25 - 100, 400, 65);
         energy.statBar.setProgressAndCapacity(100, 100);
         energy.statBar.setColor(Color.YELLOW);
+        energy.statBar.setBackgroundColor(Color.valueOf("042a2b"));
+
+        moral.statBar.setBounds(1920 - 400 - 50, 1080 - 65 * 3 - 50 - 50, 400, 65);
+        moral.statBar.setProgressAndCapacity(100, 100);
+        moral.statBar.setColor(Color.PURPLE);
+        moral.statBar.setBackgroundColor(Color.valueOf("042a2b"));
+
+        pocket.getPocketView().setBounds(1920 - 410 - 50, 1080 - 65 * 4 - 25 - 100 - 15, 400, 65);
     }
 
     public int currentGirlDialogProgress = 0;
@@ -57,13 +67,15 @@ public class Player extends Npc {
             case right:
             case sitting:
             case sittingRev:
-            case pcSitting:
             case lookinLeft:
             case lookinRight:
             case stay:
                 break;
             case sleeping:
                 calculateRecovery(delta);
+                break;
+            case pcSitting:
+                onPC();
                 break;
         }
         for(Exercise exercise: exercises){
@@ -85,6 +97,8 @@ public class Player extends Npc {
         if(energy.value > 0 && health.value > 0){
             Float value = exr.calculateProgress(delta);
             energy.minusProgress(value);
+            health.minusProgress(value / 2);
+            moral.minusProgress(value / 4);
         }else setPlayerCondition(PlayerCondition.stay);
     }
 
@@ -136,6 +150,10 @@ public class Player extends Npc {
         return energy.statBar;
     }
 
+    public StatBar getMoralBar(){
+        return moral.statBar;
+    }
+
     public Exercise isInExercise() {
         for(Exercise exercise: exercises){
             if(exercise.condition == playerCondition){
@@ -162,10 +180,32 @@ public class Player extends Npc {
     }
 
     public void onWork() {
-        health.minusProgress(1 / 2f);
-        energy.minusProgress(1);
+        float progress = 0.5f;
+        health.minusProgress(progress * 0.5f);
+        energy.minusProgress(progress);
+        moral.minusProgress(progress);
         for (Exercise exercise: exercises){
-            exercise.calculateProgress(1 / 5f);
+            exercise.calculateProgress(-progress * 0.50f);
+        }
+    }
+
+    public void onPark() {
+        float progress = 0.5f;
+        health.minusProgress(progress * 0.5f);
+        energy.minusProgress(progress * 0.25f);
+        moral.addProgress(progress * 0.5f);
+        for (Exercise exercise: exercises){
+            exercise.calculateProgress(-progress * 0.50f);
+        }
+    }
+
+    public void onPC() {
+        float progress = 0.25f;
+        health.minusProgress(progress * 0.25f);
+        energy.minusProgress(progress * 0.35f);
+        moral.addProgress(progress * 0.35f);
+        for (Exercise exercise: exercises){
+            exercise.calculateProgress(-progress * 0.50f);
         }
     }
 }

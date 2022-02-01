@@ -67,6 +67,10 @@ public class StatBar extends BaseActor {
         progressSprite.setColor(color);
     }
 
+    public void setBackgroundColor(Color color){
+        secondProgressSprite.setColor(color);
+    }
+
     @Override
     public void act(float delta) {
         super.act(delta);

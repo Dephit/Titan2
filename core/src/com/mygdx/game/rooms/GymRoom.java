@@ -156,10 +156,6 @@ public class GymRoom extends BaseRoom {
         return isDoing;
     }
 
-    private void setPushPullUps(Preffics preffics) {
-        player.setPath(800, 430, 820, 440, lookinUp, this::addPullPushChooser);
-    }
-
     private void setTalkingToAGirl(Preffics preffics) {
         player.setPath(1025, 450, 0, 0, lookinUp, () -> {
             Message message = new Message(1070, 670, true,

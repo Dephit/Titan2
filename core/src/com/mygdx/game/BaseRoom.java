@@ -63,6 +63,7 @@ public abstract class BaseRoom extends Stage  {
             objectGroup.addActor(player);
             hudGroup.addActor(player.getHealthBar());
             hudGroup.addActor(player.getEnergyBar());
+            hudGroup.addActor(player.getMoralBar());
             hudGroup.addActor(player.getPocketView());
         }
         addActor(objectGroup);

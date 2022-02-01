@@ -52,6 +52,11 @@ public class Language{
     public String comtetitionTitle;
     public String squatTitle;
     public String nextSet;
+    public String youHaveNoEnergyOrHealth;
+    public String walkInThePark;
+    public String walkToRecoverYourHead;
+    public String doWalk;
+    public String walkingInProgress;
 
     Language(){
 

@@ -13,16 +13,16 @@ import com.mygdx.game.Preffics;
 import com.mygdx.game.StatBar;
 import com.mygdx.game.Style;
 
-public class WorkRoom extends BaseRoom {
+public class ParkRoom extends BaseRoom {
 
-    public WorkRoom() {
-        super("work");
+    public ParkRoom() {
+        super("park");
     }
 
     boolean workInProgress = false;
 
-    public WorkRoom(InterScreenCommunication _communication, Player player) {
-        super(_communication, "work", player);
+    public ParkRoom(InterScreenCommunication _communication, Player player) {
+        super(_communication, "park", player);
         player.setPlayersAction(PlayerCondition.stay, -200, 250, ()->{});
     }
 
@@ -30,7 +30,6 @@ public class WorkRoom extends BaseRoom {
     public void setCommonButtons() {
         super.setCommonButtons();
         showWorkMenu();
-
     }
 
     @Override
@@ -51,8 +50,8 @@ public class WorkRoom extends BaseRoom {
     private void showWorkMenu() {
         Group group = new Group();
         //pause = true;
-        Runnable runnable = ()->{
-          //  pause = false;
+        Runnable runnable = () -> {
+            //  pause = false;
             group.clear();
             group.remove();
             openMap();
@@ -61,18 +60,20 @@ public class WorkRoom extends BaseRoom {
 
         addButton(
                 "window", Style.window, "",
-                Preffics.SCREEN_WIDTH / 2 - 500, Preffics.SCREEN_HEIGHT / 2 - 250, 1000, 500, 1, group, runnable
+                Preffics.SCREEN_WIDTH / 2 - 750, Preffics.SCREEN_HEIGHT / 2 - 250, 1500, 500, 1, group, runnable
         );
         addButton(
-                "workTitle", Style.empty, getLanguage().wannaWork,
-                Preffics.SCREEN_WIDTH / 2 - 500, Preffics.SCREEN_HEIGHT / 2 + 100, 1000, 100, 1.8f,  group, ()->{}
+                "workTitle", Style.empty, getLanguage().walkInThePark,
+                Preffics.SCREEN_WIDTH / 2 - 500, Preffics.SCREEN_HEIGHT / 2 + 100, 1000, 100, 1.8f, group, () -> {
+                }
         );
         addButton(
-                "workDescription", Style.empty, getLanguage().forThisWorkYouRecieve + " " + wokrReward,
-                Preffics.SCREEN_WIDTH / 2 - 500, Preffics.SCREEN_HEIGHT / 2 - 25, 1000, 100, 1.8f,  group, ()->{}
+                "workDescription", Style.empty, getLanguage().walkToRecoverYourHead,
+                Preffics.SCREEN_WIDTH / 2 - 500, Preffics.SCREEN_HEIGHT / 2 - 25, 1000, 100, 1.8f, group, () -> {
+                }
         );
         addButton(
-                "work", Style.yesButton, getLanguage().doWork,
+                "work", Style.yesButton, getLanguage().doWalk,
                 Preffics.SCREEN_WIDTH / 2 - 450, Preffics.SCREEN_HEIGHT / 2 - 200, 400, 125, 1.5f, group, this::showWorkProgress
         );
         addButton(
@@ -83,7 +84,7 @@ public class WorkRoom extends BaseRoom {
     }
 
     private void showWorkProgress() {
-        if(player.getEnergyBar().getCurrentAmount() > 0 && player.getHealthBar().getCurrentAmount() > 0) {
+        if (player.getEnergyBar().getCurrentAmount() > 0 && player.getHealthBar().getCurrentAmount() > 0) {
             workInProgress = true;
             Group group = new Group();
             //pause = true;
@@ -93,19 +94,18 @@ public class WorkRoom extends BaseRoom {
                 group.clear();
                 group.remove();
             };
-            int wokrReward = 1000;
 
             addButton(
                     "window", Style.window, "",
-                    Preffics.SCREEN_WIDTH / 2 - 500, Preffics.SCREEN_HEIGHT / 2 - 250, 1000, 500, 1, group, runnable
+                    Preffics.SCREEN_WIDTH / 2 - 750, Preffics.SCREEN_HEIGHT / 2 - 250, 1500, 500, 1, group, runnable
             );
             addButton(
-                    "workTitle", Style.empty, getLanguage().workInProgress,
+                    "workTitle", Style.empty, getLanguage().walkingInProgress,
                     Preffics.SCREEN_WIDTH / 2 - 500, Preffics.SCREEN_HEIGHT / 2 + 100, 1000, 100, 1.8f, group, () -> {
                     }
             );
             StatBar statBar = new StatBar("work");
-            statBar.setBounds(Preffics.SCREEN_WIDTH / 2 - 200, Preffics.SCREEN_HEIGHT / 2, 400, 65);
+            statBar.setBounds(Preffics.SCREEN_WIDTH / 2 - 400, Preffics.SCREEN_HEIGHT / 2 - 50, 800, 130);
             statBar.setProgressAndCapacity(100, 0);
             statBar.setColor(Color.valueOf("ef7b45"));
             statBar.setBackgroundColor(Color.valueOf("042a2b"));
@@ -118,25 +118,24 @@ public class WorkRoom extends BaseRoom {
             new Thread(() -> {
                 while (statBar.getCurrentAmount() < 100 && player.getEnergyBar().getCurrentAmount() > 0 && player.getHealthBar().getCurrentAmount() > 0 && workInProgress) {
                     statBar.addCurrentAmount(1);
-                    player.onWork();
+                    player.onPark();
                     try {
                         Thread.sleep(100);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
-                if(player.getEnergyBar().getCurrentAmount() <= 0 || player.getHealthBar().getCurrentAmount() <= 0){
+                if (player.getEnergyBar().getCurrentAmount() <= 0 || player.getHealthBar().getCurrentAmount() <= 0) {
                     interScreenCommunication.showToast(getLanguage().youHaveNoEnergyOrHealth);
                     runnable.run();
                     return;
                 }
                 if (statBar.getCurrentAmount() >= 100) {
-                    player.pocket.addMoney(wokrReward);
                     player.setPlayerPosition(((int) player.getX()), (int) player.getY(), PlayerCondition.stay);
                 }
                 runnable.run();
             }).start();
-        }else{
+        } else {
             interScreenCommunication.showToast(getLanguage().youHaveNoEnergyOrHealth);
             openMap();
         }
@@ -154,8 +153,8 @@ public class WorkRoom extends BaseRoom {
 
     @Override
     protected void orderExceptions(int i, int j) {
-        if (objectGroup.getChildren().get(i).getName() != null){
-            if(objectGroup.getChildren().get(i).getName().contains("player")) {
+        if (objectGroup.getChildren().get(i).getName() != null) {
+            if (objectGroup.getChildren().get(i).getName().contains("player")) {
                 Npc pl = (Npc) objectGroup.getChildren().get(i);
                 if ((pl.playerCondition.equals(PlayerCondition.bench) ||
                         pl.playerCondition.equals(PlayerCondition.pullUps) ||
@@ -163,16 +162,14 @@ public class WorkRoom extends BaseRoom {
                         pl.playerCondition.equals(PlayerCondition.sitting) ||
                         pl.playerCondition.equals(PlayerCondition.sittingRev) ||
                         pl.playerCondition.equals(PlayerCondition.hiper) ||
-                        pl.playerCondition.equals(PlayerCondition.pushUps))||
+                        pl.playerCondition.equals(PlayerCondition.pushUps)) ||
                         pl.playerCondition.equals(PlayerCondition.pcSitting))
-                    if(pl.getName().equals("player"))
+                    if (pl.getName().equals("player"))
                         objectGroup.getChildren().swap(i, objectGroup.getChildren().size - 1);
                     else
                         objectGroup.getChildren().swap(i, objectGroup.getChildren().size - 2);
             }
-            super.orderExceptions(i,j);
+            super.orderExceptions(i, j);
         }
     }
 }
-
-

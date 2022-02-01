@@ -32,6 +32,11 @@
   "comtetitionTitle": "Соревнования!!",
   "squatTitle": "Приседания",
   "nextSet": "Следующий подход",
+  "youHaveNoEnergyOrHealth" : "У вас недостаточно энергии или вы голодны",
+  "walkInThePark": "Хотите прогуляться?",
+  "walkToRecoverYourHead": "Прогуляйтесь чтобы разгрузить свою голову",
+  "doWalk": "Прогуляться",
+  "walkingInProgress": "Прогулка...",
 
   "chooseYourExercise" : "Какое упражнение хотите сделать?",
 

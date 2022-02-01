@@ -31,7 +31,7 @@ public class PocketView extends BaseActor {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         if (str != null)
-            showText(batch, str, (int) (getX() + 25), (int) (getY() + getHeight() / 1.5f), 1f, Color.BLACK);
+            showText(batch, str, (int) (getX() + 25), (int) (getY() + getHeight() / 1.5f), 2f, Color.RED);
     }
 
     public void drawText(String str) {
