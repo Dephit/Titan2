@@ -57,6 +57,9 @@ public class Language{
     public String walkToRecoverYourHead;
     public String doWalk;
     public String walkingInProgress;
+    public String health;
+    public String energy;
+    public String moral;
 
     Language(){
 

@@ -27,7 +27,7 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
     @Override
     public void create() {
         Preffics.getInstance();
-        player = new Player();
+        player = new Player(Preffics.getInstance().getLanguage());
         openGym();
     }
 

@@ -23,11 +23,13 @@ public class StatBar extends BaseActor {
     private Texture backgroundImg, progressImg, foregroundImg;
     private Sprite progressSprite, secondProgressSprite;
     private String str;
+    Color textColor = Color.BLACK;
 
     public StatBar(String name) {
         setName(name);
         createTextures();
     }
+
 
     public float getCurrentAmount() {
         return currentAmount;
@@ -71,6 +73,10 @@ public class StatBar extends BaseActor {
         secondProgressSprite.setColor(color);
     }
 
+    public void setTextColor(Color color){
+        textColor = color;
+    }
+
     @Override
     public void act(float delta) {
         super.act(delta);
@@ -91,7 +97,7 @@ public class StatBar extends BaseActor {
         progressSprite.draw(batch);
         batch.draw(foregroundImg, getX(), getY(), getWidth(), getHeight());
         if(str != null)
-            showText(batch, str, (int) (getX() + 25), (int) (getY() + getHeight() / 1.5f), 1f, Color.BLACK);
+            showText(batch, str, (int) (getX() + 25), (int) (getY() + getHeight() / 1.5f), 1f, textColor);
     }
 
     public void drawText(String str) {

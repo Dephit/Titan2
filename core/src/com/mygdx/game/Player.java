@@ -21,15 +21,19 @@ public class Player extends Npc {
     Exercise pushUps = new Exercise(PlayerCondition.pushUps);
     Exercise pullUps = new Exercise(PlayerCondition.pullUps);
 
-    Stat health = new Stat("health");
-    Stat energy = new Stat("energy");
-    Stat moral = new Stat("moral");
+    Stat health;
+    Stat energy;
+    Stat moral;
 
     public Refrigerator refrigerator = new Refrigerator();
     public Pocket pocket = new Pocket(75);
 
-    Player() {
+    Player(Language language) {
         super("player");
+        health = new Stat(language.health);
+        energy = new Stat(language.energy);
+        moral = new Stat(language.moral);
+
         exercises.add(squatExr);
         exercises.add(bench);
         exercises.add(deadlift);
@@ -38,17 +42,20 @@ public class Player extends Npc {
 
         health.statBar.setBounds(1920 - 400 - 50, 1080 - 65 - 50, 400, 65);
         health.statBar.setProgressAndCapacity(100, 100);
-        health.statBar.setColor(Color.RED);
+        health.statBar.setColor(Color.valueOf("910101"));
+        health.statBar.setTextColor(Color.WHITE);
         health.statBar.setBackgroundColor(Color.valueOf("042a2b"));
 
         energy.statBar.setBounds(1920 - 400 - 50, 1080 - 65 * 2 - 25 - 50, 400, 65);
         energy.statBar.setProgressAndCapacity(100, 100);
-        energy.statBar.setColor(Color.YELLOW);
+        energy.statBar.setColor(Color.valueOf("AE9C00"));
+        energy.statBar.setTextColor(Color.WHITE);
         energy.statBar.setBackgroundColor(Color.valueOf("042a2b"));
 
         moral.statBar.setBounds(1920 - 400 - 50, 1080 - 65 * 3 - 50 - 50, 400, 65);
         moral.statBar.setProgressAndCapacity(100, 100);
-        moral.statBar.setColor(Color.PURPLE);
+        moral.statBar.setTextColor(Color.WHITE);
+        moral.statBar.setColor(Color.valueOf("240953"));
         moral.statBar.setBackgroundColor(Color.valueOf("042a2b"));
 
         pocket.getPocketView().setBounds(1920 - 410 - 50, 1080 - 65 * 4 - 25 - 100 - 15, 400, 65);

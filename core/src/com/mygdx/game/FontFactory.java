@@ -18,7 +18,7 @@ public class FontFactory {
             + "abcdefghijklmnopqrstuvwxyz"
             + "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
             + "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
-            + "1234567890.,:;_¡!¿?\"'+-*/()[]={}";
+            + "1234567890.,:;_¡!¿?\"'+-*/()[]={}$";
 
     // Singleton: unique instance
     private static FontFactory instance;

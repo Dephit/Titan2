@@ -37,6 +37,9 @@
   "walkToRecoverYourHead": "Прогуляйтесь чтобы разгрузить свою голову",
   "doWalk": "Прогуляться",
   "walkingInProgress": "Прогулка...",
+  "health": "Голод",
+  "energy": "Енергия",
+  "moral": "ЦНС",
 
   "chooseYourExercise" : "Какое упражнение хотите сделать?",
 

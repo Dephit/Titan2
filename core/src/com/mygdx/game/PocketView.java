@@ -14,7 +14,7 @@ public class PocketView extends BaseActor {
     }
 
     public void setStr(String str) {
-        this.str = str;
+        this.str = "$" + str;
     }
 
     @Override

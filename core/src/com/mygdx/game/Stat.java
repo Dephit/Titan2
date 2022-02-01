@@ -1,5 +1,7 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.graphics.Color;
+
 public class Stat {
 
     StatBar statBar;
@@ -8,6 +10,7 @@ public class Stat {
 
     public Stat(String statName) {
         statBar = new StatBar(statName);
+        statBar.drawText(statName);
         statBar.setBounds(50,50, 600, 75);
     }
 

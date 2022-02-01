@@ -1,5 +1,7 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.graphics.Color;
+
 public class Exercise {
 
     PlayerCondition condition;
@@ -10,6 +12,9 @@ public class Exercise {
         statBar = new StatBar(statName.name());
         statBar.setProgressAndCapacity(100, (int) progress);;
         statBar.setBounds(50,50, 600, 75);
+        statBar.setColor(Color.valueOf("ef7b45"));
+        statBar.setBackgroundColor(Color.valueOf("042a2b"));
+        statBar.setTextColor(Color.WHITE);
     }
 
 
