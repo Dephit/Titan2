@@ -208,23 +208,16 @@ public class GymRoom extends BaseRoom {
 
     @Override
     protected void orderExceptions(int i, int j) {
-        if (objectGroup.getChildren().get(i).getName() != null){
-            if(objectGroup.getChildren().get(i).getName().contains("player")) {
-                Npc pl = (Npc) objectGroup.getChildren().get(i);
-                if ((pl.playerCondition.equals(PlayerCondition.bench) ||
-                        pl.playerCondition.equals(PlayerCondition.pullUps) ||
-                        pl.playerCondition.equals(PlayerCondition.legPress) ||
-                        pl.playerCondition.equals(PlayerCondition.sitting) ||
-                        pl.playerCondition.equals(PlayerCondition.sittingRev) ||
-                        pl.playerCondition.equals(PlayerCondition.hiper) ||
-                        pl.playerCondition.equals(PlayerCondition.pushUps))||
-                        pl.playerCondition.equals(PlayerCondition.pcSitting))
-                    if(pl.getName().equals("player"))
-                        objectGroup.getChildren().swap(i, objectGroup.getChildren().size - 1);
-                    else
-                        objectGroup.getChildren().swap(i, objectGroup.getChildren().size - 2);
-            }
-            super.orderExceptions(i,j);
+        Npc player = objectGroup.findActor("player");
+        Npc npc = objectGroup.findActor("player2");
+
+        if(player.doesOverDrawExercise() && npc.doesOverDrawExercise()) {
+            objectGroup.swapActor(player, objectGroup.getChildren().get(objectGroup.getChildren().size - 1));
+            objectGroup.swapActor(npc, objectGroup.getChildren().get(objectGroup.getChildren().size - 2));
+        }else if(player.doesOverDrawExercise()){
+            objectGroup.swapActor(player, objectGroup.getChildren().get(objectGroup.getChildren().size - 1));
+        }else if(npc.doesOverDrawExercise()){
+            objectGroup.swapActor(npc, objectGroup.getChildren().get(objectGroup.getChildren().size - 1));
         }
     }
 

@@ -113,6 +113,7 @@ public class Message extends Actor{
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -183,25 +184,35 @@ public class Message extends BaseActor {
     }
 
     private void manageSize() {
-        if(dialogTree.size() > 0 && currentDialog < dialogTree.size()){
+        if(!dialogTree.isEmpty() && currentDialog < dialogTree.size()){
             setData(dialogTree.get(currentDialog));
             currentDialog ++;
             if(runnable != null)
                 runnable.run();
-        }else if(randomText.size() > 0){
+        }else if(!randomText.isEmpty()){
             setData(randomText.get(new Random().nextInt(randomText.size())));
         }
     }
 
     private void setData(String dialog) {
-        //width = dialog.messageWidth;
         text = dialog;
-        GlyphLayout layout = new GlyphLayout();
-        layout.setText(FontFactory.font, text);
-        width = layout.width * 1.45f;
-        textX = (int) (x + (width / 5));
-        height = width / 2;
-        textY = y + (int) (height / 2);
+        int l = text.split("\n").length;
+        int textHeight =  (l > 0 ? l : 1) * 72 + 96;
+        int textWidth = getMaxLineLenght(text) * 48;
+
+        width = textWidth;
+        height = textHeight;
+        textX = (int) (x + width / 5);
+        textY = y + l * 48 + 48;
+    }
+
+    private int getMaxLineLenght(String text) {
+        int maxLine = 0;
+        for (String s : text.split("\n")) {
+            if(s.length() > maxLine)
+                maxLine = s.length();
+        }
+        return maxLine;
     }
 
     @Override
@@ -212,7 +223,7 @@ public class Message extends BaseActor {
         } else{
             batch.draw(texture, x + width, y ,  -width, height);
         }
-        showText(batch, util.format(text), textX, textY,1f, Color.BLACK);
+        showText(batch, text, textX, textY,2f, Color.BLACK);
     }
 
     @Override

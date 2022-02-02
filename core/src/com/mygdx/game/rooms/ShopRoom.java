@@ -1,17 +1,24 @@
 package com.mygdx.game.rooms;
 
+import static com.mygdx.game.PlayerCondition.lookinLeft;
+import static com.mygdx.game.PlayerCondition.stay;
+
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.mygdx.game.BaseRoom;
 import com.mygdx.game.InterScreenCommunication;
+import com.mygdx.game.Message;
 import com.mygdx.game.Npc;
 import com.mygdx.game.Player;
 import com.mygdx.game.PlayerCondition;
+import com.mygdx.game.Preffics;
 import com.mygdx.game.Style;
 import com.mygdx.game.model.Item;
 import com.mygdx.game.model.ShopMenu;
+
+import java.util.ArrayList;
 
 public class ShopRoom extends BaseRoom {
 
@@ -22,8 +29,10 @@ public class ShopRoom extends BaseRoom {
 
     public ShopRoom(InterScreenCommunication _communication, Player player) {
         super(_communication, "shop", player);
-
         player.setPlayerPosition(1650, 100);
+        player.setPlayersAction(stay,1650, 100, ()->{
+
+        });
     }
 
     public void setCommonButtons(){
@@ -40,12 +49,33 @@ public class ShopRoom extends BaseRoom {
                 () -> player.setPath(1610 , 310, PlayerCondition.watchShop));
         addButton("watchCam", Style.empty, "",   244, 700, 75, 75, 1f,
                 () -> player.setPath(360 , 385, PlayerCondition.watchCam));
-        addButton("talkToStaffBut", Style.empty, "",   230, 460, 75, 175, 1f,
-                () -> player.setPath(340 , 420, PlayerCondition.lookinLeft));
+        addButton("talkToStaffBut", Style.empty, "",   230, 460, 75, 175, 1f, this::talkToStaff);
         addButton("talkToCleanerBut", Style.empty, "",   1250, 430, 75, 155, 1f,
-                () -> player.setPath(1310 , 380, PlayerCondition.lookinUp));
+                this::talkToSanitar);
         addButton("buyMenuBut", Style.empty, "",   1100, 200, 200, 200, 1f,
                 () -> player.setPath(1310 , 380,1310 , 380, PlayerCondition.stay, this::showBuyMenu));
+    }
+
+    private void talkToSanitar() {
+        /*player.setPath(1310 , 380, 0, 0, PlayerCondition.lookinUp, () -> {
+            Message message = new Message(810, 500, false,
+                    new ArrayList<>(),
+                    getLanguage().sanitarRandomText
+            );
+            if (!hudGroup.getChildren().contains(message, false))
+                hudGroup.addActor(message);
+        });*/
+    }
+
+    private void talkToStaff() {
+        player.setPath(340 , 420, 0, 0, PlayerCondition.lookinLeft, () -> {
+            Message message = new Message(260, 630, true,
+                    new ArrayList<>(),
+                    getLanguage().stuffRandomText
+            );
+            if (!hudGroup.getChildren().contains(message, false))
+                hudGroup.addActor(message);
+        });
     }
 
     ShopMenu shoMenu = new ShopMenu();

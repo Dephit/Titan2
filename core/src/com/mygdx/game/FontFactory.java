@@ -3,6 +3,7 @@ package com.mygdx.game;
 import java.util.Locale;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
@@ -52,6 +53,7 @@ public class FontFactory {
         parameter = new FreeTypeFontParameter();
         parameter.characters = characters;
         parameter.size = 24;
+        parameter.shadowColor = Color.CORAL;
 
         String path = Preffics.getInstance().getPath() + fontName;
 

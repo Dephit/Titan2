@@ -111,6 +111,7 @@ public class Player extends Npc {
 
     private void calculateRecovery(float delta) {
         energy.addProgress(delta * 5f);
+        health.minusProgress(delta * 5f );
     }
 
     @Override
@@ -200,7 +201,7 @@ public class Player extends Npc {
         float progress = 0.5f;
         health.minusProgress(progress * 0.5f);
         energy.minusProgress(progress * 0.25f);
-        moral.addProgress(progress * 0.5f);
+        moral.addProgress(progress * 0.25f);
         for (Exercise exercise: exercises){
             exercise.calculateProgress(-progress * 0.50f);
         }
@@ -210,7 +211,7 @@ public class Player extends Npc {
         float progress = 0.25f;
         health.minusProgress(progress * 0.25f);
         energy.minusProgress(progress * 0.35f);
-        moral.addProgress(progress * 0.35f);
+        moral.addProgress(progress * 0.15f);
         for (Exercise exercise: exercises){
             exercise.calculateProgress(-progress * 0.50f);
         }

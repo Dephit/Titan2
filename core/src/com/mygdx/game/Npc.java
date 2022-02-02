@@ -348,5 +348,16 @@ public class Npc extends BaseActor {
         setPlayerPosition(x,y);
         setPlayerCondition(playerCondition);
     }
+
+    public boolean doesOverDrawExercise() {
+        return playerCondition.equals(PlayerCondition.bench) ||
+                playerCondition.equals(PlayerCondition.pullUps) ||
+                playerCondition.equals(PlayerCondition.legPress) ||
+                playerCondition.equals(PlayerCondition.sitting) ||
+                playerCondition.equals(PlayerCondition.sittingRev) ||
+                playerCondition.equals(PlayerCondition.hiper) ||
+                playerCondition.equals(PlayerCondition.pushUps) ||
+                playerCondition.equals(PlayerCondition.pcSitting);
+    }
 }
 

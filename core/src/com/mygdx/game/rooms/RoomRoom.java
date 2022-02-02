@@ -23,13 +23,8 @@ public class RoomRoom extends BaseRoom {
 
     public RoomRoom(InterScreenCommunication _communication, Player player) {
         super(_communication, "room", player);
-        //Npc npc = new Npc("player2");
-        //npc.clearPath();
-        //npc.setPeriodicEvent();
-        /*npcs.add(npc);
-        objectGroup.addActor(npc);*/
-
-        player.setPlayerPosition(700, 250, stay);
+        player.setPlayerPosition(700, 250);
+        player.setPlayersAction(stay, 700, 250, ()->{});
     }
 
 
