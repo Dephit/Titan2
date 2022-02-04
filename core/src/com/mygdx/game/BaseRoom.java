@@ -179,7 +179,7 @@ public abstract class BaseRoom extends Stage  {
 
     private void onLoading(Preffics preffics) {
         preffics.updateLoading();
-        showText( preffics.getLanguage().loading + ": " + preffics.getLoadingProgress(), 500, 500, 2, Color.CORAL);
+        showText( preffics.getLanguage().loading + ": " + ((int)preffics.getLoadingProgress()), Preffics.SCREEN_WIDTH / 2 - 250, Preffics.SCREEN_HEIGHT / 2 , 2, Color.CORAL);
     }
 
     protected void showText(String str, int x, int y, int scale, Color color) {

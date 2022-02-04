@@ -20,6 +20,8 @@ public class Language{
     public String level;
 
     public String squat;
+    public String bench;
+    public String deadlift;
 
     public String heavyBench;
     public String moderateBench;
@@ -60,6 +62,7 @@ public class Language{
     public String health;
     public String energy;
     public String moral;
+    public String set;
 
     Language(){
 

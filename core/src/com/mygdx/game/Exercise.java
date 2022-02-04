@@ -38,10 +38,10 @@ public class Exercise {
             limit = 100 + LVL * 20;
             progress = 0;
         }
-        if(progress > limit){
+        if(progress >= limit){
+            progress = 0;
             LVL++;
             limit = 100 + LVL * 20;
-            progress = 0;
         }
         progress += delta * 5f;
         statBar.setProgress(progress);

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -48,7 +49,7 @@ public class AndroidLauncher extends AndroidApplication implements IActivityRequ
 
 	private static final int RC_SIGN_IN = 9001;
 	String ad_id;
-	protected AdView adView;
+	//protected AdView adView;
 
 	private final int SHOW_ADS = 1;
 	private final int HIDE_ADS = 0;
@@ -65,17 +66,13 @@ public class AndroidLauncher extends AndroidApplication implements IActivityRequ
 		public void handleMessage(android.os.Message msg) {
 			super.handleMessage(msg);
 				switch(msg.what) {
-				case SHOW_ADS:
-					{
-						adView.setVisibility(View.VISIBLE);
+					case SHOW_ADS:
+						//adView.setVisibility(View.VISIBLE);
 						break;
-					}
 					case HIDE_ADS:
-						{
-							adView.setVisibility(View.GONE);
-							break;
-						}
-			}
+						//adView.setVisibility(View.GONE);
+						break;
+				}
 		}
 	};
 
@@ -88,6 +85,8 @@ public class AndroidLauncher extends AndroidApplication implements IActivityRequ
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setContentView(R.layout.main_activity);
 		mAuth = FirebaseAuth.getInstance();
 		ad_id = getResources().getString(R.string.test_banner_id);
 		GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -101,18 +100,14 @@ public class AndroidLauncher extends AndroidApplication implements IActivityRequ
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		gameLayout = createGameLayout(config);
 		launchGame();
-
-		/*if(mAuth.getCurrentUser() != null){
-			account = GoogleSignIn.getLastSignedInAccount(this);
-			launchGame();
-		} else
-			setContentView(R.layout.login_activity);*/
 	}
 
 	private void launchGame() {
 		user = mAuth.getCurrentUser();
 		//dataBase();
-		setContentView(gameLayout);
+		((LinearLayout)findViewById(R.id.container))
+				.addView(gameLayout);
+		//setContentView(gameLayout);
 	}
 
 	private void dataBase() {
@@ -157,8 +152,6 @@ public class AndroidLauncher extends AndroidApplication implements IActivityRequ
 	private RelativeLayout createGameLayout(AndroidApplicationConfiguration config) {
 		RelativeLayout layout = new RelativeLayout(this);
 
-		// Do the stuff that initialize() would do for you
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
@@ -166,7 +159,7 @@ public class AndroidLauncher extends AndroidApplication implements IActivityRequ
 		// Create the libgdx View
 		View gameView = initializeForView(new MyGdxGame(this), config);
 
-		// Create and setup the AdMob view
+		/*// Create and setup the AdMob view
 		adView = new AdView(this);
 		adView.setAdSize(AdSize.BANNER);
 		 // Put in your secret key here
@@ -177,18 +170,18 @@ public class AndroidLauncher extends AndroidApplication implements IActivityRequ
 				.addTestDevice("C6A692B5E4EE845C753A1B5F718AD1CE")
 				.build();
 
-		adView.loadAd(adRequest);
+		adView.loadAd(adRequest);*/
 
 		// Add the libgdx view
 		layout.addView(gameView);
 
 		// Add the AdMob view
-		RelativeLayout.LayoutParams adParams =
+		/*RelativeLayout.LayoutParams adParams =
 				new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
 						RelativeLayout.LayoutParams.WRAP_CONTENT);
 		adParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
 		adParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-		layout.addView(adView, adParams);
+		layout.addView(adView, adParams);*/
 
 		return layout;
 	}
@@ -379,7 +372,7 @@ public class AndroidLauncher extends AndroidApplication implements IActivityRequ
 
 	@Override
 	public boolean isAdShown() {
-		return adView.isShown();
+		return false;//adView.isShown();
 	}
 
 }

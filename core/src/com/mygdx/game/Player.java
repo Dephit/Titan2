@@ -110,8 +110,10 @@ public class Player extends Npc {
     }
 
     private void calculateRecovery(float delta) {
-        energy.addProgress(delta * 5f);
-        health.minusProgress(delta * 5f );
+        if(health.value > 0 && energy.value < 100){
+            energy.addProgress(delta * 5f);
+            health.minusProgress(delta * 5f );
+        }else setPlayerCondition(PlayerCondition.stay);
     }
 
     @Override
@@ -215,6 +217,18 @@ public class Player extends Npc {
         for (Exercise exercise: exercises){
             exercise.calculateProgress(-progress * 0.50f);
         }
+    }
+
+    public int getBestSquat() {
+        return squatExr.result;
+    }
+
+    public int getBestBench() {
+        return bench.result;
+    }
+
+    public int getBestDeadlift() {
+        return deadlift.result;
     }
 }
 
