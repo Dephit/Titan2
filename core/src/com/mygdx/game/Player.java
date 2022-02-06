@@ -28,7 +28,7 @@ public class Player extends Npc {
     public Refrigerator refrigerator = new Refrigerator();
     public Pocket pocket = new Pocket(75);
 
-    Player(Language language) {
+    public Player(Language language) {
         super("player");
         health = new Stat(language.health);
         energy = new Stat(language.energy);

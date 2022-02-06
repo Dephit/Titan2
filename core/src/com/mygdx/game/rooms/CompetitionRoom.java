@@ -9,6 +9,9 @@ import com.mygdx.game.Player;
 import com.mygdx.game.PlayerCondition;
 import com.mygdx.game.Preffics;
 import com.mygdx.game.Style;
+import com.mygdx.game.model.CompetitionOpponent;
+
+import java.util.ArrayList;
 
 enum Comp{
     SQUAT_1, SQUAT_2, SQUAT_3, BENCH_1, BENCH_2, BENCH_3, DEADLIFT_1, DEADLIFT_2, DEADLIFT_3, CLOSE
@@ -97,8 +100,27 @@ public class CompetitionRoom extends BaseRoom {
                         interScreenCommunication.openMap();
                     }
             );
+            addButton(
+                    "cancel", Style.yesButton, getLanguage().cancel,
+                    Preffics.SCREEN_WIDTH / 2 + 400, Preffics.SCREEN_HEIGHT / 2 - 400, 600, 175, 1.5f, group, () -> {
+                        showTable();
+                    }
+            );
             buttonGroup.addActor(group);
         }
+    }
+
+    private void showTable() {
+        ArrayList list = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            list.add(new CompetitionOpponent(
+                    "player "+ i,
+                    80,
+                    60,
+                    80
+            ));
+        }
+        interScreenCommunication.showPlayerList(list);
     }
 
     private String getResult() {

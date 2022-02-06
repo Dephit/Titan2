@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.mygdx.game.model.CompetitionOpponent;
 import com.mygdx.game.rooms.CompetitionRoom;
 import com.mygdx.game.rooms.GymRoom;
 import com.mygdx.game.rooms.MapRoom;
@@ -12,6 +13,8 @@ import com.mygdx.game.rooms.ParkRoom;
 import com.mygdx.game.rooms.RoomRoom;
 import com.mygdx.game.rooms.ShopRoom;
 import com.mygdx.game.rooms.WorkRoom;
+
+import java.util.List;
 
 public class MyGdxGame implements ApplicationListener, InterScreenCommunication {
 
@@ -61,6 +64,11 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
     @Override
     public void showToast(String msg) {
         myRequestHandler.showToast(msg);
+    }
+
+    @Override
+    public void showPlayerList(List<CompetitionOpponent> playerList) {
+        myRequestHandler.showPlayers(playerList);
     }
 
     @Override

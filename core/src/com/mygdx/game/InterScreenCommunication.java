@@ -1,7 +1,14 @@
 package com.mygdx.game;
 
+import com.mygdx.game.model.CompetitionOpponent;
+
+import java.util.List;
+
 public interface InterScreenCommunication {
+
     void showToast(String msg);
+
+    void showPlayerList(List<CompetitionOpponent> playerList);
 
     void openMap();
 

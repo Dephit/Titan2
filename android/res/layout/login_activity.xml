@@ -5,61 +5,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    tools:context="com.sergeenko.alexey.titangym.AndroidLauncher">
     >
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:orientation="vertical" >
-
-        <EditText
-            android:id="@+id/emailText"
-            style="@android:style/Widget.EditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textEmailAddress" />
-
-
-        <EditText
-            android:id="@+id/password"
-            style="@android:style/Widget.Holo.Light.EditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPassword" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <ImageButton
-                android:id="@+id/imageButton4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/common_google_signin_btn_icon_dark_normal"
-                android:onClick="googleSignIn"/>
-
-            <Button
-                android:id="@+id/signButton"
-                style="@android:style/Widget.Holo.Light.Button.Toggle"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Войти"
-                android:onClick="logIn"/>
-
-            <Button
-                android:id="@+id/signAnonButton"
-                style="@android:style/Widget.Holo.Light.Button.Toggle"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Войти анонимно"
-                android:onClick="sighUpAnonymously"/>
-
-        </LinearLayout>
-    </LinearLayout>
 
 </RelativeLayout>
