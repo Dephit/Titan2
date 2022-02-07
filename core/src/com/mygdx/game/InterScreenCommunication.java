@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.mygdx.game.interfaces.OnCLickCallback;
 import com.mygdx.game.model.CompetitionOpponent;
 
 import java.util.List;
@@ -8,7 +9,7 @@ public interface InterScreenCommunication {
 
     void showToast(String msg);
 
-    void showPlayerList(List<CompetitionOpponent> playerList);
+    void showPlayerList(List<CompetitionOpponent> playerList, OnCLickCallback runnable);
 
     void openMap();
 
@@ -24,3 +25,5 @@ public interface InterScreenCommunication {
 
     void openCompetition();
 }
+
+

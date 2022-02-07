@@ -96,9 +96,7 @@ public class CompetitionRoom extends BaseRoom {
             );
             addButton(
                     "cancel", Style.yesButton, getLanguage().cancel,
-                    Preffics.SCREEN_WIDTH / 2 -300, Preffics.SCREEN_HEIGHT / 2 - 400, 600, 175, 1.5f, group, () -> {
-                        interScreenCommunication.openMap();
-                    }
+                    Preffics.SCREEN_WIDTH / 2 -300, Preffics.SCREEN_HEIGHT / 2 - 400, 600, 175, 1.5f, group, interScreenCommunication::openMap
             );
             addButton(
                     "cancel", Style.yesButton, getLanguage().cancel,
@@ -120,7 +118,9 @@ public class CompetitionRoom extends BaseRoom {
                     80
             ));
         }
-        interScreenCommunication.showPlayerList(list);
+        interScreenCommunication.showPlayerList(list, object -> {
+            //interScreenCommunication.openMap();
+        });
     }
 
     private String getResult() {
