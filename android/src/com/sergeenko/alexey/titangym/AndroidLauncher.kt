@@ -21,6 +21,7 @@ import android.view.View
 import android.view.Window
 import androidx.core.view.updateLayoutParams
 import com.mygdx.game.interfaces.OnCLickCallback
+import com.mygdx.game.model.enums.Comp
 import com.sergeenko.alexey.titangym.PlayerItem
 import com.sergeenko.alexey.titangym.databinding.MainActivityBinding
 import com.sergeenko.alexey.titangym.databinding.PlayerListBinding
@@ -73,7 +74,11 @@ class AndroidLauncher : AndroidApplication(), IActivityRequestHandler {
         }
     }
 
-    override fun showPlayers(playerList: MutableList<CompetitionOpponent>, runnable: OnCLickCallback?) {
+    override fun showPlayers(
+        playerList: MutableList<CompetitionOpponent>,
+        status: Comp,
+        runnable: OnCLickCallback?
+    ) {
         val listBinding = PlayerListBinding.inflate(LayoutInflater.from(this))
         binding!!.root.post {
             val itemAdapter = ItemAdapter<IItem<*>>()
@@ -84,14 +89,19 @@ class AndroidLauncher : AndroidApplication(), IActivityRequestHandler {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 val list = ArrayList<IItem<*>>()
                 list.add(TableHeaderItem())
-                playerList.forEachIndexed { index, competitionOpponent ->
-                    list.add(PlayerItem(
-                        index,
-                        competitionOpponent
-                    ))
-                }
+                list.addAll(
+                    playerList.sortedByDescending { it.getCurrentSet(status.attempt) }.mapIndexed {  index, competitionOpponent ->
+                        PlayerItem(
+                            index + 1,
+                            status,
+                            competitionOpponent
+                        )
+
+                    }
+                )
                 itemAdapter.setNewList(list, false)
             }
+            listBinding.cont.y = binding!!.root.y + 48
             listBinding.cont.updateLayoutParams {
                 height = binding!!.root.height - 48
                 width = binding!!.root.width - 48

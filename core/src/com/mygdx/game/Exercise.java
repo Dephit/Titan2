@@ -22,6 +22,14 @@ public class Exercise {
     int result = 80;
     float lastResult = -1f;
     int LVL = 0;
+
+    public void setLVL(int LVL) {
+        this.LVL = LVL;
+        setResult();
+        progress = 0;
+        limit = 100 + LVL * 20;
+    }
+
     float progress = 0;
     float limit = 100;
 
@@ -31,21 +39,20 @@ public class Exercise {
     }
 
     public Float calculateProgress(float delta) {
-        result = 80 + 20 * LVL;
         if(progress < 0){
             if(LVL > 0)
-                LVL--;
-            limit = 100 + LVL * 20;
-            progress = 0;
+                setLVL(LVL--);
         }
         if(progress >= limit){
-            progress = 0;
-            LVL++;
-            limit = 100 + LVL * 20;
+            setLVL(LVL++);
         }
         progress += delta * 5f;
         statBar.setProgress(progress);
         return delta * 5f;
+    }
+
+    private void setResult() {
+        result = 80 + 20 * LVL;
     }
 
     /*private float calculateByVariation(float v, float v1, float v2, float v3) {

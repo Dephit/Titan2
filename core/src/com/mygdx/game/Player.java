@@ -34,6 +34,10 @@ public class Player extends Npc {
         energy = new Stat(language.energy);
         moral = new Stat(language.moral);
 
+        squatExr.setLVL(10);
+        bench.setLVL(8);
+        deadlift.setLVL(12);
+
         exercises.add(squatExr);
         exercises.add(bench);
         exercises.add(deadlift);
@@ -219,6 +223,18 @@ public class Player extends Npc {
         }
     }
 
+    public int getSquatLvl() {
+        return squatExr.LVL;
+    }
+
+    public int getBenchLvl() {
+        return bench.LVL;
+    }
+
+    public int getDlLvl() {
+        return deadlift.LVL;
+    }
+
     public int getBestSquat() {
         return squatExr.result;
     }
@@ -230,5 +246,7 @@ public class Player extends Npc {
     public int getBestDeadlift() {
         return deadlift.result;
     }
+
+
 }
 

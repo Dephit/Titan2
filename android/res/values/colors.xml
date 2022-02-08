@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="good_attempt">#88DF6E</color>
+    <color name="bad_attempt">#C45D56</color>
+    <color name="current_attempt">#80777777</color>
+    <color name="color_white">#FFFFFF</color>
+</resources>

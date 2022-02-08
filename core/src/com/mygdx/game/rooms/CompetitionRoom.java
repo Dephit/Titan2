@@ -10,12 +10,10 @@ import com.mygdx.game.PlayerCondition;
 import com.mygdx.game.Preffics;
 import com.mygdx.game.Style;
 import com.mygdx.game.model.CompetitionOpponent;
+import com.mygdx.game.model.enums.Comp;
 
 import java.util.ArrayList;
-
-enum Comp{
-    SQUAT_1, SQUAT_2, SQUAT_3, BENCH_1, BENCH_2, BENCH_3, DEADLIFT_1, DEADLIFT_2, DEADLIFT_3, CLOSE
-}
+import java.util.Random;
 
 public class CompetitionRoom extends BaseRoom {
 
@@ -108,18 +106,34 @@ public class CompetitionRoom extends BaseRoom {
         }
     }
 
-    private void showTable() {
-        ArrayList list = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            list.add(new CompetitionOpponent(
-                    "player "+ i,
-                    80,
-                    60,
-                    80
-            ));
+    ArrayList opponentList;
+
+    void createOpponents(){
+        if(opponentList == null) {
+            int avgLvl = (player.getSquatLvl() + player.getBenchLvl() + player.getDlLvl()) / 3;
+            avgLvl = avgLvl > 0 ? avgLvl : 1;
+            opponentList = new ArrayList<>();
+            for (int i = 0; i < 10; i++) {
+                opponentList.add(new CompetitionOpponent(
+                        "player " + i,
+                        avgLvl
+                ));
+            }
+            opponentList.add(
+                    new CompetitionOpponent(
+                            player.getName(),
+                            player.getBestSquat(),
+                            player.getBestBench(),
+                            player.getBestDeadlift()
+                    )
+            );
         }
-        interScreenCommunication.showPlayerList(list, object -> {
-            //interScreenCommunication.openMap();
+    }
+
+
+    private void showTable() {
+        createOpponents();
+        interScreenCommunication.showPlayerList(opponentList, compStatus, object -> {
         });
     }
 
@@ -183,41 +197,50 @@ public class CompetitionRoom extends BaseRoom {
             case SQUAT_1:
                 player.setPath((int) (Preffics.SCREEN_WIDTH / 2 - player.getWidth() / 2f), 215, PlayerCondition.compSquat);
                 compStatus = Comp.SQUAT_2;
+                compStatus.attempt = 2;
                 break;
             case SQUAT_2:
                 player.setPath((int) (Preffics.SCREEN_WIDTH / 2 - player.getWidth() / 2f), 215, PlayerCondition.compSquat);
                 compStatus = Comp.SQUAT_3;
+                compStatus.attempt = 3;
                 break;
             case SQUAT_3:
                 player.setPath((int) (Preffics.SCREEN_WIDTH / 2 - player.getWidth() / 2f), 215, PlayerCondition.compSquat);
                 compStatus = Comp.BENCH_1;
+                compStatus.attempt = 4;
                 break;
             case BENCH_1:
                 player.setPath((int) (Preffics.SCREEN_WIDTH / 2 - player.getWidth() / 2f), 215, PlayerCondition.compBench);
                 compStatus = Comp.BENCH_2;
+                compStatus.attempt = 5;
                 break;
             case BENCH_2:
                 player.setPath((int) (Preffics.SCREEN_WIDTH / 2 - player.getWidth() / 2f), 215, PlayerCondition.compBench);
                 compStatus = Comp.BENCH_3;
+                compStatus.attempt = 6;
                 break;
             case BENCH_3:
                 player.setPath((int) (Preffics.SCREEN_WIDTH / 2 - player.getWidth() / 2f), 215, PlayerCondition.compBench);
                 compStatus = Comp.DEADLIFT_1;
+                compStatus.attempt = 7;
                 break;
             case DEADLIFT_1:
                 player.setPlayerPosition((int) (Preffics.SCREEN_WIDTH / 2 - deadliftX), 225, PlayerCondition.stay);
                 player.setPath((int) (Preffics.SCREEN_WIDTH / 2 - deadliftX), 215, PlayerCondition.compDeadlift);
                 compStatus = Comp.DEADLIFT_2;
+                compStatus.attempt = 8;
                 break;
             case DEADLIFT_2:
                 player.setPlayerPosition((int) (Preffics.SCREEN_WIDTH / 2 - deadliftX), 225, PlayerCondition.stay);
                 player.setPath((int) (Preffics.SCREEN_WIDTH / 2 - deadliftX), 215, PlayerCondition.compDeadlift);
                 compStatus = Comp.DEADLIFT_3;
+                compStatus.attempt = 9;
                 break;
             case DEADLIFT_3:
                 player.setPlayerPosition((int) (Preffics.SCREEN_WIDTH / 2 - deadliftX), 225, PlayerCondition.stay);
                 player.setPath((int) (Preffics.SCREEN_WIDTH / 2 - deadliftX), 215, PlayerCondition.compDeadlift);
                 compStatus = Comp.CLOSE;
+                compStatus.attempt = 10;
                 break;
             case CLOSE:
                 interScreenCommunication.openMap();

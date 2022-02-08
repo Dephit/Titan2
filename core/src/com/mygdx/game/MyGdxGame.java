@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.mygdx.game.interfaces.OnCLickCallback;
 import com.mygdx.game.model.CompetitionOpponent;
+import com.mygdx.game.model.enums.Comp;
 import com.mygdx.game.rooms.CompetitionRoom;
 import com.mygdx.game.rooms.GymRoom;
 import com.mygdx.game.rooms.MapRoom;
@@ -68,8 +69,8 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
     }
 
     @Override
-    public void showPlayerList(List<CompetitionOpponent> playerList, OnCLickCallback runnable) {
-        myRequestHandler.showPlayers(playerList, runnable);
+    public void showPlayerList(List<CompetitionOpponent> playerList, Comp status, OnCLickCallback runnable) {
+        myRequestHandler.showPlayers(playerList, status, runnable);
     }
 
     @Override

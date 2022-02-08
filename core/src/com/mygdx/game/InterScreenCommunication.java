@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.mygdx.game.interfaces.OnCLickCallback;
 import com.mygdx.game.model.CompetitionOpponent;
+import com.mygdx.game.model.enums.Comp;
 
 import java.util.List;
 
@@ -9,7 +10,7 @@ public interface InterScreenCommunication {
 
     void showToast(String msg);
 
-    void showPlayerList(List<CompetitionOpponent> playerList, OnCLickCallback runnable);
+    void showPlayerList(List<CompetitionOpponent> playerList, Comp status, OnCLickCallback runnable);
 
     void openMap();
 
