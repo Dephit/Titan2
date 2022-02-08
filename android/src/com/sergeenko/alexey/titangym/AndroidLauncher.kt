@@ -82,14 +82,19 @@ class AndroidLauncher : AndroidApplication(), IActivityRequestHandler {
             listBinding.rv.layoutManager = LinearLayoutManager(this)
             listBinding.rv.adapter = adapter
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                val list = ArrayList<PlayerItem>()
-                for (op in playerList) {
-                    list.add(PlayerItem(op))
+                val list = ArrayList<IItem<*>>()
+                list.add(TableHeaderItem())
+                playerList.forEachIndexed { index, competitionOpponent ->
+                    list.add(PlayerItem(
+                        index,
+                        competitionOpponent
+                    ))
                 }
                 itemAdapter.setNewList(list, false)
             }
             listBinding.cont.updateLayoutParams {
                 height = binding!!.root.height - 48
+                width = binding!!.root.width - 48
             }
             listBinding.root.setOnClickListener { v: View? -> }
             listBinding.button.setOnClickListener {

@@ -2,4 +2,5 @@
 <resources>
     <item name="button_main" type="id" />
     <item name="playerItem" type="id" />
+    <item name="tableHeaderItem" type="id" />
 </resources>
