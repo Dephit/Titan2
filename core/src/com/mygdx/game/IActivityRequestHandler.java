@@ -16,4 +16,13 @@ public interface IActivityRequestHandler {
     public void showToast(String s);
 
     public void showPlayers(List<CompetitionOpponent> playerList, Comp status, OnCLickCallback runnable);
+
+    public void showNextSetMenu(
+            Player playerList,
+            int currentSet,
+            OnCLickCallback onFirstClick,
+            OnCLickCallback onSecondClick,
+            OnCLickCallback onThirdClick,
+            OnCLickCallback onFourthClick
+    );
 }

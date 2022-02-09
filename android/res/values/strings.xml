@@ -12,4 +12,8 @@
     <string name="firebase_status_fmt">fbstatus</string>
     <string name="signed_out">signed out</string>
     <string name="log_in">Войти</string>
+
+    <string name="next_set_title">Competition</string>
+    <string name="next_set_description">Squat 1st set</string>
+    <string name="close">Close</string>
 </resources>

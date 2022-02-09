@@ -9,6 +9,7 @@ import com.mygdx.game.Player;
 import com.mygdx.game.PlayerCondition;
 import com.mygdx.game.Preffics;
 import com.mygdx.game.Style;
+import com.mygdx.game.interfaces.OnCLickCallback;
 import com.mygdx.game.model.CompetitionOpponent;
 import com.mygdx.game.model.enums.Comp;
 
@@ -27,16 +28,24 @@ public class CompetitionRoom extends BaseRoom {
 
         });
         player.setPlayerPosition((int) (Preffics.SCREEN_WIDTH / 2 - player.getWidth() / 2f), 215, PlayerCondition.stay);
+        player.compValue = new CompetitionOpponent(
+                player.getName(),
+                player.getBestSquat(),
+                player.getBestBench(),
+                player.getBestDeadlift()
+        );
     }
 
     Comp compStatus = Comp.SQUAT_1;
 
     public void setCommonButtons() {
         super.setCommonButtons();
-        showWorkMenu();
+        //showWorkMenu();
+        showTable();
         player.onPlayerConditionChangeListener = (oldPlayerCondition, playerCondition) -> {
             if(playerCondition == PlayerCondition.stay){
-                showWorkMenu();
+          //      showWorkMenu();
+                showTable();
             }
         };
     }
@@ -65,8 +74,19 @@ public class CompetitionRoom extends BaseRoom {
                 group.clear();
                 group.remove();
             };
+            interScreenCommunication.showNextSetMenu(
+                    player,
+                    compStatus.attempt,
+                    object -> {
+                        player.compValue.squat.firstAttempt = (CompetitionOpponent.Attempt) object;
+                        player.animationTime = 0;
+                        getNextExercise();
+                        runnable.run();
+                    }
 
-            addButton(
+            );
+
+            /*addButton(
                     "window", Style.window, "",
                     Preffics.SCREEN_WIDTH / 2 - 750, Preffics.SCREEN_HEIGHT / 2 - 500, 1500, 1000, 1, group, () -> {
 
@@ -104,7 +124,7 @@ public class CompetitionRoom extends BaseRoom {
                     Preffics.SCREEN_WIDTH / 2 + 400, Preffics.SCREEN_HEIGHT / 2 - 400, 600, 175, 1.5f, group, () -> {
                         showTable();
                     }
-            );
+            );*/
             buttonGroup.addActor(group);
         }
     }
@@ -113,6 +133,7 @@ public class CompetitionRoom extends BaseRoom {
 
     void createOpponents(){
         if(opponentList == null) {
+
             int avgLvl = (player.getSquatLvl() + player.getBenchLvl() + player.getDlLvl()) / 3;
             avgLvl = avgLvl > 0 ? avgLvl : 1;
             opponentList = new ArrayList<>();
@@ -122,14 +143,7 @@ public class CompetitionRoom extends BaseRoom {
                         avgLvl
                 ));
             }
-            opponentList.add(
-                    new CompetitionOpponent(
-                            player.getName(),
-                            player.getBestSquat(),
-                            player.getBestBench(),
-                            player.getBestDeadlift()
-                    )
-            );
+            opponentList.add(player.compValue);
         }
     }
 
@@ -137,29 +151,30 @@ public class CompetitionRoom extends BaseRoom {
     private void showTable() {
         createOpponents();
         interScreenCommunication.showPlayerList(opponentList, compStatus, object -> {
+            showWorkMenu();
         });
     }
 
     private String getResult() {
         switch (compStatus){
             case SQUAT_1:
-                return String.valueOf(player.getBestSquat() * 0.8f);
+                return String.valueOf(player.compValue.squat.firstAttempt.weight);
             case SQUAT_2:
-                return String.valueOf(player.getBestSquat() * 0.9f);
+                return String.valueOf(player.compValue.squat.secondAttempt.weight);
             case SQUAT_3:
-                return String.valueOf(player.getBestSquat() * 0.95f);
+                return String.valueOf(player.compValue.squat.thirdAttempt.weight);
             case BENCH_1:
-                return String.valueOf(player.getBestBench() * 0.8f);
+                return String.valueOf(player.compValue.bench.firstAttempt.weight);
             case BENCH_2:
-                return String.valueOf(player.getBestBench() * 0.9f);
+                return String.valueOf(player.compValue.bench.secondAttempt.weight);
             case BENCH_3:
-                return String.valueOf(player.getBestBench() * 0.95f);
+                return String.valueOf(player.compValue.bench.thirdAttempt.weight);
             case DEADLIFT_1:
-                return String.valueOf(player.getBestDeadlift() * 0.8f);
+                return String.valueOf(player.compValue.deadlift.firstAttempt.weight);
             case DEADLIFT_2:
-                return String.valueOf(player.getBestDeadlift() * 0.9f);
+                return String.valueOf(player.compValue.deadlift.secondAttempt.weight);
             case DEADLIFT_3:
-                return String.valueOf(player.getBestDeadlift() * 0.95f);
+                return String.valueOf(player.compValue.deadlift.thirdAttempt.weight);
             case CLOSE:
                 return getLanguage().cancel;
         }

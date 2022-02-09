@@ -53,12 +53,17 @@ public class CompetitionOpponent{
 
     }
 
-    public class Attempt{
+    public static class Attempt{
         public int weight;
         public boolean isGood = new Random().nextInt(10) <= 7;
 
         public Attempt(int weight){
             this.weight = weight;
+        }
+
+        public Attempt(int weight, boolean isGood){
+            this.weight = weight;
+            this.isGood = isGood;
         }
     }
 

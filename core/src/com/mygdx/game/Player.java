@@ -3,6 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.mygdx.game.model.CompetitionOpponent;
 import com.mygdx.game.model.Container;
 import com.mygdx.game.model.Item;
 import com.mygdx.game.model.Pocket;
@@ -12,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Player extends Npc {
+
+    public CompetitionOpponent compValue;
 
     ArrayList<Exercise> exercises = new ArrayList();
 

@@ -20,12 +20,16 @@ import android.os.Build
 import android.view.View
 import android.view.Window
 import androidx.core.view.updateLayoutParams
+import com.mygdx.game.Player
 import com.mygdx.game.interfaces.OnCLickCallback
+import com.mygdx.game.model.CompetitionOpponent.Attempt
 import com.mygdx.game.model.enums.Comp
 import com.sergeenko.alexey.titangym.PlayerItem
 import com.sergeenko.alexey.titangym.databinding.MainActivityBinding
+import com.sergeenko.alexey.titangym.databinding.NextSetViewBinding
 import com.sergeenko.alexey.titangym.databinding.PlayerListBinding
 import java.util.ArrayList
+import kotlin.random.Random
 
 @SuppressLint("Registered")
 class AndroidLauncher : AndroidApplication(), IActivityRequestHandler {
@@ -77,7 +81,7 @@ class AndroidLauncher : AndroidApplication(), IActivityRequestHandler {
     override fun showPlayers(
         playerList: MutableList<CompetitionOpponent>,
         status: Comp,
-        runnable: OnCLickCallback?
+        runnable: OnCLickCallback?,
     ) {
         val listBinding = PlayerListBinding.inflate(LayoutInflater.from(this))
         binding!!.root.post {
@@ -113,7 +117,92 @@ class AndroidLauncher : AndroidApplication(), IActivityRequestHandler {
                 runnable?.call(null)
             }
             listBinding.cont.setOnClickListener { v: View? ->
-                binding!!.viewContainer.removeAllViews()
+                binding!!.viewContainer.removeViewAt(binding!!.viewContainer.childCount - 1)
+                binding!!.viewContainer.visibility = View.GONE
+            }
+            binding!!.viewContainer.addView(listBinding.root)
+            binding!!.viewContainer.visibility = View.VISIBLE
+        }
+    }
+
+    override fun showNextSetMenu(
+        player: Player,
+        currentSet: Int,
+        onFirstClick: OnCLickCallback?,
+        onSecondClick: OnCLickCallback?,
+        onThirdClick: OnCLickCallback?,
+        onFourthClick: OnCLickCallback?
+    ) {
+        val listBinding = NextSetViewBinding.inflate(LayoutInflater.from(this))
+        binding!!.root.post {
+           /*listBinding.root.y = binding!!.root.y + 48
+            listBinding.root.x = binding!!.root.x
+            listBinding.root.updateLayoutParams {
+                height = binding!!.root.height - 48
+                width = binding!!.root.width - 48
+            }*/
+            listBinding.root.setOnClickListener { v: View? -> }
+
+            val first = player.compValue.squat.firstAttempt.weight
+            val second = player.compValue.squat.firstAttempt.weight + 10
+            val third = player.compValue.squat.firstAttempt.weight + 20
+            val fourth = player.compValue.squat.firstAttempt.weight + 30
+
+
+            listBinding.weigth.text = if (
+                currentSet == 1
+            ){
+                player.compValue.squat.firstAttempt.weight.toString()
+            }else "0"
+
+            listBinding.weight1.text = if (
+                currentSet == 1
+            ){
+                first.toString()
+            }else "0"
+            listBinding.weight2.text = if (
+                currentSet == 1
+            ){
+                second.toString()
+            }else "0"
+            listBinding.weight3.text = if (
+                currentSet == 1
+            ){
+                third.toString()
+            }else "0"
+            listBinding.weight4.text = if (
+                currentSet == 1
+            ){
+                fourth.toString()
+            }else "0"
+
+            listBinding.button1.text = "90%"
+            listBinding.button2.text = "60%"
+            listBinding.button3.text = "30%"
+            listBinding.button4.text = "AD"
+
+            listBinding.button1.setOnClickListener {
+                onFirstClick?.call(Attempt(first, Random.nextInt(10) <= 9))
+                listBinding.closeButton.callOnClick()
+            }
+
+            listBinding.button2.setOnClickListener {
+                onFirstClick?.call(Attempt(second, Random.nextInt(10) <= 6))
+                listBinding.closeButton.callOnClick()
+            }
+
+            listBinding.button3.setOnClickListener {
+                onFirstClick?.call(Attempt(third, Random.nextInt(10) <= 30))
+                listBinding.closeButton.callOnClick()
+            }
+
+            listBinding.button4.setOnClickListener {
+                onFirstClick?.call(Attempt(fourth, true))
+                listBinding.closeButton.callOnClick()
+            }
+
+            listBinding.closeButton.setOnClickListener {
+                binding!!.viewContainer.removeViewAt(binding!!.viewContainer.childCount - 1)
                 binding!!.viewContainer.visibility = View.GONE
             }
             binding!!.viewContainer.addView(listBinding.root)

@@ -74,6 +74,12 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
     }
 
     @Override
+    public void showNextSetMenu(Player playerList, int currentSet, OnCLickCallback onFirstClick) {
+        myRequestHandler.showNextSetMenu(playerList, currentSet, onFirstClick, onFirstClick, onFirstClick, onFirstClick);
+    }
+
+
+    @Override
     public void openMap() {
         stage = new MapRoom(this, null);
         stage.addListener(new InputListener(){

@@ -10,12 +10,12 @@ com/mygdx/game/Dialog.java
  com.mygdx.game.Dialog
 com/mygdx/game/MyTextButton.java
  com.mygdx.game.MyTextButton
-com/mygdx/game/InterScreenCommunication.java
- com.mygdx.game.InterScreenCommunication
+com/mygdx/game/Variation.java
+ com.mygdx.game.Variation
 com/mygdx/game/model/enums/Comp.java
  com.mygdx.game.model.enums.Comp
-com/mygdx/game/IActivityRequestHandler.java
- com.mygdx.game.IActivityRequestHandler
+com/mygdx/game/ObjectData.java
+ com.mygdx.game.ObjectData
 com/mygdx/game/FontFactory.java
  com.mygdx.game.FontFactory
 com/mygdx/game/ButtonData.java
@@ -49,10 +49,8 @@ com/mygdx/game/Node.java
  com.mygdx.game.Node
 com/mygdx/game/OnPlayerConditionChangeListener.java
  com.mygdx.game.OnPlayerConditionChangeListener
-com/mygdx/game/model/CompetitionOpponent.java
- com.mygdx.game.model.CompetitionOpponent
- com.mygdx.game.model.CompetitionOpponent$Attempt
- com.mygdx.game.model.CompetitionOpponent$Exr
+com/mygdx/game/Exercise.java
+ com.mygdx.game.Exercise
 com/mygdx/game/PlayerCondition.java
  com.mygdx.game.PlayerCondition
 com/mygdx/game/Grid2d.java
@@ -64,19 +62,17 @@ com/mygdx/game/StringAlignUtils.java
  com.mygdx.game.StringAlignUtils
  com.mygdx.game.StringAlignUtils$1
  com.mygdx.game.StringAlignUtils$Alignment
-com/mygdx/game/ObjectData.java
- com.mygdx.game.ObjectData
-com/mygdx/game/Variation.java
- com.mygdx.game.Variation
+com/mygdx/game/model/CompetitionOpponent.java
+ com.mygdx.game.model.CompetitionOpponent
+ com.mygdx.game.model.CompetitionOpponent$Attempt
+ com.mygdx.game.model.CompetitionOpponent$Exr
 com/mygdx/game/rooms/GymRoom.java
  com.mygdx.game.rooms.GymRoom
  com.mygdx.game.rooms.GymRoom$1
 com/mygdx/game/model/Potato.java
  com.mygdx.game.model.Potato
-com/mygdx/game/rooms/CompetitionRoom.java
- com.mygdx.game.rooms.CompetitionRoom
- com.mygdx.game.rooms.CompetitionRoom$1
- com.mygdx.game.rooms.CompetitionRoom$2
+com/mygdx/game/model/ShopMenu.java
+ com.mygdx.game.model.ShopMenu
 com/mygdx/game/rooms/MapRoom.java
  com.mygdx.game.rooms.MapRoom
  com.mygdx.game.rooms.MapRoom$1
@@ -87,6 +83,8 @@ com/mygdx/game/model/Container.java
  com.mygdx.game.model.Container
 com/mygdx/game/Npc.java
  com.mygdx.game.Npc
+com/mygdx/game/InterScreenCommunication.java
+ com.mygdx.game.InterScreenCommunication
 com/mygdx/game/model/Nuggets.java
  com.mygdx.game.model.Nuggets
 com/mygdx/game/rooms/ShopRoom.java
@@ -98,11 +96,23 @@ com/mygdx/game/rooms/RoomRoom.java
 com/mygdx/game/rooms/WorkRoom.java
  com.mygdx.game.rooms.WorkRoom
  com.mygdx.game.rooms.WorkRoom$1
-com/mygdx/game/Exercise.java
- com.mygdx.game.Exercise
 com/mygdx/game/Player.java
  com.mygdx.game.Player
  com.mygdx.game.Player$1
+com/mygdx/game/model/Refrigerator.java
+ com.mygdx.game.model.Refrigerator
+com/mygdx/game/model/Pocket.java
+ com.mygdx.game.model.Pocket
+com/mygdx/game/BaseRoom.java
+ com.mygdx.game.BaseRoom
+com/mygdx/game/model/Item.java
+ com.mygdx.game.model.Item
+com/mygdx/game/IActivityRequestHandler.java
+ com.mygdx.game.IActivityRequestHandler
+com/mygdx/game/rooms/CompetitionRoom.java
+ com.mygdx.game.rooms.CompetitionRoom
+ com.mygdx.game.rooms.CompetitionRoom$1
+ com.mygdx.game.rooms.CompetitionRoom$2
 com/mygdx/game/MyGdxGame.java
  com.mygdx.game.MyGdxGame
  com.mygdx.game.MyGdxGame$1
@@ -112,13 +122,3 @@ com/mygdx/game/MyGdxGame.java
  com.mygdx.game.MyGdxGame$5
  com.mygdx.game.MyGdxGame$6
  com.mygdx.game.MyGdxGame$7
-com/mygdx/game/model/Pocket.java
- com.mygdx.game.model.Pocket
-com/mygdx/game/BaseRoom.java
- com.mygdx.game.BaseRoom
-com/mygdx/game/model/Item.java
- com.mygdx.game.model.Item
-com/mygdx/game/model/Refrigerator.java
- com.mygdx.game.model.Refrigerator
-com/mygdx/game/model/ShopMenu.java
- com.mygdx.game.model.ShopMenu
