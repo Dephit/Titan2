@@ -102,6 +102,7 @@ class AndroidLauncher : AndroidApplication(), IActivityRequestHandler {
                 itemAdapter.setNewList(list, false)
             }
             listBinding.cont.y = binding!!.root.y + 48
+            listBinding.cont.x = binding!!.root.x
             listBinding.cont.updateLayoutParams {
                 height = binding!!.root.height - 48
                 width = binding!!.root.width - 48

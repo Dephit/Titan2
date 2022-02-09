@@ -71,13 +71,13 @@ public class CompetitionOpponent{
     public CompetitionOpponent(String name, int avgLvl) {
         this.name = name;
         squat = new Exr(
-                80 + new Random().nextInt(30) * avgLvl
+                80 + (new Random().nextInt(15) + 15) * avgLvl
         );
         bench = new Exr(
-                60 + new Random().nextInt(30) * avgLvl
+                60 + (new Random().nextInt(10) + 10) * avgLvl
         );
         deadlift = new Exr(
-                80 + new Random().nextInt(30) * avgLvl
+                80 + (new Random().nextInt(15) + 15) * avgLvl
         );
     }
 

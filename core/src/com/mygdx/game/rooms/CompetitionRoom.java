@@ -23,7 +23,10 @@ public class CompetitionRoom extends BaseRoom {
 
     public CompetitionRoom(InterScreenCommunication _communication, Player player) {
         super(_communication, "competition", player);
-        player.setPlayerPosition((int) (Preffics.SCREEN_WIDTH / 2 - player.getWidth() / 2f), 215,PlayerCondition.stay);
+        player.setPlayersAction(PlayerCondition.stay, (int) (Preffics.SCREEN_WIDTH / 2 - player.getWidth() / 2f), 215, ()->{
+
+        });
+        player.setPlayerPosition((int) (Preffics.SCREEN_WIDTH / 2 - player.getWidth() / 2f), 215, PlayerCondition.stay);
     }
 
     Comp compStatus = Comp.SQUAT_1;
@@ -240,7 +243,7 @@ public class CompetitionRoom extends BaseRoom {
                 player.setPlayerPosition((int) (Preffics.SCREEN_WIDTH / 2 - deadliftX), 225, PlayerCondition.stay);
                 player.setPath((int) (Preffics.SCREEN_WIDTH / 2 - deadliftX), 215, PlayerCondition.compDeadlift);
                 compStatus = Comp.CLOSE;
-                compStatus.attempt = 10;
+                compStatus.attempt = 10 ;
                 break;
             case CLOSE:
                 interScreenCommunication.openMap();
