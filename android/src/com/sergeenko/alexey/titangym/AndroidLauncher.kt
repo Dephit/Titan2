@@ -1,6 +1,7 @@
 package com.sergeenko.alexey.titangym
 
 import android.annotation.SuppressLint
+import android.icu.util.ULocale.getLanguage
 import com.badlogic.gdx.backends.android.AndroidApplication
 import com.mygdx.game.IActivityRequestHandler
 import android.widget.RelativeLayout
@@ -85,6 +86,7 @@ class AndroidLauncher : AndroidApplication(), IActivityRequestHandler {
     ) {
         val listBinding = PlayerListBinding.inflate(LayoutInflater.from(this))
         binding!!.root.post {
+            binding!!.viewContainer.removeAllViews()
             val itemAdapter = ItemAdapter<IItem<*>>()
             val adapter = FastAdapter.with(itemAdapter)
             adapter.setHasStableIds(true)
@@ -117,7 +119,7 @@ class AndroidLauncher : AndroidApplication(), IActivityRequestHandler {
                 runnable?.call(null)
             }
             listBinding.cont.setOnClickListener { v: View? ->
-                binding!!.viewContainer.removeViewAt(binding!!.viewContainer.childCount - 1)
+                binding!!.viewContainer.removeAllViews()
                 binding!!.viewContainer.visibility = View.GONE
             }
             binding!!.viewContainer.addView(listBinding.root)
@@ -135,79 +137,169 @@ class AndroidLauncher : AndroidApplication(), IActivityRequestHandler {
     ) {
         val listBinding = NextSetViewBinding.inflate(LayoutInflater.from(this))
         binding!!.root.post {
-           /*listBinding.root.y = binding!!.root.y + 48
-            listBinding.root.x = binding!!.root.x
-            listBinding.root.updateLayoutParams {
-                height = binding!!.root.height - 48
-                width = binding!!.root.width - 48
-            }*/
+            binding!!.viewContainer.removeAllViews()
             listBinding.root.setOnClickListener { v: View? -> }
 
-            val first = player.compValue.squat.firstAttempt.weight
-            val second = player.compValue.squat.firstAttempt.weight + 10
-            val third = player.compValue.squat.firstAttempt.weight + 20
-            val fourth = player.compValue.squat.firstAttempt.weight + 30
+            val first = getResult(currentSet, player)
+            val second = first + 10
+            val third = first + 20
+            val fourth = first + 30
 
 
-            listBinding.weigth.text = if (
-                currentSet == 1
-            ){
-                player.compValue.squat.firstAttempt.weight.toString()
-            }else "0"
+            listBinding.weight1.text = first.toString()
+            listBinding.weight2.text = second.toString()
+            listBinding.weight3.text = third.toString()
+            listBinding.weight4.text = fourth.toString()
 
-            listBinding.weight1.text = if (
-                currentSet == 1
-            ){
-                first.toString()
-            }else "0"
-            listBinding.weight2.text = if (
-                currentSet == 1
-            ){
-                second.toString()
-            }else "0"
-            listBinding.weight3.text = if (
-                currentSet == 1
-            ){
-                third.toString()
-            }else "0"
-            listBinding.weight4.text = if (
-                currentSet == 1
-            ){
-                fourth.toString()
-            }else "0"
+            listBinding.weigth.text = first.toString()
+            getPercentages(currentSet, listBinding,onFirstClick, first, second, third, fourth)
 
-            listBinding.button1.text = "90%"
-            listBinding.button2.text = "60%"
-            listBinding.button3.text = "30%"
-            listBinding.button4.text = "AD"
-
-            listBinding.button1.setOnClickListener {
-                onFirstClick?.call(Attempt(first, Random.nextInt(10) <= 9))
-                listBinding.closeButton.callOnClick()
+            listBinding.scoreSheetButton.setOnClickListener {
+                onFirstClick?.call(null)
             }
 
-            listBinding.button2.setOnClickListener {
-                onFirstClick?.call(Attempt(second, Random.nextInt(10) <= 6))
-                listBinding.closeButton.callOnClick()
-            }
 
-            listBinding.button3.setOnClickListener {
-                onFirstClick?.call(Attempt(third, Random.nextInt(10) <= 30))
-                listBinding.closeButton.callOnClick()
-            }
-
-            listBinding.button4.setOnClickListener {
-                onFirstClick?.call(Attempt(fourth, true))
-                listBinding.closeButton.callOnClick()
-            }
 
             listBinding.closeButton.setOnClickListener {
-                binding!!.viewContainer.removeViewAt(binding!!.viewContainer.childCount - 1)
+                binding!!.viewContainer.removeAllViews()
                 binding!!.viewContainer.visibility = View.GONE
             }
             binding!!.viewContainer.addView(listBinding.root)
             binding!!.viewContainer.visibility = View.VISIBLE
+            listBinding.container.y = binding!!.root.y + 48
+            listBinding.container.x = binding!!.root.x
+            listBinding.container.updateLayoutParams {
+                height = binding!!.root.height - 48
+                width = binding!!.root.width - 48
+            }
         }
+    }
+
+    private fun getPercentages(
+        compStatus: Int,
+        binding: NextSetViewBinding,
+        onFirstClick: OnCLickCallback?,
+        first: Int,
+        second: Int,
+        third: Int,
+        fourth: Int,
+    ) {
+        var per1 = 90
+        var per2 = 90
+        var per3 = 90
+        var per4 = 50
+        when (compStatus) {
+            1 -> {
+                per1 = 90
+                per2 = 60
+                per3 = 30
+            }
+            2 -> {
+                per1 = 60
+                per2 = 30
+                per3 = 10
+            }
+            3 ->  {
+                per1 = 30
+                per2 = 10
+                per3 = 3
+            }
+            4 -> {
+                per1 = 90
+                per2 = 60
+                per3 = 30
+            }
+            5 -> {
+                per1 = 60
+                per2 = 30
+                per3 = 10
+            }
+            6 ->  {
+                per1 = 30
+                per2 = 10
+                per3 = 3
+            }
+            7 -> {
+                per1 = 90
+                per2 = 60
+                per3 = 30
+            }
+            8 -> {
+                per1 = 60
+                per2 = 30
+                per3 = 10
+            }
+            9 ->  {
+                per1 = 30
+                per2 = 10
+                per3 = 3
+            }
+        }
+        binding.button1.text = "$per1%"
+        binding.button2.text = "$per2%"
+        binding.button3.text = "$per3%"
+        binding.button4.text = "AD($per4%)"
+
+        binding.button1.setOnClickListener {
+            onFirstClick?.call(Attempt(first, (Random.nextInt(100) < per1)))
+            binding.closeButton.callOnClick()
+        }
+
+        binding.button2.setOnClickListener {
+            onFirstClick?.call(Attempt(second, (Random.nextInt(100) < per2)))
+            binding.closeButton.callOnClick()
+        }
+
+        binding.button3.setOnClickListener {
+            onFirstClick?.call(Attempt(third, (Random.nextInt(100) < per3)))
+            binding.closeButton.callOnClick()
+        }
+
+        binding.button4.setOnClickListener {
+            onFirstClick?.call(Attempt(fourth, true))
+            binding.closeButton.callOnClick()
+        }
+
+    }
+
+    private fun getResult(compStatus: Int, player: Player): Int {
+        when (compStatus) {
+            1 -> return player.compValue.squat.firstAttempt.weight
+            2 -> {
+                player.compValue.squat.secondAttempt.weight = player.compValue.squat.firstAttempt.weight +
+                        if(player.compValue.squat.firstAttempt.isGood) 5 else 0
+                return player.compValue.squat.secondAttempt.weight
+            }
+            3 ->  {
+                player.compValue.squat.thirdAttempt.weight = player.compValue.squat.secondAttempt.weight +
+                        if(player.compValue.squat.secondAttempt.isGood) 5 else 0
+                return player.compValue.squat.thirdAttempt.weight
+            }
+            4 -> return player.compValue.bench.firstAttempt.weight
+            5 -> {
+                player.compValue.bench.secondAttempt.weight = player.compValue.bench.firstAttempt.weight +
+                        if(player.compValue.bench.firstAttempt.isGood) 5 else 0
+                return player.compValue.bench.secondAttempt.weight
+            }
+            6 ->  {
+                player.compValue.bench.thirdAttempt.weight = player.compValue.bench.secondAttempt.weight +
+                        if(player.compValue.bench.secondAttempt.isGood) 5 else 0
+                return player.compValue.bench.thirdAttempt.weight
+            }
+            7 -> return player.compValue.deadlift.firstAttempt.weight
+            8 -> {
+                player.compValue.deadlift.secondAttempt.weight = player.compValue.deadlift.firstAttempt.weight +
+                        if(player.compValue.deadlift.firstAttempt.isGood) 5 else 0
+                return player.compValue.deadlift.secondAttempt.weight
+            }
+            9 ->  {
+                player.compValue.deadlift.thirdAttempt.weight = player.compValue.deadlift.secondAttempt.weight +
+                        if(player.compValue.deadlift.secondAttempt.isGood) 5 else 0
+                return player.compValue.deadlift.thirdAttempt.weight
+            }
+                10 -> return 0
+            }
+        return 0
     }
 
     override fun isAdShown(): Boolean {

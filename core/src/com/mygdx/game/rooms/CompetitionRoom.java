@@ -40,12 +40,12 @@ public class CompetitionRoom extends BaseRoom {
 
     public void setCommonButtons() {
         super.setCommonButtons();
-        //showWorkMenu();
-        showTable();
+        showWorkMenu();
+        //showTable();
         player.onPlayerConditionChangeListener = (oldPlayerCondition, playerCondition) -> {
             if(playerCondition == PlayerCondition.stay){
-          //      showWorkMenu();
-                showTable();
+                showWorkMenu();
+               // showTable();
             }
         };
     }
@@ -78,10 +78,42 @@ public class CompetitionRoom extends BaseRoom {
                     player,
                     compStatus.attempt,
                     object -> {
-                        player.compValue.squat.firstAttempt = (CompetitionOpponent.Attempt) object;
-                        player.animationTime = 0;
-                        getNextExercise();
-                        runnable.run();
+                        if(object == null){
+                            showTable();
+                        }else {
+                            switch (compStatus.attempt){
+                                case 1:
+                                    player.compValue.squat.firstAttempt = (CompetitionOpponent.Attempt) object;
+                                    break;
+                                case 2:
+                                    player.compValue.squat.secondAttempt = (CompetitionOpponent.Attempt) object;
+                                    break;
+                                case 3:
+                                    player.compValue.squat.thirdAttempt = (CompetitionOpponent.Attempt) object;
+                                    break;
+                                case 4:
+                                    player.compValue.bench.firstAttempt = (CompetitionOpponent.Attempt) object;
+                                    break;
+                                case 5:
+                                    player.compValue.bench.secondAttempt = (CompetitionOpponent.Attempt) object;
+                                    break;
+                                case 6:
+                                    player.compValue.bench.thirdAttempt = (CompetitionOpponent.Attempt) object;
+                                    break;
+                                case 7:
+                                    player.compValue.deadlift.firstAttempt = (CompetitionOpponent.Attempt) object;
+                                    break;
+                                case 8:
+                                    player.compValue.deadlift.secondAttempt = (CompetitionOpponent.Attempt) object;
+                                    break;
+                                case 9:
+                                    player.compValue.deadlift.thirdAttempt = (CompetitionOpponent.Attempt) object;
+                                    break;
+                            }
+                            player.animationTime = 0;
+                            getNextExercise();
+                            runnable.run();
+                        }
                     }
 
             );
@@ -133,7 +165,6 @@ public class CompetitionRoom extends BaseRoom {
 
     void createOpponents(){
         if(opponentList == null) {
-
             int avgLvl = (player.getSquatLvl() + player.getBenchLvl() + player.getDlLvl()) / 3;
             avgLvl = avgLvl > 0 ? avgLvl : 1;
             opponentList = new ArrayList<>();
@@ -151,35 +182,12 @@ public class CompetitionRoom extends BaseRoom {
     private void showTable() {
         createOpponents();
         interScreenCommunication.showPlayerList(opponentList, compStatus, object -> {
+            pause = false;
             showWorkMenu();
         });
     }
 
-    private String getResult() {
-        switch (compStatus){
-            case SQUAT_1:
-                return String.valueOf(player.compValue.squat.firstAttempt.weight);
-            case SQUAT_2:
-                return String.valueOf(player.compValue.squat.secondAttempt.weight);
-            case SQUAT_3:
-                return String.valueOf(player.compValue.squat.thirdAttempt.weight);
-            case BENCH_1:
-                return String.valueOf(player.compValue.bench.firstAttempt.weight);
-            case BENCH_2:
-                return String.valueOf(player.compValue.bench.secondAttempt.weight);
-            case BENCH_3:
-                return String.valueOf(player.compValue.bench.thirdAttempt.weight);
-            case DEADLIFT_1:
-                return String.valueOf(player.compValue.deadlift.firstAttempt.weight);
-            case DEADLIFT_2:
-                return String.valueOf(player.compValue.deadlift.secondAttempt.weight);
-            case DEADLIFT_3:
-                return String.valueOf(player.compValue.deadlift.thirdAttempt.weight);
-            case CLOSE:
-                return getLanguage().cancel;
-        }
-        return "";
-    }
+
 
     private String getSetText() {
         switch (compStatus){
