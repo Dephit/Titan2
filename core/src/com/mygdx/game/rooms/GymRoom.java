@@ -11,6 +11,7 @@ import static com.mygdx.game.PlayerCondition.pushUps;
 import static com.mygdx.game.PlayerCondition.sitting;
 import static com.mygdx.game.PlayerCondition.sittingRev;
 import static com.mygdx.game.PlayerCondition.squat;
+import static com.mygdx.game.PlayerCondition.stay;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -45,6 +46,7 @@ public class GymRoom extends BaseRoom {
         npcs.add(npc);
         objectGroup.addActor(npc);
         player.setPlayerPosition(400,100);
+        player.setPlayersAction(stay, 400, 100, ()->{});
         hudGroup.addActor(exrGroup);
     }
 

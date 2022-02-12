@@ -43,11 +43,9 @@ public class CompetitionRoom extends BaseRoom {
     public void setCommonButtons() {
         super.setCommonButtons();
         showWorkMenu();
-        //showTable();
         player.onPlayerConditionChangeListener = (oldPlayerCondition, playerCondition) -> {
             if(playerCondition == PlayerCondition.stay){
                 showWorkMenu();
-               // showTable();
             }
         };
     }
@@ -71,6 +69,7 @@ public class CompetitionRoom extends BaseRoom {
     public void onRender() {
         super.onRender();
         if(callOnClose){
+            player.onPlayerConditionChangeListener = null;
             interScreenCommunication.openMap();
         }
     }

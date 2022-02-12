@@ -66,25 +66,23 @@ com/mygdx/game/model/CompetitionOpponent.java
  com.mygdx.game.model.CompetitionOpponent
  com.mygdx.game.model.CompetitionOpponent$Attempt
  com.mygdx.game.model.CompetitionOpponent$Exr
-com/mygdx/game/rooms/GymRoom.java
- com.mygdx.game.rooms.GymRoom
- com.mygdx.game.rooms.GymRoom$1
+com/mygdx/game/model/Item.java
+ com.mygdx.game.model.Item
 com/mygdx/game/model/Potato.java
  com.mygdx.game.model.Potato
 com/mygdx/game/model/ShopMenu.java
  com.mygdx.game.model.ShopMenu
-com/mygdx/game/rooms/MapRoom.java
- com.mygdx.game.rooms.MapRoom
- com.mygdx.game.rooms.MapRoom$1
-com/mygdx/game/rooms/ParkRoom.java
- com.mygdx.game.rooms.ParkRoom
- com.mygdx.game.rooms.ParkRoom$1
+com/mygdx/game/model/Pocket.java
+ com.mygdx.game.model.Pocket
+com/mygdx/game/model/Refrigerator.java
+ com.mygdx.game.model.Refrigerator
 com/mygdx/game/model/Container.java
  com.mygdx.game.model.Container
 com/mygdx/game/Npc.java
  com.mygdx.game.Npc
-com/mygdx/game/InterScreenCommunication.java
- com.mygdx.game.InterScreenCommunication
+com/mygdx/game/Player.java
+ com.mygdx.game.Player
+ com.mygdx.game.Player$1
 com/mygdx/game/model/Nuggets.java
  com.mygdx.game.model.Nuggets
 com/mygdx/game/rooms/ShopRoom.java
@@ -96,19 +94,21 @@ com/mygdx/game/rooms/RoomRoom.java
 com/mygdx/game/rooms/WorkRoom.java
  com.mygdx.game.rooms.WorkRoom
  com.mygdx.game.rooms.WorkRoom$1
-com/mygdx/game/Player.java
- com.mygdx.game.Player
- com.mygdx.game.Player$1
-com/mygdx/game/model/Refrigerator.java
- com.mygdx.game.model.Refrigerator
-com/mygdx/game/model/Pocket.java
- com.mygdx.game.model.Pocket
-com/mygdx/game/BaseRoom.java
- com.mygdx.game.BaseRoom
-com/mygdx/game/model/Item.java
- com.mygdx.game.model.Item
+com/mygdx/game/rooms/GymRoom.java
+ com.mygdx.game.rooms.GymRoom
+ com.mygdx.game.rooms.GymRoom$1
 com/mygdx/game/IActivityRequestHandler.java
  com.mygdx.game.IActivityRequestHandler
+com/mygdx/game/rooms/MapRoom.java
+ com.mygdx.game.rooms.MapRoom
+ com.mygdx.game.rooms.MapRoom$1
+com/mygdx/game/rooms/ParkRoom.java
+ com.mygdx.game.rooms.ParkRoom
+ com.mygdx.game.rooms.ParkRoom$1
+com/mygdx/game/InterScreenCommunication.java
+ com.mygdx.game.InterScreenCommunication
+com/mygdx/game/BaseRoom.java
+ com.mygdx.game.BaseRoom
 com/mygdx/game/rooms/CompetitionRoom.java
  com.mygdx.game.rooms.CompetitionRoom
  com.mygdx.game.rooms.CompetitionRoom$1
