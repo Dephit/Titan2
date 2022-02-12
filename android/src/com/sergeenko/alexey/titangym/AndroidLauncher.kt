@@ -102,7 +102,6 @@ class AndroidLauncher : AndroidApplication(), IActivityRequestHandler {
                             status,
                             competitionOpponent
                         )
-
                     }
                 )
                 itemAdapter.setNewList(list, false)
@@ -127,42 +126,55 @@ class AndroidLauncher : AndroidApplication(), IActivityRequestHandler {
         }
     }
 
+    fun close(){
+        binding!!.viewContainer.removeAllViews()
+        binding!!.viewContainer.visibility = View.GONE
+    }
+
     override fun showNextSetMenu(
         player: Player,
         currentSet: Int,
+        playerList: MutableList<CompetitionOpponent>,
         onFirstClick: OnCLickCallback?,
-        onSecondClick: OnCLickCallback?,
-        onThirdClick: OnCLickCallback?,
-        onFourthClick: OnCLickCallback?
+        onClose: OnCLickCallback?
     ) {
         val listBinding = NextSetViewBinding.inflate(LayoutInflater.from(this))
         binding!!.root.post {
             binding!!.viewContainer.removeAllViews()
             listBinding.root.setOnClickListener { v: View? -> }
 
-            val first = getResult(currentSet, player)
-            val second = first + 10
-            val third = first + 20
-            val fourth = first + 30
+            if(currentSet < 10){
+                val color = getFlagColor(currentSet, player)
+                listBinding.flag1.setBackgroundResource(color)
+                listBinding.flag2.setBackgroundResource(color)
+                listBinding.flag3.setBackgroundResource(color)
 
+                val first = getResult(currentSet, player)
+                val second = first + 10
+                val third = first + 20
+                val fourth = first + 30
 
-            listBinding.weight1.text = first.toString()
-            listBinding.weight2.text = second.toString()
-            listBinding.weight3.text = third.toString()
-            listBinding.weight4.text = fourth.toString()
+                listBinding.weight1.text = first.toString()
+                listBinding.weight2.text = second.toString()
+                listBinding.weight3.text = third.toString()
+                listBinding.weight4.text = fourth.toString()
 
-            listBinding.weigth.text = first.toString()
-            getPercentages(currentSet, listBinding,onFirstClick, first, second, third, fourth)
+                listBinding.weigth.text = first.toString()
+                getPercentages(currentSet, listBinding,onFirstClick, first, second, third, fourth)
+            }else{
+                listBinding.buttons.setGone()
+                listBinding.flags.setGone()
+                listBinding.nextSetView.text =
+                    "${getString(R.string.congratulation, (playerList.sortedByDescending { it.getTotal() }.indexOfFirst { it.name == "player" } + 1).toString(), player.compValue.getTotal())}"
+                listBinding.weigth.text = ""
+            }
 
             listBinding.scoreSheetButton.setOnClickListener {
                 onFirstClick?.call(null)
             }
-
-
-
             listBinding.closeButton.setOnClickListener {
-                binding!!.viewContainer.removeAllViews()
-                binding!!.viewContainer.visibility = View.GONE
+                close()
+                onClose?.call(null)
             }
             binding!!.viewContainer.addView(listBinding.root)
             binding!!.viewContainer.visibility = View.VISIBLE
@@ -173,6 +185,34 @@ class AndroidLauncher : AndroidApplication(), IActivityRequestHandler {
                 width = binding!!.root.width - 48
             }
         }
+    }
+
+    private fun getFlagColor(currentSet: Int, player: Player): Int {
+            when (currentSet) {
+                1 -> return R.color.color_white
+                2 -> {
+                    return if(player.compValue.squat.firstAttempt.isGood) R.color.color_green else R.color.color_red
+                }
+                3 ->  {
+                    return if(player.compValue.squat.secondAttempt.isGood) R.color.color_green else R.color.color_red
+                }
+                4 -> return if(player.compValue.squat.thirdAttempt.isGood) R.color.color_green else R.color.color_red
+                5 -> {
+                    return if(player.compValue.bench.firstAttempt.isGood) R.color.color_green else R.color.color_red
+                }
+                6 ->  {
+                    return if(player.compValue.bench.secondAttempt.isGood) R.color.color_green else R.color.color_red
+                }
+                7 -> return if(player.compValue.bench.thirdAttempt.isGood) R.color.color_green else R.color.color_red
+                8 -> {
+                    return if(player.compValue.deadlift.firstAttempt.isGood) R.color.color_green else R.color.color_red
+                }
+                9 ->  {
+                    return if(player.compValue.deadlift.secondAttempt.isGood) R.color.color_green else R.color.color_red
+                }
+                10 -> return if(player.compValue.deadlift.thirdAttempt.isGood) R.color.color_green else R.color.color_red
+            }
+            return 0
     }
 
     private fun getPercentages(
@@ -188,53 +228,74 @@ class AndroidLauncher : AndroidApplication(), IActivityRequestHandler {
         var per2 = 90
         var per3 = 90
         var per4 = 50
+        var title = ""
         when (compStatus) {
             1 -> {
                 per1 = 90
                 per2 = 60
                 per3 = 30
+                per4 = 100
+                title = getString(R.string.squat_set, "1")
             }
             2 -> {
-                per1 = 60
-                per2 = 30
-                per3 = 10
+                per1 = 80
+                per2 = 40
+                per3 = 15
+                per4 = 90
+                title = getString(R.string.squat_set, "2")
             }
             3 ->  {
-                per1 = 30
-                per2 = 10
-                per3 = 3
+                per1 = 60
+                per2 = 15
+                per3 = 5
+                per4 = 50
+                title = getString(R.string.squat_set, "3")
             }
             4 -> {
                 per1 = 90
                 per2 = 60
                 per3 = 30
+                per4 = 100
+                title = getString(R.string.bench_set, "1")
             }
             5 -> {
-                per1 = 60
-                per2 = 30
-                per3 = 10
+                per1 = 80
+                per2 = 40
+                per3 = 15
+                per4 = 90
+                title = getString(R.string.bench_set, "2")
             }
             6 ->  {
-                per1 = 30
-                per2 = 10
-                per3 = 3
+                per1 = 60
+                per2 = 15
+                per3 = 5
+                per4 = 50
+                title = getString(R.string.bench_set, "3")
             }
             7 -> {
                 per1 = 90
                 per2 = 60
                 per3 = 30
+                per4 = 100
+                title = getString(R.string.dl_set, "1")
             }
             8 -> {
-                per1 = 60
-                per2 = 30
+                per1 = 80
+                per2 = 40
                 per3 = 10
+                per4 = 90
+                title = getString(R.string.dl_set, "2")
             }
             9 ->  {
-                per1 = 30
-                per2 = 10
-                per3 = 3
+                per1 = 60
+                per2 = 15
+                per3 = 5
+                per4 = 50
+                title = getString(R.string.dl_set, "3")
             }
         }
+        binding.nextSetView.text = title
+
         binding.button1.text = "$per1%"
         binding.button2.text = "$per2%"
         binding.button3.text = "$per3%"
@@ -242,22 +303,22 @@ class AndroidLauncher : AndroidApplication(), IActivityRequestHandler {
 
         binding.button1.setOnClickListener {
             onFirstClick?.call(Attempt(first, (Random.nextInt(100) < per1)))
-            binding.closeButton.callOnClick()
+            close()
         }
 
         binding.button2.setOnClickListener {
             onFirstClick?.call(Attempt(second, (Random.nextInt(100) < per2)))
-            binding.closeButton.callOnClick()
+            close()
         }
 
         binding.button3.setOnClickListener {
             onFirstClick?.call(Attempt(third, (Random.nextInt(100) < per3)))
-            binding.closeButton.callOnClick()
+            close()
         }
 
         binding.button4.setOnClickListener {
             onFirstClick?.call(Attempt(fourth, true))
-            binding.closeButton.callOnClick()
+            close()
         }
 
     }
@@ -267,7 +328,7 @@ class AndroidLauncher : AndroidApplication(), IActivityRequestHandler {
             1 -> return player.compValue.squat.firstAttempt.weight
             2 -> {
                 player.compValue.squat.secondAttempt.weight = player.compValue.squat.firstAttempt.weight +
-                        if(player.compValue.squat.firstAttempt.isGood) 5 else 0
+                        if(player.compValue.squat.firstAttempt.isGood) 10 else 0
                 return player.compValue.squat.secondAttempt.weight
             }
             3 ->  {
@@ -278,7 +339,7 @@ class AndroidLauncher : AndroidApplication(), IActivityRequestHandler {
             4 -> return player.compValue.bench.firstAttempt.weight
             5 -> {
                 player.compValue.bench.secondAttempt.weight = player.compValue.bench.firstAttempt.weight +
-                        if(player.compValue.bench.firstAttempt.isGood) 5 else 0
+                        if(player.compValue.bench.firstAttempt.isGood) 10 else 0
                 return player.compValue.bench.secondAttempt.weight
             }
             6 ->  {
@@ -289,7 +350,7 @@ class AndroidLauncher : AndroidApplication(), IActivityRequestHandler {
             7 -> return player.compValue.deadlift.firstAttempt.weight
             8 -> {
                 player.compValue.deadlift.secondAttempt.weight = player.compValue.deadlift.firstAttempt.weight +
-                        if(player.compValue.deadlift.firstAttempt.isGood) 5 else 0
+                        if(player.compValue.deadlift.firstAttempt.isGood) 10 else 0
                 return player.compValue.deadlift.secondAttempt.weight
             }
             9 ->  {

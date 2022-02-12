@@ -4,4 +4,7 @@
     <color name="bad_attempt">#C45D56</color>
     <color name="current_attempt">#80777777</color>
     <color name="color_white">#FFFFFF</color>
+    <color name="color_green">#4CAF50</color>
+    <color name="color_red">#F44336</color>
+    <color name="color_player">#80FF9800</color>
 </resources>

@@ -18,6 +18,8 @@ import java.util.Random;
 
 public class CompetitionRoom extends BaseRoom {
 
+    private boolean callOnClose = false;
+
     public CompetitionRoom() {
         super("competition");
     }
@@ -65,8 +67,17 @@ public class CompetitionRoom extends BaseRoom {
         };
     }
 
+    @Override
+    public void onRender() {
+        super.onRender();
+        if(callOnClose){
+            interScreenCommunication.openMap();
+        }
+    }
+
     private void showWorkMenu() {
         if(!pause) {
+            createOpponents();
             Group group = new Group();
             pause = true;
             Runnable runnable = () -> {
@@ -77,6 +88,7 @@ public class CompetitionRoom extends BaseRoom {
             interScreenCommunication.showNextSetMenu(
                     player,
                     compStatus.attempt,
+                    opponentList,
                     object -> {
                         if(object == null){
                             showTable();
@@ -109,54 +121,22 @@ public class CompetitionRoom extends BaseRoom {
                                 case 9:
                                     player.compValue.deadlift.thirdAttempt = (CompetitionOpponent.Attempt) object;
                                     break;
+                                case 10:
+                                    callOnClose = true;
+                                    break;
                             }
                             player.animationTime = 0;
                             getNextExercise();
                             runnable.run();
                         }
-                    }
-
-            );
-
-            /*addButton(
-                    "window", Style.window, "",
-                    Preffics.SCREEN_WIDTH / 2 - 750, Preffics.SCREEN_HEIGHT / 2 - 500, 1500, 1000, 1, group, () -> {
-
+                    },
+                    object -> {
+                        callOnClose = true;
+                        if(compStatus.attempt == 10){
+                            pause = false;
+                        }
                     }
             );
-            addButton(
-                    "comtetitionTitle", Style.empty, getLanguage().comtetitionTitle,
-                    Preffics.SCREEN_WIDTH / 2 - 500, Preffics.SCREEN_HEIGHT / 2 + 300, 1000, 100, 1.8f, group, () -> {
-                    }
-            );
-            addButton(
-                    "squatTitle", Style.empty, getSetText(),
-                    Preffics.SCREEN_WIDTH / 2 - 500, Preffics.SCREEN_HEIGHT / 2 + 175, 1000, 100, 1.8f, group, () -> {
-                    }
-            );
-            addButton(
-                    "squatTitle", Style.empty, getResult(),
-                    Preffics.SCREEN_WIDTH / 2 - 500, Preffics.SCREEN_HEIGHT / 2 -25, 1000, 100, 1.8f, group, () -> {
-                    }
-            );
-            addButton(
-                    "work", Style.yesButton, getLanguage().nextSet,
-                    Preffics.SCREEN_WIDTH / 2 - 300, Preffics.SCREEN_HEIGHT / 2 - 200, 600, 175, 1.5f, group, () -> {
-                        player.animationTime = 0;
-                        getNextExercise();
-                        runnable.run();
-                    }
-            );
-            addButton(
-                    "cancel", Style.yesButton, getLanguage().cancel,
-                    Preffics.SCREEN_WIDTH / 2 -300, Preffics.SCREEN_HEIGHT / 2 - 400, 600, 175, 1.5f, group, interScreenCommunication::openMap
-            );
-            addButton(
-                    "cancel", Style.yesButton, getLanguage().cancel,
-                    Preffics.SCREEN_WIDTH / 2 + 400, Preffics.SCREEN_HEIGHT / 2 - 400, 600, 175, 1.5f, group, () -> {
-                        showTable();
-                    }
-            );*/
             buttonGroup.addActor(group);
         }
     }
@@ -180,39 +160,10 @@ public class CompetitionRoom extends BaseRoom {
 
 
     private void showTable() {
-        createOpponents();
         interScreenCommunication.showPlayerList(opponentList, compStatus, object -> {
             pause = false;
             showWorkMenu();
         });
-    }
-
-
-
-    private String getSetText() {
-        switch (compStatus){
-            case SQUAT_1:
-                return getLanguage().squat + " " + 1 + " " + getLanguage().set;
-            case SQUAT_2:
-                return getLanguage().squat + " "  + 2 + " " + getLanguage().set;
-            case SQUAT_3:
-                return getLanguage().squat + " "  + 3 + " " + getLanguage().set;
-            case BENCH_1:
-                return getLanguage().bench + " "  + 1 + " " + getLanguage().set;
-            case BENCH_2:
-                return getLanguage().bench + " "  + 2 + " " + getLanguage().set;
-            case BENCH_3:
-                return getLanguage().bench + " "  + 3 + " " + getLanguage().set;
-            case DEADLIFT_1:
-                return getLanguage().deadlift + " "  + 1 + " " + getLanguage().set;
-            case DEADLIFT_2:
-                return getLanguage().deadlift + " "  + 2 + " " + getLanguage().set;
-            case DEADLIFT_3:
-                return getLanguage().deadlift + " "  + 3 + " " + getLanguage().set;
-            case CLOSE:
-                return getLanguage().cancel;
-        }
-        return "";
     }
 
     private PlayerCondition getNextExercise() {

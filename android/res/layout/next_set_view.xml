@@ -82,17 +82,38 @@
         app:layout_constraintTop_toBottomOf="@+id/nextSetView"
         app:layout_constraintVertical_bias="0" />
 
-    <Space
-        android:id="@+id/space"
+    <LinearLayout
+        android:id="@+id/flags"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/weigth"
+        app:layout_constraintEnd_toStartOf="@+id/weigth"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/weigth">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/flag1"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/flag2"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/flag3"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp" />
+
+    </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/buttons"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"

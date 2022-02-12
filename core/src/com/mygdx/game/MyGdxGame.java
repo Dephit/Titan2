@@ -74,8 +74,8 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
     }
 
     @Override
-    public void showNextSetMenu(Player playerList, int currentSet, OnCLickCallback onFirstClick) {
-        myRequestHandler.showNextSetMenu(playerList, currentSet, onFirstClick, onFirstClick, onFirstClick, onFirstClick);
+    public void showNextSetMenu(Player player, int currentSet, List<CompetitionOpponent> playerList, OnCLickCallback onFirstClick, OnCLickCallback onClose) {
+        myRequestHandler.showNextSetMenu(player, currentSet, playerList, onFirstClick, onClose);
     }
 
 

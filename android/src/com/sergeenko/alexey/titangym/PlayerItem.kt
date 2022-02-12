@@ -27,6 +27,12 @@ public class PlayerItem(
             with(binding){
                 rnkView.text = item.index.toString()
                 nameVIew.text = item.player.name
+                bg.setBackgroundResource(
+                    if(item.player.name == "player")
+                        R.color.color_player
+                    else
+                        R.color.color_white
+                )
                 val status = item.status
                 sqt1VIew.setAttempt(item.player.squat.firstAttempt, status, 1)
                 sqt2VIew.setAttempt(item.player.squat.secondAttempt, status, 2)

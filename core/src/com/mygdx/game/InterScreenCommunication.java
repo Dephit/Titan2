@@ -13,9 +13,11 @@ public interface InterScreenCommunication {
     void showPlayerList(List<CompetitionOpponent> playerList, Comp status, OnCLickCallback runnable);
 
     void showNextSetMenu(
-            Player playerList,
+            Player player,
             int currentSet,
-            OnCLickCallback onFirstClick
+            List<CompetitionOpponent> playerList,
+            OnCLickCallback onFirstClick,
+            OnCLickCallback onClose
     );
 
     void openMap();
