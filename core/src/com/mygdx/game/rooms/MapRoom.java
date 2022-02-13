@@ -2,6 +2,7 @@ package com.mygdx.game.rooms;
 
 import static com.mygdx.game.PlayerCondition.lookinLeft;
 import static com.mygdx.game.PlayerCondition.lookinUp;
+import static com.mygdx.game.PlayerCondition.stay;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -27,6 +28,8 @@ public class MapRoom extends BaseRoom {
 
     public MapRoom(InterScreenCommunication _communication, Player player) {
         super(_communication, "map", player);
+        player.setPlayerPosition(-400,100);
+        player.setPlayersAction(stay, -400, 100, ()->{});
     }
 
 
@@ -37,7 +40,9 @@ public class MapRoom extends BaseRoom {
         addButton("room", "room","", 500, 350, 125, 125, 1f, ()-> interScreenCommunication.openRoom());
         addButton("work", "workButton","",  950, 200, 110, 105, 1f, ()-> interScreenCommunication.openWork());
         addButton("work", "map","",  450, 200, 110, 105, 1f, ()-> interScreenCommunication.openPark());
-        addButton("competition", "champ","",   1600, 330, 110, 105, 1f, ()-> interScreenCommunication.openCompetition());
+        if(player.day.currentDay % 5 == 0) {
+            addButton("competition", "champ", "", 1600, 330, 110, 105, 1f, () -> interScreenCommunication.openCompetition());
+        }
     }
 
     @Override

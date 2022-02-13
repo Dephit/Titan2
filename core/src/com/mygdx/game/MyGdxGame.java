@@ -81,7 +81,7 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
 
     @Override
     public void openMap() {
-        stage = new MapRoom(this, null);
+        stage = new MapRoom(this, player);
         stage.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {

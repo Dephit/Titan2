@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.model.CompetitionOpponent;
 import com.mygdx.game.model.Container;
+import com.mygdx.game.model.Day;
 import com.mygdx.game.model.Item;
 import com.mygdx.game.model.Pocket;
 import com.mygdx.game.model.Refrigerator;
@@ -13,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Player extends Npc {
+
+    public Day day = new Day();
 
     public CompetitionOpponent compValue;
 
@@ -37,9 +40,7 @@ public class Player extends Npc {
         energy = new Stat(language.energy);
         moral = new Stat(language.moral);
 
-        squatExr.setLVL(10);
-        bench.setLVL(8);
-        deadlift.setLVL(12);
+        setDebugPlayer();
 
         exercises.add(squatExr);
         exercises.add(bench);
@@ -66,6 +67,13 @@ public class Player extends Npc {
         moral.statBar.setBackgroundColor(Color.valueOf("042a2b"));
 
         pocket.getPocketView().setBounds(1920 - 410 - 50, 1080 - 65 * 4 - 25 - 100 - 15, 400, 65);
+    }
+
+    private void setDebugPlayer() {
+        squatExr.setLVL(10, true);
+        bench.setLVL(8,true);
+        deadlift.setLVL(12,true);
+        day.currentDay = 5;
     }
 
     public int currentGirlDialogProgress = 0;
@@ -131,6 +139,32 @@ public class Player extends Npc {
                 manageText(exercise);
             }
         }
+        showText(batch,day.currentDay + " " + day.currentTime, 1920 - 410 - 50, 1080 - 65 * 6 - 25 - 100 - 15, 10, Color.BLACK );
+    }
+
+    @Override
+    boolean isAnimationFinished() {
+        boolean isFinishd = super.isAnimationFinished();
+        if(isFinishd){
+            if(playerCondition != PlayerCondition.stay && playerCondition != PlayerCondition.compSquat
+                    && playerCondition != PlayerCondition.compDeadlift
+                    && playerCondition != PlayerCondition.compBench
+                    && playerCondition != PlayerCondition.lookinUp
+                    && playerCondition != PlayerCondition.sittingRev
+                    && playerCondition != PlayerCondition.sitting
+                    && playerCondition != PlayerCondition.lookinLeft
+                    && playerCondition != PlayerCondition.lookinRight
+                    && playerCondition != PlayerCondition.watchLoli
+                    && playerCondition != PlayerCondition.watchCam
+                    && playerCondition != PlayerCondition.watchShop
+                    && playerCondition != PlayerCondition.up
+                    && playerCondition != PlayerCondition.left
+                    && playerCondition != PlayerCondition.right
+                    && playerCondition != PlayerCondition.down)
+            day.addTime();
+        }
+
+        return isFinishd;
     }
 
     private void manageText(Exercise exercise) {
@@ -210,7 +244,7 @@ public class Player extends Npc {
         float progress = 0.5f;
         health.minusProgress(progress * 0.5f);
         energy.minusProgress(progress * 0.25f);
-        moral.addProgress(progress * 0.25f);
+        moral.addProgress(progress);
         for (Exercise exercise: exercises){
             exercise.calculateProgress(-progress * 0.50f);
         }

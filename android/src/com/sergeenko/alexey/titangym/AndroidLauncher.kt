@@ -176,14 +176,14 @@ class AndroidLauncher : AndroidApplication(), IActivityRequestHandler {
                 close()
                 onClose?.call(null)
             }
+            listBinding.container.y = binding!!.container.y + 48
+            listBinding.container.x = binding!!.container.x
+            listBinding.container.updateLayoutParams {
+                height = binding!!.container.height - 96
+                width = binding!!.container.width - 96
+            }
             binding!!.viewContainer.addView(listBinding.root)
             binding!!.viewContainer.visibility = View.VISIBLE
-            listBinding.container.y = binding!!.root.y + 48
-            listBinding.container.x = binding!!.root.x
-            listBinding.container.updateLayoutParams {
-                height = binding!!.root.height - 48
-                width = binding!!.root.width - 48
-            }
         }
     }
 

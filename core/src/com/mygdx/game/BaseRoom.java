@@ -143,10 +143,10 @@ public abstract class BaseRoom extends Stage  {
 
         getBatch().begin();
         if (preffics.isLoaded()) {
-                onLoaded(preffics);
-            } else {
-                onLoading(preffics);
-            }
+            onLoaded(preffics);
+        } else {
+            onLoading(preffics);
+        }
         try{
            // showPath(preffics);
         }catch (Exception e){

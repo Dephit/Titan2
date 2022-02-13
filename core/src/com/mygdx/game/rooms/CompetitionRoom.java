@@ -132,6 +132,7 @@ public class CompetitionRoom extends BaseRoom {
                     object -> {
                         callOnClose = true;
                         if(compStatus.attempt == 10){
+                            player.day.currentDay++;
                             pause = false;
                         }
                     }

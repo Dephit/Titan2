@@ -23,11 +23,12 @@ public class Exercise {
     float lastResult = -1f;
     int LVL = 0;
 
-    public void setLVL(int LVL) {
+    public void setLVL(int LVL, boolean isReduced) {
         this.LVL = LVL;
         setResult();
-        progress = 0;
         limit = 100 + LVL * 20;
+        statBar.setCapacity((int) limit);
+        progress = isReduced ? limit : 0;
     }
 
     float progress = 0;
@@ -41,10 +42,10 @@ public class Exercise {
     public Float calculateProgress(float delta) {
         if(progress < 0){
             if(LVL > 0)
-                setLVL(LVL--);
+                setLVL(LVL--, true);
         }
         if(progress >= limit){
-            setLVL(LVL++);
+            setLVL(LVL++, false);
         }
         progress += delta * 5f;
         statBar.setProgress(progress);
