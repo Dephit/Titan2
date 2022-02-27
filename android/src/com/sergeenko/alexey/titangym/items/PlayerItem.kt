@@ -1,4 +1,4 @@
-package com.sergeenko.alexey.titangym
+package com.sergeenko.alexey.titangym.items
 
 import android.view.View
 import android.widget.TextView
@@ -6,8 +6,10 @@ import androidx.core.content.ContextCompat
 import com.mikepenz.fastadapter.items.AbstractItem
 import com.mygdx.game.model.CompetitionOpponent
 import com.mygdx.game.model.enums.Comp
+import com.sergeenko.alexey.titangym.R
 import com.sergeenko.alexey.titangym.databinding.PlayerItemBinding
 import com.sergeenko.alexey.titangym.items.BaseViewHolder
+import com.sergeenko.alexey.titangym.setVisible
 
 public class PlayerItem(
     val index: Int,
@@ -63,20 +65,16 @@ private fun TextView.setAttempt(firstAttempt: CompetitionOpponent.Attempt?, b: C
     text = firstAttempt?.weight.toString()
     val color = when {
         i == b.attempt -> {
-            //setVisible()
             R.color.color_white
         }
         i > b.attempt -> {
-            //setGone()
             text = "-"
             R.color.current_attempt
         }
         firstAttempt?.isGood == true -> {
-            //setVisible()
             R.color.good_attempt
         }
         firstAttempt?.isGood == false -> {
-            //setVisible()
             R.color.bad_attempt
         }
         else -> R.color.current_attempt
@@ -86,11 +84,5 @@ private fun TextView.setAttempt(firstAttempt: CompetitionOpponent.Attempt?, b: C
     setBackgroundColor(ContextCompat.getColor(context, color))
 }
 
-public fun View.setVisible() {
-    visibility = View.VISIBLE
-}
 
-public fun View.setGone() {
-    visibility = View.GONE
-}
 

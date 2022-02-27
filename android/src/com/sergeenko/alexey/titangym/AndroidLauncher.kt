@@ -8,9 +8,19 @@ import android.os.Bundle
 import android.view.*
 import android.widget.RelativeLayout
 import android.widget.Toast
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration
@@ -25,9 +35,13 @@ import com.mygdx.game.interfaces.OnCLickCallback
 import com.mygdx.game.model.CompetitionOpponent
 import com.mygdx.game.model.CompetitionOpponent.Attempt
 import com.mygdx.game.model.enums.Comp
+import com.sergeenko.alexey.titangym.composeFunctions.CompetitionTable
+import com.sergeenko.alexey.titangym.composeFunctions.PlayerList
 import com.sergeenko.alexey.titangym.databinding.MainActivityBinding
 import com.sergeenko.alexey.titangym.databinding.NextSetViewBinding
 import com.sergeenko.alexey.titangym.databinding.PlayerListBinding
+import com.sergeenko.alexey.titangym.items.PlayerComposeItem
+import com.sergeenko.alexey.titangym.items.TableHeaderComposeItem
 import kotlin.random.Random
 
 
@@ -35,16 +49,6 @@ import kotlin.random.Random
 class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHandler {
     private var gameLayout: RelativeLayout? = null
     private lateinit var binding: MainActivityBinding
-    private val data: Map<String?, Any?>? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
-    override fun onAttach(ctx: Context) {
-        super.onAttach(ctx)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -58,7 +62,7 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = MainActivityBinding.inflate(inflater)
         return binding.root
     }
@@ -66,12 +70,6 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
     private fun setBinding() {
         binding.composeView.apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-
-            this.setContent {
-                MaterialTheme {
-                    Text("Hello Compose!")
-                }
-            }
             setVisible()
         }
     }
@@ -92,12 +90,6 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
         return layout
     }
 
-    override fun showAds(show: Boolean) {}
-
-    override fun loadData(): Map<String?, Any?> {
-        return data!!
-    }
-
     override fun showToast(s: String) {
         runOnUiThread {
             Toast.makeText(
@@ -108,56 +100,28 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
         }
     }
 
+    private fun showComposeView(function: @Composable () -> Unit) {
+        binding.composeView.apply {
+            setContent {
+                MaterialTheme {
+                    function()
+                }
+            }
+            post {
+                setVisible()
+            }
+        }
+    }
+
     override fun showPlayers(
         playerList: MutableList<CompetitionOpponent>,
         status: Comp,
         runnable: OnCLickCallback?,
-    ) {
-        val listBinding = PlayerListBinding.inflate(LayoutInflater.from(context))
-        binding.root.post {
-            binding!!.viewContainer.removeAllViews()
-            val itemAdapter = ItemAdapter<IItem<*>>()
-            val adapter = FastAdapter.with(itemAdapter)
-            adapter.setHasStableIds(true)
-            listBinding.rv.layoutManager = LinearLayoutManager(context)
-            listBinding.rv.adapter = adapter
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                val list = ArrayList<IItem<*>>()
-                list.add(TableHeaderItem())
-                list.addAll(
-                    playerList.sortedByDescending { it.getCurrentSet(status.attempt) }.mapIndexed {  index, competitionOpponent ->
-                        PlayerItem(
-                            index + 1,
-                            status,
-                            competitionOpponent
-                        )
-                    }
-                )
-                itemAdapter.setNewList(list, false)
-            }
-            listBinding.cont.y = binding.root.y + 48
-            listBinding.cont.x = binding.root.x
-            listBinding.cont.updateLayoutParams {
-                height = binding.root.height - 48
-                width = binding.root.width - 48
-            }
-            listBinding.root.setOnClickListener { v: View? -> }
-            listBinding.button.setOnClickListener {
-                listBinding.cont.callOnClick()
-                runnable?.call(null)
-            }
-            listBinding.cont.setOnClickListener { v: View? ->
-                binding.viewContainer.removeAllViews()
-                binding.viewContainer.visibility = View.GONE
-            }
-            binding.viewContainer.addView(listBinding.root)
-            binding.viewContainer.visibility = View.VISIBLE
+    ) = showComposeView{
+        PlayerList(playerList,status) {
+            binding.composeView.setGone()
+            runnable?.call(it)
         }
-    }
-
-    fun close(){
-        binding.viewContainer.removeAllViews()
-        binding.viewContainer.visibility = View.GONE
     }
 
     override fun showNextSetMenu(
@@ -167,235 +131,20 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
         onFirstClick: OnCLickCallback?,
         onClose: OnCLickCallback?
     ) {
-        val listBinding = NextSetViewBinding.inflate(LayoutInflater.from(context))
-        binding.root.post {
-            binding!!.viewContainer.removeAllViews()
-            listBinding.root.setOnClickListener { v: View? -> }
-
-            if(currentSet < 10){
-                val color = getFlagColor(currentSet, player)
-                listBinding.flag1.setBackgroundResource(color)
-                listBinding.flag2.setBackgroundResource(color)
-                listBinding.flag3.setBackgroundResource(color)
-
-                val first = getResult(currentSet, player)
-                val second = first + 10
-                val third = first + 20
-                val fourth = first + 30
-
-                listBinding.weight1.text = first.toString()
-                listBinding.weight2.text = second.toString()
-                listBinding.weight3.text = third.toString()
-                listBinding.weight4.text = fourth.toString()
-
-                listBinding.weigth.text = first.toString()
-                getPercentages(currentSet, listBinding,onFirstClick, first, second, third, fourth)
-            }else{
-                listBinding.buttons.setGone()
-                listBinding.flags.setGone()
-                listBinding.nextSetView.text =
-                    "${getString(R.string.congratulation, (playerList.sortedByDescending { it.getTotal() }.indexOfFirst { it.name == "player" } + 1).toString(), player.compValue.getTotal())}"
-                listBinding.weigth.text = ""
+        showComposeView{
+            CompetitionTable(
+                player = player,
+                currentSet = currentSet,
+                playerList = playerList,
+                onFirstClick = onFirstClick,
+                onClose = {
+                    binding.composeView.setGone()
+                    onClose?.call(it)
+                }
+            ) {
+                binding.composeView.setGone()
             }
-
-            listBinding.scoreSheetButton.setOnClickListener {
-                onFirstClick?.call(null)
-            }
-            listBinding.closeButton.setOnClickListener {
-                close()
-                onClose?.call(null)
-            }
-            listBinding.container.y = binding.container.y + 48
-            listBinding.container.x = binding.container.x
-            listBinding.container.updateLayoutParams {
-                height = binding.container.height - 96
-                width = binding.container.width - 96
-            }
-            binding.viewContainer.addView(listBinding.root)
-            binding.viewContainer.visibility = View.VISIBLE
         }
     }
 
-    private fun getFlagColor(currentSet: Int, player: Player): Int {
-            when (currentSet) {
-                1 -> return R.color.color_white
-                2 -> {
-                    return if(player.compValue.squat.firstAttempt.isGood) R.color.color_green else R.color.color_red
-                }
-                3 ->  {
-                    return if(player.compValue.squat.secondAttempt.isGood) R.color.color_green else R.color.color_red
-                }
-                4 -> return if(player.compValue.squat.thirdAttempt.isGood) R.color.color_green else R.color.color_red
-                5 -> {
-                    return if(player.compValue.bench.firstAttempt.isGood) R.color.color_green else R.color.color_red
-                }
-                6 ->  {
-                    return if(player.compValue.bench.secondAttempt.isGood) R.color.color_green else R.color.color_red
-                }
-                7 -> return if(player.compValue.bench.thirdAttempt.isGood) R.color.color_green else R.color.color_red
-                8 -> {
-                    return if(player.compValue.deadlift.firstAttempt.isGood) R.color.color_green else R.color.color_red
-                }
-                9 ->  {
-                    return if(player.compValue.deadlift.secondAttempt.isGood) R.color.color_green else R.color.color_red
-                }
-                10 -> return if(player.compValue.deadlift.thirdAttempt.isGood) R.color.color_green else R.color.color_red
-            }
-            return 0
-    }
-
-    private fun getPercentages(
-        compStatus: Int,
-        binding: NextSetViewBinding,
-        onFirstClick: OnCLickCallback?,
-        first: Int,
-        second: Int,
-        third: Int,
-        fourth: Int,
-    ) {
-        var per1 = 90
-        var per2 = 90
-        var per3 = 90
-        var per4 = 50
-        var title = ""
-        when (compStatus) {
-            1 -> {
-                per1 = 90
-                per2 = 60
-                per3 = 30
-                per4 = 100
-                title = getString(R.string.squat_set, "1")
-            }
-            2 -> {
-                per1 = 80
-                per2 = 40
-                per3 = 15
-                per4 = 90
-                title = getString(R.string.squat_set, "2")
-            }
-            3 ->  {
-                per1 = 60
-                per2 = 15
-                per3 = 5
-                per4 = 50
-                title = getString(R.string.squat_set, "3")
-            }
-            4 -> {
-                per1 = 90
-                per2 = 60
-                per3 = 30
-                per4 = 100
-                title = getString(R.string.bench_set, "1")
-            }
-            5 -> {
-                per1 = 80
-                per2 = 40
-                per3 = 15
-                per4 = 90
-                title = getString(R.string.bench_set, "2")
-            }
-            6 ->  {
-                per1 = 60
-                per2 = 15
-                per3 = 5
-                per4 = 50
-                title = getString(R.string.bench_set, "3")
-            }
-            7 -> {
-                per1 = 90
-                per2 = 60
-                per3 = 30
-                per4 = 100
-                title = getString(R.string.dl_set, "1")
-            }
-            8 -> {
-                per1 = 80
-                per2 = 40
-                per3 = 10
-                per4 = 90
-                title = getString(R.string.dl_set, "2")
-            }
-            9 ->  {
-                per1 = 60
-                per2 = 15
-                per3 = 5
-                per4 = 50
-                title = getString(R.string.dl_set, "3")
-            }
-        }
-        binding.nextSetView.text = title
-
-        binding.button1.text = "$per1%"
-        binding.button2.text = "$per2%"
-        binding.button3.text = "$per3%"
-        binding.button4.text = "AD($per4%)"
-
-        binding.button1.setOnClickListener {
-            onFirstClick?.call(Attempt(first, (Random.nextInt(100) < per1)))
-            close()
-        }
-
-        binding.button2.setOnClickListener {
-            onFirstClick?.call(Attempt(second, (Random.nextInt(100) < per2)))
-            close()
-        }
-
-        binding.button3.setOnClickListener {
-            onFirstClick?.call(Attempt(third, (Random.nextInt(100) < per3)))
-            close()
-        }
-
-        binding.button4.setOnClickListener {
-            onFirstClick?.call(Attempt(fourth, true))
-            close()
-        }
-
-    }
-
-    private fun getResult(compStatus: Int, player: Player): Int {
-        when (compStatus) {
-            1 -> return player.compValue.squat.firstAttempt.weight
-            2 -> {
-                player.compValue.squat.secondAttempt.weight = player.compValue.squat.firstAttempt.weight +
-                        if(player.compValue.squat.firstAttempt.isGood) 10 else 0
-                return player.compValue.squat.secondAttempt.weight
-            }
-            3 ->  {
-                player.compValue.squat.thirdAttempt.weight = player.compValue.squat.secondAttempt.weight +
-                        if(player.compValue.squat.secondAttempt.isGood) 5 else 0
-                return player.compValue.squat.thirdAttempt.weight
-            }
-            4 -> return player.compValue.bench.firstAttempt.weight
-            5 -> {
-                player.compValue.bench.secondAttempt.weight = player.compValue.bench.firstAttempt.weight +
-                        if(player.compValue.bench.firstAttempt.isGood) 10 else 0
-                return player.compValue.bench.secondAttempt.weight
-            }
-            6 ->  {
-                player.compValue.bench.thirdAttempt.weight = player.compValue.bench.secondAttempt.weight +
-                        if(player.compValue.bench.secondAttempt.isGood) 5 else 0
-                return player.compValue.bench.thirdAttempt.weight
-            }
-            7 -> return player.compValue.deadlift.firstAttempt.weight
-            8 -> {
-                player.compValue.deadlift.secondAttempt.weight = player.compValue.deadlift.firstAttempt.weight +
-                        if(player.compValue.deadlift.firstAttempt.isGood) 10 else 0
-                return player.compValue.deadlift.secondAttempt.weight
-            }
-            9 ->  {
-                player.compValue.deadlift.thirdAttempt.weight = player.compValue.deadlift.secondAttempt.weight +
-                        if(player.compValue.deadlift.secondAttempt.isGood) 5 else 0
-                return player.compValue.deadlift.thirdAttempt.weight
-            }
-                10 -> return 0
-            }
-        return 0
-    }
-
-    override fun isAdShown(): Boolean {
-        return false //adView.isShown();
-    }
-
-    override fun signOut() {}
-    override fun saveData(value: Map<*, *>?) {}
 }

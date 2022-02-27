@@ -21,4 +21,10 @@
     <string name="squat_set">squat %s set</string>
     <string name="bench_set">Bench %s set</string>
     <string name="dl_set">Deadlift %s set</string>
+    <string name="rnk">RNK</string>
+    <string name="player_name">Name</string>
+    <string name="sqt">SQT</string>
+    <string name="bp">BP</string>
+    <string name="dl">DL</string>
+    <string name="total">Total</string>
 </resources>
