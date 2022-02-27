@@ -1,70 +1,99 @@
 package com.sergeenko.alexey.titangym
 
 import android.annotation.SuppressLint
-import android.icu.util.ULocale.getLanguage
-import com.badlogic.gdx.backends.android.AndroidApplication
-import com.mygdx.game.IActivityRequestHandler
-import android.widget.RelativeLayout
-import com.mikepenz.fastadapter.FastAdapter
-import com.mikepenz.fastadapter.adapters.ItemAdapter
-import android.os.Bundle
-import android.view.LayoutInflater
-import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration
-import android.view.WindowManager
-import com.mygdx.game.MyGdxGame
-import android.widget.Toast
-import com.mygdx.game.model.CompetitionOpponent
-import com.mikepenz.fastadapter.IItem
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.LinearLayoutManager
+import android.app.Activity
+import android.content.Context
 import android.os.Build
-import android.view.View
-import android.view.Window
+import android.os.Bundle
+import android.view.*
+import android.widget.RelativeLayout
+import android.widget.Toast
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.view.updateLayoutParams
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration
+import com.badlogic.gdx.backends.android.AndroidFragmentApplication
+import com.mikepenz.fastadapter.FastAdapter
+import com.mikepenz.fastadapter.IItem
+import com.mikepenz.fastadapter.adapters.ItemAdapter
+import com.mygdx.game.IActivityRequestHandler
+import com.mygdx.game.MyGdxGame
 import com.mygdx.game.Player
 import com.mygdx.game.interfaces.OnCLickCallback
+import com.mygdx.game.model.CompetitionOpponent
 import com.mygdx.game.model.CompetitionOpponent.Attempt
 import com.mygdx.game.model.enums.Comp
-import com.sergeenko.alexey.titangym.PlayerItem
 import com.sergeenko.alexey.titangym.databinding.MainActivityBinding
 import com.sergeenko.alexey.titangym.databinding.NextSetViewBinding
 import com.sergeenko.alexey.titangym.databinding.PlayerListBinding
-import java.util.ArrayList
 import kotlin.random.Random
 
+
 @SuppressLint("Registered")
-class AndroidLauncher : AndroidApplication(), IActivityRequestHandler {
+class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHandler {
     private var gameLayout: RelativeLayout? = null
-    var binding: MainActivityBinding? = null
+    private lateinit var binding: MainActivityBinding
     private val data: Map<String?, Any?>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
-        binding = MainActivityBinding.inflate(LayoutInflater.from(this))
-        setContentView(binding!!.root)
+
+    }
+
+    override fun onAttach(ctx: Context) {
+        super.onAttach(ctx)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setBinding()
         val config = AndroidApplicationConfiguration()
         gameLayout = createGameLayout(config)
         launchGame()
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = MainActivityBinding.inflate(inflater)
+        return binding.root
+    }
+
+    private fun setBinding() {
+        binding.composeView.apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+
+            this.setContent {
+                MaterialTheme {
+                    Text("Hello Compose!")
+                }
+            }
+            setVisible()
+        }
+    }
+
     private fun launchGame() {
-        binding!!.container.addView(gameLayout)
+        binding.container.addView(gameLayout)
     }
 
     private fun createGameLayout(config: AndroidApplicationConfiguration): RelativeLayout {
-        val layout = RelativeLayout(this)
-        window.setFlags(
+        val layout = RelativeLayout(context)
+        activity?.window?.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
-        window.clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN)
+        activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN)
         val gameView = initializeForView(MyGdxGame(this), config)
         layout.addView(gameView)
         return layout
     }
 
     override fun showAds(show: Boolean) {}
+
     override fun loadData(): Map<String?, Any?> {
         return data!!
     }
@@ -72,7 +101,7 @@ class AndroidLauncher : AndroidApplication(), IActivityRequestHandler {
     override fun showToast(s: String) {
         runOnUiThread {
             Toast.makeText(
-                this@AndroidLauncher.applicationContext,
+                context,
                 s,
                 Toast.LENGTH_SHORT
             ).show()
@@ -84,13 +113,13 @@ class AndroidLauncher : AndroidApplication(), IActivityRequestHandler {
         status: Comp,
         runnable: OnCLickCallback?,
     ) {
-        val listBinding = PlayerListBinding.inflate(LayoutInflater.from(this))
-        binding!!.root.post {
+        val listBinding = PlayerListBinding.inflate(LayoutInflater.from(context))
+        binding.root.post {
             binding!!.viewContainer.removeAllViews()
             val itemAdapter = ItemAdapter<IItem<*>>()
             val adapter = FastAdapter.with(itemAdapter)
             adapter.setHasStableIds(true)
-            listBinding.rv.layoutManager = LinearLayoutManager(this)
+            listBinding.rv.layoutManager = LinearLayoutManager(context)
             listBinding.rv.adapter = adapter
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 val list = ArrayList<IItem<*>>()
@@ -106,11 +135,11 @@ class AndroidLauncher : AndroidApplication(), IActivityRequestHandler {
                 )
                 itemAdapter.setNewList(list, false)
             }
-            listBinding.cont.y = binding!!.root.y + 48
-            listBinding.cont.x = binding!!.root.x
+            listBinding.cont.y = binding.root.y + 48
+            listBinding.cont.x = binding.root.x
             listBinding.cont.updateLayoutParams {
-                height = binding!!.root.height - 48
-                width = binding!!.root.width - 48
+                height = binding.root.height - 48
+                width = binding.root.width - 48
             }
             listBinding.root.setOnClickListener { v: View? -> }
             listBinding.button.setOnClickListener {
@@ -118,17 +147,17 @@ class AndroidLauncher : AndroidApplication(), IActivityRequestHandler {
                 runnable?.call(null)
             }
             listBinding.cont.setOnClickListener { v: View? ->
-                binding!!.viewContainer.removeAllViews()
-                binding!!.viewContainer.visibility = View.GONE
+                binding.viewContainer.removeAllViews()
+                binding.viewContainer.visibility = View.GONE
             }
-            binding!!.viewContainer.addView(listBinding.root)
-            binding!!.viewContainer.visibility = View.VISIBLE
+            binding.viewContainer.addView(listBinding.root)
+            binding.viewContainer.visibility = View.VISIBLE
         }
     }
 
     fun close(){
-        binding!!.viewContainer.removeAllViews()
-        binding!!.viewContainer.visibility = View.GONE
+        binding.viewContainer.removeAllViews()
+        binding.viewContainer.visibility = View.GONE
     }
 
     override fun showNextSetMenu(
@@ -138,8 +167,8 @@ class AndroidLauncher : AndroidApplication(), IActivityRequestHandler {
         onFirstClick: OnCLickCallback?,
         onClose: OnCLickCallback?
     ) {
-        val listBinding = NextSetViewBinding.inflate(LayoutInflater.from(this))
-        binding!!.root.post {
+        val listBinding = NextSetViewBinding.inflate(LayoutInflater.from(context))
+        binding.root.post {
             binding!!.viewContainer.removeAllViews()
             listBinding.root.setOnClickListener { v: View? -> }
 
@@ -176,14 +205,14 @@ class AndroidLauncher : AndroidApplication(), IActivityRequestHandler {
                 close()
                 onClose?.call(null)
             }
-            listBinding.container.y = binding!!.container.y + 48
-            listBinding.container.x = binding!!.container.x
+            listBinding.container.y = binding.container.y + 48
+            listBinding.container.x = binding.container.x
             listBinding.container.updateLayoutParams {
-                height = binding!!.container.height - 96
-                width = binding!!.container.width - 96
+                height = binding.container.height - 96
+                width = binding.container.width - 96
             }
-            binding!!.viewContainer.addView(listBinding.root)
-            binding!!.viewContainer.visibility = View.VISIBLE
+            binding.viewContainer.addView(listBinding.root)
+            binding.viewContainer.visibility = View.VISIBLE
         }
     }
 

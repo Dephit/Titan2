@@ -3,10 +3,10 @@ package com.sergeenko.alexey.titangym.items
 import android.content.Context
 import android.content.res.Resources
 import android.os.Build
-import android.support.annotation.DrawableRes
 import android.view.View
 import androidx.annotation.ColorRes
 import androidx.annotation.DimenRes
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat

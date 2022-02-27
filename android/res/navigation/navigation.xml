@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation"
+    app:startDestination="@id/androidLauncherFragment">
+
+    <fragment
+        android:id="@+id/androidLauncherFragment"
+        android:name="com.sergeenko.alexey.titangym.AndroidLauncherFragment"
+        android:label="AndroidLauncherFragment" />
+</navigation>
