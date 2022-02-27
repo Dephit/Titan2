@@ -109,29 +109,19 @@ public class RoomRoom extends BaseRoom {
             showRefrigerator();
             group.remove();
         };
-        final TextButton textButton = getTextButton("menu", item.menuStyleName, "",
-                600, 100, 812, 651, 1, ()->{}
-        );
-
-        final TextButton yes = getTextButton("description", Style.empty,
+        interScreenCommunication.showDialog(
+                item.title,
                 item.description,
-                1090, 270, 0, 400, 1.5f, ()->{});
-
-        final TextButton no = getTextButton("potatoAnswer", Style.empty, "",
-                1090, 300, 0, 0, 1.5f, ()->{});
-        final TextButton agreePotatoButton = getTextButton("agreePotatoButton", Style.yesButton, "Eat",
-                650, 118, 287, 84, 1.5f, ()->{
+                "Eat",
+                "Put it back",
+                (o)-> runnable.run(),
+                (o)->{
                     item.onUse(player);
                     runnable.run();
-                });
-        final TextButton declineFood = getTextButton("declineFood", Style.yesButton, "Put it back",
-                1060, 118, 287, 84, 1.5f, runnable);
-        group.addActor(textButton);
-        group.addActor(yes);
-        group.addActor(agreePotatoButton);
-        group.addActor(declineFood);
-        group.addActor(no);
-        buttonGroup.addActor(group);
+                }
+
+
+        );
     }
 
     @Override

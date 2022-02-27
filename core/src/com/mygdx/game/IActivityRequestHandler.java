@@ -19,4 +19,20 @@ public interface IActivityRequestHandler {
             OnCLickCallback onFirstClick,
             OnCLickCallback onClose
     );
+
+    void showDialog(
+            String title,
+            String subtitle,
+            OnCLickCallback onClose,
+            OnCLickCallback onAgree
+    );
+
+    void showDialog(
+            String title,
+            String subtitle,
+            String agreeText,
+            String closeText,
+            OnCLickCallback onClose,
+            OnCLickCallback onAgree
+    );
 }

@@ -78,6 +78,16 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
         myRequestHandler.showNextSetMenu(player, currentSet, playerList, onFirstClick, onClose);
     }
 
+    @Override
+    public void showDialog(String title, String subtitle, OnCLickCallback onClose, OnCLickCallback onAgree) {
+        myRequestHandler.showDialog(title, subtitle, onClose, onAgree);
+    }
+
+    @Override
+    public void showDialog(String title, String subtitle, String agreeText, String closeText, OnCLickCallback onClose, OnCLickCallback onAgree) {
+        myRequestHandler.showDialog(title, subtitle, agreeText, closeText, onClose, onAgree);
+    }
+
 
     @Override
     public void openMap() {

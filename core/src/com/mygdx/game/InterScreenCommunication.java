@@ -20,6 +20,22 @@ public interface InterScreenCommunication {
             OnCLickCallback onClose
     );
 
+    void showDialog(
+            String title,
+            String subtitle,
+            OnCLickCallback onClose,
+            OnCLickCallback onAgree
+    );
+
+    void showDialog(
+            String title,
+            String subtitle,
+            String agreeText,
+            String closeText,
+            OnCLickCallback onClose,
+            OnCLickCallback onAgree
+    );
+
     void openMap();
 
     void openGym();

@@ -1,54 +1,42 @@
 package com.sergeenko.alexey.titangym
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Context
-import android.os.Build
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.RelativeLayout
 import android.widget.Toast
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.core.view.updateLayoutParams
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration
 import com.badlogic.gdx.backends.android.AndroidFragmentApplication
-import com.mikepenz.fastadapter.FastAdapter
-import com.mikepenz.fastadapter.IItem
-import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mygdx.game.IActivityRequestHandler
 import com.mygdx.game.MyGdxGame
 import com.mygdx.game.Player
 import com.mygdx.game.interfaces.OnCLickCallback
 import com.mygdx.game.model.CompetitionOpponent
-import com.mygdx.game.model.CompetitionOpponent.Attempt
 import com.mygdx.game.model.enums.Comp
+import com.sergeenko.alexey.titangym.composeFunctions.AlertDialogSample
 import com.sergeenko.alexey.titangym.composeFunctions.CompetitionTable
 import com.sergeenko.alexey.titangym.composeFunctions.PlayerList
 import com.sergeenko.alexey.titangym.databinding.MainActivityBinding
-import com.sergeenko.alexey.titangym.databinding.NextSetViewBinding
-import com.sergeenko.alexey.titangym.databinding.PlayerListBinding
-import com.sergeenko.alexey.titangym.items.PlayerComposeItem
-import com.sergeenko.alexey.titangym.items.TableHeaderComposeItem
-import kotlin.random.Random
-
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 @SuppressLint("Registered")
 class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHandler {
     private var gameLayout: RelativeLayout? = null
     private lateinit var binding: MainActivityBinding
+
+    private val viewModel: MainViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -124,6 +112,54 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
         }
     }
 
+    override fun showDialog(
+        title: String,
+        subtitle: String,
+        agreeText: String,
+        closeText: String,
+        onClose: OnCLickCallback,
+        onAgree: OnCLickCallback
+    ){
+        showComposeView {
+                AlertDialogSample(
+                    title = title,
+                    subtitle = subtitle,
+                    agreeText = agreeText,
+                    closeText = closeText,
+                    onClose = {
+                        binding.composeView.setGone()
+                        onClose.call(it)
+                    },
+                    onAgree = {
+                        binding.composeView.setGone()
+                        onAgree.call(it)
+                    }
+                )
+        }
+    }
+
+    override fun showDialog(
+        title: String,
+        subtitle: String,
+        onClose: OnCLickCallback,
+        onAgree: OnCLickCallback
+    ){
+        showComposeView {
+            AlertDialogSample(
+                title = title,
+                subtitle = subtitle,
+                onClose = {
+                    binding.composeView.setGone()
+                    onClose.call(it)
+                },
+                onAgree = {
+                    binding.composeView.setGone()
+                    onAgree.call(it)
+                }
+            )
+        }
+    }
+
     override fun showNextSetMenu(
         player: Player,
         currentSet: Int,
@@ -147,4 +183,25 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
         }
     }
 
+}
+
+class MainViewModel : ViewModel() {
+    // Initial value is false so the dialog is hidden
+    private val _showDialog = MutableStateFlow(false)
+    val showDialog: StateFlow<Boolean> = _showDialog.asStateFlow()
+
+    fun onOpenDialogClicked() {
+        _showDialog.value = true
+    }
+
+    fun onDialogConfirm() {
+        _showDialog.value = false
+        // Continue with executing the confirmed action
+    }
+
+    fun onDialogDismiss() {
+        _showDialog.value = false
+    }
+
+    // The rest of your screen's logic...
 }
