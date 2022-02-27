@@ -10,8 +10,8 @@ import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
@@ -58,7 +58,10 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
     private fun setBinding() {
         binding.composeView.apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-            setVisible()
+        }
+        binding.dialogView.apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+//            dialog()
         }
     }
 
@@ -101,6 +104,18 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
         }
     }
 
+    fun dialog(){
+        binding.dialogView.apply {
+            setContent {
+
+                MaterialTheme {
+
+                }
+            }
+        }
+
+    }
+
     override fun showPlayers(
         playerList: MutableList<CompetitionOpponent>,
         status: Comp,
@@ -120,21 +135,30 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
         onClose: OnCLickCallback,
         onAgree: OnCLickCallback
     ){
-        showComposeView {
-                AlertDialogSample(
-                    title = title,
-                    subtitle = subtitle,
-                    agreeText = agreeText,
-                    closeText = closeText,
-                    onClose = {
-                        binding.composeView.setGone()
-                        onClose.call(it)
-                    },
-                    onAgree = {
-                        binding.composeView.setGone()
-                        onAgree.call(it)
-                    }
-                )
+        viewModel.onOpenDialogClicked()
+        binding.root.post {
+            showComposeView {
+                val showDialogState: Boolean by viewModel.showDialog.collectAsState()
+                if(showDialogState){
+                    AlertDialogSample(
+                        title = title,
+                        subtitle = subtitle,
+                        agreeText = agreeText,
+                        closeText = closeText,
+                        onClose = {
+                            viewModel.onDialogDismiss()
+                            binding.composeView.setGone()
+                            onClose.call(it)
+                        },
+                        onAgree = {
+                            viewModel.onDialogConfirm()
+                            binding.composeView.setGone()
+                            onAgree.call(it)
+                        },
+                        state = viewModel.showDialog
+                    )
+                }
+            }
         }
     }
 
@@ -144,20 +168,14 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
         onClose: OnCLickCallback,
         onAgree: OnCLickCallback
     ){
-        showComposeView {
-            AlertDialogSample(
-                title = title,
-                subtitle = subtitle,
-                onClose = {
-                    binding.composeView.setGone()
-                    onClose.call(it)
-                },
-                onAgree = {
-                    binding.composeView.setGone()
-                    onAgree.call(it)
-                }
-            )
-        }
+        showDialog(
+            title = title,
+            subtitle = subtitle,
+            agreeText = getString(R.string.ok),
+            closeText = getString(R.string.close),
+            onClose = onClose,
+            onAgree = onAgree
+        )
     }
 
     override fun showNextSetMenu(
