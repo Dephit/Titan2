@@ -50,31 +50,30 @@ public class ShopRoom extends BaseRoom {
         addButton("watchCam", Style.empty, "",   244, 700, 75, 75, 1f,
                 () -> player.setPath(360 , 385, PlayerCondition.watchCam));
         addButton("talkToStaffBut", Style.empty, "",   230, 460, 75, 175, 1f, this::talkToStaff);
-        addButton("talkToCleanerBut", Style.empty, "",   1250, 430, 75, 155, 1f,
-                this::talkToSanitar);
+        addButton("talkToCleanerBut", Style.empty, "",   1250, 430, 75, 155, 1f, this::talkToSanitar);
         addButton("buyMenuBut", Style.empty, "",   1100, 200, 200, 200, 1f,
                 () -> player.setPath(1310 , 380,1310 , 380, PlayerCondition.stay, this::showBuyMenu));
     }
 
     private void talkToSanitar() {
-        /*player.setPath(1310 , 380, 0, 0, PlayerCondition.lookinUp, () -> {
-            Message message = new Message(810, 500, false,
+        player.setPath(1310 , 380, 0, 0, PlayerCondition.lookinUp, () -> {
+            Message message = new Message("Sanitar",
                     new ArrayList<>(),
                     getLanguage().sanitarRandomText
             );
-            if (!hudGroup.getChildren().contains(message, false))
-                hudGroup.addActor(message);
-        });*/
+            showDialog(message);
+            player.setPlayersAction(stay, 1310 , 380, ()->{});
+        });
     }
 
     private void talkToStaff() {
         player.setPath(340 , 420, 0, 0, PlayerCondition.lookinLeft, () -> {
-            Message message = new Message(260, 630, true,
+            Message message = new Message("Stuff",
                     new ArrayList<>(),
                     getLanguage().stuffRandomText
             );
-            if (!hudGroup.getChildren().contains(message, false))
-                hudGroup.addActor(message);
+            showDialog(message);
+            player.setPlayersAction(stay, 340 , 420, ()->{});
         });
     }
 

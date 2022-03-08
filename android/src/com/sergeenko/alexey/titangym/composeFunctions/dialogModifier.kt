@@ -9,10 +9,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+
+val titleTextSize = 30.sp
 
 @Composable
 fun dialogModifier(): Modifier {
     return Modifier.fillMaxSize()
+        .clip(RoundedCornerShape(5))
+        .background(Color.White)
+        .padding(10.dp)
+}
+
+@Composable
+fun progressBarModifier(): Modifier {
+    return Modifier
         .clip(RoundedCornerShape(5))
         .background(Color.White)
         .padding(10.dp)

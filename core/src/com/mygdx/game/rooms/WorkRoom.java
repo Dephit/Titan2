@@ -12,6 +12,8 @@ import com.mygdx.game.PlayerCondition;
 import com.mygdx.game.Preffics;
 import com.mygdx.game.StatBar;
 import com.mygdx.game.Style;
+import com.mygdx.game.interfaces.OnCLickCallback;
+import com.mygdx.game.interfaces.OnClickBooleanCallback;
 
 public class WorkRoom extends BaseRoom {
 
@@ -49,102 +51,62 @@ public class WorkRoom extends BaseRoom {
     }
 
     private void showWorkMenu() {
-        Group group = new Group();
-        //pause = true;
-        Runnable runnable = ()->{
-          //  pause = false;
-            group.clear();
-            group.remove();
-            openMap();
-        };
         int wokrReward = 1000;
 
-        addButton(
-                "window", Style.window, "",
-                Preffics.SCREEN_WIDTH / 2 - 500, Preffics.SCREEN_HEIGHT / 2 - 250, 1000, 500, 1, group, runnable
+        interScreenCommunication.showDialog(
+                getLanguage().wannaWork,
+                getLanguage().forThisWorkYouRecieve + " " + wokrReward,
+                getLanguage().doWork,
+                getLanguage().cancel,
+                (o)-> callOnClose = true,
+                (o) -> showWorkProgress()
         );
-        addButton(
-                "workTitle", Style.empty, getLanguage().wannaWork,
-                Preffics.SCREEN_WIDTH / 2 - 500, Preffics.SCREEN_HEIGHT / 2 + 100, 1000, 100, 1.8f,  group, ()->{}
-        );
-        addButton(
-                "workDescription", Style.empty, getLanguage().forThisWorkYouRecieve + " " + wokrReward,
-                Preffics.SCREEN_WIDTH / 2 - 500, Preffics.SCREEN_HEIGHT / 2 - 25, 1000, 100, 1.8f,  group, ()->{}
-        );
-        addButton(
-                "work", Style.yesButton, getLanguage().doWork,
-                Preffics.SCREEN_WIDTH / 2 - 450, Preffics.SCREEN_HEIGHT / 2 - 200, 400, 125, 1.5f, group, this::showWorkProgress
-        );
-        addButton(
-                "cancel", Style.yesButton, getLanguage().cancel,
-                Preffics.SCREEN_WIDTH / 2 + 50, Preffics.SCREEN_HEIGHT / 2 - 200, 400, 125, 1.5f, group, runnable::run
-        );
-        buttonGroup.addActor(group);
     }
 
     private void showWorkProgress() {
         if(player.getEnergyBar().getCurrentAmount() > 0 && player.getHealthBar().getCurrentAmount() > 0) {
             workInProgress = true;
-            Group group = new Group();
-            //pause = true;
             Runnable runnable = () -> {
-                //pause = false;
                 workInProgress = false;
-                group.clear();
-                group.remove();
+                showWorkMenu();
             };
             int wokrReward = 1000;
 
-            addButton(
-                    "window", Style.window, "",
-                    Preffics.SCREEN_WIDTH / 2 - 500, Preffics.SCREEN_HEIGHT / 2 - 250, 1000, 500, 1, group, runnable
+            interScreenCommunication.showProgressBar(
+                    getLanguage().workInProgress,
+                    //onEnd
+                    (OnCLickCallback) (o) -> {
+                        player.pocket.addMoney(wokrReward);
+                        player.setPlayerPosition(((int) player.getX()), (int) player.getY(), PlayerCondition.stay);
+                        runnable.run();
+                    },
+                    //onUpdate
+                    () -> {
+                        if(player.getEnergyBar().getCurrentAmount() <= 0 || player.getHealthBar().getCurrentAmount() <= 0){
+                            interScreenCommunication.showToast(getLanguage().youHaveNoEnergyOrHealth);
+                            runnable.run();
+                            return false;
+                        }
+                        player.onWork();
+                        return player.getEnergyBar().getCurrentAmount() > 0 && player.getHealthBar().getCurrentAmount() > 0 && workInProgress;
+                    },
+                    //onClose
+                    (o) -> runnable.run()
             );
-            addButton(
-                    "workTitle", Style.empty, getLanguage().workInProgress,
-                    Preffics.SCREEN_WIDTH / 2 - 500, Preffics.SCREEN_HEIGHT / 2 + 100, 1000, 100, 1.8f, group, () -> {
-                    }
-            );
-            StatBar statBar = new StatBar("work");
-            statBar.setBounds(Preffics.SCREEN_WIDTH / 2 - 200, Preffics.SCREEN_HEIGHT / 2, 400, 65);
-            statBar.setProgressAndCapacity(100, 0);
-            statBar.setColor(Color.valueOf("ef7b45"));
-            statBar.setBackgroundColor(Color.valueOf("042a2b"));
-            group.addActor(statBar);
-            addButton(
-                    "cancel", Style.yesButton, getLanguage().cancel,
-                    Preffics.SCREEN_WIDTH / 2 - 200, Preffics.SCREEN_HEIGHT / 2 - 200, 400, 125, 1.5f, group, runnable::run
-            );
-            buttonGroup.addActor(group);
-            new Thread(() -> {
-                while (statBar.getCurrentAmount() < 100 && player.getEnergyBar().getCurrentAmount() > 0 && player.getHealthBar().getCurrentAmount() > 0 && workInProgress) {
-                    statBar.addCurrentAmount(1);
-                    player.onWork();
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                if(player.getEnergyBar().getCurrentAmount() <= 0 || player.getHealthBar().getCurrentAmount() <= 0){
-                    interScreenCommunication.showToast(getLanguage().youHaveNoEnergyOrHealth);
-                    runnable.run();
-                    return;
-                }
-                if (statBar.getCurrentAmount() >= 100) {
-                    player.pocket.addMoney(wokrReward);
-                    player.setPlayerPosition(((int) player.getX()), (int) player.getY(), PlayerCondition.stay);
-                }
-                runnable.run();
-            }).start();
         }else{
             interScreenCommunication.showToast(getLanguage().youHaveNoEnergyOrHealth);
-            openMap();
+            showWorkMenu();
         }
     }
 
     private void openMap() {
         workInProgress = false;
         interScreenCommunication.openMap();
+    }
+
+    @Override
+    public void onClose(){
+        openMap();
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.mygdx.game.interfaces.OnCLickCallback;
+import com.mygdx.game.interfaces.OnClickBooleanCallback;
 import com.mygdx.game.model.CompetitionOpponent;
 import com.mygdx.game.model.enums.Comp;
 
@@ -26,6 +27,12 @@ public interface IActivityRequestHandler {
             OnCLickCallback onClose,
             OnCLickCallback onAgree
     );
+
+    void showProgressBar(
+            String title,
+            OnCLickCallback onProgressEnd,
+            OnClickBooleanCallback onProgressUpdate,
+            OnCLickCallback onClose);
 
     void showDialog(
             String title,

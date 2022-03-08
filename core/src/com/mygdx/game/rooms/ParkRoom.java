@@ -47,40 +47,21 @@ public class ParkRoom extends BaseRoom {
         };
     }
 
-    private void showWorkMenu() {
-        Group group = new Group();
-        //pause = true;
-        Runnable runnable = () -> {
-            //  pause = false;
-            group.clear();
-            group.remove();
-            openMap();
-        };
-        int wokrReward = 1000;
+    @Override
+    public void onClose(){
+        openMap();
+    }
 
-        addButton(
-                "window", Style.window, "",
-                Preffics.SCREEN_WIDTH / 2 - 750, Preffics.SCREEN_HEIGHT / 2 - 250, 1500, 500, 1, group, runnable
+    private void showWorkMenu() {
+        interScreenCommunication.showDialog(
+                getLanguage().walkInThePark,
+                getLanguage().walkToRecoverYourHead,
+                getLanguage().doWalk,
+                getLanguage().cancel,
+                (o)-> callOnClose = true,
+                (o)-> showWorkProgress()
+
         );
-        addButton(
-                "workTitle", Style.empty, getLanguage().walkInThePark,
-                Preffics.SCREEN_WIDTH / 2 - 500, Preffics.SCREEN_HEIGHT / 2 + 100, 1000, 100, 1.8f, group, () -> {
-                }
-        );
-        addButton(
-                "workDescription", Style.empty, getLanguage().walkToRecoverYourHead,
-                Preffics.SCREEN_WIDTH / 2 - 500, Preffics.SCREEN_HEIGHT / 2 - 25, 1000, 100, 1.8f, group, () -> {
-                }
-        );
-        addButton(
-                "work", Style.yesButton, getLanguage().doWalk,
-                Preffics.SCREEN_WIDTH / 2 - 450, Preffics.SCREEN_HEIGHT / 2 - 200, 400, 125, 1.5f, group, this::showWorkProgress
-        );
-        addButton(
-                "cancel", Style.yesButton, getLanguage().cancel,
-                Preffics.SCREEN_WIDTH / 2 + 50, Preffics.SCREEN_HEIGHT / 2 - 200, 400, 125, 1.5f, group, runnable::run
-        );
-        buttonGroup.addActor(group);
     }
 
     private void showWorkProgress() {
@@ -93,6 +74,7 @@ public class ParkRoom extends BaseRoom {
                 workInProgress = false;
                 group.clear();
                 group.remove();
+                showWorkMenu();
             };
 
             addButton(

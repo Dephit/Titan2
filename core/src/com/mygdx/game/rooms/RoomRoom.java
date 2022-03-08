@@ -119,8 +119,6 @@ public class RoomRoom extends BaseRoom {
                     item.onUse(player);
                     runnable.run();
                 }
-
-
         );
     }
 

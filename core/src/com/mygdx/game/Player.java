@@ -231,7 +231,7 @@ public class Player extends Npc {
     }
 
     public void onWork() {
-        float progress = 0.5f;
+        float progress = 0.5f * 10;
         health.minusProgress(progress * 0.5f);
         energy.minusProgress(progress);
         moral.minusProgress(progress);

@@ -18,7 +18,7 @@ import java.util.Random;
 
 public class CompetitionRoom extends BaseRoom {
 
-    private boolean callOnClose = false;
+
 
     public CompetitionRoom() {
         super("competition");
@@ -68,10 +68,13 @@ public class CompetitionRoom extends BaseRoom {
     @Override
     public void onRender() {
         super.onRender();
-        if(callOnClose){
-            player.onPlayerConditionChangeListener = null;
-            interScreenCommunication.openMap();
-        }
+
+    }
+
+    @Override
+    public void onClose(){
+        player.onPlayerConditionChangeListener = null;
+        interScreenCommunication.openMap();
     }
 
     private void showWorkMenu() {

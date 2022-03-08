@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.mygdx.game.interfaces.OnCLickCallback;
+import com.mygdx.game.interfaces.OnClickBooleanCallback;
 import com.mygdx.game.model.CompetitionOpponent;
 import com.mygdx.game.model.enums.Comp;
 import com.mygdx.game.rooms.CompetitionRoom;
@@ -81,6 +82,11 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
     @Override
     public void showDialog(String title, String subtitle, OnCLickCallback onClose, OnCLickCallback onAgree) {
         myRequestHandler.showDialog(title, subtitle, onClose, onAgree);
+    }
+
+    @Override
+    public void showProgressBar(String title, OnCLickCallback onProgressEnd, OnClickBooleanCallback onProgressUpdate, OnCLickCallback onClose) {
+        myRequestHandler.showProgressBar(title, onProgressEnd, onProgressUpdate, onClose);
     }
 
     @Override

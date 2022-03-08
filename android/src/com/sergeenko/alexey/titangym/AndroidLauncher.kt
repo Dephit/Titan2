@@ -2,6 +2,7 @@ package com.sergeenko.alexey.titangym
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,22 +15,26 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.lifecycleScope
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration
 import com.badlogic.gdx.backends.android.AndroidFragmentApplication
 import com.mygdx.game.IActivityRequestHandler
 import com.mygdx.game.MyGdxGame
 import com.mygdx.game.Player
 import com.mygdx.game.interfaces.OnCLickCallback
+import com.mygdx.game.interfaces.OnClickBooleanCallback
 import com.mygdx.game.model.CompetitionOpponent
 import com.mygdx.game.model.enums.Comp
 import com.sergeenko.alexey.titangym.composeFunctions.AlertDialogSample
 import com.sergeenko.alexey.titangym.composeFunctions.CompetitionTable
 import com.sergeenko.alexey.titangym.composeFunctions.PlayerList
+import com.sergeenko.alexey.titangym.composeFunctions.ProgressBar
 import com.sergeenko.alexey.titangym.databinding.MainActivityBinding
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @SuppressLint("Registered")
 class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHandler {
@@ -69,6 +74,8 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
         binding.container.addView(gameLayout)
     }
 
+
+
     private fun createGameLayout(config: AndroidApplicationConfiguration): RelativeLayout {
         val layout = RelativeLayout(context)
         activity?.window?.setFlags(
@@ -107,7 +114,6 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
     fun dialog(){
         binding.dialogView.apply {
             setContent {
-
                 MaterialTheme {
 
                 }
@@ -126,6 +132,39 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
             runnable?.call(it)
         }
     }
+
+    override fun showProgressBar(
+        title: String,
+        onProgressEnd: OnCLickCallback,
+        onProgressUpdate: OnClickBooleanCallback,
+        onClose: OnCLickCallback
+    ) {
+        var work = true
+        viewModel.resetProgress()
+        lifecycleScope.launch {
+            while (viewModel.progress.value < 1f && work){
+                viewModel.updateProgress(0.1f)
+                work = onProgressUpdate.isConditionOk
+                withContext(Main){
+                    showComposeView {
+                        ProgressBar(
+                            title = title,
+                            onProgressEnd = onProgressEnd,
+                            onClose = {
+                                work = false
+                                binding.composeView.setGone()
+                                onClose.call(it)
+                            },
+                            state = viewModel.progress)
+                    }
+                }
+                delay(1000)
+            }
+            binding.composeView.setGone()
+            onClose.call(null)
+        }
+    }
+
 
     override fun showDialog(
         title: String,
@@ -203,23 +242,3 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
 
 }
 
-class MainViewModel : ViewModel() {
-    // Initial value is false so the dialog is hidden
-    private val _showDialog = MutableStateFlow(false)
-    val showDialog: StateFlow<Boolean> = _showDialog.asStateFlow()
-
-    fun onOpenDialogClicked() {
-        _showDialog.value = true
-    }
-
-    fun onDialogConfirm() {
-        _showDialog.value = false
-        // Continue with executing the confirmed action
-    }
-
-    fun onDialogDismiss() {
-        _showDialog.value = false
-    }
-
-    // The rest of your screen's logic...
-}

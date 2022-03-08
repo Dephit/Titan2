@@ -26,6 +26,7 @@ import com.mygdx.game.Player;
 import com.mygdx.game.PlayerCondition;
 import com.mygdx.game.Preffics;
 import com.mygdx.game.Style;
+import com.mygdx.game.interfaces.OnCLickCallback;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -160,38 +161,35 @@ public class GymRoom extends BaseRoom {
 
     private void setTalkingToAGirl(Preffics preffics) {
         player.setPath(1025, 450, 0, 0, lookinUp, () -> {
-            Message message = new Message(1070, 670, true,
+            Message message = new Message("Girl",
                     preffics.getLanguage().armGirlDialogTree,
-                    preffics.getLanguage().armGirlRandomText,
-                    player.currentGirlDialogProgress,
-                    () -> player.currentGirlDialogProgress++
+                    preffics.getLanguage().armGirlRandomText
             );
-            if (!hudGroup.getChildren().contains(message, false))
-                hudGroup.addActor(message);
+            showDialog(message);
+            player.setPlayersAction(stay, 1025, 450, ()->{});
         });
     }
 
     private void setTalkingToBicepsGuy(Preffics preffics) {
             player.setPath(400, 300, 0, 0, lookinLeft, () -> {
-                Message message = new Message(300, 500, true,
+                Message message = new Message(
+                        "Guy",
                         new ArrayList<>(),
                         preffics.getLanguage().dumbelGuyRandomText
                 );
-                if (!hudGroup.getChildren().contains(message, false))
-                    hudGroup.addActor(message);
+                showDialog(message);
+                player.setPlayersAction(stay, 400, 300, ()->{});
             });
     }
 
     private void setTalkingCoach(Preffics preffics) {
         player.setPath(350, 50, 0, 0, lookinLeft, () -> {
-            Message message = new Message(100, 240, true,
+            Message message = new Message("Coach",
                     preffics.getLanguage().coachDialogTree,
-                    preffics.getLanguage().coachRandomText,
-                    player.coachDialogProgress,
-                    () -> player.coachDialogProgress++
+                    preffics.getLanguage().coachRandomText
             );
-            if (!hudGroup.getChildren().contains(message, false))
-                hudGroup.addActor(message);
+            showDialog(message);
+            player.setPlayersAction(stay, 350, 50, ()->{});
         });
     }
 

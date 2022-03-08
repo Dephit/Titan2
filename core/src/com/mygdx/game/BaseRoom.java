@@ -16,11 +16,13 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.mygdx.game.interfaces.OnCLickCallback;
 
 import java.util.ArrayList;
 
 public abstract class BaseRoom extends Stage  {
 
+    protected boolean callOnClose = false;
 
     protected ArrayList<Npc> npcs = new ArrayList<>();
 
@@ -108,6 +110,20 @@ public abstract class BaseRoom extends Stage  {
         return pixmap;
     }
 
+
+    public void showDialog(Message message){
+        interScreenCommunication.showDialog(
+                "Coach",
+                message.text,
+                (OnCLickCallback) object -> {
+                },
+                (OnCLickCallback) object -> {
+                    message.onClick();
+                    showDialog(message);
+                }
+        );
+    }
+
     public BaseRoom(FitViewport viewport) {
         super(viewport);
         init();
@@ -157,6 +173,13 @@ public abstract class BaseRoom extends Stage  {
         if(!pause) {
             act(Gdx.graphics.getDeltaTime());
         }
+        if(callOnClose){
+            onClose();
+        }
+    }
+
+    public void onClose() {
+
     }
 
     private void showPath(Preffics preffics) {
