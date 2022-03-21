@@ -42,4 +42,6 @@ public interface IActivityRequestHandler {
             OnCLickCallback onClose,
             OnCLickCallback onAgree
     );
+
+    void openOptions();
 }

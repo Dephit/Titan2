@@ -1,6 +1,8 @@
 package com.sergeenko.alexey.titangym.composeFunctions
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -28,3 +30,6 @@ fun progressBarModifier(): Modifier {
         .background(Color.White)
         .padding(10.dp)
 }
+
+@Composable
+fun ColumnScope.FillSpacer() = Spacer(modifier = Modifier.weight(1f))

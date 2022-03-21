@@ -6,7 +6,7 @@ public class Day {
 
     public void addTime() {
         currentTime++;
-        if (currentTime > 50) {
+        if (currentTime > 30) {
             currentDay++;
             currentTime = 0;
         }

@@ -28,4 +28,9 @@
     <string name="dl">DL</string>
     <string name="total">Total</string>
     <string name="ok">Ok</string>
+    <string name="tap_to_continue">Tap to continue...</string>
+    <string name="launch_game">Launch Game</string>
+    <string name="options">Options</string>
+    <string name="exit">Exit</string>
+    <string name="back">Back</string>
 </resources>

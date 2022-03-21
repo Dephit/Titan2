@@ -57,6 +57,8 @@ public interface InterScreenCommunication {
     void openPark();
 
     void openCompetition();
+
+    void openOptions();
 }
 
 

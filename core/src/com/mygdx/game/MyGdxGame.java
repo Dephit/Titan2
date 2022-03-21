@@ -56,7 +56,6 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
 
     @Override
     public void resume() {
-
     }
 
     @Override
@@ -178,6 +177,11 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
                 return super.touchDown(event, x, y, pointer, button);
             }
         });
+    }
+
+    @Override
+    public void openOptions() {
+        myRequestHandler.openOptions();
     }
 }
 

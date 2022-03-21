@@ -1,8 +1,7 @@
-package com.sergeenko.alexey.titangym
+package com.sergeenko.alexey.titangym.fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +15,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration
 import com.badlogic.gdx.backends.android.AndroidFragmentApplication
 import com.mygdx.game.IActivityRequestHandler
@@ -25,14 +25,17 @@ import com.mygdx.game.interfaces.OnCLickCallback
 import com.mygdx.game.interfaces.OnClickBooleanCallback
 import com.mygdx.game.model.CompetitionOpponent
 import com.mygdx.game.model.enums.Comp
+import com.sergeenko.alexey.titangym.MainViewModel
+import com.sergeenko.alexey.titangym.R
 import com.sergeenko.alexey.titangym.composeFunctions.AlertDialogSample
 import com.sergeenko.alexey.titangym.composeFunctions.CompetitionTable
 import com.sergeenko.alexey.titangym.composeFunctions.PlayerList
 import com.sergeenko.alexey.titangym.composeFunctions.ProgressBar
 import com.sergeenko.alexey.titangym.databinding.MainActivityBinding
+import com.sergeenko.alexey.titangym.setGone
+import com.sergeenko.alexey.titangym.setVisible
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -73,8 +76,6 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
     private fun launchGame() {
         binding.container.addView(gameLayout)
     }
-
-
 
     private fun createGameLayout(config: AndroidApplicationConfiguration): RelativeLayout {
         val layout = RelativeLayout(context)
@@ -161,8 +162,16 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
                 delay(1000)
             }
             binding.composeView.setGone()
+            onProgressEnd.call(null)
             onClose.call(null)
         }
+    }
+
+    override fun openOptions() {
+        findNavController()
+            .navigate(
+                R.id.action_androidLauncherFragment_to_optionsFragment
+            )
     }
 
 

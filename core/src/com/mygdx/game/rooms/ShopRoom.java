@@ -1,6 +1,5 @@
 package com.mygdx.game.rooms;
 
-import static com.mygdx.game.PlayerCondition.lookinLeft;
 import static com.mygdx.game.PlayerCondition.stay;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -13,7 +12,6 @@ import com.mygdx.game.Message;
 import com.mygdx.game.Npc;
 import com.mygdx.game.Player;
 import com.mygdx.game.PlayerCondition;
-import com.mygdx.game.Preffics;
 import com.mygdx.game.Style;
 import com.mygdx.game.model.Item;
 import com.mygdx.game.model.ShopMenu;
@@ -50,12 +48,12 @@ public class ShopRoom extends BaseRoom {
         addButton("watchCam", Style.empty, "",   244, 700, 75, 75, 1f,
                 () -> player.setPath(360 , 385, PlayerCondition.watchCam));
         addButton("talkToStaffBut", Style.empty, "",   230, 460, 75, 175, 1f, this::talkToStaff);
-        addButton("talkToCleanerBut", Style.empty, "",   1250, 430, 75, 155, 1f, this::talkToSanitar);
+        addButton("talkToCleanerBut", Style.empty, "",   1250, 430, 75, 155, 1f, this::talkToSanitaire);
         addButton("buyMenuBut", Style.empty, "",   1100, 200, 200, 200, 1f,
                 () -> player.setPath(1310 , 380,1310 , 380, PlayerCondition.stay, this::showBuyMenu));
     }
 
-    private void talkToSanitar() {
+    private void talkToSanitaire() {
         player.setPath(1310 , 380, 0, 0, PlayerCondition.lookinUp, () -> {
             Message message = new Message("Sanitar",
                     new ArrayList<>(),
@@ -156,7 +154,11 @@ public class ShopRoom extends BaseRoom {
         return new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                onFinish.run();
+                try{
+                    onFinish.run();
+                }catch (Exception e){
+
+                }
             }
 
             @Override

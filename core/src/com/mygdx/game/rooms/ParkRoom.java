@@ -12,6 +12,7 @@ import com.mygdx.game.PlayerCondition;
 import com.mygdx.game.Preffics;
 import com.mygdx.game.StatBar;
 import com.mygdx.game.Style;
+import com.mygdx.game.interfaces.OnCLickCallback;
 
 public class ParkRoom extends BaseRoom {
 
@@ -67,56 +68,33 @@ public class ParkRoom extends BaseRoom {
     private void showWorkProgress() {
         if (player.getEnergyBar().getCurrentAmount() > 0 && player.getHealthBar().getCurrentAmount() > 0) {
             workInProgress = true;
-            Group group = new Group();
             //pause = true;
             Runnable runnable = () -> {
                 //pause = false;
                 workInProgress = false;
-                group.clear();
-                group.remove();
                 showWorkMenu();
             };
 
-            addButton(
-                    "window", Style.window, "",
-                    Preffics.SCREEN_WIDTH / 2 - 750, Preffics.SCREEN_HEIGHT / 2 - 250, 1500, 500, 1, group, runnable
+            interScreenCommunication.showProgressBar(
+                    getLanguage().walkingInProgress,
+                    //onEnd
+                    (OnCLickCallback) (o) -> {
+                        player.setPlayerPosition(((int) player.getX()), (int) player.getY(), PlayerCondition.stay);
+                        runnable.run();
+                    },
+                    //onUpdate
+                    () -> {
+                        if(player.getEnergyBar().getCurrentAmount() <= 0 || player.getHealthBar().getCurrentAmount() <= 0){
+                            interScreenCommunication.showToast(getLanguage().youHaveNoEnergyOrHealth);
+                            runnable.run();
+                            return false;
+                        }
+                        player.onWork();
+                        return player.getEnergyBar().getCurrentAmount() > 0 && player.getHealthBar().getCurrentAmount() > 0 && workInProgress;
+                    },
+                    //onClose
+                    (o) -> runnable.run()
             );
-            addButton(
-                    "workTitle", Style.empty, getLanguage().walkingInProgress,
-                    Preffics.SCREEN_WIDTH / 2 - 500, Preffics.SCREEN_HEIGHT / 2 + 100, 1000, 100, 1.8f, group, () -> {
-                    }
-            );
-            StatBar statBar = new StatBar("work");
-            statBar.setBounds(Preffics.SCREEN_WIDTH / 2 - 400, Preffics.SCREEN_HEIGHT / 2 - 50, 800, 130);
-            statBar.setProgressAndCapacity(100, 0);
-            statBar.setColor(Color.valueOf("ef7b45"));
-            statBar.setBackgroundColor(Color.valueOf("042a2b"));
-            group.addActor(statBar);
-            addButton(
-                    "cancel", Style.yesButton, getLanguage().cancel,
-                    Preffics.SCREEN_WIDTH / 2 - 200, Preffics.SCREEN_HEIGHT / 2 - 200, 400, 125, 1.5f, group, runnable::run
-            );
-            buttonGroup.addActor(group);
-            new Thread(() -> {
-                while (statBar.getCurrentAmount() < 100 && player.getEnergyBar().getCurrentAmount() > 0 && player.getHealthBar().getCurrentAmount() > 0 && workInProgress) {
-                    statBar.addCurrentAmount(1);
-                    player.onPark();
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                if (player.getEnergyBar().getCurrentAmount() <= 0 || player.getHealthBar().getCurrentAmount() <= 0) {
-                    interScreenCommunication.showToast(getLanguage().youHaveNoEnergyOrHealth);
-                    runnable.run();
-                    return;
-                }
-                if (statBar.getCurrentAmount() >= 100) {
-                    player.setPlayerPosition(((int) player.getX()), (int) player.getY(), PlayerCondition.stay);
-                }
-                runnable.run();
-            }).start();
         } else {
             interScreenCommunication.showToast(getLanguage().youHaveNoEnergyOrHealth);
             openMap();

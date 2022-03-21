@@ -1,11 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/androidLauncherFragment">
+    app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/androidLauncherFragment"
-        android:name="com.sergeenko.alexey.titangym.AndroidLauncherFragment"
-        android:label="AndroidLauncherFragment" />
+        android:name="com.sergeenko.alexey.titangym.fragments.AndroidLauncherFragment"
+        android:label="AndroidLauncherFragment" >
+        <action
+            android:id="@+id/action_androidLauncherFragment_to_optionsFragment"
+            app:destination="@id/optionsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.sergeenko.alexey.titangym.fragments.SplashFragment"
+        android:label="fragment_splash"
+        >
+        <action
+            android:id="@+id/action_splashFragment_to_androidLauncherFragment"
+            app:destination="@id/mainMenuFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainMenuFragment"
+        android:name="com.sergeenko.alexey.titangym.fragments.MainMenuFragment"
+        android:label="MainMenuFragment" >
+        <action
+            android:id="@+id/action_mainMenuFragment_to_optionsFragment"
+            app:destination="@id/optionsFragment" />
+        <action
+            android:id="@+id/action_mainMenuFragment_to_androidLauncherFragment"
+            app:destination="@id/androidLauncherFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/optionsFragment"
+        android:name="com.sergeenko.alexey.titangym.fragments.OptionsFragment"
+        android:label="OptionsFragment" />
 </navigation>

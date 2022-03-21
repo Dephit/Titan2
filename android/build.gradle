@@ -16,7 +16,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion '1.0.5'
+        kotlinCompilerExtensionVersion '1.1.0'
     }
 
     packagingOptions {
@@ -120,7 +120,7 @@ task run(type: Exec) {
     }
 
     def adb = path + "/platform-tools/adb"
-    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.mygdx.game/com.sergeenko.alexey.titangym.AndroidLauncher'
+    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.mygdx.game/com.sergeenko.alexey.titangym.activities.AndroidLauncher'
 }
 
 dependencies {
@@ -136,6 +136,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore:22.0.2'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.4.1'
     implementation 'androidx.navigation:navigation-ui-ktx:2.4.1'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     def fastAdapterVersion = '5.3.2'
     implementation "com.mikepenz:fastadapter:$fastAdapterVersion"
