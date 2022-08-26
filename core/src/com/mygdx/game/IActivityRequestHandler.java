@@ -44,4 +44,6 @@ public interface IActivityRequestHandler {
     );
 
     void openOptions();
+
+    void showHud(Player player);
 }

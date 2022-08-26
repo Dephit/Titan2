@@ -8,11 +8,19 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.RelativeLayout
 import android.widget.Toast
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -27,10 +35,7 @@ import com.mygdx.game.model.CompetitionOpponent
 import com.mygdx.game.model.enums.Comp
 import com.sergeenko.alexey.titangym.MainViewModel
 import com.sergeenko.alexey.titangym.R
-import com.sergeenko.alexey.titangym.composeFunctions.AlertDialogSample
-import com.sergeenko.alexey.titangym.composeFunctions.CompetitionTable
-import com.sergeenko.alexey.titangym.composeFunctions.PlayerList
-import com.sergeenko.alexey.titangym.composeFunctions.ProgressBar
+import com.sergeenko.alexey.titangym.composeFunctions.*
 import com.sergeenko.alexey.titangym.databinding.MainActivityBinding
 import com.sergeenko.alexey.titangym.setGone
 import com.sergeenko.alexey.titangym.setVisible
@@ -75,6 +80,7 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
 
     private fun launchGame() {
         binding.container.addView(gameLayout)
+        showComposeView()
     }
 
     private fun createGameLayout(config: AndroidApplicationConfiguration): RelativeLayout {
@@ -97,7 +103,7 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
         }
     }
 
-    private fun showComposeView(function: @Composable () -> Unit) {
+    private fun showComposeView(function: @Composable () -> Unit = {}) {
         binding.composeView.apply {
             setContent {
                 MaterialTheme {
@@ -109,6 +115,7 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
             }
         }
     }
+
 
     fun dialog(){
         binding.dialogView.apply {
@@ -171,6 +178,14 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
                 .navigate(
                     R.id.action_androidLauncherFragment_to_optionsFragment
                 )
+        }
+    }
+
+    override fun showHud(player: Player) {
+        binding.hudView.apply {
+            setContent {
+                HudBar(player)
+            }
         }
     }
 

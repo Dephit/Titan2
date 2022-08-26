@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.mygdx.game.Player
 import com.mygdx.game.interfaces.OnCLickCallback
 import com.sergeenko.alexey.titangym.R
 import kotlinx.coroutines.flow.StateFlow
@@ -50,3 +51,4 @@ fun ProgressBar(
         }
     }
 }
+
