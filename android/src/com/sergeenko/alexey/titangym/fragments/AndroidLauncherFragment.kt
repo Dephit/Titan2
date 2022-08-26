@@ -79,11 +79,13 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
 
     private fun createGameLayout(config: AndroidApplicationConfiguration): RelativeLayout {
         val layout = RelativeLayout(context)
-        activity?.window?.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )
-        activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN)
+        activity?.window?.apply {
+            setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+            )
+            clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN)
+        }
         val gameView = initializeForView(MyGdxGame(this), config)
         layout.addView(gameView)
         return layout
