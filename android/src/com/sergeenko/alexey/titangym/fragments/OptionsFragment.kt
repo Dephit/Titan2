@@ -39,7 +39,6 @@ class OptionsFragment : BaseComposeFragment() {
             Box(Modifier.clickable {
                 isViewVisible = false
                 navigate(R.id.action_splashFragment_to_androidLauncherFragment)
-
             }) {
                 Column {
                     FillSpacer()

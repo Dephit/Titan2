@@ -56,6 +56,7 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
 
     @Override
     public void resume() {
+        stage.onRender();
     }
 
     @Override

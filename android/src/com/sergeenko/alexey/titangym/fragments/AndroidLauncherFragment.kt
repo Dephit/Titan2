@@ -91,11 +91,7 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
 
     override fun showToast(s: String) {
         runOnUiThread {
-            Toast.makeText(
-                context,
-                s,
-                Toast.LENGTH_SHORT
-            ).show()
+            Toast.makeText(context, s, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -168,10 +164,12 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
     }
 
     override fun openOptions() {
-        findNavController()
-            .navigate(
-                R.id.action_androidLauncherFragment_to_optionsFragment
-            )
+        postRunnable {
+            findNavController()
+                .navigate(
+                    R.id.action_androidLauncherFragment_to_optionsFragment
+                )
+        }
     }
 
 

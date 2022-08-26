@@ -20,15 +20,13 @@ import static com.mygdx.game.PlayerCondition.squat;
 
 public class Npc extends BaseActor {
 
-    private int sizeMult = 5;
-
     public PlayerCondition playerCondition = PlayerCondition.stay;
     private PlayerCondition nextPlayerCondition = PlayerCondition.stay;
 
     private final Vector2 speed;
     public Vector2 lastWalkablePosition = new Vector2();
     private final TextureAtlas textureAtlas;
-    private Map<String, Animation<TextureRegion>> animMap;
+    private final Map<String, Animation<TextureRegion>> animMap;
     protected final TextureRegion currentFrame = new TextureRegion();
     public float animationTime = 0;
     public float nextX;
@@ -89,6 +87,7 @@ public class Npc extends BaseActor {
     private void playAnimation(){
         try {
             currentFrame.setRegion(animMap.get(playerCondition.toString().toLowerCase()).getKeyFrame(animationTime, true));
+            int sizeMult = 5;
             setSize(currentFrame.getRegionWidth() * sizeMult, currentFrame.getRegionHeight() * sizeMult);
         }catch (NullPointerException ignored){}
     }

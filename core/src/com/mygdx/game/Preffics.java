@@ -86,7 +86,7 @@ public class Preffics {
     public void updateLoading() {
         try{
             assetManager.update();
-        }catch (Exception e){
+        }catch (Exception ignored){
 
         }
     }
@@ -99,8 +99,6 @@ public class Preffics {
         assetManager.clear();
     }
 
-
-
     public void createMap(String tag) {
         mapSize = 14;
         mapCoordinateCorrector = 50;
@@ -111,7 +109,7 @@ public class Preffics {
 
     public void RestoreMap(String tag) {
         try {
-            ArrayList<Coordinates> coordinates = Preffics.getInstance().fromObjectFromJson("screens/" + tag + "/" + tag + ".json", ArrayList.class);
+            ArrayList<Coordinates> coordinates = fromObjectFromJson("screens/" + tag + "/" + tag + ".json", ArrayList.class);
             for (Coordinates coordinate : coordinates) {
                 mapArr[coordinate.x][coordinate.y] = -1;
             }
