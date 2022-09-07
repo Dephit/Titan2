@@ -54,6 +54,7 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
         myRequestHandler.showHud(player);
     }
 
+
     @Override
     public void pause() {
         stage.onPause();
@@ -189,5 +190,6 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
     public void openOptions() {
         myRequestHandler.openOptions();
     }
+
 }
 

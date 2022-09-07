@@ -26,7 +26,7 @@ public abstract class BaseRoom extends Stage  {
 
     protected ArrayList<Npc> npcs = new ArrayList<>();
 
-    protected Group objectGroup, buttonGroup, hudGroup = new Group();
+    protected Group objectGroup, buttonGroup/*, hudGroup = new Group()*/;
 
     public Player player;
     protected String ROOM_TAG = "";
@@ -63,13 +63,13 @@ public abstract class BaseRoom extends Stage  {
         init();
         if(_player != null){
             objectGroup.addActor(player);
-            hudGroup.addActor(player.getHealthBar());
+           /* hudGroup.addActor(player.getHealthBar());
             hudGroup.addActor(player.getEnergyBar());
-            hudGroup.addActor(player.getMoralBar());
-            hudGroup.addActor(player.getPocketView());
+            hudGroup.addActor(player.getTirednessBar());
+            hudGroup.addActor(player.getPocketView());*/
         }
         addActor(objectGroup);
-        addActor(hudGroup);
+        //addActor(hudGroup);
         addActor(buttonGroup);
     }
 
@@ -97,7 +97,7 @@ public abstract class BaseRoom extends Stage  {
             player.clearPath();
         }
         objectGroup = new Group();
-        hudGroup = new Group();
+        //hudGroup = new Group();
         buttonGroup = new Group();
     }
 

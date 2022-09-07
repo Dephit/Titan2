@@ -1,11 +1,9 @@
 package com.sergeenko.alexey.titangym.composeFunctions
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -21,21 +19,79 @@ fun HudBar(
     Box(
         Modifier
             .fillMaxSize()
-            .padding(50.dp)
+            .padding(20.dp)
     ) {
-        Row {
-            Spacer(Modifier.fillMaxWidth().weight(1f))
-            LinearProgressIndicator(
-                modifier = Modifier
-                    .width(100.dp)
-                    .height(10.dp)
-                    .clip(RoundedCornerShape(50)
+        val bar = player.isInExercise
+
+        Row(
+            modifier = Modifier.padding(end = 30.dp)
+        ) {
+            Spacer(
+                Modifier
+                    .fillMaxWidth()
+                    .weight(1f))
+            Column {
+                LinearProgressIndicator(
+                    modifier = Modifier
+                        .width(150.dp)
+                        .height(15.dp)
+                        .clip(
+                            RoundedCornerShape(50)
+                        )
+                    ,
+                    color = Color.Red,
+                    progress = player.healthBar.currentAmount / 100f,
+                    backgroundColor = Color.Black
+                )
+                Spacer(
+                    Modifier.height(10.dp)
+                )
+                LinearProgressIndicator(
+                    modifier = Modifier
+                        .width(150.dp)
+                        .height(15.dp)
+                        .clip(
+                            RoundedCornerShape(50)
+                        )
+                    ,
+                    color = Color.Yellow,
+                    progress = player.energyBar.currentAmount / 100f,
+                    backgroundColor = Color.Black
+                )
+                Spacer(
+                    Modifier.height(10.dp)
+                )
+                LinearProgressIndicator(
+                    modifier = Modifier
+                        .width(150.dp)
+                        .height(15.dp)
+                        .clip(
+                            RoundedCornerShape(50)
+                        )
+                    ,
+                    color = Color.Green,
+                    progress = player.tirednessBar.currentAmount / 100f,
+                    backgroundColor = Color.Black
+                )
+                Spacer(
+                    Modifier.height(10.dp)
+                )
+                if(bar != null){
+                    LinearProgressIndicator(
+                        modifier = Modifier
+                            .width(150.dp)
+                            .height(15.dp)
+                            .clip(
+                                RoundedCornerShape(50)
+                            )
+                        ,
+                        color = Color.White,
+                        progress = bar.statBar.currentAmount / 100f,
+                        backgroundColor = Color.Black
                     )
-                ,
-                color = Color.Yellow,
-                progress = player.energyBar.currentAmount / 100f,
-                backgroundColor = Color.Black
-            )
+                }
+            }
+
         }
     }
 }

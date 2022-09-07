@@ -59,6 +59,8 @@ public interface InterScreenCommunication {
     void openCompetition();
 
     void openOptions();
+
+
 }
 
 

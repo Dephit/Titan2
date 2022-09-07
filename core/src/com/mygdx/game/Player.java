@@ -11,7 +11,6 @@ import com.mygdx.game.model.Pocket;
 import com.mygdx.game.model.Refrigerator;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Player extends Npc {
 
@@ -29,7 +28,7 @@ public class Player extends Npc {
 
     Stat health;
     Stat energy;
-    Stat moral;
+    Stat tiredness;
 
     public Refrigerator refrigerator = new Refrigerator();
     public Pocket pocket = new Pocket(75);
@@ -38,7 +37,7 @@ public class Player extends Npc {
         super("player");
         health = new Stat(language.health);
         energy = new Stat(language.energy);
-        moral = new Stat(language.moral);
+        tiredness = new Stat(language.moral);
 
         setDebugPlayer();
 
@@ -48,7 +47,7 @@ public class Player extends Npc {
         exercises.add(pushUps);
         exercises.add(pullUps);
 
-        health.statBar.setBounds(1920 - 400 - 50, 1080 - 65 - 50, 400, 65);
+        /*health.statBar.setBounds(1920 - 400 - 50, 1080 - 65 - 50, 400, 65);
         health.statBar.setProgressAndCapacity(100, 100);
         health.statBar.setColor(Color.valueOf("910101"));
         health.statBar.setTextColor(Color.WHITE);
@@ -60,11 +59,11 @@ public class Player extends Npc {
         energy.statBar.setTextColor(Color.WHITE);
         energy.statBar.setBackgroundColor(Color.valueOf("042a2b"));
 
-        moral.statBar.setBounds(1920 - 400 - 50, 1080 - 65 * 3 - 50 - 50, 400, 65);
-        moral.statBar.setProgressAndCapacity(100, 100);
-        moral.statBar.setTextColor(Color.WHITE);
-        moral.statBar.setColor(Color.valueOf("240953"));
-        moral.statBar.setBackgroundColor(Color.valueOf("042a2b"));
+        tiredness.statBar.setBounds(1920 - 400 - 50, 1080 - 65 * 3 - 50 - 50, 400, 65);
+        tiredness.statBar.setProgressAndCapacity(100, 100);
+        tiredness.statBar.setTextColor(Color.WHITE);
+        tiredness.statBar.setColor(Color.valueOf("240953"));
+        tiredness.statBar.setBackgroundColor(Color.valueOf("042a2b"));*/
 
         pocket.getPocketView().setBounds(1920 - 410 - 50, 1080 - 65 * 4 - 25 - 100 - 15, 400, 65);
     }
@@ -120,7 +119,7 @@ public class Player extends Npc {
             Float value = exr.calculateProgress(delta);
             energy.minusProgress(value);
             health.minusProgress(value / 2);
-            moral.minusProgress(value / 4);
+            tiredness.minusProgress(value / 4);
         }else setPlayerCondition(PlayerCondition.stay);
     }
 
@@ -201,8 +200,8 @@ public class Player extends Npc {
         return energy.statBar;
     }
 
-    public StatBar getMoralBar(){
-        return moral.statBar;
+    public StatBar getTirednessBar(){
+        return tiredness.statBar;
     }
 
     public Exercise isInExercise() {
@@ -234,7 +233,7 @@ public class Player extends Npc {
         float progress = 0.5f * 10;
         health.minusProgress(progress * 0.5f);
         energy.minusProgress(progress);
-        moral.minusProgress(progress);
+        tiredness.minusProgress(progress);
         for (Exercise exercise: exercises){
             exercise.calculateProgress(-progress * 0.50f);
         }
@@ -244,7 +243,7 @@ public class Player extends Npc {
         float progress = 0.5f;
         health.minusProgress(progress * 0.5f);
         energy.minusProgress(progress * 0.25f);
-        moral.addProgress(progress);
+        tiredness.addProgress(progress);
         for (Exercise exercise: exercises){
             exercise.calculateProgress(-progress * 0.50f);
         }
@@ -254,7 +253,7 @@ public class Player extends Npc {
         float progress = 0.25f;
         health.minusProgress(progress * 0.25f);
         energy.minusProgress(progress * 0.35f);
-        moral.addProgress(progress * 0.15f);
+        tiredness.addProgress(progress * 0.15f);
         for (Exercise exercise: exercises){
             exercise.calculateProgress(-progress * 0.50f);
         }

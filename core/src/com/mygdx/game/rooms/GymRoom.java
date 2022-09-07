@@ -37,7 +37,7 @@ public class GymRoom extends BaseRoom {
         super("gym");
     }
 
-    Group exrGroup = new Group();
+    //Group exrGroup = new Group();
 
     public GymRoom(InterScreenCommunication _communication, Player player) {
         super(_communication, "gym", player);
@@ -48,7 +48,7 @@ public class GymRoom extends BaseRoom {
         objectGroup.addActor(npc);
         player.setPlayerPosition(400,100);
         player.setPlayersAction(stay, 400, 100, ()->{});
-        hudGroup.addActor(exrGroup);
+        //hudGroup.addActor(exrGroup);
     }
 
     @Override
@@ -196,15 +196,9 @@ public class GymRoom extends BaseRoom {
     @Override
     public void draw() {
         super.draw();
-        Exercise bar = player.isInExercise();
-        if(bar != null && !bar.statBar.hasParent()){
-            exrGroup.clear();
-            exrGroup.addActor(bar.statBar);
-        }
-        if(bar == null && exrGroup.hasChildren()){
-            exrGroup.clear();
-        }
+
     }
+
 
     @Override
     protected void orderExceptions(int i, int j) {
