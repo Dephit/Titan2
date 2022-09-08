@@ -44,10 +44,10 @@ public class Exercise {
     public Float calculateProgress(float delta) {
         if(progress < 0){
             if(LVL > 0)
-                setLVL(LVL--, true);
+                setLVL(--LVL, true);
         }
         if(progress >= limit){
-            setLVL(LVL++, false);
+            setLVL(++LVL, false);
         }
         progress += delta * 25f;
         statBar.setProgress(progress);

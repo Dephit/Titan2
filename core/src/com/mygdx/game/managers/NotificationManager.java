@@ -1,6 +1,7 @@
 package com.mygdx.game.managers;
 
 import com.mygdx.game.Exercise;
+import com.mygdx.game.Stat;
 import com.mygdx.game.model.Notification;
 
 import java.util.ArrayList;
@@ -38,10 +39,31 @@ public class NotificationManager {
     }
 
     public void addNewLevelNotification(Exercise exercise) {
-        Notification n = new Notification();
-        n.showTime = 10000L;
-        n.message = exercise.condition + " is reached level " + exercise.LVL;
-        notificationList.add(n);
+        notificationList.add(
+                new Notification(
+                        exercise.condition + " is reached level " + exercise.LVL,
+                        10000L
+                )
+        );
         exercise.newLevelReached = false;
+    }
+
+    public void manageStats(Stat energy, Stat health, Stat tiredness) {
+        if(energy.value <= 0 && !energy.isZero){
+            notificationList.add(new Notification("Your energy level is zero, go to sleep",15000L));
+            energy.isZero = true;
+        }
+        if(health.value <= 0 && !health.isZero){
+            notificationList.add(new Notification("Your too hungry to do this, go to eat",15000L));
+            health.isZero = true;
+        }
+        if(tiredness.value <= 0 && !tiredness.isZero){
+            notificationList.add(new Notification("Your are tired, go to relax",15000L));
+            tiredness.isZero = true;
+        }
+    }
+
+    public void addMessage(String msg) {
+        notificationList.add(new Notification(msg, 10000L));
     }
 }

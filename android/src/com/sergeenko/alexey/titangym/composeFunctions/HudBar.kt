@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.mygdx.game.Exercise
 import com.mygdx.game.Player
@@ -69,16 +70,30 @@ fun NotificationList(notificationManager: NotificationManager) {
 
 @Composable
 fun CurrentExercise(bar: Exercise?) {
+    val value: Float
+    val height: Dp
     if(bar != null){
+        value = bar.statBar.currentAmount / bar.limit
+        height = 5.dp
+    }else {
+        value = 0f
+        height = 3.dp
+    }
+    Column() {
+        Spacer(
+            Modifier
+                .fillMaxHeight()
+                .weight(1f)
+        )
         LinearProgressIndicator(
             modifier = Modifier
                 .width(150.dp)
-                .height(15.dp)
+                .height(height)
                 .clip(
                     RoundedCornerShape(50)
                 ),
             color = Color.White,
-            progress = bar.statBar.currentAmount / bar.limit,
+            progress = value,
             backgroundColor = Color.Black
         )
     }

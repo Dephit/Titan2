@@ -4,9 +4,10 @@ import com.badlogic.gdx.graphics.Color;
 
 public class Stat {
 
+    public boolean isZero = false;
     StatBar statBar;
 
-    float value = 100;
+    public float value = 100;
 
     public Stat(String statName) {
         statBar = new StatBar(statName);
@@ -25,6 +26,7 @@ public class Stat {
         if(value <= 100) {
             value += progress;
         }
+        isZero = false;
         statBar.setProgress(value);
     }
 }

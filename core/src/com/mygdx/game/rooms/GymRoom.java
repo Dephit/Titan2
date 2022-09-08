@@ -128,7 +128,8 @@ public class GymRoom extends BaseRoom {
         if(!someoneDoingIt(playerCondition)) {
             runnable.run();
         }else{
-            interScreenCommunication.showToast(getLanguage().thisIsTaken);
+            //interScreenCommunication.showToast();
+            player.notificationManager.addMessage(getLanguage().thisIsTaken);
         }
     }
 

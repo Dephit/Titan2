@@ -2,6 +2,7 @@ package com.mygdx.game.managers;
 
 import com.mygdx.game.Exercise;
 import com.mygdx.game.PlayerCondition;
+import com.mygdx.game.Stat;
 
 public class PlayerExerciseManager extends ExerciseManager {
 
@@ -25,4 +26,5 @@ public class PlayerExerciseManager extends ExerciseManager {
                 bench.setLVL(8,true);
                 deadlift.setLVL(12,true);
         }
+
 }

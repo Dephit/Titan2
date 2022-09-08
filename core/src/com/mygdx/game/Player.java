@@ -130,7 +130,10 @@ public class Player extends Npc {
             energy.minusProgress(value);
             health.minusProgress(value / 2);
             tiredness.minusProgress(value / 4);
-        }else setPlayerCondition(PlayerCondition.stay);
+        }else {
+            notificationManager.manageStats(energy, health, tiredness);
+            setPlayerCondition(PlayerCondition.stay);
+        }
     }
 
     private void calculateRecovery(float delta) {
