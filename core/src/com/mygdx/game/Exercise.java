@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 
 public class Exercise {
 
-    PlayerCondition condition;
+    public PlayerCondition condition;
     public StatBar statBar;
 
     public Exercise(PlayerCondition statName) {
@@ -21,7 +21,8 @@ public class Exercise {
     float recovery = 100;
     int result = 80;
     float lastResult = -1f;
-    int LVL = 0;
+    public int LVL = 0;
+    public Boolean newLevelReached = false;
 
     public void setLVL(int LVL, boolean isReduced) {
         this.LVL = LVL;
@@ -29,10 +30,11 @@ public class Exercise {
         limit = 100 + LVL * 20;
         statBar.setCapacity((int) limit);
         progress = isReduced ? limit : 0;
+        newLevelReached = !isReduced;
     }
 
     float progress = 0;
-    float limit = 100;
+    public float limit = 100;
 
     public void minusPrgress(float value){
         progress -=value;
@@ -47,7 +49,7 @@ public class Exercise {
         if(progress >= limit){
             setLVL(LVL++, false);
         }
-        progress += delta * 5f;
+        progress += delta * 25f;
         statBar.setProgress(progress);
         return delta * 5f;
     }

@@ -3,16 +3,23 @@ package com.mygdx.game;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.mygdx.game.managers.ExerciseManager;
+import com.mygdx.game.managers.PlayerExerciseManager;
 import com.mygdx.game.model.CompetitionOpponent;
 import com.mygdx.game.model.Container;
 import com.mygdx.game.model.Day;
 import com.mygdx.game.model.Item;
+import com.mygdx.game.managers.NotificationManager;
+import com.mygdx.game.model.Notification;
 import com.mygdx.game.model.Pocket;
 import com.mygdx.game.model.Refrigerator;
 
 import java.util.ArrayList;
 
 public class Player extends Npc {
+
+    public NotificationManager notificationManager = new NotificationManager();
+    public PlayerExerciseManager exerciseManager = new PlayerExerciseManager();
 
     public Day day = new Day();
 
@@ -102,6 +109,9 @@ public class Player extends Npc {
         for(Exercise exercise: exercises){
             if(exercise.condition == playerCondition){
                 calculateExercise(exercise, delta);
+            }
+            if(exercise.newLevelReached){
+                notificationManager.addNewLevelNotification(exercise);
             }
         }
     }
