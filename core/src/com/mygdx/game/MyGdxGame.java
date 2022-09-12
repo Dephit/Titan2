@@ -149,6 +149,7 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
         });
     }
 
+
     @Override
     public void openWork() {
         stage = new WorkRoom(this, player);
@@ -188,7 +189,14 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
 
     @Override
     public void openOptions() {
-        myRequestHandler.openOptions();
+ //       myRequestHandler.openOptions();
+        myRequestHandler.openInventory(player);
+    }
+
+
+    @Override
+    public void openInventory() {
+        myRequestHandler.openInventory(player);
     }
 
 }

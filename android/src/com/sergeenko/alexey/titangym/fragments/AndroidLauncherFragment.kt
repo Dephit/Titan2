@@ -8,19 +8,12 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.RelativeLayout
 import android.widget.Toast
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.compose.ui.unit.dp
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -185,6 +178,23 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
         binding.hudView.apply {
             setContent {
                 HudBar(player)
+            }
+        }
+    }
+
+    override fun openInventory(player: Player) {
+        showComposeView {
+
+            DrawInventory(
+                context?.assets,
+                player.inventoryManager,
+                {
+                    it.onUse(player)
+                    player.inventoryManager.inventory.removeItem(it)
+                    binding.composeView.setGone()
+                }
+            ) {
+                binding.composeView.setGone()
             }
         }
     }

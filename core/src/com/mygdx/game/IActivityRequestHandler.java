@@ -46,4 +46,6 @@ public interface IActivityRequestHandler {
     void openOptions();
 
     void showHud(Player player);
+
+    void openInventory(Player player);
 }

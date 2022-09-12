@@ -52,6 +52,8 @@ public interface InterScreenCommunication {
 
     void openShop();
 
+    void openInventory();
+
     void openWork();
 
     void openPark();

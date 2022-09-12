@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.managers.ExerciseManager;
+import com.mygdx.game.managers.InventoryManager;
 import com.mygdx.game.managers.PlayerExerciseManager;
 import com.mygdx.game.model.CompetitionOpponent;
 import com.mygdx.game.model.Container;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 public class Player extends Npc {
 
     public NotificationManager notificationManager = new NotificationManager();
+    public InventoryManager inventoryManager = new InventoryManager();
     public PlayerExerciseManager exerciseManager = new PlayerExerciseManager();
 
     public Day day = new Day();
