@@ -148,12 +148,11 @@ public class Player extends Npc {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        for(Exercise exercise: exercises){
+        /*for(Exercise exercise: exercises){
             if(exercise.condition == playerCondition){
                 manageText(exercise);
             }
-        }
-        showText(batch,day.currentDay + " " + day.currentTime, 1920 - 410 - 50, 1080 - 65 * 6 - 25 - 100 - 15, 10, Color.BLACK );
+        }*/
     }
 
     @Override

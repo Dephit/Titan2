@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.mygdx.game.Exercise
 import com.mygdx.game.Player
 import com.mygdx.game.managers.NotificationManager
@@ -109,6 +110,8 @@ fun MainParams(player: Player, isInExercise: Boolean) {
             Modifier
                 .fillMaxWidth()
                 .weight(1f))
+        Text(text = "${player.day.currentDay}d", fontSize = 30.sp, color = Color.White)
+        Spacer(modifier = Modifier.width(5.dp))
         Column {
             LinearProgressIndicator(
                 modifier = Modifier
