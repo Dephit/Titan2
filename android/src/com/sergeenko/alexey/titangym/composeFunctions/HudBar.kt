@@ -26,7 +26,7 @@ fun HudBar(
             .fillMaxSize()
             .padding(20.dp)
     ) {
-        MainParams(player)
+        MainParams(player, player.isInExercise != null)
         CurrentExercise(player.isInExercise)
         NotificationList(player.notificationManager)
     }
@@ -100,10 +100,11 @@ fun CurrentExercise(bar: Exercise?) {
 }
 
 @Composable
-fun MainParams(player: Player) {
+fun MainParams(player: Player, isInExercise: Boolean) {
     Row(
         modifier = Modifier.padding(end = 30.dp)
     ) {
+        val barHeight = if(isInExercise) 15.dp else 5.dp
         Spacer(
             Modifier
                 .fillMaxWidth()
@@ -112,7 +113,7 @@ fun MainParams(player: Player) {
             LinearProgressIndicator(
                 modifier = Modifier
                     .width(150.dp)
-                    .height(15.dp)
+                    .height(barHeight)
                     .clip(
                         RoundedCornerShape(50)
                     )
@@ -127,7 +128,7 @@ fun MainParams(player: Player) {
             LinearProgressIndicator(
                 modifier = Modifier
                     .width(150.dp)
-                    .height(15.dp)
+                    .height(barHeight)
                     .clip(
                         RoundedCornerShape(50)
                     )
@@ -142,7 +143,7 @@ fun MainParams(player: Player) {
             LinearProgressIndicator(
                 modifier = Modifier
                     .width(150.dp)
-                    .height(15.dp)
+                    .height(barHeight)
                     .clip(
                         RoundedCornerShape(50)
                     )
