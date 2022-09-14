@@ -1,5 +1,7 @@
 package com.mygdx.game;
 
+import static com.mygdx.game.PlayerCondition.stay;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -23,6 +25,11 @@ import java.util.ArrayList;
 public abstract class BaseRoom extends Stage  {
 
     protected boolean callOnClose = false;
+
+    public Runnable pauseGame(){
+        pause = true;
+        return ()-> pause = false;
+    }
 
     protected ArrayList<Npc> npcs = new ArrayList<>();
 
@@ -300,7 +307,8 @@ public abstract class BaseRoom extends Stage  {
     public void setCommonButtons(){
         addButton("map", "map","", 10, 800, 125, 125, 1f, ()-> interScreenCommunication.openMap());
         addButton("optionButton", "optionButton","", 10,940, 125, 125, 1f, ()-> {
-            interScreenCommunication.openOptions();
+            interScreenCommunication.openInventory(pauseGame());
+            //interScreenCommunication.openOptions();
         });
     }
 

@@ -39,9 +39,6 @@ public class Player extends Npc {
     Stat energy;
     Stat tiredness;
 
-    public Refrigerator refrigerator = new Refrigerator();
-    public Pocket pocket = new Pocket(75);
-
     public Player(Language language) {
         super("player");
         health = new Stat(language.health);
@@ -55,26 +52,6 @@ public class Player extends Npc {
         exercises.add(deadlift);
         exercises.add(pushUps);
         exercises.add(pullUps);
-
-        /*health.statBar.setBounds(1920 - 400 - 50, 1080 - 65 - 50, 400, 65);
-        health.statBar.setProgressAndCapacity(100, 100);
-        health.statBar.setColor(Color.valueOf("910101"));
-        health.statBar.setTextColor(Color.WHITE);
-        health.statBar.setBackgroundColor(Color.valueOf("042a2b"));
-
-        energy.statBar.setBounds(1920 - 400 - 50, 1080 - 65 * 2 - 25 - 50, 400, 65);
-        energy.statBar.setProgressAndCapacity(100, 100);
-        energy.statBar.setColor(Color.valueOf("AE9C00"));
-        energy.statBar.setTextColor(Color.WHITE);
-        energy.statBar.setBackgroundColor(Color.valueOf("042a2b"));
-
-        tiredness.statBar.setBounds(1920 - 400 - 50, 1080 - 65 * 3 - 50 - 50, 400, 65);
-        tiredness.statBar.setProgressAndCapacity(100, 100);
-        tiredness.statBar.setTextColor(Color.WHITE);
-        tiredness.statBar.setColor(Color.valueOf("240953"));
-        tiredness.statBar.setBackgroundColor(Color.valueOf("042a2b"));*/
-
-        pocket.getPocketView().setBounds(1920 - 410 - 50, 1080 - 65 * 4 - 25 - 100 - 15, 400, 65);
     }
 
     private void setDebugPlayer() {
@@ -189,11 +166,8 @@ public class Player extends Npc {
         exercise.statBar.drawText(str);
     }
 
-    public boolean buyItem(Item item, Container container){
-        if(pocket.buy(item.cost) && container.hasSpace()){
-            refrigerator.addItem(item);
-            return true;
-        }else return false;
+    public boolean buyItemToRefrigerator(Item item){
+        return inventoryManager.buyItemToRefrigerator(item);
     }
 
     public void setModerateSquat() {
@@ -239,8 +213,8 @@ public class Player extends Npc {
         health.addProgress(i);
     }
 
-    public Actor getPocketView() {
-        return pocket.getPocketView();
+    public void addEnergy(int i) {
+        energy.addProgress(i);
     }
 
     public void onWork() {

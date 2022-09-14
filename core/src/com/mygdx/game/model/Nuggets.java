@@ -15,6 +15,6 @@ public class Nuggets extends Item {
     @Override
     public void onUse(Player player) {
         player.addHealth(25);
-        player.refrigerator.removeItem(this);
+        ////player.refrigerator.removeItem(this);
     }
 }

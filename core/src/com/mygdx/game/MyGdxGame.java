@@ -189,14 +189,19 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
 
     @Override
     public void openOptions() {
- //       myRequestHandler.openOptions();
-        myRequestHandler.openInventory(player);
+        myRequestHandler.openOptions();
+  //      myRequestHandler.openInventory(player);
+    }
+
+    @Override
+    public void openRefrigerator(Player player, Runnable runnable) {
+        myRequestHandler.openRefrigerator(player, runnable);
     }
 
 
     @Override
-    public void openInventory() {
-        myRequestHandler.openInventory(player);
+    public void openInventory(Runnable runnable) {
+        myRequestHandler.openInventory(player, runnable);
     }
 
 }

@@ -58,67 +58,16 @@ public class RoomRoom extends BaseRoom {
     Group refPopupGroup = new Group();
 
     private void showRefrigerator() {
-        pause = true;
+        Runnable pauseRunnable = pauseGame();
         Runnable runnable = ()->{
             player.setPath(900 , 500, 900, 500, stay);
-            pause = false;
+            pauseRunnable.run();
             refPopupGroup.clear();
             refPopupGroup.remove();
         };
-        int x = 1300;
-        int y = 50;
-        final TextButton textButton = getTextButton("pullUpOrPushUp", Style.refWindow, "",
-                x, y, 450, 650, 1, runnable
-        );
-        refPopupGroup.addActor(textButton);
-
-        addToRef(x, y, runnable);
-
-        buttonGroup.addActor(refPopupGroup);
-    }
-
-    private void addToRef(int x, int y, Runnable runnable) {
-        int countX = 0;
-        int countY = 0;
-
-        for (Item item : player.refrigerator.getItems()) {
-            final TextButton potato = getTextButton(item.title, item.styleName, "",
-                    x + 50 + (400 - 215) * countX, y + 505 - 140 * countY, 165, 125, 1f, () ->showItemMenu(item));
-            countX++;
-            if (countX == 2) {
-                countX = 0;
-                countY++;
-            }
-            refPopupGroup.addActor(potato);
-        }
-
-
-        final TextButton closeRef = getTextButton("closeRef", Style.closeRef, "Close me!!",
-                x + 50,y + 15, 350, 60, 1f, runnable);
-        refPopupGroup.addActor(closeRef);
-    }
-
-    private void showItemMenu(Item item) {
-        pause = true;
-        Group group = new Group();
-        Runnable runnable = ()->{
-            player.setPath(900 , 500, 900, 500, stay);
-            pause = false;
-            group.clear();
-            refPopupGroup.clear();
-            showRefrigerator();
-            group.remove();
-        };
-        interScreenCommunication.showDialog(
-                item.title,
-                item.description,
-                "Eat",
-                "Put it back",
-                (o)-> runnable.run(),
-                (o)->{
-                    item.onUse(player);
-                    runnable.run();
-                }
+        interScreenCommunication.openRefrigerator(
+                player,
+                runnable
         );
     }
 

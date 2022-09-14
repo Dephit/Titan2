@@ -115,11 +115,11 @@ public class ShopRoom extends BaseRoom {
 
 
     private void showItemMenu(Item item) {
-        pause = true;
+        Runnable pauseRunnable = pauseGame();
         Group group = new Group();
         Runnable runnable = ()->{
             player.setPath(900 , 500, 900, 500, PlayerCondition.stay);
-            pause = false;
+            pauseRunnable.run();
             group.clear();
             group.remove();
         };
@@ -133,8 +133,8 @@ public class ShopRoom extends BaseRoom {
                 1090, 300, 0, 0, 1.5f, ()->{});
         final TextButton agreePotatoButton = getTextButton("agreePotatoButton", Style.yesButton, getLanguage().buyText,
                 650, 118, 287, 84, 1.5f, ()->{
-                    if(!player.buyItem(item, player.refrigerator)){
-                        interScreenCommunication.showToast(getLanguage().refregiratorIsFull);
+                    if(!player.buyItemToRefrigerator(item)){
+                        player.notificationManager.addMessage(getLanguage().refregiratorIsFull);
                         runnable.run();
                     }
                 });

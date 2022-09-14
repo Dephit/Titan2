@@ -6,7 +6,6 @@ import com.mygdx.game.model.CompetitionOpponent;
 import com.mygdx.game.model.enums.Comp;
 
 import java.util.List;
-import java.util.Map;
 
 public interface IActivityRequestHandler {
     void showToast(String s);
@@ -47,5 +46,7 @@ public interface IActivityRequestHandler {
 
     void showHud(Player player);
 
-    void openInventory(Player player);
+    void openInventory(Player player, Runnable runnable);
+
+    void openRefrigerator(Player player, Runnable onClose);
 }

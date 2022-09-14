@@ -76,7 +76,7 @@ public class WorkRoom extends BaseRoom {
                     getLanguage().workInProgress,
                     //onEnd
                     (OnCLickCallback) (o) -> {
-                        player.pocket.addMoney(wokrReward);
+                        player.inventoryManager.pocket.addMoney(wokrReward);
                         player.setPlayerPosition(((int) player.getX()), (int) player.getY(), PlayerCondition.stay);
                         runnable.run();
                     },

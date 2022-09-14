@@ -52,7 +52,7 @@ public interface InterScreenCommunication {
 
     void openShop();
 
-    void openInventory();
+    void openInventory(Runnable runnable);
 
     void openWork();
 
@@ -62,7 +62,7 @@ public interface InterScreenCommunication {
 
     void openOptions();
 
-
+    void openRefrigerator(Player player, Runnable runnable);
 }
 
 

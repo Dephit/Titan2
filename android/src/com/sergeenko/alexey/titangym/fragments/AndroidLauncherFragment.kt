@@ -12,7 +12,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -182,9 +181,8 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
         }
     }
 
-    override fun openInventory(player: Player) {
+    override fun openInventory(player: Player, runnable: Runnable) {
         showComposeView {
-
             DrawInventory(
                 context?.assets,
                 player.inventoryManager,
@@ -192,9 +190,29 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
                     it.onUse(player)
                     player.inventoryManager.inventory.removeItem(it)
                     binding.composeView.setGone()
+                    runnable.run()
                 }
             ) {
                 binding.composeView.setGone()
+                runnable.run()
+            }
+        }
+    }
+
+    override fun openRefrigerator(player: Player, onClose: Runnable?) {
+        showComposeView {
+            DrawRefregerator(
+                context?.assets,
+                player,
+                {
+                    it.onUse(player)
+                    player.inventoryManager.refrigerator.removeItem(it)
+                    binding.composeView.setGone()
+                    onClose?.run()
+                }
+            ) {
+                binding.composeView.setGone()
+                onClose?.run()
             }
         }
     }
