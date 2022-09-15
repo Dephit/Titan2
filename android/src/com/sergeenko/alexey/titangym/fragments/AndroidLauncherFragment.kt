@@ -24,6 +24,7 @@ import com.mygdx.game.Player
 import com.mygdx.game.interfaces.OnCLickCallback
 import com.mygdx.game.interfaces.OnClickBooleanCallback
 import com.mygdx.game.model.CompetitionOpponent
+import com.mygdx.game.model.Container
 import com.mygdx.game.model.enums.Comp
 import com.sergeenko.alexey.titangym.MainViewModel
 import com.sergeenko.alexey.titangym.R
@@ -183,14 +184,22 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
 
     override fun openInventory(player: Player, runnable: Runnable) {
         showComposeView {
-            DrawInventory(
+            DrawRefregerator(
                 context?.assets,
-                player.inventoryManager,
+                player.inventoryManager.inventory,
                 {
-                    it.onUse(player)
-                    player.inventoryManager.inventory.removeItem(it)
-                    binding.composeView.setGone()
-                    runnable.run()
+                    showDialog(
+                        title = "Do you wnat to use item ${it.title}",
+                        subtitle = it.description,
+                        onAgree = OnCLickCallback { _ ->
+                            it.onUse(player)
+                            player.inventoryManager.inventory.removeItem(it)
+                            runnable.run()
+                        },
+                        onClose = OnCLickCallback {
+                            runnable.run()
+                        }
+                    )
                 }
             ) {
                 binding.composeView.setGone()
@@ -203,16 +212,52 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
         showComposeView {
             DrawRefregerator(
                 context?.assets,
-                player,
+                player.inventoryManager.refrigerator,
                 {
-                    it.onUse(player)
-                    player.inventoryManager.refrigerator.removeItem(it)
-                    binding.composeView.setGone()
-                    onClose?.run()
+                    showDialog(
+                        title = "Do you wnat to use item ${it.title}",
+                        subtitle = it.description,
+                        onAgree = OnCLickCallback { _ ->
+                            it.onUse(player)
+                            player.inventoryManager.refrigerator.removeItem(it)
+                            onClose?.run()
+                        },
+                        onClose = OnCLickCallback {
+                            onClose?.run()
+                        }
+                    )
                 }
             ) {
                 binding.composeView.setGone()
                 onClose?.run()
+            }
+        }
+    }
+
+    override fun openShopByMenu(
+        container: Container,
+        onBuyRunnable: OnCLickCallback,
+        runnable: Runnable
+    ) {
+        showComposeView {
+            DrawRefregerator(
+                context?.assets,
+                container,
+                {
+                    showDialog(
+                        title = "Do you wnat to use item ${it.title}",
+                        subtitle = it.description,
+                        onAgree = OnCLickCallback { _ ->
+                            onBuyRunnable.call(it)
+                        },
+                        onClose = OnCLickCallback {
+                            runnable.run()
+                        }
+                    )
+                }
+            ) {
+                binding.composeView.setGone()
+                runnable.run()
             }
         }
     }

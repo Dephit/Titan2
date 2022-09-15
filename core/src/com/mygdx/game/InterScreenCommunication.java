@@ -3,6 +3,7 @@ package com.mygdx.game;
 import com.mygdx.game.interfaces.OnCLickCallback;
 import com.mygdx.game.interfaces.OnClickBooleanCallback;
 import com.mygdx.game.model.CompetitionOpponent;
+import com.mygdx.game.model.Container;
 import com.mygdx.game.model.enums.Comp;
 
 import java.util.List;
@@ -63,6 +64,10 @@ public interface InterScreenCommunication {
     void openOptions();
 
     void openRefrigerator(Player player, Runnable runnable);
+
+    void showBuyMenu(Container container, OnCLickCallback onBuyRunnable, Runnable runnable);
+
+    void showHud();
 }
 
 

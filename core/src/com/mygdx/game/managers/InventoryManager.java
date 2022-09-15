@@ -10,12 +10,23 @@ public class InventoryManager {
 
     public Container inventory = new Inventory();
     public Refrigerator refrigerator = new Refrigerator();
-    public Pocket pocket = new Pocket(75);
+    public Pocket pocket = new Pocket(1000);
 
     public boolean buyItemToRefrigerator(Item item) {
-        if(pocket.buy(item.cost)){
-            refrigerator.addItem(item);
-            return true;
+        if(refrigerator.hasSpace()){
+            if(pocket.buy(item.cost)){
+                refrigerator.addItem(item);
+                return true;
+            }else return false;
         }else return false;
+    }
+
+    public boolean buyItemToInventory(Item item) {
+        if(inventory.hasSpace()){
+            if(pocket.buy(item.cost)){
+                inventory.addItem(item);
+                return true;
+            }else return false;
+        } else return false;
     }
 }

@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.mygdx.game.interfaces.OnCLickCallback;
 import com.mygdx.game.interfaces.OnClickBooleanCallback;
 import com.mygdx.game.model.CompetitionOpponent;
+import com.mygdx.game.model.Container;
 import com.mygdx.game.model.enums.Comp;
 import com.mygdx.game.rooms.CompetitionRoom;
 import com.mygdx.game.rooms.GymRoom;
@@ -47,13 +48,15 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.onRender();
-        showHud();
+        if(player != null){
+            showHud();
+        }
     }
 
-    private void showHud() {
+    @Override
+    public void showHud() {
         myRequestHandler.showHud(player);
     }
-
 
     @Override
     public void pause() {
@@ -196,6 +199,11 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
     @Override
     public void openRefrigerator(Player player, Runnable runnable) {
         myRequestHandler.openRefrigerator(player, runnable);
+    }
+
+    @Override
+    public void showBuyMenu(Container container, OnCLickCallback onBuyRunnable, Runnable runnable) {
+        myRequestHandler.openShopByMenu(container, onBuyRunnable, runnable);
     }
 
 

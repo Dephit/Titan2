@@ -31,6 +31,14 @@ public abstract class BaseRoom extends Stage  {
         return ()-> pause = false;
     }
 
+    public Runnable pauseGame(Runnable runnable){
+        pause = true;
+        return ()-> {
+            runnable.run();
+            pause = false;
+        };
+    }
+
     protected ArrayList<Npc> npcs = new ArrayList<>();
 
     protected Group objectGroup, buttonGroup/*, hudGroup = new Group()*/;
@@ -306,10 +314,8 @@ public abstract class BaseRoom extends Stage  {
 
     public void setCommonButtons(){
         addButton("map", "map","", 10, 800, 125, 125, 1f, ()-> interScreenCommunication.openMap());
-        addButton("optionButton", "optionButton","", 10,940, 125, 125, 1f, ()-> {
-            interScreenCommunication.openInventory(pauseGame());
-            //interScreenCommunication.openOptions();
-        });
+        addButton("optionButton", "optionButton","", 10,940, 125, 125, 1f, ()-> interScreenCommunication.openOptions());
+        addButton("optionButton", "optionButton","", 10,660, 125, 125, 1f, ()-> interScreenCommunication.openInventory(pauseGame()));
     }
 
     public void addButton(String name, String style, String text, int x, int y, int w, int h, float scale, Runnable runnable) {

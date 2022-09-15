@@ -19,13 +19,15 @@ import androidx.compose.ui.unit.dp
 import com.mygdx.game.Player
 import com.mygdx.game.interfaces.OnCLickCallback
 import com.mygdx.game.managers.InventoryManager
+import com.mygdx.game.model.Container
 import com.mygdx.game.model.Item
+import com.sergeenko.alexey.titangym.assetsToBitmap
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DrawRefregerator(
     am: AssetManager?,
-    player: Player,
+    container: Container,
     onItemClick: (Item) -> Unit,
     onClose: OnCLickCallback
 ) {
@@ -59,7 +61,7 @@ fun DrawRefregerator(
                         cells = GridCells.Adaptive(40.dp),
                         modifier = Modifier.width(100.dp)
                     ) {
-                        player.inventoryManager.refrigerator.items?.forEachIndexed { _, item ->
+                        container.items?.forEachIndexed { _, item ->
                             item {
                                 am?.assetsToBitmap("screens/buttons/${item.styleName}.png")
                                     ?.asImageBitmap()?.let {

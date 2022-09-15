@@ -3,6 +3,7 @@ package com.mygdx.game;
 import com.mygdx.game.interfaces.OnCLickCallback;
 import com.mygdx.game.interfaces.OnClickBooleanCallback;
 import com.mygdx.game.model.CompetitionOpponent;
+import com.mygdx.game.model.Container;
 import com.mygdx.game.model.enums.Comp;
 
 import java.util.List;
@@ -49,4 +50,6 @@ public interface IActivityRequestHandler {
     void openInventory(Player player, Runnable runnable);
 
     void openRefrigerator(Player player, Runnable onClose);
+
+    void openShopByMenu(Container container, OnCLickCallback onBuyRunnable, Runnable runnable);
 }

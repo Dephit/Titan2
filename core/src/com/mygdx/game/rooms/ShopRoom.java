@@ -13,13 +13,18 @@ import com.mygdx.game.Npc;
 import com.mygdx.game.Player;
 import com.mygdx.game.PlayerCondition;
 import com.mygdx.game.Style;
+import com.mygdx.game.interfaces.OnCLickCallback;
+import com.mygdx.game.model.Container;
 import com.mygdx.game.model.Item;
 import com.mygdx.game.model.ShopMenu;
+import com.mygdx.game.model.SnackMenu;
 
 import java.util.ArrayList;
 
 public class ShopRoom extends BaseRoom {
 
+    Container shopMenu = new ShopMenu();
+    Container snackMenu = new SnackMenu();
 
     public ShopRoom() {
         super("shop");
@@ -44,7 +49,8 @@ public class ShopRoom extends BaseRoom {
         addButton("watchAlc3", Style.empty, "",  985, 460, 200, 250, 1f,
                 () -> player.setPath(1085 , 410, PlayerCondition.watchShop));
         addButton("watchAlc3", Style.empty, "",  1510, 360, 200, 250, 1f,
-                () -> player.setPath(1610 , 310, PlayerCondition.watchShop));
+                () -> player.setPath(1610 , 310,1610 , 310, PlayerCondition.stay, this::showBuySnackMenu)
+        );
         addButton("watchCam", Style.empty, "",   244, 700, 75, 75, 1f,
                 () -> player.setPath(360 , 385, PlayerCondition.watchCam));
         addButton("talkToStaffBut", Style.empty, "",   230, 460, 75, 175, 1f, this::talkToStaff);
@@ -75,77 +81,31 @@ public class ShopRoom extends BaseRoom {
         });
     }
 
-    ShopMenu shoMenu = new ShopMenu();
-
-    private void showBuyMenu() {
-            Group refPopupGroup = new Group();
-            pause = true;
-            Runnable runnable = ()->{
-                player.setPath(900 , 500, 900, 500, PlayerCondition.stay);
-                pause = false;
-                refPopupGroup.clear();
-                refPopupGroup.remove();
-            };
-            int x = 1300;
-            int y = 50;
-            final TextButton textButton = getTextButton("pullUpOrPushUp",  Style.refWindow, "",
-                    x, y, 450, 650, 1, runnable
-            );
-            refPopupGroup.addActor(textButton);
-        int countX = 0;
-        int countY = 0;
-
-        for (Item item : shoMenu.getItems()) {
-            final TextButton potato = getTextButton(item.title, item.styleName, "",
-                    x + 50 + (400 - 215) * countX, y + 505 - 140 * countY, 165, 125, 1f, () ->showItemMenu(item));
-            countX++;
-            if (countX == 2) {
-                countX = 0;
-                countY++;
-            }
-            refPopupGroup.addActor(potato);
-        }
-
-
-        final TextButton closeRef = getTextButton("closeRef", Style.closeRef, "Close me!!",
-                x + 50,y + 15, 350, 60, 1f, runnable);
-        refPopupGroup.addActor(closeRef);
-            buttonGroup.addActor(refPopupGroup);
-        }
-
-
-    private void showItemMenu(Item item) {
-        Runnable pauseRunnable = pauseGame();
-        Group group = new Group();
-        Runnable runnable = ()->{
-            player.setPath(900 , 500, 900, 500, PlayerCondition.stay);
-            pauseRunnable.run();
-            group.clear();
-            group.remove();
-        };
-        final TextButton textButton = getTextButton("menu", item.menuStyleName, "",
-                600, 100, 812, 651, 1, ()->{}
+    private void showBuySnackMenu() {
+        Runnable pauseRunnable = pauseGame(
+                () -> player.setPath(1610 , 310, PlayerCondition.stay)
         );
 
-        final TextButton yes = getTextButton("description",  Style.empty, item.description,
-                1090, 470, 0, 0, 1.5f, ()->{});
-        final TextButton no = getTextButton("potatoAnswer",  Style.empty, "",
-                1090, 300, 0, 0, 1.5f, ()->{});
-        final TextButton agreePotatoButton = getTextButton("agreePotatoButton", Style.yesButton, getLanguage().buyText,
-                650, 118, 287, 84, 1.5f, ()->{
-                    if(!player.buyItemToRefrigerator(item)){
-                        player.notificationManager.addMessage(getLanguage().refregiratorIsFull);
-                        runnable.run();
-                    }
-                });
-        final TextButton declineFood = getTextButton("declineFood", Style.yesButton, getLanguage().no,
-                1060, 118, 287, 84, 1f, runnable);
-        group.addActor(textButton);
-        group.addActor(yes);
-        group.addActor(agreePotatoButton);
-        group.addActor(declineFood);
-        group.addActor(no);
-        buttonGroup.addActor(group);
+
+        OnCLickCallback onBuyRunnable = object -> {
+            player.buyItemToInventory((Item) object);
+            pauseRunnable.run();
+        };
+
+        interScreenCommunication.showBuyMenu(snackMenu, onBuyRunnable, pauseRunnable);
+    }
+
+    private void showBuyMenu() {
+        Runnable pauseRunnable = pauseGame(
+                () -> player.setPath(900 , 500, 900, 500, PlayerCondition.stay)
+        );
+
+        OnCLickCallback onBuyRunnable = object -> {
+            player.buyItemToRefrigerator((Item) object);
+            pauseRunnable.run();
+        };
+
+        interScreenCommunication.showBuyMenu(shopMenu, onBuyRunnable, pauseRunnable);
     }
 
 

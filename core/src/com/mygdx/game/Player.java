@@ -39,6 +39,8 @@ public class Player extends Npc {
     Stat energy;
     Stat tiredness;
 
+
+
     public Player(Language language) {
         super("player");
         health = new Stat(language.health);
@@ -123,16 +125,6 @@ public class Player extends Npc {
     }
 
     @Override
-    public void draw(Batch batch, float parentAlpha) {
-        super.draw(batch, parentAlpha);
-        /*for(Exercise exercise: exercises){
-            if(exercise.condition == playerCondition){
-                manageText(exercise);
-            }
-        }*/
-    }
-
-    @Override
     boolean isAnimationFinished() {
         boolean isFinishd = super.isAnimationFinished();
         if(isFinishd){
@@ -166,8 +158,16 @@ public class Player extends Npc {
         exercise.statBar.drawText(str);
     }
 
-    public boolean buyItemToRefrigerator(Item item){
-        return inventoryManager.buyItemToRefrigerator(item);
+    public void buyItemToRefrigerator(Item item){
+        if(!inventoryManager.buyItemToRefrigerator(item)){
+            notificationManager.addMessage(getLanguage().refregiratorIsFull);
+        }
+    }
+
+    public void buyItemToInventory(Item item){
+        if(!inventoryManager.buyItemToInventory(item)){
+            notificationManager.addMessage(getLanguage().refregiratorIsFull);
+        }
     }
 
     public void setModerateSquat() {

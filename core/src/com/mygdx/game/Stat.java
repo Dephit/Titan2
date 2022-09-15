@@ -1,7 +1,5 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.graphics.Color;
-
 public class Stat {
 
     public boolean isZero = false;
@@ -13,6 +11,7 @@ public class Stat {
         statBar = new StatBar(statName);
         statBar.drawText(statName);
         statBar.setBounds(50,50, 600, 75);
+        statBar.setProgress(value);
     }
 
     public void minusProgress(float progress) {
