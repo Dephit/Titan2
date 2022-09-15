@@ -5,6 +5,8 @@ public class Stat {
     public boolean isZero = false;
     StatBar statBar;
 
+
+
     public float value = 100;
 
     public Stat(String statName) {
@@ -27,5 +29,10 @@ public class Stat {
         }
         isZero = false;
         statBar.setProgress(value);
+    }
+
+
+    public float getCurrentAmount() {
+        return statBar.getCurrentAmount();
     }
 }

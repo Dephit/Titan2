@@ -17,10 +17,11 @@ public class Exercise {
         statBar.setTextColor(Color.WHITE);
     }
 
-
-    float recovery = 100;
-    int result = 80;
-    float lastResult = -1f;
+    public float updateValue = 0.05f;
+    public float updateEnergyValue = 0.05f;
+    public float updateHealthValue = 0.05f;
+    public float updateTirednessValue = 0.05f;
+    public int result = 80;
     public int LVL = 0;
     public Boolean newLevelReached = false;
 
@@ -36,12 +37,7 @@ public class Exercise {
     float progress = 0;
     public float limit = 100;
 
-    public void minusPrgress(float value){
-        progress -=value;
-        statBar.setProgress(progress);
-    }
-
-    public Float calculateProgress(float delta) {
+    public void calculateProgress(float delta) {
         if(progress < 0){
             if(LVL > 0)
                 setLVL(--LVL, true);
@@ -49,16 +45,11 @@ public class Exercise {
         if(progress >= limit){
             setLVL(++LVL, false);
         }
-        progress += delta * 25f;
+        progress += delta;
         statBar.setProgress(progress);
-        return delta * 5f;
     }
 
     private void setResult() {
         result = 80 + 20 * LVL;
     }
-
-    /*private float calculateByVariation(float v, float v1, float v2, float v3) {
-        return variation == Variation.EASY ? v : variation == Variation.MODERATE ? v1 : variation == Variation.HEAVY ? v2 : v3;
-    }*/
 }

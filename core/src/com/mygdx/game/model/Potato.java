@@ -29,7 +29,7 @@ public class Potato extends Item {
 
     @Override
     public void onUse(Player player) {
-        player.addHealth(50);
+        player.exerciseManager.addHealth(50);
         //player.refrigerator.removeItem(this);
     }
 }

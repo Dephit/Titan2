@@ -122,7 +122,7 @@ fun MainParams(player: Player, isInExercise: Boolean) {
                     )
                 ,
                 color = Color.Red,
-                progress = player.healthBar.currentAmount / 100f,
+                progress = player.exerciseManager.health.currentAmount / 100f,
                 backgroundColor = Color.Black
             )
             Spacer(
@@ -137,7 +137,7 @@ fun MainParams(player: Player, isInExercise: Boolean) {
                     )
                 ,
                 color = Color.Yellow,
-                progress = player.energyBar.currentAmount / 100f,
+                progress = player.exerciseManager.energy.currentAmount / 100f,
                 backgroundColor = Color.Black
             )
             Spacer(
@@ -152,7 +152,7 @@ fun MainParams(player: Player, isInExercise: Boolean) {
                     )
                 ,
                 color = Color.Green,
-                progress = player.tirednessBar.currentAmount / 100f,
+                progress = player.exerciseManager.tiredness.currentAmount / 100f,
                 backgroundColor = Color.Black
             )
             Spacer(

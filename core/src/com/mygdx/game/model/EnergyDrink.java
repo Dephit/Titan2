@@ -20,7 +20,7 @@ public class EnergyDrink extends Item {
 
     @Override
     public void onUse(Player player) {
-        player.addEnergy(25);
+        player.exerciseManager.addEnergy(25);
         //player.refrigerator.removeItem(this);
     }
 }

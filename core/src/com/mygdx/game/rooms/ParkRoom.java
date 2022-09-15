@@ -66,7 +66,7 @@ public class ParkRoom extends BaseRoom {
     }
 
     private void showWorkProgress() {
-        if (player.getEnergyBar().getCurrentAmount() > 0 && player.getHealthBar().getCurrentAmount() > 0) {
+        if (player.exerciseManager.energy.getCurrentAmount() > 0 && player.exerciseManager.health.getCurrentAmount() > 0) {
             workInProgress = true;
             //pause = true;
             Runnable runnable = () -> {
@@ -84,13 +84,13 @@ public class ParkRoom extends BaseRoom {
                     },
                     //onUpdate
                     () -> {
-                        if(player.getEnergyBar().getCurrentAmount() <= 0 || player.getHealthBar().getCurrentAmount() <= 0){
+                        if(player.exerciseManager.energy.getCurrentAmount() <= 0 || player.exerciseManager.health.getCurrentAmount() <= 0){
                             interScreenCommunication.showToast(getLanguage().youHaveNoEnergyOrHealth);
                             runnable.run();
                             return false;
                         }
-                        player.onWork();
-                        return player.getEnergyBar().getCurrentAmount() > 0 && player.getHealthBar().getCurrentAmount() > 0 && workInProgress;
+                        player.exerciseManager.onWork();
+                        return player.exerciseManager.energy.getCurrentAmount() > 0 && player.exerciseManager.health.getCurrentAmount() > 0 && workInProgress;
                     },
                     //onClose
                     (o) -> runnable.run()

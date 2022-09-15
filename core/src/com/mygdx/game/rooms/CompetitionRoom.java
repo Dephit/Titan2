@@ -32,9 +32,9 @@ public class CompetitionRoom extends BaseRoom {
         player.setPlayerPosition((int) (Preffics.SCREEN_WIDTH / 2 - player.getWidth() / 2f), 215, PlayerCondition.stay);
         player.compValue = new CompetitionOpponent(
                 player.getName(),
-                player.getBestSquat(),
-                player.getBestBench(),
-                player.getBestDeadlift()
+                player.exerciseManager.squatExr.result,
+                player.exerciseManager.bench.result,
+                player.exerciseManager.deadlift.result
         );
     }
 
@@ -148,7 +148,7 @@ public class CompetitionRoom extends BaseRoom {
 
     void createOpponents(){
         if(opponentList == null) {
-            int avgLvl = (player.getSquatLvl() + player.getBenchLvl() + player.getDlLvl()) / 3;
+            int avgLvl = (player.exerciseManager.squatExr.LVL + player.exerciseManager.bench.LVL + player.exerciseManager.deadlift.LVL) / 3;
             avgLvl = avgLvl > 0 ? avgLvl : 1;
             opponentList = new ArrayList<>();
             for (int i = 0; i < 10; i++) {
