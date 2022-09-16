@@ -59,6 +59,11 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
     }
 
     @Override
+    public void openStats(Runnable pauseGame) {
+        myRequestHandler.openStats(player, pauseGame);
+    }
+
+    @Override
     public void pause() {
         stage.onPause();
     }

@@ -182,6 +182,22 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
         }
     }
 
+    override fun openStats(player: Player, runnable: Runnable) {
+        showComposeView {
+            DrawRefregerator(
+                context?.assets,
+                player.inventoryManager.equipmentContainer,
+                {
+                    binding.composeView.setGone()
+                    runnable.run()
+                }
+            ) {
+                binding.composeView.setGone()
+                runnable.run()
+            }
+        }
+    }
+
     override fun openInventory(player: Player, runnable: Runnable) {
         showComposeView {
             DrawRefregerator(

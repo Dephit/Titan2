@@ -52,4 +52,7 @@ public interface IActivityRequestHandler {
     void openRefrigerator(Player player, Runnable onClose);
 
     void openShopByMenu(Container container, OnCLickCallback onBuyRunnable, Runnable runnable);
+
+    void openStats(Player player, Runnable pauseGame);
+
 }

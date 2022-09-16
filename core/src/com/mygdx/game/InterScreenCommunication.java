@@ -68,6 +68,8 @@ public interface InterScreenCommunication {
     void showBuyMenu(Container container, OnCLickCallback onBuyRunnable, Runnable runnable);
 
     void showHud();
+
+    void openStats(Runnable pauseGame);
 }
 
 
