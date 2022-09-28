@@ -18,7 +18,6 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.mygdx.game.BaseRoom;
-import com.mygdx.game.Exercise;
 import com.mygdx.game.InterScreenCommunication;
 import com.mygdx.game.Message;
 import com.mygdx.game.Npc;
@@ -26,10 +25,8 @@ import com.mygdx.game.Player;
 import com.mygdx.game.PlayerCondition;
 import com.mygdx.game.Preffics;
 import com.mygdx.game.Style;
-import com.mygdx.game.interfaces.OnCLickCallback;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class GymRoom extends BaseRoom {
 

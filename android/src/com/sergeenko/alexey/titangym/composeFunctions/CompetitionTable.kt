@@ -12,7 +12,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mygdx.game.Player
-import com.mygdx.game.interfaces.OnCLickCallback
+import com.mygdx.game.interfaces.OnClickCallback
 import com.mygdx.game.model.CompetitionOpponent
 import com.sergeenko.alexey.titangym.R
 import kotlin.random.Random
@@ -22,8 +22,8 @@ fun CompetitionTable(
     player: Player,
     currentSet: Int,
     playerList: MutableList<CompetitionOpponent>,
-    onFirstClick: OnCLickCallback?,
-    onClose: OnCLickCallback?,
+    onFirstClick: OnClickCallback?,
+    onClose: OnClickCallback?,
     hideView: ()->Unit
 ) {
     return DialogBox{
@@ -89,7 +89,7 @@ fun CompetitionTable(
 @Composable
 private fun getPercentages(
     compStatus: Int,
-    onFirstClick: OnCLickCallback?,
+    onFirstClick: OnClickCallback?,
     first: Int,
     second: Int,
     third: Int,

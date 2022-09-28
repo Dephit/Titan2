@@ -21,7 +21,7 @@ import com.badlogic.gdx.backends.android.AndroidFragmentApplication
 import com.mygdx.game.IActivityRequestHandler
 import com.mygdx.game.MyGdxGame
 import com.mygdx.game.Player
-import com.mygdx.game.interfaces.OnCLickCallback
+import com.mygdx.game.interfaces.OnClickCallback
 import com.mygdx.game.interfaces.OnClickBooleanCallback
 import com.mygdx.game.model.CompetitionOpponent
 import com.mygdx.game.model.Container
@@ -124,7 +124,7 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
     override fun showPlayers(
         playerList: MutableList<CompetitionOpponent>,
         status: Comp,
-        runnable: OnCLickCallback?,
+        runnable: OnClickCallback?,
     ) = showComposeView{
         PlayerList(playerList,status) {
             binding.composeView.setGone()
@@ -134,9 +134,9 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
 
     override fun showProgressBar(
         title: String,
-        onProgressEnd: OnCLickCallback,
+        onProgressEnd: OnClickCallback,
         onProgressUpdate: OnClickBooleanCallback,
-        onClose: OnCLickCallback
+        onClose: OnClickCallback
     ) {
         var work = true
         viewModel.resetProgress()
@@ -207,12 +207,12 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
                     showDialog(
                         title = "Do you wnat to use item ${it.title}",
                         subtitle = it.description,
-                        onAgree = OnCLickCallback { _ ->
+                        onAgree = OnClickCallback { _ ->
                             it.onUse(player)
                             player.inventoryManager.inventory.removeItem(it)
                             runnable.run()
                         },
-                        onClose = OnCLickCallback {
+                        onClose = OnClickCallback {
                             runnable.run()
                         }
                     )
@@ -233,12 +233,12 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
                     showDialog(
                         title = "Do you wnat to use item ${it.title}",
                         subtitle = it.description,
-                        onAgree = OnCLickCallback { _ ->
+                        onAgree = OnClickCallback { _ ->
                             it.onUse(player)
                             player.inventoryManager.refrigerator.removeItem(it)
                             onClose?.run()
                         },
-                        onClose = OnCLickCallback {
+                        onClose = OnClickCallback {
                             onClose?.run()
                         }
                     )
@@ -252,7 +252,7 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
 
     override fun openShopByMenu(
         container: Container,
-        onBuyRunnable: OnCLickCallback,
+        onBuyRunnable: OnClickCallback,
         runnable: Runnable
     ) {
         showComposeView {
@@ -263,10 +263,10 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
                     showDialog(
                         title = "Do you wnat to use item ${it.title}",
                         subtitle = it.description,
-                        onAgree = OnCLickCallback { _ ->
+                        onAgree = OnClickCallback { _ ->
                             onBuyRunnable.call(it)
                         },
-                        onClose = OnCLickCallback {
+                        onClose = OnClickCallback {
                             runnable.run()
                         }
                     )
@@ -284,8 +284,8 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
         subtitle: String,
         agreeText: String,
         closeText: String,
-        onClose: OnCLickCallback,
-        onAgree: OnCLickCallback
+        onClose: OnClickCallback,
+        onAgree: OnClickCallback
     ){
         viewModel.onOpenDialogClicked()
         binding.root.post {
@@ -317,8 +317,8 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
     override fun showDialog(
         title: String,
         subtitle: String,
-        onClose: OnCLickCallback,
-        onAgree: OnCLickCallback
+        onClose: OnClickCallback,
+        onAgree: OnClickCallback
     ){
         showDialog(
             title = title,
@@ -334,8 +334,8 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
         player: Player,
         currentSet: Int,
         playerList: MutableList<CompetitionOpponent>,
-        onFirstClick: OnCLickCallback?,
-        onClose: OnCLickCallback?
+        onFirstClick: OnClickCallback?,
+        onClose: OnClickCallback?
     ) {
         showComposeView{
             CompetitionTable(

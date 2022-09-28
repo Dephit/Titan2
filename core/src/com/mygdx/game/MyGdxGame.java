@@ -5,7 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.mygdx.game.interfaces.OnCLickCallback;
+import com.mygdx.game.interfaces.OnClickCallback;
 import com.mygdx.game.interfaces.OnClickBooleanCallback;
 import com.mygdx.game.model.CompetitionOpponent;
 import com.mygdx.game.model.Container;
@@ -84,27 +84,27 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
     }
 
     @Override
-    public void showPlayerList(List<CompetitionOpponent> playerList, Comp status, OnCLickCallback runnable) {
+    public void showPlayerList(List<CompetitionOpponent> playerList, Comp status, OnClickCallback runnable) {
         myRequestHandler.showPlayers(playerList, status, runnable);
     }
 
     @Override
-    public void showNextSetMenu(Player player, int currentSet, List<CompetitionOpponent> playerList, OnCLickCallback onFirstClick, OnCLickCallback onClose) {
+    public void showNextSetMenu(Player player, int currentSet, List<CompetitionOpponent> playerList, OnClickCallback onFirstClick, OnClickCallback onClose) {
         myRequestHandler.showNextSetMenu(player, currentSet, playerList, onFirstClick, onClose);
     }
 
     @Override
-    public void showDialog(String title, String subtitle, OnCLickCallback onClose, OnCLickCallback onAgree) {
+    public void showDialog(String title, String subtitle, OnClickCallback onClose, OnClickCallback onAgree) {
         myRequestHandler.showDialog(title, subtitle, onClose, onAgree);
     }
 
     @Override
-    public void showProgressBar(String title, OnCLickCallback onProgressEnd, OnClickBooleanCallback onProgressUpdate, OnCLickCallback onClose) {
+    public void showProgressBar(String title, OnClickCallback onProgressEnd, OnClickBooleanCallback onProgressUpdate, OnClickCallback onClose) {
         myRequestHandler.showProgressBar(title, onProgressEnd, onProgressUpdate, onClose);
     }
 
     @Override
-    public void showDialog(String title, String subtitle, String agreeText, String closeText, OnCLickCallback onClose, OnCLickCallback onAgree) {
+    public void showDialog(String title, String subtitle, String agreeText, String closeText, OnClickCallback onClose, OnClickCallback onAgree) {
         myRequestHandler.showDialog(title, subtitle, agreeText, closeText, onClose, onAgree);
     }
 
@@ -207,7 +207,7 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
     }
 
     @Override
-    public void showBuyMenu(Container container, OnCLickCallback onBuyRunnable, Runnable runnable) {
+    public void showBuyMenu(Container container, OnClickCallback onBuyRunnable, Runnable runnable) {
         myRequestHandler.openShopByMenu(container, onBuyRunnable, runnable);
     }
 

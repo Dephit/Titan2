@@ -1,7 +1,5 @@
 package com.mygdx.game.rooms;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.mygdx.game.BaseRoom;
@@ -9,12 +7,7 @@ import com.mygdx.game.InterScreenCommunication;
 import com.mygdx.game.Npc;
 import com.mygdx.game.Player;
 import com.mygdx.game.PlayerCondition;
-import com.mygdx.game.Preffics;
-import com.mygdx.game.StatBar;
-import com.mygdx.game.Style;
-import com.mygdx.game.interfaces.OnCLickCallback;
-import com.mygdx.game.interfaces.OnClickBooleanCallback;
-import com.mygdx.game.managers.PlayerExerciseManager;
+import com.mygdx.game.interfaces.OnClickCallback;
 
 public class WorkRoom extends BaseRoom {
 
@@ -76,7 +69,7 @@ public class WorkRoom extends BaseRoom {
             interScreenCommunication.showProgressBar(
                     getLanguage().workInProgress,
                     //onEnd
-                    (OnCLickCallback) (o) -> {
+                    (OnClickCallback) (o) -> {
                         player.inventoryManager.pocket.addMoney(wokrReward);
                         player.setPlayerPosition(((int) player.getX()), (int) player.getY(), PlayerCondition.stay);
                         runnable.run();

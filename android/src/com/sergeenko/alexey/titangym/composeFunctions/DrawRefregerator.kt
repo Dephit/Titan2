@@ -16,9 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import com.mygdx.game.Player
-import com.mygdx.game.interfaces.OnCLickCallback
-import com.mygdx.game.managers.InventoryManager
+import com.mygdx.game.interfaces.OnClickCallback
 import com.mygdx.game.model.Container
 import com.mygdx.game.model.Item
 import com.sergeenko.alexey.titangym.assetsToBitmap
@@ -29,7 +27,7 @@ fun DrawRefregerator(
     am: AssetManager?,
     container: Container,
     onItemClick: (Item) -> Unit,
-    onClose: OnCLickCallback
+    onClose: OnClickCallback
 ) {
     return Box(
         modifier = Modifier.clickable {

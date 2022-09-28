@@ -1,6 +1,6 @@
 package com.mygdx.game;
 
-import com.mygdx.game.interfaces.OnCLickCallback;
+import com.mygdx.game.interfaces.OnClickCallback;
 import com.mygdx.game.interfaces.OnClickBooleanCallback;
 import com.mygdx.game.model.CompetitionOpponent;
 import com.mygdx.game.model.Container;
@@ -11,36 +11,36 @@ import java.util.List;
 public interface IActivityRequestHandler {
     void showToast(String s);
 
-    void showPlayers(List<CompetitionOpponent> playerList, Comp status, OnCLickCallback runnable);
+    void showPlayers(List<CompetitionOpponent> playerList, Comp status, OnClickCallback runnable);
 
     void showNextSetMenu(
             Player player,
             int currentSet,
             List<CompetitionOpponent> playerList,
-            OnCLickCallback onFirstClick,
-            OnCLickCallback onClose
+            OnClickCallback onFirstClick,
+            OnClickCallback onClose
     );
 
     void showDialog(
             String title,
             String subtitle,
-            OnCLickCallback onClose,
-            OnCLickCallback onAgree
+            OnClickCallback onClose,
+            OnClickCallback onAgree
     );
 
     void showProgressBar(
             String title,
-            OnCLickCallback onProgressEnd,
+            OnClickCallback onProgressEnd,
             OnClickBooleanCallback onProgressUpdate,
-            OnCLickCallback onClose);
+            OnClickCallback onClose);
 
     void showDialog(
             String title,
             String subtitle,
             String agreeText,
             String closeText,
-            OnCLickCallback onClose,
-            OnCLickCallback onAgree
+            OnClickCallback onClose,
+            OnClickCallback onAgree
     );
 
     void openOptions();
@@ -51,7 +51,7 @@ public interface IActivityRequestHandler {
 
     void openRefrigerator(Player player, Runnable onClose);
 
-    void openShopByMenu(Container container, OnCLickCallback onBuyRunnable, Runnable runnable);
+    void openShopByMenu(Container container, OnClickCallback onBuyRunnable, Runnable runnable);
 
     void openStats(Player player, Runnable pauseGame);
 

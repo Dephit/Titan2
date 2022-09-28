@@ -1,7 +1,5 @@
 package com.mygdx.game;
 
-import static com.mygdx.game.PlayerCondition.stay;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -12,13 +10,12 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.mygdx.game.interfaces.OnCLickCallback;
+import com.mygdx.game.interfaces.OnClickCallback;
 
 import java.util.ArrayList;
 
@@ -130,9 +127,9 @@ public abstract class BaseRoom extends Stage  {
         interScreenCommunication.showDialog(
                 "Coach",
                 message.text,
-                (OnCLickCallback) object -> {
+                (OnClickCallback) object -> {
                 },
-                (OnCLickCallback) object -> {
+                (OnClickCallback) object -> {
                     message.onClick();
                     showDialog(message);
                 }

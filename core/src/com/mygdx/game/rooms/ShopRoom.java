@@ -2,10 +2,8 @@ package com.mygdx.game.rooms;
 
 import static com.mygdx.game.PlayerCondition.stay;
 
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.mygdx.game.BaseRoom;
 import com.mygdx.game.InterScreenCommunication;
 import com.mygdx.game.Message;
@@ -13,7 +11,7 @@ import com.mygdx.game.Npc;
 import com.mygdx.game.Player;
 import com.mygdx.game.PlayerCondition;
 import com.mygdx.game.Style;
-import com.mygdx.game.interfaces.OnCLickCallback;
+import com.mygdx.game.interfaces.OnClickCallback;
 import com.mygdx.game.model.Container;
 import com.mygdx.game.model.Item;
 import com.mygdx.game.model.ShopMenu;
@@ -87,7 +85,7 @@ public class ShopRoom extends BaseRoom {
         );
 
 
-        OnCLickCallback onBuyRunnable = object -> {
+        OnClickCallback onBuyRunnable = object -> {
             player.buyItemToInventory((Item) object);
             pauseRunnable.run();
         };
@@ -100,7 +98,7 @@ public class ShopRoom extends BaseRoom {
                 () -> player.setPath(900 , 500, 900, 500, PlayerCondition.stay)
         );
 
-        OnCLickCallback onBuyRunnable = object -> {
+        OnClickCallback onBuyRunnable = object -> {
             player.buyItemToRefrigerator((Item) object);
             pauseRunnable.run();
         };

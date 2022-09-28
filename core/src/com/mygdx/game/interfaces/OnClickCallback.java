@@ -1,6 +1,6 @@
 package com.mygdx.game.interfaces;
 
-public interface OnCLickCallback {
+public interface OnClickCallback {
 
     void call(Object object);
 }

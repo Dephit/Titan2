@@ -1,6 +1,6 @@
 package com.mygdx.game;
 
-import com.mygdx.game.interfaces.OnCLickCallback;
+import com.mygdx.game.interfaces.OnClickCallback;
 import com.mygdx.game.interfaces.OnClickBooleanCallback;
 import com.mygdx.game.model.CompetitionOpponent;
 import com.mygdx.game.model.Container;
@@ -12,28 +12,28 @@ public interface InterScreenCommunication {
 
     void showToast(String msg);
 
-    void showPlayerList(List<CompetitionOpponent> playerList, Comp status, OnCLickCallback runnable);
+    void showPlayerList(List<CompetitionOpponent> playerList, Comp status, OnClickCallback runnable);
 
     void showNextSetMenu(
             Player player,
             int currentSet,
             List<CompetitionOpponent> playerList,
-            OnCLickCallback onFirstClick,
-            OnCLickCallback onClose
+            OnClickCallback onFirstClick,
+            OnClickCallback onClose
     );
 
     void showDialog(
             String title,
             String subtitle,
-            OnCLickCallback onClose,
-            OnCLickCallback onAgree
+            OnClickCallback onClose,
+            OnClickCallback onAgree
     );
 
     void showProgressBar(
             String title,
-            OnCLickCallback onProgressEnd,
+            OnClickCallback onProgressEnd,
             OnClickBooleanCallback onProgressUpdate,
-            OnCLickCallback onClose);
+            OnClickCallback onClose);
 
 
     void showDialog(
@@ -41,8 +41,8 @@ public interface InterScreenCommunication {
             String subtitle,
             String agreeText,
             String closeText,
-            OnCLickCallback onClose,
-            OnCLickCallback onAgree
+            OnClickCallback onClose,
+            OnClickCallback onAgree
     );
 
     void openMap();
@@ -65,7 +65,7 @@ public interface InterScreenCommunication {
 
     void openRefrigerator(Player player, Runnable runnable);
 
-    void showBuyMenu(Container container, OnCLickCallback onBuyRunnable, Runnable runnable);
+    void showBuyMenu(Container container, OnClickCallback onBuyRunnable, Runnable runnable);
 
     void showHud();
 

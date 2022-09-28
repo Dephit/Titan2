@@ -11,11 +11,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.mygdx.game.interfaces.OnCLickCallback
+import com.mygdx.game.interfaces.OnClickCallback
 import com.sergeenko.alexey.titangym.R
 
 @Composable
-fun ColumnScope.CloseButton(onClose: OnCLickCallback?) {
+fun ColumnScope.CloseButton(onClose: OnClickCallback?) {
     MyButton(
         onClick = {
             onClose?.call(null)
@@ -23,7 +23,7 @@ fun ColumnScope.CloseButton(onClose: OnCLickCallback?) {
 }
 
 @Composable
-fun RowScope.CloseButton(onClose: OnCLickCallback?) {
+fun RowScope.CloseButton(onClose: OnClickCallback?) {
     MyButton(
         onClick = {
             onClose?.call(null)
@@ -32,7 +32,7 @@ fun RowScope.CloseButton(onClose: OnCLickCallback?) {
 
 
 @Composable
-fun MyButton(onClick: OnCLickCallback?, text: String, modifier: Modifier = Modifier){
+fun MyButton(onClick: OnClickCallback?, text: String, modifier: Modifier = Modifier){
     return Button(
         onClick = {
             onClick?.call(null)

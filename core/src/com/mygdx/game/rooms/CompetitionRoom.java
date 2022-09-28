@@ -8,13 +8,10 @@ import com.mygdx.game.InterScreenCommunication;
 import com.mygdx.game.Player;
 import com.mygdx.game.PlayerCondition;
 import com.mygdx.game.Preffics;
-import com.mygdx.game.Style;
-import com.mygdx.game.interfaces.OnCLickCallback;
 import com.mygdx.game.model.CompetitionOpponent;
 import com.mygdx.game.model.enums.Comp;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class CompetitionRoom extends BaseRoom {
 
