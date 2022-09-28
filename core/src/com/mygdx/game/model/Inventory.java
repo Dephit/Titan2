@@ -1,5 +1,8 @@
 package com.mygdx.game.model;
 
+import com.mygdx.game.model.items.snackes.EnergyDrink;
+import com.mygdx.game.model.items.snackes.ProteinBar;
+
 public class Inventory extends Container {
 
     public Inventory() {

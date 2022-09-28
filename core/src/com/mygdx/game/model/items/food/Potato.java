@@ -1,11 +1,12 @@
-package com.mygdx.game.model;
+package com.mygdx.game.model.items.food;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.Player;
+import com.mygdx.game.model.items.Item;
 
 public class Potato extends Item {
 
-    Potato(){
+    public Potato(){
         title = "Potato";
         styleName = "potato";
         description = "The potato is a\n" +

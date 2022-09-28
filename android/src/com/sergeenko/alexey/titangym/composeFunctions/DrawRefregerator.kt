@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -18,7 +19,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.mygdx.game.interfaces.OnClickCallback
 import com.mygdx.game.model.Container
-import com.mygdx.game.model.Item
+import com.mygdx.game.model.items.Item
 import com.sergeenko.alexey.titangym.assetsToBitmap
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -63,16 +64,19 @@ fun DrawRefregerator(
                             item {
                                 am?.assetsToBitmap("screens/buttons/${item.styleName}.png")
                                     ?.asImageBitmap()?.let {
-                                        Image(bitmap = it,
-                                            contentDescription = "Localized description",
-                                            contentScale = ContentScale.FillBounds,
-                                            modifier = Modifier
-                                                .width(40.dp)
-                                                .height(40.dp)
-                                                .clickable {
-                                                    onItemClick(item)
-                                                }
-                                        )
+                                        Column {
+                                            Image(bitmap = it,
+                                                contentDescription = "Localized description",
+                                                contentScale = ContentScale.FillBounds,
+                                                modifier = Modifier
+                                                    .width(40.dp)
+                                                    .height(40.dp)
+                                                    .clickable {
+                                                        onItemClick(item)
+                                                    }
+                                            )
+                                            Text(text = item.cost.toString())
+                                        }
                                     }
                             }
                         }

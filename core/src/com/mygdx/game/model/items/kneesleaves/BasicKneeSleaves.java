@@ -1,12 +1,16 @@
-package com.mygdx.game.model;
+package com.mygdx.game.model.items.kneesleaves;
 
 import com.mygdx.game.Player;
+import com.mygdx.game.model.ContiniousItem;
+import com.mygdx.game.model.ItemType;
+import com.mygdx.game.model.KneesleavesItem;
 
-public class BasicKneeSleaves extends ContiniousItem {
+public class BasicKneeSleaves extends KneesleavesItem {
 
-    BasicKneeSleaves(){
+
+    public BasicKneeSleaves(){
         title = "BasicKneeSleaves";
-        styleName = "basic_kneesleeves";
+        styleName = "kneesleaves/basic_kneesleeves";
         description = "BasicKneeSleaves";
         menuStyleName = "potatoMenu";
         cost = 5000;

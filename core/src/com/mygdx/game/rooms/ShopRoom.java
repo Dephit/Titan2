@@ -13,9 +13,11 @@ import com.mygdx.game.PlayerCondition;
 import com.mygdx.game.Style;
 import com.mygdx.game.interfaces.OnClickCallback;
 import com.mygdx.game.model.Container;
-import com.mygdx.game.model.Item;
-import com.mygdx.game.model.ShopMenu;
-import com.mygdx.game.model.SnackMenu;
+import com.mygdx.game.model.ContiniousItem;
+import com.mygdx.game.model.items.Item;
+import com.mygdx.game.model.shop.EquipmentShopMenu;
+import com.mygdx.game.model.shop.ShopMenu;
+import com.mygdx.game.model.shop.SnackMenu;
 
 import java.util.ArrayList;
 
@@ -23,6 +25,7 @@ public class ShopRoom extends BaseRoom {
 
     Container shopMenu = new ShopMenu();
     Container snackMenu = new SnackMenu();
+    Container equipmentShopMenu = new EquipmentShopMenu();
 
     public ShopRoom() {
         super("shop");
@@ -51,7 +54,8 @@ public class ShopRoom extends BaseRoom {
         );
         addButton("watchCam", Style.empty, "",   244, 700, 75, 75, 1f,
                 () -> player.setPath(360 , 385, PlayerCondition.watchCam));
-        addButton("talkToStaffBut", Style.empty, "",   230, 460, 75, 175, 1f, this::talkToStaff);
+        addButton("talkToStaffBut", Style.empty, "",   230, 460, 75, 175, 1f,
+                () -> player.setPath(340 , 420,340 , 420, PlayerCondition.stay, this::talkToStaff));
         addButton("talkToCleanerBut", Style.empty, "",   1250, 430, 75, 155, 1f, this::talkToSanitaire);
         addButton("buyMenuBut", Style.empty, "",   1100, 200, 200, 200, 1f,
                 () -> player.setPath(1310 , 380,1310 , 380, PlayerCondition.stay, this::showBuyMenu));
@@ -69,14 +73,18 @@ public class ShopRoom extends BaseRoom {
     }
 
     private void talkToStaff() {
-        player.setPath(340 , 420, 0, 0, PlayerCondition.lookinLeft, () -> {
-            Message message = new Message("Stuff",
-                    new ArrayList<>(),
-                    getLanguage().stuffRandomText
-            );
-            showDialog(message);
-            player.setPlayersAction(stay, 340 , 420, ()->{});
-        });
+        Runnable pauseRunnable = pauseGame(
+                () -> player.setPath(340 , 420, PlayerCondition.stay)
+        );
+
+
+        OnClickCallback onBuyRunnable = object -> {
+            player.buyEquipmentItem((ContiniousItem) object);
+            pauseRunnable.run();
+        };
+
+        interScreenCommunication.showBuyMenu(equipmentShopMenu, onBuyRunnable, pauseRunnable);
+
     }
 
     private void showBuySnackMenu() {

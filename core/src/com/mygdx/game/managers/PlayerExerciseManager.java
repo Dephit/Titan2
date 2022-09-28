@@ -6,9 +6,7 @@ import com.mygdx.game.Player;
 import com.mygdx.game.PlayerCondition;
 import com.mygdx.game.Stat;
 import com.mygdx.game.model.ContiniousItem;
-import com.mygdx.game.model.Item;
-
-import java.util.ArrayList;
+import com.mygdx.game.model.items.Item;
 
 public class PlayerExerciseManager extends ExerciseManager {
 

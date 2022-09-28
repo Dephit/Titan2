@@ -1,4 +1,8 @@
-package com.mygdx.game.model;
+package com.mygdx.game.model.shop;
+
+import com.mygdx.game.model.Container;
+import com.mygdx.game.model.items.food.Nuggets;
+import com.mygdx.game.model.items.food.Potato;
 
 public class ShopMenu extends Container {
 

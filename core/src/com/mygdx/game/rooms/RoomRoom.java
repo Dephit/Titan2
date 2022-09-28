@@ -5,14 +5,12 @@ import static com.mygdx.game.PlayerCondition.stay;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.mygdx.game.BaseRoom;
 import com.mygdx.game.InterScreenCommunication;
 import com.mygdx.game.Npc;
 import com.mygdx.game.Player;
 import com.mygdx.game.PlayerCondition;
 import com.mygdx.game.Style;
-import com.mygdx.game.model.Item;
 
 public class RoomRoom extends BaseRoom {
 

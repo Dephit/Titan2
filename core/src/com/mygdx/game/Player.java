@@ -3,8 +3,9 @@ package com.mygdx.game;
 import com.mygdx.game.managers.InventoryManager;
 import com.mygdx.game.managers.PlayerExerciseManager;
 import com.mygdx.game.model.CompetitionOpponent;
+import com.mygdx.game.model.ContiniousItem;
 import com.mygdx.game.model.Day;
-import com.mygdx.game.model.Item;
+import com.mygdx.game.model.items.Item;
 import com.mygdx.game.managers.NotificationManager;
 
 public class Player extends Npc {
@@ -97,6 +98,12 @@ public class Player extends Npc {
 
     public void buyItemToInventory(Item item){
         if(!inventoryManager.buyItemToInventory(item)){
+            notificationManager.addMessage(getLanguage().refregiratorIsFull);
+        }
+    }
+
+    public void buyEquipmentItem(ContiniousItem item){
+        if(!inventoryManager.buyItemToEquipment(item)){
             notificationManager.addMessage(getLanguage().refregiratorIsFull);
         }
     }

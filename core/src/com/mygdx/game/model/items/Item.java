@@ -1,4 +1,4 @@
-package com.mygdx.game.model;
+package com.mygdx.game.model.items;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.BaseActor;

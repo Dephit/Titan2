@@ -1,11 +1,12 @@
-package com.mygdx.game.model;
+package com.mygdx.game.model.items.snackes;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.Player;
+import com.mygdx.game.model.items.Item;
 
 public class EnergyDrink extends Item {
 
-    EnergyDrink() {
+    public EnergyDrink() {
         title = "Energy Drink";
         styleName = "energy_drink";
         description = "Energy Drink";

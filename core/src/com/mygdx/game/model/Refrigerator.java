@@ -1,8 +1,7 @@
 package com.mygdx.game.model;
 
-import org.apache.commons.logging.Log;
-
-import java.util.logging.Logger;
+import com.mygdx.game.model.items.food.Nuggets;
+import com.mygdx.game.model.items.food.Potato;
 
 public class Refrigerator extends Container {
 
