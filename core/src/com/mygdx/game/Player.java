@@ -103,7 +103,7 @@ public class Player extends Npc {
     }
 
     public void buyEquipmentItem(ContiniousItem item){
-        if(!inventoryManager.buyItemToEquipment(item)){
+        if(!inventoryManager.buyItemToEquipment(this, item)){
             notificationManager.addMessage(getLanguage().refregiratorIsFull);
         }
     }

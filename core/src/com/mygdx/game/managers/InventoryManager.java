@@ -2,8 +2,10 @@ package com.mygdx.game.managers;
 
 import static sun.jvm.hotspot.debugger.win32.coff.DebugVC50X86RegisterEnums.TAG;
 
+import com.mygdx.game.Player;
 import com.mygdx.game.model.Container;
 import com.mygdx.game.model.ContiniousItem;
+import com.mygdx.game.model.EffectType;
 import com.mygdx.game.model.EquipmentContainer;
 import com.mygdx.game.model.Inventory;
 import com.mygdx.game.model.items.Item;
@@ -37,17 +39,23 @@ public class InventoryManager {
         } else return false;
     }
 
-    public boolean buyItemToEquipment(ContiniousItem item) {
+    public boolean buyItemToEquipment(Player player, ContiniousItem item) {
         if(equipmentContainer.hasSpace()){
             if(pocket.buy(item.cost)){
                 for (Item equipItem: equipmentContainer.getItems()) {
                     if(((ContiniousItem) equipItem).type == item.type){
                         System.out.println("TYPE_" + equipItem.title);
+                        if (item.effectType == EffectType.ON_USE){
+                            item.onRemove(player);
+                        }
                         equipmentContainer.removeItem(equipItem);
                         break;
                     }
                 }
                 equipmentContainer.addItem(item);
+                if(item.effectType == EffectType.PERMANENT || item.effectType == EffectType.ON_USE){
+                    item.onUse(player);
+                }
                 return true;
             }else return false;
         } else return false;

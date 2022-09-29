@@ -6,6 +6,7 @@ import com.mygdx.game.Player;
 import com.mygdx.game.PlayerCondition;
 import com.mygdx.game.Stat;
 import com.mygdx.game.model.ContiniousItem;
+import com.mygdx.game.model.EffectType;
 import com.mygdx.game.model.items.Item;
 
 public class PlayerExerciseManager extends ExerciseManager {
@@ -63,13 +64,22 @@ public class PlayerExerciseManager extends ExerciseManager {
                                 }
                         }
                         float value;
-                        float updateEnergyValue = exr.updateEnergyValue;
-                        float updateHealthValue = exr.updateHealthValue;
-                        float updateTirednessValue = exr.updateTirednessValue;
-                        if(equipment != null){
+                        float updateEnergyValue;
+                        float updateHealthValue;
+                        float updateTirednessValue;
+                        if(equipment != null
+                                && equipment.effectType == EffectType.ON_EXERCISE
+                                && equipment.conditionList.contains(player.playerCondition)
+                        ){
                                 value = exr.updateValue * equipment.getExerciseMultiplier();
+                                updateEnergyValue = exr.updateValue * equipment.getEnergyMultiplier();
+                                updateHealthValue = exr.updateValue * equipment.getHealthMultiplier();
+                                updateTirednessValue = exr.updateValue * equipment.getTirednessMultiplier();
                         }else{
                                 value = exr.updateValue;
+                                updateEnergyValue = exr.updateValue;
+                                updateHealthValue = exr.updateValue;
+                                updateTirednessValue = exr.updateValue;
                         }
                         exr.calculateProgress(value);
                         energy.minusProgress(updateEnergyValue);

@@ -58,7 +58,7 @@ fun DrawRefregerator(
                     CloseButton(onClose)
                     LazyVerticalGrid(
                         cells = GridCells.Adaptive(40.dp),
-                        modifier = Modifier.width(100.dp)
+                        modifier = Modifier.width(100.dp).height(200.dp)
                     ) {
                         container.items?.forEachIndexed { _, item ->
                             item {
