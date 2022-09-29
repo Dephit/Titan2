@@ -184,7 +184,7 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
 
     override fun openStats(player: Player, runnable: Runnable) {
         showComposeView {
-            DrawRefregerator(
+            DrawInventory(
                 context?.assets,
                 player.inventoryManager.equipmentContainer,
                 {
@@ -200,7 +200,7 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
 
     override fun openInventory(player: Player, runnable: Runnable) {
         showComposeView {
-            DrawRefregerator(
+            DrawInventory(
                 context?.assets,
                 player.inventoryManager.inventory,
                 {
@@ -226,7 +226,7 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
 
     override fun openRefrigerator(player: Player, onClose: Runnable?) {
         showComposeView {
-            DrawRefregerator(
+            DrawInventory(
                 context?.assets,
                 player.inventoryManager.refrigerator,
                 {
@@ -256,7 +256,7 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
         runnable: Runnable
     ) {
         showComposeView {
-            DrawRefregerator(
+            DrawInventory(
                 context?.assets,
                 container,
                 {

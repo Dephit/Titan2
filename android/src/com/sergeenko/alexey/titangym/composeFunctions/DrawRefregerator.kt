@@ -24,7 +24,7 @@ import com.sergeenko.alexey.titangym.assetsToBitmap
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun DrawRefregerator(
+fun DrawInventory(
     am: AssetManager?,
     container: Container,
     onItemClick: (Item) -> Unit,
@@ -62,7 +62,7 @@ fun DrawRefregerator(
                     ) {
                         container.items?.forEachIndexed { _, item ->
                             item {
-                                am?.assetsToBitmap("screens/buttons/${item.styleName}.png")
+                                am?.assetsToBitmap(getItemPath(item.styleName))
                                     ?.asImageBitmap()?.let {
                                         Column {
                                             Image(bitmap = it,
@@ -91,3 +91,5 @@ fun DrawRefregerator(
         }
     }
 }
+
+private fun getItemPath(path: String) = if(!path.contains(".png")) "screens/buttons/${path}.png" else path
