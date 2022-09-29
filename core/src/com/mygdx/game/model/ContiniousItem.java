@@ -6,7 +6,6 @@ import com.mygdx.game.model.items.Item;
 
 import java.util.ArrayList;
 
-
 public class ContiniousItem extends Item {
 
     public ItemType type;
@@ -14,7 +13,6 @@ public class ContiniousItem extends Item {
     public EffectType effectType;
 
     public ArrayList<PlayerCondition> conditionList = new ArrayList<>();
-
 
     public float getExerciseMultiplier() {
         return 1.0f;

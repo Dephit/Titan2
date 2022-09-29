@@ -1,9 +1,6 @@
 package com.mygdx.game.model.items.kneesleaves;
 
 import com.mygdx.game.Player;
-import com.mygdx.game.model.ContiniousItem;
-import com.mygdx.game.model.ItemType;
-import com.mygdx.game.model.KneesleavesItem;
 
 public class BasicKneeSleaves extends KneesleavesItem {
 

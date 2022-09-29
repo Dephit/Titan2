@@ -72,14 +72,14 @@ public class PlayerExerciseManager extends ExerciseManager {
                                 && equipment.conditionList.contains(player.playerCondition)
                         ){
                                 value = exr.updateValue * equipment.getExerciseMultiplier();
-                                updateEnergyValue = exr.updateValue * equipment.getEnergyMultiplier();
-                                updateHealthValue = exr.updateValue * equipment.getHealthMultiplier();
-                                updateTirednessValue = exr.updateValue * equipment.getTirednessMultiplier();
+                                updateEnergyValue = exr.updateEnergyValue * equipment.getEnergyMultiplier();
+                                updateHealthValue = exr.updateHealthValue * equipment.getHealthMultiplier();
+                                updateTirednessValue = exr.updateTirednessValue * equipment.getTirednessMultiplier();
                         }else{
                                 value = exr.updateValue;
-                                updateEnergyValue = exr.updateValue;
-                                updateHealthValue = exr.updateValue;
-                                updateTirednessValue = exr.updateValue;
+                                updateEnergyValue = exr.updateEnergyValue;
+                                updateHealthValue = exr.updateHealthValue;
+                                updateTirednessValue = exr.updateTirednessValue;
                         }
                         exr.calculateProgress(value);
                         energy.minusProgress(updateEnergyValue);
