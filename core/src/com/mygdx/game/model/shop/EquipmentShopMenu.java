@@ -1,5 +1,10 @@
 package com.mygdx.game.model.shop;
 
+import com.mygdx.game.model.items.belts.B12Belt;
+import com.mygdx.game.model.items.belts.BasicBelt;
+import com.mygdx.game.model.items.belts.GoldenBelt;
+import com.mygdx.game.model.items.belts.IzerBelt;
+import com.mygdx.game.model.items.belts.SDBBelt;
 import com.mygdx.game.model.items.kneesleaves.BasicKneeSleaves;
 import com.mygdx.game.model.Container;
 import com.mygdx.game.model.items.kneesleaves.GoldenKneeSleaves;
@@ -39,6 +44,12 @@ public class EquipmentShopMenu extends Container {
         addItem(new BlackWraps());
         addItem(new RedWraps());
         addItem(new BasicWraps());
+
+        addItem(new BasicBelt());
+        addItem(new IzerBelt());
+        addItem(new B12Belt());
+        addItem(new SDBBelt());
+        addItem(new GoldenBelt());
     }
 
 }
