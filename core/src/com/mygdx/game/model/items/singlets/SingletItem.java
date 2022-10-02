@@ -10,7 +10,7 @@ import com.mygdx.game.model.items.kneesleaves.KneesleavesItem;
 public class SingletItem extends ContiniousItem {
 
     public SingletItem(){
-        effectType = EffectType.ON_USE;
+        effectType = EffectType.ON_EXERCISE;
         type = ItemType.SINGLET;
     }
 

@@ -3,7 +3,6 @@ package com.mygdx.game.model.items.singlets;
 import com.mygdx.game.Player;
 import com.mygdx.game.model.items.kneesleaves.KneesleavesItem;
 
-
 public class RedSinglet extends SingletItem {
 
     public RedSinglet() {

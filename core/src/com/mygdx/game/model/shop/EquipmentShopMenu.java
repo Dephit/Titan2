@@ -11,6 +11,11 @@ import com.mygdx.game.model.items.singlets.BlackSinglet;
 import com.mygdx.game.model.items.singlets.GoldenSinglet;
 import com.mygdx.game.model.items.singlets.PlatinumSinglet;
 import com.mygdx.game.model.items.singlets.RedSinglet;
+import com.mygdx.game.model.items.wristWraps.BasicWraps;
+import com.mygdx.game.model.items.wristWraps.BlackWraps;
+import com.mygdx.game.model.items.wristWraps.GoldenWraps;
+import com.mygdx.game.model.items.wristWraps.PlatinumWraps;
+import com.mygdx.game.model.items.wristWraps.RedWraps;
 
 public class EquipmentShopMenu extends Container {
 
@@ -22,11 +27,18 @@ public class EquipmentShopMenu extends Container {
         addItem(new SilverKneeSleaves());
         addItem(new SDBKneeSleaves());
         addItem(new BasicKneeSleaves());
+
         addItem(new PlatinumSinglet());
         addItem(new GoldenSinglet());
         addItem(new BlackSinglet());
         addItem(new RedSinglet());
         addItem(new BasicSinglet());
+
+        addItem(new PlatinumWraps());
+        addItem(new GoldenWraps());
+        addItem(new BlackWraps());
+        addItem(new RedWraps());
+        addItem(new BasicWraps());
     }
 
 }
