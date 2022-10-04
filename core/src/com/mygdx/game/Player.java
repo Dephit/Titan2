@@ -7,13 +7,13 @@ import com.mygdx.game.model.ContiniousItem;
 import com.mygdx.game.model.Day;
 import com.mygdx.game.model.items.Item;
 import com.mygdx.game.managers.NotificationManager;
+import com.mygdx.game.model.items.supplements.SupplementItem;
 
 public class Player extends Npc {
 
     public NotificationManager notificationManager = new NotificationManager();
     public InventoryManager inventoryManager = new InventoryManager();
     public PlayerExerciseManager exerciseManager;
-
     public Day day = new Day();
 
     public CompetitionOpponent compValue;
@@ -84,7 +84,7 @@ public class Player extends Npc {
                     && playerCondition != PlayerCondition.left
                     && playerCondition != PlayerCondition.right
                     && playerCondition != PlayerCondition.down)
-            day.addTime();
+            day.addTime(this);
         }
 
         return isFinishd;
@@ -103,7 +103,9 @@ public class Player extends Npc {
     }
 
     public void buyEquipmentItem(ContiniousItem item){
-        if(!inventoryManager.buyItemToEquipment(this, item)){
+        if(item instanceof SupplementItem){
+            if(!inventoryManager.buySupplement(this, item));
+        }else if(!inventoryManager.buyItemToEquipment(this, item)){
             notificationManager.addMessage(getLanguage().refregiratorIsFull);
         }
     }

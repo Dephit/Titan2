@@ -70,6 +70,8 @@ public interface InterScreenCommunication {
     void showHud();
 
     void openStats(Runnable pauseGame);
+
+    void openPerkMenu(Runnable pauseGame);
 }
 
 

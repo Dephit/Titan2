@@ -92,4 +92,4 @@ fun DrawInventory(
     }
 }
 
-private fun getItemPath(path: String) = if(!path.contains(".png")) "screens/buttons/${path}.png" else path
+fun getItemPath(path: String) = if(!path.contains(".png")) "screens/buttons/${path}.png" else path

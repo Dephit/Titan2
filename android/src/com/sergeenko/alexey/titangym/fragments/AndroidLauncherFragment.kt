@@ -177,7 +177,7 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
     override fun showHud(player: Player) {
         binding.hudView.apply {
             setContent {
-                HudBar(player)
+                HudBar(requireContext().assets, player)
             }
         }
     }
@@ -197,6 +197,13 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
             }
         }
     }
+
+    override fun openPerkMenu(player: Player?, pauseGame: Runnable?) {
+        showComposeView {
+            DrawPerkMenu(player)
+        }
+    }
+
 
     override fun openInventory(player: Player, runnable: Runnable) {
         showComposeView {

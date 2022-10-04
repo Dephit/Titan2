@@ -16,6 +16,7 @@ import com.mygdx.game.model.items.singlets.BlackSinglet;
 import com.mygdx.game.model.items.singlets.GoldenSinglet;
 import com.mygdx.game.model.items.singlets.PlatinumSinglet;
 import com.mygdx.game.model.items.singlets.RedSinglet;
+import com.mygdx.game.model.items.supplements.Creatine;
 import com.mygdx.game.model.items.wristWraps.BasicWraps;
 import com.mygdx.game.model.items.wristWraps.BlackWraps;
 import com.mygdx.game.model.items.wristWraps.GoldenWraps;
@@ -26,6 +27,8 @@ public class EquipmentShopMenu extends Container {
 
     public EquipmentShopMenu() {
         this.totalCapacity = 100;
+
+        addItem(new Creatine());
 
         addItem(new PlatinumKneeSleaves());
         addItem(new GoldenKneeSleaves());

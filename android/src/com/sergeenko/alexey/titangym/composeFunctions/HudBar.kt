@@ -1,6 +1,9 @@
 package com.sergeenko.alexey.titangym.composeFunctions
 
+import android.content.res.AssetManager
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.LinearProgressIndicator
@@ -9,6 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -16,10 +21,13 @@ import androidx.compose.ui.unit.sp
 import com.mygdx.game.Exercise
 import com.mygdx.game.Player
 import com.mygdx.game.managers.NotificationManager
+import com.mygdx.game.model.items.supplements.SupplementItem
+import com.sergeenko.alexey.titangym.assetsToBitmap
 
 @Composable
 @Preview
 fun HudBar(
+    am: AssetManager,
     player: Player
 ) {
     Box(
@@ -27,7 +35,7 @@ fun HudBar(
             .fillMaxSize()
             .padding(20.dp)
     ) {
-        MainParams(player, player.isInExercise != null)
+        MainParams(am, player, player.isInExercise != null)
         CurrentExercise(player.isInExercise)
         NotificationList(player.notificationManager)
     }
@@ -101,7 +109,7 @@ fun CurrentExercise(bar: Exercise?) {
 }
 
 @Composable
-fun MainParams(player: Player, isInExercise: Boolean) {
+fun MainParams(am: AssetManager, player: Player, isInExercise: Boolean) {
     Row(
         modifier = Modifier.padding(end = 30.dp)
     ) {
@@ -158,6 +166,22 @@ fun MainParams(player: Player, isInExercise: Boolean) {
             Spacer(
                 Modifier.height(10.dp)
             )
+            player.inventoryManager.supplements.items.filter { it is SupplementItem && it.timeInUseLeft < it.timeWillBeLast }.forEach { sup ->
+                am.assetsToBitmap(getItemPath(sup.styleName))
+                    ?.asImageBitmap()?.let {
+                        Column(modifier = Modifier.background(Color.White)) {
+                            Image(bitmap = it,
+                                contentDescription = "Localized description",
+                                contentScale = ContentScale.FillBounds,
+                                modifier = Modifier
+                                    .width(40.dp)
+                                    .height(40.dp)
+                                    .clickable {}
+                            )
+                            Text(text = ((sup as SupplementItem).timeWillBeLast - sup.timeInUseLeft).toString())
+                        }
+                    }
+            }
         }
 
     }

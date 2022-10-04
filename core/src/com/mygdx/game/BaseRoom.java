@@ -314,6 +314,7 @@ public abstract class BaseRoom extends Stage  {
         addButton("optionButton", "optionButton","", 10,940, 125, 125, 1f, ()-> interScreenCommunication.openOptions());
         addButton("optionButton", "optionButton","", 10,660, 125, 125, 1f, ()-> interScreenCommunication.openInventory(pauseGame()));
         addButton("optionButton", "optionButton","", 10,520, 125, 125, 1f, ()-> interScreenCommunication.openStats(pauseGame()));
+        addButton("optionButton", "optionButton","", 10,380, 125, 125, 1f, ()-> interScreenCommunication.openPerkMenu(pauseGame()));
     }
 
     public void addButton(String name, String style, String text, int x, int y, int w, int h, float scale, Runnable runnable) {

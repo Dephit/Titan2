@@ -64,6 +64,11 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
     }
 
     @Override
+    public void openPerkMenu(Runnable pauseGame) {
+        myRequestHandler.openPerkMenu(player, pauseGame);
+    }
+
+    @Override
     public void pause() {
         stage.onPause();
     }

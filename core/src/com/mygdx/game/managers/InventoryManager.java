@@ -8,6 +8,7 @@ import com.mygdx.game.model.ContiniousItem;
 import com.mygdx.game.model.EffectType;
 import com.mygdx.game.model.EquipmentContainer;
 import com.mygdx.game.model.Inventory;
+import com.mygdx.game.model.SupplementsContainer;
 import com.mygdx.game.model.items.Item;
 import com.mygdx.game.model.Pocket;
 import com.mygdx.game.model.Refrigerator;
@@ -17,6 +18,7 @@ import org.graalvm.compiler.replacements.Log;
 public class InventoryManager {
 
     public Container inventory = new Inventory();
+    public SupplementsContainer supplements = new SupplementsContainer();
     public EquipmentContainer equipmentContainer = new EquipmentContainer();
     public Refrigerator refrigerator = new Refrigerator();
     public Pocket pocket = new Pocket(100000);
@@ -53,6 +55,28 @@ public class InventoryManager {
                     }
                 }
                 equipmentContainer.addItem(item);
+                if(item.effectType == EffectType.PERMANENT || item.effectType == EffectType.ON_USE){
+                    item.onUse(player);
+                }
+                return true;
+            }else return false;
+        } else return false;
+    }
+
+    public boolean buySupplement(Player player, ContiniousItem item) {
+        if(supplements.hasSpace()){
+            if(pocket.buy(item.cost)){
+                /*for (Item equipItem: supplements.getItems()) {
+                    if(((ContiniousItem) equipItem).type == item.type){
+                        System.out.println("TYPE_" + equipItem.title);
+                        if (item.effectType == EffectType.ON_USE){
+                            item.onRemove(player);
+                        }
+                        supplements.removeItem(equipItem);
+                        break;
+                    }
+                }*/
+                supplements.addItem(item);
                 if(item.effectType == EffectType.PERMANENT || item.effectType == EffectType.ON_USE){
                     item.onUse(player);
                 }

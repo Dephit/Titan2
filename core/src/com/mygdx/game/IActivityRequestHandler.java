@@ -55,4 +55,5 @@ public interface IActivityRequestHandler {
 
     void openStats(Player player, Runnable pauseGame);
 
+    void openPerkMenu(Player player, Runnable pauseGame);
 }

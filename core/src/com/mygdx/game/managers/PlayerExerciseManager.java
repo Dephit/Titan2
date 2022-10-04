@@ -8,6 +8,7 @@ import com.mygdx.game.Stat;
 import com.mygdx.game.model.ContiniousItem;
 import com.mygdx.game.model.EffectType;
 import com.mygdx.game.model.items.Item;
+import com.mygdx.game.model.items.supplements.SupplementItem;
 
 public class PlayerExerciseManager extends ExerciseManager {
 
@@ -56,31 +57,38 @@ public class PlayerExerciseManager extends ExerciseManager {
 
         private void calculateExercise(Exercise exr) {
                 if(energy.value > 0 && health.value > 0){
-                        ContiniousItem equipment = null;
-                        for (Item item: player.inventoryManager.equipmentContainer.getItems()) {
-                                if(item instanceof ContiniousItem){
-                                       equipment = (ContiniousItem) item;
-                                       break;
-                                }
-                        }
                         float value;
                         float updateEnergyValue;
                         float updateHealthValue;
                         float updateTirednessValue;
-                        if(equipment != null
-                                && equipment.effectType == EffectType.ON_EXERCISE
-                                && equipment.conditionList.contains(player.playerCondition)
-                        ){
-                                value = exr.updateValue * equipment.getExerciseMultiplier();
-                                updateEnergyValue = exr.updateEnergyValue * equipment.getEnergyMultiplier();
-                                updateHealthValue = exr.updateHealthValue * equipment.getHealthMultiplier();
-                                updateTirednessValue = exr.updateTirednessValue * equipment.getTirednessMultiplier();
-                        }else{
-                                value = exr.updateValue;
-                                updateEnergyValue = exr.updateEnergyValue;
-                                updateHealthValue = exr.updateHealthValue;
-                                updateTirednessValue = exr.updateTirednessValue;
+                        value = exr.updateValue;
+                        updateEnergyValue = exr.updateEnergyValue;
+                        updateHealthValue = exr.updateHealthValue;
+                        updateTirednessValue = exr.updateTirednessValue;
+                        for (Item item: player.inventoryManager.equipmentContainer.getItems()) {
+                                if(item instanceof ContiniousItem){
+                                       if(((ContiniousItem) item).conditionList.contains(player.playerCondition)
+                                               && ((ContiniousItem) item).effectType == EffectType.ON_EXERCISE){
+                                               value *= ((ContiniousItem) item).getExerciseMultiplier();
+                                               updateEnergyValue *= ((ContiniousItem) item).getEnergyMultiplier();
+                                               updateHealthValue *= ((ContiniousItem) item).getHealthMultiplier();
+                                               updateTirednessValue *= ((ContiniousItem) item).getTirednessMultiplier();
+                                       }
+                                }
                         }
+
+                        for (Item item: player.inventoryManager.supplements.getItems()) {
+                                if(item instanceof ContiniousItem){
+                                        if(((ContiniousItem) item).conditionList.contains(player.playerCondition)
+                                                && ((ContiniousItem) item).effectType == EffectType.ON_EXERCISE){
+                                                value *= ((ContiniousItem) item).getExerciseMultiplier();
+                                                updateEnergyValue *= ((ContiniousItem) item).getEnergyMultiplier();
+                                                updateHealthValue *= ((ContiniousItem) item).getHealthMultiplier();
+                                                updateTirednessValue *= ((ContiniousItem) item).getTirednessMultiplier();
+                                        }
+                                }
+                        }
+
                         exr.calculateProgress(value);
                         energy.minusProgress(updateEnergyValue);
                         health.minusProgress(updateHealthValue);

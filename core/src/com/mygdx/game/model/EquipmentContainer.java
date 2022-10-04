@@ -10,3 +10,4 @@ public class EquipmentContainer extends Container {
     }
 
 }
+
