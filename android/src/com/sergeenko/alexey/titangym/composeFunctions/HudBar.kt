@@ -1,10 +1,13 @@
 package com.sergeenko.alexey.titangym.composeFunctions
 
 import android.content.res.AssetManager
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.GridCells
+import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.Text
@@ -108,6 +111,7 @@ fun CurrentExercise(bar: Exercise?) {
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MainParams(am: AssetManager, player: Player, isInExercise: Boolean) {
     Row(
@@ -166,21 +170,40 @@ fun MainParams(am: AssetManager, player: Player, isInExercise: Boolean) {
             Spacer(
                 Modifier.height(10.dp)
             )
-            player.inventoryManager.supplements.items.filter { it is SupplementItem && it.timeInUseLeft < it.timeWillBeLast }.forEach { sup ->
-                am.assetsToBitmap(getItemPath(sup.styleName))
-                    ?.asImageBitmap()?.let {
-                        Column(modifier = Modifier.background(Color.White)) {
-                            Image(bitmap = it,
-                                contentDescription = "Localized description",
-                                contentScale = ContentScale.FillBounds,
-                                modifier = Modifier
-                                    .width(40.dp)
-                                    .height(40.dp)
-                                    .clickable {}
-                            )
-                            Text(text = ((sup as SupplementItem).timeWillBeLast - sup.timeInUseLeft).toString())
-                        }
+            LazyVerticalGrid(
+                cells = GridCells.Adaptive(30.dp),
+                modifier = Modifier.width(150.dp).height(200.dp)
+            ) {
+                player.inventoryManager.supplements.items.filter { it is SupplementItem && it.timeInUseLeft < it.timeWillBeLast }.forEach { sup ->
+                    item {
+                        am.assetsToBitmap(getItemPath(sup.styleName))
+                            ?.asImageBitmap()?.let {
+                                Column(modifier = Modifier.background(Color.White)) {
+                                    Image(bitmap = it,
+                                        contentDescription = "Localized description",
+                                        contentScale = ContentScale.FillBounds,
+                                        modifier = Modifier
+                                            .width(30.dp)
+                                            .height(30.dp)
+                                            .clickable {}
+                                    )
+                                    LinearProgressIndicator(
+                                        modifier = Modifier
+                                            .padding(1.dp)
+                                            .fillMaxWidth()
+                                            .height(4.dp)
+                                            .clip(
+                                                RoundedCornerShape(50)
+                                            )
+                                        ,
+                                        color = Color.Black,
+                                        progress = 1f -((sup as SupplementItem).timeInUseLeft / sup.timeWillBeLast.toFloat()),
+                                        backgroundColor = Color.Gray
+                                    )
+                                }
+                            }
                     }
+                }
             }
         }
 
