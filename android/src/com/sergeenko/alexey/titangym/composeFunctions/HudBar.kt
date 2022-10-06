@@ -26,6 +26,7 @@ import com.mygdx.game.Player
 import com.mygdx.game.managers.NotificationManager
 import com.mygdx.game.model.items.supplements.SupplementItem
 import com.sergeenko.alexey.titangym.assetsToBitmap
+import com.sergeenko.alexey.titangym.getItemImage
 
 @Composable
 @Preview
@@ -170,41 +171,33 @@ fun MainParams(am: AssetManager, player: Player, isInExercise: Boolean) {
             )
             LazyVerticalGrid(
                 cells = GridCells.Adaptive(30.dp),
-                modifier = Modifier.width(150.dp).height(200.dp)
+                modifier = Modifier
+                    .width(150.dp)
+                    .height(200.dp)
             ) {
                 listOf(
                     player.inventoryManager.supplements.items.filter { it is SupplementItem && it.timeInUseLeft < it.timeWillBeLast },
                     player.inventoryManager.equipmentContainer.items
                 ).flatten().forEach { sup ->
                     item {
-                        am.assetsToBitmap(getItemPath(sup.styleName))
-                            ?.asImageBitmap()?.let {
-                                Column(modifier = Modifier.background(Color.White)) {
-                                    Image(bitmap = it,
-                                        contentDescription = "Localized description",
-                                        contentScale = ContentScale.FillBounds,
-                                        modifier = Modifier
-                                            .width(30.dp)
-                                            .height(30.dp)
-                                            .clickable {}
-                                    )
-                                    if(sup is SupplementItem){
-                                        LinearProgressIndicator(
-                                            modifier = Modifier
-                                                .padding(1.dp)
-                                                .fillMaxWidth()
-                                                .height(4.dp)
-                                                .clip(
-                                                    RoundedCornerShape(50)
-                                                )
-                                            ,
-                                            color = Color.Black,
-                                            progress = 1f -(sup.timeInUseLeft / sup.timeWillBeLast.toFloat()),
-                                            backgroundColor = Color.Gray
+                        Column(modifier = Modifier.background(Color.White)) {
+                            am.getItemImage(item = sup, onItemClick = {})
+                            if(sup is SupplementItem){
+                                LinearProgressIndicator(
+                                    modifier = Modifier
+                                        .padding(1.dp)
+                                        .fillMaxWidth()
+                                        .height(4.dp)
+                                        .clip(
+                                            RoundedCornerShape(50)
                                         )
-                                    }
-                                }
+                                    ,
+                                    color = Color.Black,
+                                    progress = 1f -(sup.timeInUseLeft / sup.timeWillBeLast.toFloat()),
+                                    backgroundColor = Color.Gray
+                                )
                             }
+                        }
                     }
                 }
             }

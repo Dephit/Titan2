@@ -11,6 +11,8 @@ import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -21,6 +23,8 @@ import com.mygdx.game.interfaces.OnClickCallback
 import com.mygdx.game.model.Container
 import com.mygdx.game.model.items.Item
 import com.sergeenko.alexey.titangym.assetsToBitmap
+import com.sergeenko.alexey.titangym.getItemImage
+import com.sergeenko.alexey.titangym.getItemPath
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -58,26 +62,18 @@ fun DrawInventory(
                     CloseButton(onClose)
                     LazyVerticalGrid(
                         cells = GridCells.Adaptive(40.dp),
-                        modifier = Modifier.width(100.dp).height(200.dp)
+                        modifier = Modifier
+                            .width(100.dp)
+                            .height(200.dp)
                     ) {
                         container.items?.forEachIndexed { _, item ->
                             item {
-                                am?.assetsToBitmap(getItemPath(item.styleName))
-                                    ?.asImageBitmap()?.let {
-                                        Column {
-                                            Image(bitmap = it,
-                                                contentDescription = "Localized description",
-                                                contentScale = ContentScale.FillBounds,
-                                                modifier = Modifier
-                                                    .width(40.dp)
-                                                    .height(40.dp)
-                                                    .clickable {
-                                                        onItemClick(item)
-                                                    }
-                                            )
-                                            Text(text = item.cost.toString())
-                                        }
+                                Box(modifier = Modifier.padding(1.dp)){
+                                    Column(Modifier.background(Color.Gray)) {
+                                        am?.getItemImage(item = item, onItemClick = onItemClick::invoke)
+                                        Text(modifier = Modifier.align(CenterHorizontally), text = item.cost.toString())
                                     }
+                                }
                             }
                         }
                     }
@@ -91,5 +87,3 @@ fun DrawInventory(
         }
     }
 }
-
-fun getItemPath(path: String) = if(!path.contains(".png")) "screens/buttons/${path}.png" else path

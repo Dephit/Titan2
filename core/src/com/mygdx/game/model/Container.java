@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Container {
 
-    private ArrayList<Item> items = new ArrayList<>();
+    private final ArrayList<Item> items = new ArrayList<>();
 
     public int totalCapacity = 0;
 
@@ -22,6 +22,14 @@ public class Container {
         return false;
     }
 
+    public boolean addItems(ArrayList<Item> items){
+        if(hasSpace(items.size())){
+            this.items.addAll(items);
+            return true;
+        }
+        return false;
+    }
+
 
     public void removeItem(Item item){
         items.remove(item);
@@ -29,6 +37,10 @@ public class Container {
 
     public boolean hasSpace() {
         return items.size() < totalCapacity;
+    }
+
+    public boolean hasSpace(int amount) {
+        return items.size() + amount < totalCapacity;
     }
 }
 

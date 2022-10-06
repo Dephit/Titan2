@@ -26,12 +26,9 @@ import com.mygdx.game.interfaces.OnClickBooleanCallback
 import com.mygdx.game.model.CompetitionOpponent
 import com.mygdx.game.model.Container
 import com.mygdx.game.model.enums.Comp
-import com.sergeenko.alexey.titangym.MainViewModel
-import com.sergeenko.alexey.titangym.R
+import com.sergeenko.alexey.titangym.*
 import com.sergeenko.alexey.titangym.composeFunctions.*
 import com.sergeenko.alexey.titangym.databinding.MainActivityBinding
-import com.sergeenko.alexey.titangym.setGone
-import com.sergeenko.alexey.titangym.setVisible
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -185,7 +182,7 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
     override fun openStats(player: Player, runnable: Runnable) {
         showComposeView {
             DrawInventory(
-                context?.assets,
+                getAssetManager(),
                 player.inventoryManager.equipmentContainer,
                 {
                     binding.composeView.setGone()
@@ -200,7 +197,15 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
 
     override fun openPerkMenu(player: Player?, pauseGame: Runnable?) {
         showComposeView {
-            DrawPerkMenu(player)
+            DrawPerkMenu(getAssetManager(), player,
+                {
+                    binding.composeView.setGone()
+                    pauseGame?.run()
+                }
+            ) {
+                binding.composeView.setGone()
+                pauseGame?.run()
+            }
         }
     }
 
@@ -208,7 +213,7 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
     override fun openInventory(player: Player, runnable: Runnable) {
         showComposeView {
             DrawInventory(
-                context?.assets,
+                getAssetManager(),
                 player.inventoryManager.inventory,
                 {
                     showDialog(
@@ -234,7 +239,7 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
     override fun openRefrigerator(player: Player, onClose: Runnable?) {
         showComposeView {
             DrawInventory(
-                context?.assets,
+                getAssetManager(),
                 player.inventoryManager.refrigerator,
                 {
                     showDialog(
@@ -264,7 +269,7 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
     ) {
         showComposeView {
             DrawInventory(
-                context?.assets,
+                getAssetManager(),
                 container,
                 {
                     showDialog(
