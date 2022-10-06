@@ -1,5 +1,5 @@
 package com.mygdx.game.model;
 
 public enum EffectType {
-    PERMANENT, ON_EXERCISE, ON_USE
+    PERMANENT, ON_EXERCISE, WHILE_EQUIPPED
 }

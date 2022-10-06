@@ -1,19 +1,15 @@
 package com.mygdx.game.managers;
 
-import static sun.jvm.hotspot.debugger.win32.coff.DebugVC50X86RegisterEnums.TAG;
-
 import com.mygdx.game.Player;
 import com.mygdx.game.model.Container;
 import com.mygdx.game.model.ContiniousItem;
 import com.mygdx.game.model.EffectType;
 import com.mygdx.game.model.EquipmentContainer;
 import com.mygdx.game.model.Inventory;
-import com.mygdx.game.model.SupplementsContainer;
-import com.mygdx.game.model.items.Item;
 import com.mygdx.game.model.Pocket;
 import com.mygdx.game.model.Refrigerator;
-
-import org.graalvm.compiler.replacements.Log;
+import com.mygdx.game.model.SupplementsContainer;
+import com.mygdx.game.model.items.Item;
 
 public class InventoryManager {
 
@@ -47,7 +43,7 @@ public class InventoryManager {
                 for (Item equipItem: equipmentContainer.getItems()) {
                     if(((ContiniousItem) equipItem).type == item.type){
                         System.out.println("TYPE_" + equipItem.title);
-                        if (item.effectType == EffectType.ON_USE){
+                        if (item.effectType == EffectType.WHILE_EQUIPPED){
                             item.onRemove(player);
                         }
                         equipmentContainer.removeItem(equipItem);
@@ -55,7 +51,7 @@ public class InventoryManager {
                     }
                 }
                 equipmentContainer.addItem(item);
-                if(item.effectType == EffectType.PERMANENT || item.effectType == EffectType.ON_USE){
+                if(item.effectType == EffectType.PERMANENT || item.effectType == EffectType.WHILE_EQUIPPED){
                     item.onUse(player);
                 }
                 return true;
@@ -66,18 +62,18 @@ public class InventoryManager {
     public boolean buySupplement(Player player, ContiniousItem item) {
         if(supplements.hasSpace()){
             if(pocket.buy(item.cost)){
-                /*for (Item equipItem: supplements.getItems()) {
+                for (Item equipItem: supplements.getItems()) {
                     if(((ContiniousItem) equipItem).type == item.type){
                         System.out.println("TYPE_" + equipItem.title);
-                        if (item.effectType == EffectType.ON_USE){
+                        if (item.effectType == EffectType.WHILE_EQUIPPED){
                             item.onRemove(player);
                         }
                         supplements.removeItem(equipItem);
                         break;
                     }
-                }*/
+                }
                 supplements.addItem(item);
-                if(item.effectType == EffectType.PERMANENT || item.effectType == EffectType.ON_USE){
+                if(item.effectType == EffectType.PERMANENT || item.effectType == EffectType.WHILE_EQUIPPED){
                     item.onUse(player);
                 }
                 return true;

@@ -29,12 +29,16 @@ public class NotificationManager {
     public ArrayList<Notification> notificationList = new ArrayList();
 
     public void countNotification(){
-        for (Notification next : notificationList) {
-            next.showTime -= 100;
-            if (next.showTime <= 0) {
-                //notificationList.remove(next);
-                next.show = false;
+        try{
+            for (Notification next : notificationList) {
+                next.showTime -= 100;
+                if (next.showTime <= 0) {
+                    //notificationList.remove(next);
+                    next.show = false;
+                }
             }
+        }catch (Exception ignored){
+
         }
     }
 

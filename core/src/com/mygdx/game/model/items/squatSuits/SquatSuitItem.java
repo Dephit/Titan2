@@ -7,7 +7,7 @@ import com.mygdx.game.model.ItemType;
 public class SquatSuitItem extends ContiniousItem {
 
     public SquatSuitItem(){
-        effectType = EffectType.ON_USE;
+        effectType = EffectType.WHILE_EQUIPPED;
         type = ItemType.SUIT;
         //conditionList.add(PlayerCondition.squat);
     }

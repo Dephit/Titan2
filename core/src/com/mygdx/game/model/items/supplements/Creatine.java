@@ -6,7 +6,7 @@ import com.mygdx.game.model.EffectType;
 public class Creatine extends SupplementItem {
 
     public Creatine() {
-        timeWillBeLast = 10L;
+        timeWillBeLast = 30L;
         title = "Creatine";
         styleName = "supplements/creatine";
         description = "Creatine";
@@ -21,12 +21,12 @@ public class Creatine extends SupplementItem {
 
     @Override
     public float getExerciseMultiplier() {
-        return 50;
+        return 1.2f;
     }
 
     @Override
     public float getEnergyMultiplier() {
-        return 0.5f;
+        return 0.9f;
     }
 
 }

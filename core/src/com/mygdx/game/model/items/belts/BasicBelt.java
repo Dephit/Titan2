@@ -14,7 +14,7 @@ public class BasicBelt extends BeltItem {
 
     @Override
     public float getExerciseMultiplier() {
-        return 20f;
+        return 1.2f;
     }
 
 }

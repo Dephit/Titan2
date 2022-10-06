@@ -15,7 +15,7 @@ public class BasicKneeSleaves extends KneesleavesItem {
 
     @Override
     public float getExerciseMultiplier() {
-        return 10f;
+        return 1.2f;
     }
 
     @Override

@@ -12,7 +12,7 @@ public class BasicWraps extends WristItem {
 
     @Override
     public float getExerciseMultiplier() {
-        return 20f;
+        return 1.2f;
     }
 
 }

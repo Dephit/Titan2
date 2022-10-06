@@ -60,20 +60,18 @@ fun NotificationList(notificationManager: NotificationManager) {
                     .fillMaxHeight()
                     .weight(1f)
             )
-            notificationManager.notificationList.sortedByDescending { it.showTime }.forEach {
-                if(it.show) {
-                    Text(
-                        text = it.message,
-                        modifier = Modifier
-                            .background(color = Color.White)
-                            .clip(RoundedCornerShape(50))
-                            .padding(3.dp),
-                        color = Color.Black
-                    )
-                    Spacer(
-                        Modifier.height(3.dp)
-                    )
-                }
+            notificationManager.notificationList.filter { it.show }.sortedByDescending { it.showTime }.take(5).forEach {
+                Text(
+                    text = it.message,
+                    modifier = Modifier
+                        .background(color = Color.White)
+                        .clip(RoundedCornerShape(50))
+                        .padding(3.dp),
+                    color = Color.Black
+                )
+                Spacer(
+                    Modifier.height(3.dp)
+                )
             }
         }
     }
@@ -174,7 +172,10 @@ fun MainParams(am: AssetManager, player: Player, isInExercise: Boolean) {
                 cells = GridCells.Adaptive(30.dp),
                 modifier = Modifier.width(150.dp).height(200.dp)
             ) {
-                player.inventoryManager.supplements.items.filter { it is SupplementItem && it.timeInUseLeft < it.timeWillBeLast }.forEach { sup ->
+                listOf(
+                    player.inventoryManager.supplements.items.filter { it is SupplementItem && it.timeInUseLeft < it.timeWillBeLast },
+                    player.inventoryManager.equipmentContainer.items
+                ).flatten().forEach { sup ->
                     item {
                         am.assetsToBitmap(getItemPath(sup.styleName))
                             ?.asImageBitmap()?.let {
@@ -187,19 +188,21 @@ fun MainParams(am: AssetManager, player: Player, isInExercise: Boolean) {
                                             .height(30.dp)
                                             .clickable {}
                                     )
-                                    LinearProgressIndicator(
-                                        modifier = Modifier
-                                            .padding(1.dp)
-                                            .fillMaxWidth()
-                                            .height(4.dp)
-                                            .clip(
-                                                RoundedCornerShape(50)
-                                            )
-                                        ,
-                                        color = Color.Black,
-                                        progress = 1f -((sup as SupplementItem).timeInUseLeft / sup.timeWillBeLast.toFloat()),
-                                        backgroundColor = Color.Gray
-                                    )
+                                    if(sup is SupplementItem){
+                                        LinearProgressIndicator(
+                                            modifier = Modifier
+                                                .padding(1.dp)
+                                                .fillMaxWidth()
+                                                .height(4.dp)
+                                                .clip(
+                                                    RoundedCornerShape(50)
+                                                )
+                                            ,
+                                            color = Color.Black,
+                                            progress = 1f -(sup.timeInUseLeft / sup.timeWillBeLast.toFloat()),
+                                            backgroundColor = Color.Gray
+                                        )
+                                    }
                                 }
                             }
                     }

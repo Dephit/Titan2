@@ -15,7 +15,7 @@ public class BasicSinglet extends SingletItem {
 
     @Override
     public float getExerciseMultiplier() {
-        return 40f;
+        return 1f;
     }
 
     @Override
