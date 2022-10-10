@@ -1,5 +1,7 @@
 package com.mygdx.game.model.items.perks;
 
+import com.mygdx.game.Player;
+
 public class BeltUsePerk extends PerkItem {
 
     public BeltUsePerk() {
@@ -8,5 +10,10 @@ public class BeltUsePerk extends PerkItem {
         description = "BeltUsePerk";
         menuStyleName = "potatoMenu";
         cost = 5;
+    }
+
+    @Override
+    public boolean isRequirementSatisfied(Player player) {
+        return player.inventoryManager.hasPerk(new BeltUsePerk());
     }
 }

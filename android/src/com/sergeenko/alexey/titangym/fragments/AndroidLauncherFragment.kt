@@ -26,6 +26,7 @@ import com.mygdx.game.interfaces.OnClickBooleanCallback
 import com.mygdx.game.model.CompetitionOpponent
 import com.mygdx.game.model.Container
 import com.mygdx.game.model.enums.Comp
+import com.mygdx.game.model.items.perks.PerkItem
 import com.sergeenko.alexey.titangym.*
 import com.sergeenko.alexey.titangym.composeFunctions.*
 import com.sergeenko.alexey.titangym.databinding.MainActivityBinding
@@ -199,8 +200,26 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
         showComposeView {
             DrawPerkMenu(getAssetManager(), player,
                 {
-                    binding.composeView.setGone()
-                    pauseGame?.run()
+                    if(player?.inventoryManager?.hasPerk(it as PerkItem?) == false){
+                        if((it as PerkItem).isRequirementSatisfied(player)) {
+                            showDialog(
+                                title = "Do you wnat to use item ${it.title}",
+                                subtitle = it.description,
+                                onAgree = OnClickCallback { _ ->
+                                    it.onUse(player)
+                                    player.inventoryManager.perkContainer.addItem(it)
+                                    pauseGame?.run()
+                                },
+                                onClose = OnClickCallback {
+                                    pauseGame?.run()
+                                }
+                            )
+                        }else{
+                            player.notificationManager?.addMessage("You can't buy this one yet")
+                        }
+                    }else{
+                        player?.notificationManager?.addMessage("You have this perk")
+                    }
                 }
             ) {
                 binding.composeView.setGone()

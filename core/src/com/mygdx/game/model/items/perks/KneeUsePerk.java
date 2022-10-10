@@ -1,5 +1,7 @@
 package com.mygdx.game.model.items.perks;
 
+import com.mygdx.game.Player;
+
 public class KneeUsePerk extends PerkItem {
 
     public KneeUsePerk() {
@@ -8,6 +10,11 @@ public class KneeUsePerk extends PerkItem {
         description = "KneeUsePerk";
         menuStyleName = "potatoMenu";
         cost = 5;
+    }
+
+    @Override
+    public boolean isRequirementSatisfied(Player player) {
+        return player.inventoryManager.hasPerk(new SquatFirstPerk());
     }
 }
 
