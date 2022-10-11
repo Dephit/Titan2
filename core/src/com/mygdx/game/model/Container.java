@@ -3,6 +3,8 @@ package com.mygdx.game.model;
 import com.mygdx.game.model.items.Item;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class Container {
 
@@ -22,9 +24,9 @@ public class Container {
         return false;
     }
 
-    public boolean addItems(ArrayList<Item> items){
-        if(hasSpace(items.size())){
-            this.items.addAll(items);
+    public boolean addItems(Item... items){
+        if(hasSpace(items.length)){
+            Collections.addAll(this.items, items);
             return true;
         }
         return false;

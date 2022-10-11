@@ -50,6 +50,7 @@ public class PlayerExerciseManager extends ExerciseManager {
                                 calculateExercise(exercise);
                         }
                         if(exercise.newLevelReached){
+                                player.inventoryManager.perkPocket.addMoney(1);
                                 player.notificationManager.addNewLevelNotification(exercise);
                         }
                 }

@@ -6,11 +6,10 @@ import com.mygdx.game.PocketView;
 
 public class Pocket extends Container {
 
-    int money;
+    public int money;
 
     public void setMoney(int money) {
         this.money = money;
-        updateView();
     }
 
     PocketView pocketView = new PocketView("pocket");
@@ -20,27 +19,22 @@ public class Pocket extends Container {
         setMoney(money);
     }
 
-    public PocketView getPocketView() {
-        return pocketView;
-    }
 
-    private void updateView() {
-        pocketView.setStr(String.valueOf(money));
-    }
 
     public void addMoney(int amount){
         money += amount;
-        updateView();
+    }
+
+    public boolean hasEnough(int amount){
+        return amount <= money;
     }
 
     public boolean buy(int amount){
-        if(amount <= money){
+        boolean has = hasEnough(amount);
+        if(has){
             money -= amount;
-            updateView();
-            return true;
-        }else {
-            return false;
         }
+        return has;
     }
 
 

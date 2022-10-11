@@ -1,10 +1,6 @@
 package com.mygdx.game.model.items.perks;
 
 import com.mygdx.game.model.Container;
-import com.mygdx.game.model.items.food.Nuggets;
-import com.mygdx.game.model.items.food.Potato;
-
-import java.util.ArrayList;
 
 public class PerksMenu extends Container {
 
@@ -17,15 +13,17 @@ public class PerksMenu extends Container {
     }
 
     private void addDeadliftTree() {
-        addItem(new SquatFirstPerk());
+        addItems(
+                new SquaterPerk(), new SquatFirstPerk()
+        );
     }
 
     private void addBenchTree() {
-        addItem(new BenchFirstPerk());
+        addItems(new BencherPerk(), new BenchFirstPerk());
     }
 
     private void addSquatTree() {
-        addItem(new DeadliftFirstPerk());
+        addItems(new DeadliftPerk(), new DeadliftFirstPerk());
     }
 
 }

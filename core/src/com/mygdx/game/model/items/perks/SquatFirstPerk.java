@@ -13,5 +13,3 @@ public class SquatFirstPerk extends PerkItem {
         );
     }
 }
-
-

@@ -14,6 +14,6 @@ public class BeltUsePerk extends PerkItem {
 
     @Override
     public boolean isRequirementSatisfied(Player player) {
-        return player.inventoryManager.hasPerk(new BeltUsePerk());
+        return player.inventoryManager.hasPerk(DeadliftFirstPerk.class.getName()) && super.isRequirementSatisfied(player);
     }
 }

@@ -61,7 +61,7 @@ fun DrawPerkMenu(
 
                 ) {
                     PerksMenu().items.map { it as PerkItem }.forEachIndexed { _, item ->
-                        val bgColor = if(player?.inventoryManager?.hasPerk(item) == true) Color.Yellow else Color.Gray
+                        val bgColor = player!!.getPerkColor(item)
                         item {
                             LazyRow{
                                 item{
@@ -74,7 +74,7 @@ fun DrawPerkMenu(
 
                                 }
                                 item.childPerk.forEach {
-                                    val bgColor = if(player?.inventoryManager?.hasPerk(it) == true) Color.Yellow else Color.Gray
+                                    val bgColor = player.getPerkColor(it)
                                     item{
                                         Row(
                                             modifier = Modifier.height(40.dp)
@@ -102,6 +102,10 @@ fun DrawPerkMenu(
             }
         }
     }
+}
+
+private fun Player.getPerkColor(item: PerkItem): Color {
+    return if(inventoryManager?.hasPerk(item) == true) Color.Gray else if(item.canBeBought(this)) if(item.isRequirementSatisfied(this)) Color.Green else Color.Yellow else Color.Red
 }
 
 @Composable

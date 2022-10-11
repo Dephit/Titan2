@@ -14,6 +14,6 @@ public class WristUsePerk extends PerkItem {
 
     @Override
     public boolean isRequirementSatisfied(Player player) {
-        return player.inventoryManager.hasPerk(new WristUsePerk());
+        return player.inventoryManager.hasPerk(BenchFirstPerk.class.getName())  && super.isRequirementSatisfied(player);
     }
 }

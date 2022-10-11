@@ -21,6 +21,7 @@ public class InventoryManager {
     public EquipmentContainer equipmentContainer = new EquipmentContainer();
     public Refrigerator refrigerator = new Refrigerator();
     public Pocket pocket = new Pocket(100000);
+    public Pocket perkPocket = new Pocket(100);
 
     public boolean buyItemToRefrigerator(Item item) {
         if(refrigerator.hasSpace()){
@@ -83,6 +84,10 @@ public class InventoryManager {
     }
 
     public boolean hasPerk(PerkItem item) {
+        return perkContainer.hasPerk(item);
+    }
+
+    public boolean hasPerk(String item) {
         return perkContainer.hasPerk(item);
     }
 }

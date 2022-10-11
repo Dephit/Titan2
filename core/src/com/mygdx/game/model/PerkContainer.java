@@ -13,9 +13,13 @@ public class PerkContainer extends Container {
     }
 
     public boolean hasPerk(PerkItem item) {
+        return hasPerk(item.getClass().getName());
+    }
+
+    public boolean hasPerk(String title) {
         boolean has = false;
         for (Item equipItem: getItems()) {
-            if (Objects.equals(equipItem.title, item.title)){
+            if (equipItem.getClass().getName().equals(title)){
                 has = true;
                 break;
             }

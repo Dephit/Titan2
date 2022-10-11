@@ -200,14 +200,13 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
         showComposeView {
             DrawPerkMenu(getAssetManager(), player,
                 {
-                    if(player?.inventoryManager?.hasPerk(it as PerkItem?) == false){
-                        if((it as PerkItem).isRequirementSatisfied(player)) {
+                    if(player?.inventoryManager?.hasPerk(it as PerkItem?) == false && (it as PerkItem?)?.canBeBought(player) == true){
+                        if(it.isRequirementSatisfied(player)) {
                             showDialog(
                                 title = "Do you wnat to use item ${it.title}",
                                 subtitle = it.description,
                                 onAgree = OnClickCallback { _ ->
-                                    it.onUse(player)
-                                    player.inventoryManager.perkContainer.addItem(it)
+                                    it.buy(player)
                                     pauseGame?.run()
                                 },
                                 onClose = OnClickCallback {
@@ -217,7 +216,9 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
                         }else{
                             player.notificationManager?.addMessage("You can't buy this one yet")
                         }
-                    }else{
+                    }else if((it as PerkItem?)?.canBeBought(player) == false) {
+                        player?.notificationManager?.addMessage("You can't buy this one")
+                    } else{
                         player?.notificationManager?.addMessage("You have this perk")
                     }
                 }

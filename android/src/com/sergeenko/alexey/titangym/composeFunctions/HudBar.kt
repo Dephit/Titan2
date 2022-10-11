@@ -169,6 +169,22 @@ fun MainParams(am: AssetManager, player: Player, isInExercise: Boolean) {
             Spacer(
                 Modifier.height(10.dp)
             )
+            Text(
+                text = "${player.inventoryManager.pocket.money}$",
+                modifier = Modifier
+                    .background(color = Color.White)
+                    .clip(RoundedCornerShape(50))
+                    .padding(3.dp),
+                color = Color.Black
+            )
+            Text(
+                text = "${player.inventoryManager.perkPocket.money}$$",
+                modifier = Modifier
+                    .background(color = Color.White)
+                    .clip(RoundedCornerShape(50))
+                    .padding(3.dp),
+                color = Color.Black
+            )
             LazyVerticalGrid(
                 cells = GridCells.Adaptive(30.dp),
                 modifier = Modifier

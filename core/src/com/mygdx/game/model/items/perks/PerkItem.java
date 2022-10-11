@@ -13,15 +13,27 @@ import java.util.ArrayList;
 
 public class PerkItem extends ContiniousItem {
 
+
     public ArrayList<PerkItem> childPerk = new ArrayList<>();
 
     public boolean isRequirementSatisfied(Player player){
+        return player.inventoryManager.perkPocket.hasEnough(cost);
+    }
+
+    public boolean canBeBought(Player player){
         return true;
     }
 
     public PerkItem(){
         //effectType = EffectType.PERMANENT;
         type = ItemType.PERK;
+    }
+
+    public void buy(Player player) {
+        onUse(player);
+        if(player.inventoryManager.perkPocket.buy(cost)){
+            player.inventoryManager.perkContainer.addItem(this);
+        }
     }
 }
 
