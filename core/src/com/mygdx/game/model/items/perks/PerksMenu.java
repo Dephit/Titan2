@@ -10,6 +10,7 @@ public class PerksMenu extends Container {
         addSquatTree();
         addBenchTree();
         addDeadliftTree();
+        addItem(new SquatEnergyFirstPerk());
     }
 
     private void addDeadliftTree() {

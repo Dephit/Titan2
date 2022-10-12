@@ -16,6 +16,8 @@ public class KneeUsePerk extends PerkItem {
     public boolean isRequirementSatisfied(Player player) {
         return player.inventoryManager.hasPerk(SquatFirstPerk.class.getName()) && super.isRequirementSatisfied(player);
     }
+
+
 }
 
 

@@ -30,8 +30,8 @@ public class PerkItem extends ContiniousItem {
     }
 
     public void buy(Player player) {
-        onUse(player);
         if(player.inventoryManager.perkPocket.buy(cost)){
+            onUse(player);
             player.inventoryManager.perkContainer.addItem(this);
         }
     }

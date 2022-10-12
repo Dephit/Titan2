@@ -78,6 +78,19 @@ public class PlayerExerciseManager extends ExerciseManager {
                                 }
                         }
 
+                        for (Item item: player.inventoryManager.perkContainer.getItems()) {
+                                if(item instanceof ContiniousItem){
+                                        if(((ContiniousItem) item).conditionList.contains(player.playerCondition)
+                                                && ((ContiniousItem) item).effectType == EffectType.ON_EXERCISE){
+                                                value *= ((ContiniousItem) item).getExerciseMultiplier();
+                                                updateEnergyValue *= ((ContiniousItem) item).getEnergyMultiplier();
+                                                updateHealthValue *= ((ContiniousItem) item).getHealthMultiplier();
+                                                updateTirednessValue *= ((ContiniousItem) item).getTirednessMultiplier();
+                                        }
+                                }
+                        }
+
+
                         for (Item item: player.inventoryManager.supplements.getItems()) {
                                 if(item instanceof ContiniousItem){
                                         if(((ContiniousItem) item).conditionList.contains(player.playerCondition)

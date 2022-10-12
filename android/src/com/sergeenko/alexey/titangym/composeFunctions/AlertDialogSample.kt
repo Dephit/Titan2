@@ -22,13 +22,9 @@ fun AlertDialogSample(
     state: StateFlow<Boolean>,
 ) {
     Column {
-        //val openDialog = remember { mutableStateOf(false)  }
-
-
         if (state.value) {
             AlertDialog(
                 onDismissRequest = {
-                    //openDialog.value = false
                     onClose.call(null)
                 },
                 title = {
@@ -40,7 +36,6 @@ fun AlertDialogSample(
                 confirmButton = {
                     Button(
                         onClick = {
-                            //openDialog.value = false
                             onAgree.call(null)
                         }) {
                         Text(agreeText)
@@ -48,9 +43,7 @@ fun AlertDialogSample(
                 },
                 dismissButton = {
                     Button(
-
                         onClick = {
-                            //openDialog.value = false
                             onClose.call(null)
                         }) {
                         Text(closeText)

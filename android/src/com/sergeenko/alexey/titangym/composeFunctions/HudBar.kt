@@ -122,7 +122,7 @@ fun MainParams(am: AssetManager, player: Player, isInExercise: Boolean) {
                 .fillMaxWidth()
                 .weight(1f))
         Text(text = "${player.day.currentDay}d", fontSize = 30.sp, color = Color.White)
-        Spacer(modifier = Modifier.width(5.dp))
+        Spacer(width = 5.dp)
         Column {
             LinearProgressIndicator(
                 modifier = Modifier
@@ -130,66 +130,42 @@ fun MainParams(am: AssetManager, player: Player, isInExercise: Boolean) {
                     .height(barHeight)
                     .clip(
                         RoundedCornerShape(50)
-                    )
-                ,
+                    ),
                 color = Color.Red,
                 progress = player.exerciseManager.health.currentAmount / 100f,
                 backgroundColor = Color.Black
             )
-            Spacer(
-                Modifier.height(10.dp)
-            )
+            Spacer(height = 10.dp)
             LinearProgressIndicator(
                 modifier = Modifier
                     .width(150.dp)
                     .height(barHeight)
                     .clip(
                         RoundedCornerShape(50)
-                    )
-                ,
+                    ),
                 color = Color.Yellow,
                 progress = player.exerciseManager.energy.currentAmount / 100f,
                 backgroundColor = Color.Black
             )
-            Spacer(
-                Modifier.height(10.dp)
-            )
+            Spacer(height = 10.dp)
             LinearProgressIndicator(
                 modifier = Modifier
                     .width(150.dp)
                     .height(barHeight)
                     .clip(
                         RoundedCornerShape(50)
-                    )
-                ,
+                    ),
                 color = Color.Green,
                 progress = player.exerciseManager.tiredness.currentAmount / 100f,
                 backgroundColor = Color.Black
             )
-            Spacer(
-                Modifier.height(10.dp)
-            )
-            Text(
-                text = "${player.inventoryManager.pocket.money}$",
-                modifier = Modifier
-                    .background(color = Color.White)
-                    .clip(RoundedCornerShape(50))
-                    .padding(3.dp),
-                color = Color.Black
-            )
-            Text(
-                text = "${player.inventoryManager.perkPocket.money}$$",
-                modifier = Modifier
-                    .background(color = Color.White)
-                    .clip(RoundedCornerShape(50))
-                    .padding(3.dp),
-                color = Color.Black
-            )
+            Spacer(Modifier.height(10.dp))
+            RoundBackgroundText(text = "${player.inventoryManager.pocket.money}$")
+            RoundBackgroundText(text = "${player.inventoryManager.perkPocket.money}$$")
             LazyVerticalGrid(
                 columns = GridCells.Adaptive(30.dp),
                 modifier = Modifier
                     .width(150.dp)
-                    .height(200.dp)
             ) {
                 listOf(
                     player.inventoryManager.supplements.items.filter { it is SupplementItem && it.timeInUseLeft < it.timeWillBeLast },
@@ -218,6 +194,22 @@ fun MainParams(am: AssetManager, player: Player, isInExercise: Boolean) {
                 }
             }
         }
-
     }
+}
+
+@Composable
+fun Spacer(width: Dp = 0.dp, height: Dp = 0.dp){
+    Spacer(Modifier.height(height).width(width))
+}
+
+@Composable
+fun RoundBackgroundText(text: String){
+    Text(
+        text = text,
+        modifier = Modifier
+            .background(color = Color.White)
+            .clip(RoundedCornerShape(50))
+            .padding(3.dp),
+        color = Color.Black
+    )
 }

@@ -37,11 +37,7 @@ class MainMenuFragment : BaseComposeFragment() {
 
     private fun drawView(){
         setContent {
-            Box(Modifier.clickable {
-                isViewVisible = false
-                navigate(R.id.action_splashFragment_to_androidLauncherFragment)
-
-            }) {
+            Box {
                 Column {
                     FillSpacer()
                     Button(onClick = {
@@ -81,7 +77,6 @@ class MainMenuFragment : BaseComposeFragment() {
     }
 
     override fun onBackPress() {
-        //super.onBackPress()
         (activity as AndroidLauncher).exit()
     }
 
