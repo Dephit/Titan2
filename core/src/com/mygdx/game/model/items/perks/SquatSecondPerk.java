@@ -22,7 +22,7 @@ public class SquatSecondPerk extends PerkItem {
     }
 
     @Override
-    public float getExerciseMultiplier() {
+    public float getExerciseMultiplier(PlayerCondition playerCondition) {
         return 1.2f;
     }
 }

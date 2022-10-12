@@ -1,5 +1,7 @@
 package com.mygdx.game.model.items.wristWraps;
 
+import com.mygdx.game.PlayerCondition;
+
 public class BasicWraps extends WristItem {
 
     public BasicWraps() {
@@ -11,7 +13,7 @@ public class BasicWraps extends WristItem {
     }
 
     @Override
-    public float getExerciseMultiplier() {
+    public float getExerciseMultiplier(PlayerCondition playerCondition) {
         return 1.2f;
     }
 

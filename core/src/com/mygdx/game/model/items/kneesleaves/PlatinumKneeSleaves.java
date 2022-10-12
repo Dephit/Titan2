@@ -1,6 +1,7 @@
 package com.mygdx.game.model.items.kneesleaves;
 
 import com.mygdx.game.Player;
+import com.mygdx.game.PlayerCondition;
 
 public class PlatinumKneeSleaves extends KneesleavesItem {
 
@@ -13,8 +14,8 @@ public class PlatinumKneeSleaves extends KneesleavesItem {
     }
 
     @Override
-    public float getExerciseMultiplier() {
-        return 50f;
+    public float getExerciseMultiplier(PlayerCondition playerCondition) {
+        return 1.5f;
     }
 
     @Override

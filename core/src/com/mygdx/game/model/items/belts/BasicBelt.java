@@ -1,5 +1,6 @@
 package com.mygdx.game.model.items.belts;
 
+import com.mygdx.game.PlayerCondition;
 import com.mygdx.game.model.items.wristWraps.WristItem;
 
 public class BasicBelt extends BeltItem {
@@ -13,8 +14,8 @@ public class BasicBelt extends BeltItem {
     }
 
     @Override
-    public float getExerciseMultiplier() {
-        return 1.2f;
+    public float getExerciseMultiplier(PlayerCondition playerCondition) {
+        return 1.1f;
     }
 
 }

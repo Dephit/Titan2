@@ -1,6 +1,7 @@
 package com.mygdx.game.model.items.singlets;
 
 import com.mygdx.game.Player;
+import com.mygdx.game.PlayerCondition;
 import com.mygdx.game.model.items.kneesleaves.KneesleavesItem;
 
 public class PlatinumSinglet extends SingletItem {
@@ -14,8 +15,8 @@ public class PlatinumSinglet extends SingletItem {
     }
 
     @Override
-    public float getExerciseMultiplier() {
-        return 40f;
+    public float getExerciseMultiplier(PlayerCondition playerCondition) {
+        return 1.2f;
     }
 
     @Override

@@ -197,19 +197,3 @@ fun MainParams(am: AssetManager, player: Player, isInExercise: Boolean) {
     }
 }
 
-@Composable
-fun Spacer(width: Dp = 0.dp, height: Dp = 0.dp){
-    Spacer(Modifier.height(height).width(width))
-}
-
-@Composable
-fun RoundBackgroundText(text: String){
-    Text(
-        text = text,
-        modifier = Modifier
-            .background(color = Color.White)
-            .clip(RoundedCornerShape(50))
-            .padding(3.dp),
-        color = Color.Black
-    )
-}

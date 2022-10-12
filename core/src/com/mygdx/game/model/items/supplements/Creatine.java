@@ -20,7 +20,7 @@ public class Creatine extends SupplementItem {
     }
 
     @Override
-    public float getExerciseMultiplier() {
+    public float getExerciseMultiplier(PlayerCondition playerCondition) {
         return 1.2f;
     }
 

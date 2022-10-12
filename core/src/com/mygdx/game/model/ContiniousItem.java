@@ -14,7 +14,7 @@ public class ContiniousItem extends Item {
 
     public ArrayList<PlayerCondition> conditionList = new ArrayList<>();
 
-    public float getExerciseMultiplier() {
+    public float getExerciseMultiplier(PlayerCondition playerCondition) {
         return 1.0f;
     }
 

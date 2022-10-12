@@ -16,12 +16,15 @@ public class SquatFirstPerk extends PerkItem {
         childPerk.add(new SquatThirdPerk());
         effectType = EffectType.ON_EXERCISE;
         conditionList.add(PlayerCondition.squat);
+
     }
 
     @Override
-    public float getExerciseMultiplier() {
+    public float getExerciseMultiplier(PlayerCondition playerCondition) {
         return 1.2f;
     }
+
+
 }
 
 

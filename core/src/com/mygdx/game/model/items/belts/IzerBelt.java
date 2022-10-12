@@ -1,5 +1,7 @@
 package com.mygdx.game.model.items.belts;
 
+import com.mygdx.game.PlayerCondition;
+
 public class IzerBelt extends BeltItem {
 
     public IzerBelt() {
@@ -11,8 +13,8 @@ public class IzerBelt extends BeltItem {
     }
 
     @Override
-    public float getExerciseMultiplier() {
-        return 40f;
+    public float getExerciseMultiplier(PlayerCondition playerCondition) {
+        return 1.3f;
     }
 
 }

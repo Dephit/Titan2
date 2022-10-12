@@ -40,23 +40,14 @@ fun DrawPerkMenu(
     onClose: OnClickCallback
 ) {
     return Box(
-        modifier = dialogModifier().clickable {
-            //onClose.call(null)
-        }
+        modifier = dialogModifier()
     ) {
-        Row(
-            modifier = Modifier.padding(end = 30.dp)
+        Column(
+            modifier = Modifier.padding(start = 30.dp, end = 30.dp)
         ) {
             CloseButton(onClose)
-            Column() {
-                Spacer(
-                    Modifier
-                        .fillMaxHeight()
-                        .weight(1f)
-                )
-                LazyColumn(
-
-                ) {
+            Row {
+                LazyColumn(modifier = Modifier.fillMaxWidth()){
                     PerksMenu().items.map { it as PerkItem }.forEachIndexed { _, item ->
                         val bgColor = player!!.getPerkColor(item)
                         item {
@@ -91,11 +82,6 @@ fun DrawPerkMenu(
                         }
                     }
                 }
-                Spacer(
-                    Modifier
-                        .fillMaxHeight()
-                        .weight(1f)
-                )
             }
         }
     }
@@ -108,9 +94,10 @@ private fun Player.getPerkColor(item: PerkItem): Color {
 @Composable
 private fun PerkItem(assetManager: AssetManager, perk: PerkItem, bgColor: Color, onItemClick: (Item) -> Unit){
     Box(modifier = Modifier){
-        Column(Modifier
-            .background(bgColor)
-            .padding(1.dp)) {
+        Column(
+            Modifier
+                .background(bgColor)
+                .padding(1.dp)) {
             assetManager.getItemImage(perk, onItemClick)
             //Text(text = perk.cost.toString(), textAlign = TextAlign.Center, modifier = Modifier.align(CenterHorizontally), color = Color.White)
         }

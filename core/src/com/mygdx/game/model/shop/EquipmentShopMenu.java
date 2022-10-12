@@ -22,6 +22,7 @@ import com.mygdx.game.model.items.wristWraps.BlackWraps;
 import com.mygdx.game.model.items.wristWraps.GoldenWraps;
 import com.mygdx.game.model.items.wristWraps.PlatinumWraps;
 import com.mygdx.game.model.items.wristWraps.RedWraps;
+import com.mygdx.game.model.items.wristWraps.SilverWraps;
 
 public class EquipmentShopMenu extends Container {
 
@@ -44,6 +45,7 @@ public class EquipmentShopMenu extends Container {
 
         addItem(new PlatinumWraps());
         addItem(new GoldenWraps());
+        addItem(new SilverWraps());
         addItem(new BlackWraps());
         addItem(new RedWraps());
         addItem(new BasicWraps());

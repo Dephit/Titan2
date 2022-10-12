@@ -4,25 +4,26 @@ import com.mygdx.game.Player;
 import com.mygdx.game.PlayerCondition;
 import com.mygdx.game.model.EffectType;
 
-public class SquatThirdPerk extends PerkItem {
+public class DeadliftSecondPerk extends PerkItem {
 
-    public SquatThirdPerk() {
-        title = "SquatThirdPerk";
-        styleName = "perks/squat_first_perk";
-        description = "SquatThirdPerk";
+    public DeadliftSecondPerk() {
+        title = "DeadliftSecondPerk";
+        styleName = "perks/deadlift_first_perk";
+        description = "DeadliftSecondPerk";
         menuStyleName = "potatoMenu";
         cost = 5;
         effectType = EffectType.ON_EXERCISE;
-        conditionList.add(PlayerCondition.squat);
+        conditionList.add(PlayerCondition.deadlift);
     }
 
     @Override
     public boolean isRequirementSatisfied(Player player) {
-        return player.inventoryManager.hasPerk(SquatSecondPerk.class.getName()) && super.isRequirementSatisfied(player);
+        return player.inventoryManager.hasPerk(BeltUsePerk.class.getName()) && super.isRequirementSatisfied(player);
     }
 
     @Override
     public float getExerciseMultiplier(PlayerCondition playerCondition) {
-        return 1.1f;
+        return 1.2f;
     }
 }
+

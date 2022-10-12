@@ -7,9 +7,9 @@ public class PerksMenu extends Container {
     public PerksMenu() {
         this.totalCapacity = 200;
 
+        addDeadliftTree();
         addSquatTree();
         addBenchTree();
-        addDeadliftTree();
         addItem(new SquatEnergyFirstPerk());
     }
 
@@ -19,12 +19,10 @@ public class PerksMenu extends Container {
         );
     }
 
-    private void addBenchTree() {
-        addItems(new BencherPerk(), new BenchFirstPerk());
-    }
+    private void addBenchTree() {addItems(new BenchFirstPerk());}
 
     private void addSquatTree() {
-        addItems(new DeadliftPerk(), new DeadliftFirstPerk());
+        addItems(new DeadliftFirstPerk());
     }
 
 }
