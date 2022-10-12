@@ -26,9 +26,9 @@ public class PlayerExerciseManager extends ExerciseManager {
 
         public PlayerExerciseManager(Player player, Language language){
                 this.player = player;
-                health = new Stat(language.health);
-                energy = new Stat(language.energy);
-                tiredness = new Stat(language.moral);
+                health = new Stat();
+                energy = new Stat();
+                tiredness = new Stat();
 
                 exercises.add(squatExr);
                 exercises.add(bench);
@@ -116,14 +116,6 @@ public class PlayerExerciseManager extends ExerciseManager {
                 return null;
         }
 
-        public void clearExercise() {
-                for(Exercise exercise: exercises){
-                        if(exercise.condition == player.playerCondition){
-                                exercise.statBar.remove();
-                        }
-                }
-        }
-
         public void onWork() {
                 float progress = 0.5f * 10;
                 health.minusProgress(progress * 0.5f);
@@ -160,9 +152,5 @@ public class PlayerExerciseManager extends ExerciseManager {
 
         public void addEnergy(int progress) {
                 energy.addProgress(progress);
-        }
-
-        public int getBestSquat() {
-                return squatExr.result;
         }
 }

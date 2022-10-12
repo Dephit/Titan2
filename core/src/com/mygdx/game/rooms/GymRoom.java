@@ -125,7 +125,6 @@ public class GymRoom extends BaseRoom {
         if(!someoneDoingIt(playerCondition)) {
             runnable.run();
         }else{
-            //interScreenCommunication.showToast();
             player.notificationManager.addMessage(getLanguage().thisIsTaken);
         }
     }
@@ -146,10 +145,10 @@ public class GymRoom extends BaseRoom {
         }
     }
 
-    private boolean someoneDoingIt(PlayerCondition squat) {
+    private boolean someoneDoingIt(PlayerCondition condition) {
         boolean isDoing = false;
         for (Npc npc : npcs){
-            if (npc.playerCondition == squat) {
+            if (npc.playerCondition == condition) {
                 isDoing = true;
                 break;
             }

@@ -102,7 +102,7 @@ public class Npc extends BaseActor {
         }
 
         if(playAnim){
-            manageExericeseAnim(delta);
+            manageExerciseAnim(delta);
         }
         playAnimation();
         changePlayerCondition();
@@ -113,7 +113,7 @@ public class Npc extends BaseActor {
 
     }
 
-    private void manageExericeseAnim(float delta) {
+    private void manageExerciseAnim(float delta) {
         if(playerCondition == squat || playerCondition == bench || playerCondition == deadlift){
             if(animationTime == 0) {
                 if(new Random().nextInt(500) > 450)
@@ -220,7 +220,7 @@ public class Npc extends BaseActor {
         setPlayersAction(playerCondition, xDestination, yDestination, runnable);
     }
 
-    void setPlayerCondition(PlayerCondition playerCondition) {
+    public void setPlayerCondition(PlayerCondition playerCondition) {
         if(onPlayerConditionChangeListener != null){
             onPlayerConditionChangeListener.onChange(this.playerCondition, playerCondition);
         }
@@ -260,8 +260,6 @@ public class Npc extends BaseActor {
     }
 
     public void set2BenchSitting() { setPath(1680,260, 1720,280, PlayerCondition.sittingRev); }
-
-    public void setDumbellExercise() { }
 
     public void setPullUps() {
         setPath(800, 430, 820, 440, PlayerCondition.pullUps);

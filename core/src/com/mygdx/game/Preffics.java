@@ -46,13 +46,10 @@ public class Preffics {
     }
 
     public void choseLanguage(String lang) {
-        switch (lang) {
-            case "ru":
-                locale = new Locale("ru", "RU");
-                break;
-            default:
-                locale = new Locale("es", "ES");
-                break;
+        if ("ru".equals(lang)) {
+            locale = new Locale("ru", "RU");
+        } else {
+            locale = new Locale("es", "ES");
         }
 
         language = Language.getLanguage(getJson("locale/" + lang + ".json"));

@@ -84,7 +84,7 @@ fun CurrentExercise(bar: Exercise?) {
     val value: Float
     val height: Dp
     if(bar != null){
-        value = bar.statBar.currentAmount / bar.limit
+        value = bar.progress / bar.limit
         height = 5.dp
     }else {
         value = 0f

@@ -67,8 +67,8 @@ public class Player extends Npc {
 
     @Override
     boolean isAnimationFinished() {
-        boolean isFinishd = super.isAnimationFinished();
-        if(isFinishd){
+        boolean isFinished = super.isAnimationFinished();
+        if(isFinished){
             if(playerCondition != PlayerCondition.stay && playerCondition != PlayerCondition.compSquat
                     && playerCondition != PlayerCondition.compDeadlift
                     && playerCondition != PlayerCondition.compBench
@@ -87,7 +87,7 @@ public class Player extends Npc {
             day.addTime(this);
         }
 
-        return isFinishd;
+        return isFinished;
     }
 
     public void buyItemToRefrigerator(Item item){
@@ -104,7 +104,7 @@ public class Player extends Npc {
 
     public void buyEquipmentItem(ContiniousItem item){
         if(item instanceof SupplementItem){
-            if(!inventoryManager.buySupplement(this, item));
+            inventoryManager.buySupplement(this, item);
         }else if(!inventoryManager.buyItemToEquipment(this, item)){
             notificationManager.addMessage(getLanguage().refregiratorIsFull);
         }
@@ -114,21 +114,9 @@ public class Player extends Npc {
         setSquatExercise();
     }
 
-    @Override
-    public void setPlayerCondition(PlayerCondition playerCondition) {
-        clearExercise();
-        super.setPlayerCondition(playerCondition);
-    }
-
     public Exercise isInExercise() {
         return exerciseManager.isInExercise();
     }
-
-    public void clearExercise() {
-        exerciseManager.clearExercise();
-    }
-
-
 
 }
 
