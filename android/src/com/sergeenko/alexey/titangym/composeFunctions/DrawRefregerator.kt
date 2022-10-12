@@ -6,8 +6,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -26,7 +26,6 @@ import com.sergeenko.alexey.titangym.assetsToBitmap
 import com.sergeenko.alexey.titangym.getItemImage
 import com.sergeenko.alexey.titangym.getItemPath
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DrawInventory(
     am: AssetManager?,
@@ -55,13 +54,16 @@ fun DrawInventory(
                 )
                 Column(
                     modifier = Modifier
+                        .clickable {
+
+                        }
                         .clip(RoundedCornerShape(5))
                         .background(Color.White)
                         .padding(10.dp)
                 ) {
                     CloseButton(onClose)
                     LazyVerticalGrid(
-                        cells = GridCells.Adaptive(40.dp),
+                        columns = GridCells.Adaptive(40.dp),
                         modifier = Modifier
                             .width(100.dp)
                             .height(200.dp)

@@ -6,8 +6,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.Text
@@ -110,7 +110,7 @@ fun CurrentExercise(bar: Exercise?) {
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
+
 @Composable
 fun MainParams(am: AssetManager, player: Player, isInExercise: Boolean) {
     Row(
@@ -186,7 +186,7 @@ fun MainParams(am: AssetManager, player: Player, isInExercise: Boolean) {
                 color = Color.Black
             )
             LazyVerticalGrid(
-                cells = GridCells.Adaptive(30.dp),
+                columns = GridCells.Adaptive(30.dp),
                 modifier = Modifier
                     .width(150.dp)
                     .height(200.dp)
