@@ -5,17 +5,16 @@ import com.mygdx.game.PlayerCondition;
 public class SilverWraps extends WristItem {
 
     public SilverWraps() {
-        title = "SilverWraps";
+        title = getLanguage().silverWristWraps;
         styleName = "wraps/silver_wraps";
-        description = "SilverWraps";
         menuStyleName = "potatoMenu";
         cost = 10000;
+        exerciseValue = 1.2f;
+        description = getItemDescription(
+                getPercentages(exerciseValue), getLanguage().bench
+        );
     }
 
-    @Override
-    public float getExerciseMultiplier(PlayerCondition playerCondition) {
-        return 1.2f;
-    }
 
 }
 

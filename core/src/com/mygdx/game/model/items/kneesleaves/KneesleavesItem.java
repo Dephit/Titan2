@@ -7,6 +7,12 @@ import com.mygdx.game.model.ItemType;
 
 public class KneesleavesItem extends ContiniousItem {
 
+
+    @Override
+    public float getExerciseMultiplier(PlayerCondition playerCondition) {
+        return exerciseValue;
+    }
+
     public KneesleavesItem(){
         effectType = EffectType.ON_EXERCISE;
         type = ItemType.KNEESLEAVES;

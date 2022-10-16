@@ -6,17 +6,15 @@ import com.mygdx.game.model.items.wristWraps.WristItem;
 public class BasicBelt extends BeltItem {
 
     public BasicBelt() {
-        title = "BasicBelt";
+        title = getLanguage().basicBelt;
         styleName = "belts/basic_belt";
-        description = "BasicBelt";
-        menuStyleName = "potatoMenu";
+        exerciseValue = 1.1f;
+        description = getItemDescription(
+                getPercentages(exerciseValue), getLanguage().deadlift
+        );
         cost = 7500;
     }
 
-    @Override
-    public float getExerciseMultiplier(PlayerCondition playerCondition) {
-        return 1.1f;
-    }
 
 }
 

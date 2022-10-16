@@ -5,17 +5,15 @@ import com.mygdx.game.PlayerCondition;
 public class SDBBelt extends BeltItem {
 
     public SDBBelt() {
-        title = "SDBBelt";
+        title = getLanguage().sbdBelt;
         styleName = "belts/sdb_belt";
-        description = "SDBBelt";
-        menuStyleName = "potatoMenu";
+        exerciseValue = 1.3f;
+        description = getItemDescription(
+                getPercentages(exerciseValue), getLanguage().deadlift
+        );
         cost = 20000;
     }
 
-    @Override
-    public float getExerciseMultiplier(PlayerCondition playerCondition) {
-        return 1.3f;
-    }
 
 }
 

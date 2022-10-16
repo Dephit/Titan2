@@ -1,22 +1,20 @@
 package com.mygdx.game.model.items.kneesleaves;
 
 import com.mygdx.game.Player;
-import com.mygdx.game.PlayerCondition;
 
 public class SDBKneeSleaves extends KneesleavesItem {
 
     public SDBKneeSleaves() {
-        title = "SDBKneeSleaves";
+        title = getLanguage().sdbKneesleaves;
         styleName = "kneesleaves/sdb_kneesleeves";
-        description = "SDBKneeSleaves";
+        exerciseValue = 1.2f;
         menuStyleName = "potatoMenu";
         cost = 10000;
+        description = getItemDescription(
+                getPercentages(exerciseValue), getLanguage().squat
+        );
     }
 
-    @Override
-    public float getExerciseMultiplier(PlayerCondition playerCondition) {
-        return 1.2f;
-    }
 
     @Override
     public void onUse(Player player) {

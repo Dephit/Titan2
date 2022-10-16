@@ -1,15 +1,20 @@
 package com.mygdx.game.model.items.perks;
 
+import com.mygdx.game.Language;
 import com.mygdx.game.PlayerCondition;
 import com.mygdx.game.model.EffectType;
 
 public class BenchFirstPerk extends PerkItem {
 
     public BenchFirstPerk() {
-        title = "BenchFirstPerk";
+        title = getLanguage().bencherIPerk;
+        exerciseValue = 1.2f;
+        description = Language.getString(
+                getLanguage().bencherImprovePerk,
+                getPercentages(exerciseValue)
+        );
         styleName = "perks/bench_first_perk";
-        description = "BenchFirstPerk";
-        menuStyleName = "potatoMenu";
+
         cost = 5;
         childPerk.add(new WristUsePerk());
         childPerk.add(new BenchSecondPerk());
@@ -21,7 +26,7 @@ public class BenchFirstPerk extends PerkItem {
 
     @Override
     public float getExerciseMultiplier(PlayerCondition playerCondition) {
-        return 1.2f;
+        return exerciseValue;
     }
 }
 

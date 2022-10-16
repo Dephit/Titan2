@@ -1,5 +1,6 @@
 package com.mygdx.game.model.items.perks;
 
+import com.mygdx.game.Language;
 import com.mygdx.game.Player;
 import com.mygdx.game.PlayerCondition;
 import com.mygdx.game.model.EffectType;
@@ -7,10 +8,13 @@ import com.mygdx.game.model.EffectType;
 public class BenchThirdPerk extends PerkItem {
 
     public BenchThirdPerk() {
-        title = "BenchThirdPerk";
+        title = getLanguage().bencherIIIPerk;
+        exerciseValue = 1.2f;
+        description = Language.getString(
+                getLanguage().bencherImprovePerk,
+                getPercentages(exerciseValue)
+        );
         styleName = "perks/bench_first_perk";
-        description = "BenchThirdPerk";
-        menuStyleName = "potatoMenu";
         cost = 5;
         effectType = EffectType.ON_EXERCISE;
         conditionList.add(PlayerCondition.bench);
@@ -23,6 +27,6 @@ public class BenchThirdPerk extends PerkItem {
 
     @Override
     public float getExerciseMultiplier(PlayerCondition playerCondition) {
-        return 1.2f;
+        return exerciseValue;
     }
 }

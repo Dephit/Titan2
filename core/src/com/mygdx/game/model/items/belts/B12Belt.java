@@ -5,17 +5,15 @@ import com.mygdx.game.PlayerCondition;
 public class B12Belt extends BeltItem {
 
     public B12Belt() {
-        title = "B12Belt";
+        title = getLanguage().b12BeltTitle;
         styleName = "belts/b12_belt";
-        description = "B12Belt";
-        menuStyleName = "potatoMenu";
+        exerciseValue = 1.3f;
+        description = getItemDescription(
+                getPercentages(exerciseValue), getLanguage().deadlift
+        );
         cost = 15000;
     }
 
-    @Override
-    public float getExerciseMultiplier(PlayerCondition playerCondition) {
-        return 1.3f;
-    }
 
 }
 

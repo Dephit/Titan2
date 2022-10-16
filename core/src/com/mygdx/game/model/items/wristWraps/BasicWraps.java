@@ -5,17 +5,16 @@ import com.mygdx.game.PlayerCondition;
 public class BasicWraps extends WristItem {
 
     public BasicWraps() {
-        title = "BasicWraps";
+        title = getLanguage().basicWristWraps;
         styleName = "wraps/basic_wraps";
-        description = "BasicWraps";
-        menuStyleName = "potatoMenu";
+        exerciseValue = 1.2f;
+        description = getItemDescription(
+                getPercentages(exerciseValue), getLanguage().bench
+        );
+
         cost = 2500;
     }
 
-    @Override
-    public float getExerciseMultiplier(PlayerCondition playerCondition) {
-        return 1.2f;
-    }
 
 }
 

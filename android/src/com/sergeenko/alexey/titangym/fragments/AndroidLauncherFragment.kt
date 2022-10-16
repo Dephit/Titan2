@@ -19,6 +19,7 @@ import androidx.navigation.fragment.findNavController
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration
 import com.badlogic.gdx.backends.android.AndroidFragmentApplication
 import com.mygdx.game.IActivityRequestHandler
+import com.mygdx.game.Language
 import com.mygdx.game.MyGdxGame
 import com.mygdx.game.Player
 import com.mygdx.game.interfaces.OnClickCallback
@@ -26,6 +27,7 @@ import com.mygdx.game.interfaces.OnClickBooleanCallback
 import com.mygdx.game.model.CompetitionOpponent
 import com.mygdx.game.model.Container
 import com.mygdx.game.model.enums.Comp
+import com.mygdx.game.model.items.Item
 import com.mygdx.game.model.items.perks.PerkItem
 import com.sergeenko.alexey.titangym.*
 import com.sergeenko.alexey.titangym.composeFunctions.*
@@ -203,13 +205,11 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
                     if(player?.inventoryManager?.hasPerk(it as PerkItem?) == false && (it as PerkItem?)?.canBeBought(player) == true){
                         if(it.isRequirementSatisfied(player)) {
                             showDialog(
-                                title = "Do you wnat to use item ${it.title}",
-                                subtitle = it.description,
-                                onAgree = OnClickCallback { _ ->
+                                it,
+                                onAgree = {
                                     it.buy(player)
-                                    pauseGame?.run()
                                 },
-                                onClose = OnClickCallback {
+                                onClose = {
                                     pauseGame?.run()
                                 }
                             )
@@ -237,17 +237,14 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
                 player.inventoryManager.inventory,
                 {
                     showDialog(
-                        title = "Do you wnat to use item ${it.title}",
-                        subtitle = it.description,
-                        onAgree = OnClickCallback { _ ->
+                        it,
+                        onAgree = {
                             it.onUse(player)
                             player.inventoryManager.inventory.removeItem(it)
-                            runnable.run()
-                        },
-                        onClose = OnClickCallback {
-                            runnable.run()
                         }
-                    )
+                    ){
+                        runnable.run()
+                    }
                 }
             ) {
                 binding.composeView.setGone()
@@ -263,17 +260,14 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
                 player.inventoryManager.refrigerator,
                 {
                     showDialog(
-                        title = "Do you wnat to use item ${it.title}",
-                        subtitle = it.description,
-                        onAgree = OnClickCallback { _ ->
+                        it,
+                        onAgree = {
                             it.onUse(player)
                             player.inventoryManager.refrigerator.removeItem(it)
-                            onClose?.run()
-                        },
-                        onClose = OnClickCallback {
-                            onClose?.run()
                         }
-                    )
+                    ){
+                        onClose?.run()
+                    }
                 }
             ) {
                 binding.composeView.setGone()
@@ -293,15 +287,13 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
                 container,
                 {
                     showDialog(
-                        title = "Do you wnat to use item ${it.title}",
-                        subtitle = it.description,
-                        onAgree = OnClickCallback { _ ->
+                        it,
+                        onAgree = {
                             onBuyRunnable.call(it)
-                        },
-                        onClose = OnClickCallback {
-                            runnable.run()
                         }
-                    )
+                    ){
+                        runnable.run()
+                    }
                 }
             ) {
                 binding.composeView.setGone()
@@ -385,5 +377,19 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
         }
     }
 
+}
+
+private fun AndroidLauncherFragment.showDialog(item: Item, onAgree: () -> Unit, onClose: () -> Unit?) {
+    showDialog(
+        title = item.title,
+        subtitle = item.description,
+        onAgree = OnClickCallback { _ ->
+            onAgree()
+            onClose()
+        },
+        onClose = OnClickCallback {
+            onClose()
+        }
+    )
 }
 

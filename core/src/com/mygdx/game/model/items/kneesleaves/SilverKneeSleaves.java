@@ -1,22 +1,21 @@
 package com.mygdx.game.model.items.kneesleaves;
 
 import com.mygdx.game.Player;
-import com.mygdx.game.PlayerCondition;
 
 public class SilverKneeSleaves extends KneesleavesItem {
 
     public SilverKneeSleaves() {
-        title = "SilverKneeSleaves";
+        title = getLanguage().silerKneeSleaves;
         styleName = "kneesleaves/silver_kneesleeves";
-        description = "SilverKneeSleaves";
         menuStyleName = "potatoMenu";
+        exerciseValue = 1.3f;
         cost = 10000;
+        description = getItemDescription(
+                getPercentages(exerciseValue), getLanguage().squat
+        );
     }
 
-    @Override
-    public float getExerciseMultiplier(PlayerCondition playerCondition) {
-        return 1.3f;
-    }
+
 
     @Override
     public void onUse(Player player) {

@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class BaseActor extends Actor {
 
-    Language getLanguage(){
+    public Language getLanguage(){
         return Preffics.getInstance().getLanguage();
     }
 

@@ -1,15 +1,19 @@
 package com.mygdx.game.model.items.perks;
 
+import com.mygdx.game.Language;
 import com.mygdx.game.PlayerCondition;
 import com.mygdx.game.model.EffectType;
 
 public class SquatFirstPerk extends PerkItem {
 
     public SquatFirstPerk() {
-        title = "SquatFirstPerk";
+        title = getLanguage().squatFirstPerk;
+        exerciseValue = 1.2f;
+        description = Language.getString(
+                getLanguage().squatImprovePerk,
+                getPercentages(exerciseValue)
+        );
         styleName = "perks/squat_first_perk";
-        description = "SquatFirstPerk";
-        menuStyleName = "potatoMenu";
         cost = 5;
         childPerk.add(new KneeUsePerk());
         childPerk.add(new SquatSecondPerk());
@@ -19,10 +23,6 @@ public class SquatFirstPerk extends PerkItem {
 
     }
 
-    @Override
-    public float getExerciseMultiplier(PlayerCondition playerCondition) {
-        return 1.2f;
-    }
 
 
 }

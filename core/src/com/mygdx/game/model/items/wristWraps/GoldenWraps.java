@@ -1,21 +1,18 @@
 package com.mygdx.game.model.items.wristWraps;
 
-import com.mygdx.game.PlayerCondition;
-
 public class GoldenWraps extends WristItem {
 
     public GoldenWraps() {
-        title = "GoldenWraps";
+        title = getLanguage().goldenWristWraps;
         styleName = "wraps/golden_wraps";
-        description = "GoldenWraps";
+        exerciseValue = 1.25f;
+        description = getItemDescription(
+                getPercentages(exerciseValue), getLanguage().bench
+        );
         menuStyleName = "potatoMenu";
         cost = 15000;
     }
 
-    @Override
-    public float getExerciseMultiplier(PlayerCondition playerCondition) {
-        return 1.25f;
-    }
 
 }
 

@@ -1,5 +1,6 @@
 package com.sergeenko.alexey.titangym.composeFunctions
 
+import android.icu.util.ULocale.getLanguage
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
@@ -11,15 +12,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.mygdx.game.Language
+import com.mygdx.game.Preffics
 import com.mygdx.game.interfaces.OnClickCallback
 import com.sergeenko.alexey.titangym.R
+
+val language: Language
+    get() = Preffics.getInstance().language
 
 @Composable
 fun ColumnScope.CloseButton(onClose: OnClickCallback?) {
     MyButton(
         onClick = {
             onClose?.call(null)
-        }, stringResource(R.string.close), modifier = Modifier.align(Alignment.End))
+        }, language.cancel, modifier = Modifier.align(Alignment.End))
 }
 
 @Composable
@@ -27,7 +33,7 @@ fun RowScope.CloseButton(onClose: OnClickCallback?) {
     MyButton(
         onClick = {
             onClose?.call(null)
-        }, stringResource(R.string.close))
+        }, language.cancel)
 }
 
 

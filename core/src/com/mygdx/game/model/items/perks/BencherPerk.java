@@ -1,5 +1,6 @@
 package com.mygdx.game.model.items.perks;
 
+import com.mygdx.game.Language;
 import com.mygdx.game.Player;
 import com.mygdx.game.PlayerCondition;
 import com.mygdx.game.model.EffectType;
@@ -13,10 +14,13 @@ public class BencherPerk extends PerkItem {
     }
 
     public BencherPerk() {
-        title = "BencherPerk";
+        title = getLanguage().bencherPerk;
+        exerciseValue = 1.2f;
+        description = Language.getString(
+                getLanguage().bencherImprovePerk,
+                getPercentages(exerciseValue)
+        );
         styleName = "perks/bench_first_perk";
-        description = "BencherPerk";
-        menuStyleName = "potatoMenu";
         cost = 5;
         effectType = EffectType.ON_EXERCISE;
         conditionList.add(PlayerCondition.squat);

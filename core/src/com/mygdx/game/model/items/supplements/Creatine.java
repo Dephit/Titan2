@@ -5,11 +5,13 @@ import com.mygdx.game.model.EffectType;
 
 public class Creatine extends SupplementItem {
 
+
     public Creatine() {
         timeWillBeLast = 30L;
-        title = "Creatine";
         styleName = "supplements/creatine";
-        description = "Creatine";
+        title = getLanguage().creatineTitle;
+        description = getItemDescription(getPercentages(exerciseValue), getLanguage().energy);
+
         menuStyleName = "potatoMenu";
         cost = 500;
 
@@ -19,9 +21,11 @@ public class Creatine extends SupplementItem {
         conditionList.add(PlayerCondition.deadlift);
     }
 
+
+
     @Override
     public float getExerciseMultiplier(PlayerCondition playerCondition) {
-        return 1.2f;
+        return exerciseValue;
     }
 
     @Override

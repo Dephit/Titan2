@@ -5,17 +5,15 @@ import com.mygdx.game.PlayerCondition;
 public class IzerBelt extends BeltItem {
 
     public IzerBelt() {
-        title = "IzerBelt";
+        title = getLanguage().izerBelt;
         styleName = "belts/izer_belt";
-        description = "IzerBelt";
-        menuStyleName = "potatoMenu";
+        exerciseValue = 1.3f;
+        description = getItemDescription(
+                getPercentages(exerciseValue), getLanguage().deadlift
+        );
         cost = 12000;
     }
 
-    @Override
-    public float getExerciseMultiplier(PlayerCondition playerCondition) {
-        return 1.3f;
-    }
 
 }
 

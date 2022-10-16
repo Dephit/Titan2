@@ -5,16 +5,14 @@ import com.mygdx.game.PlayerCondition;
 public class GoldenBelt extends BeltItem {
 
     public GoldenBelt() {
-        title = "GoldenBelt";
+        title = getLanguage().goldenBelt;
         styleName = "belts/golden_belt";
-        description = "GoldenBelt";
-        menuStyleName = "potatoMenu";
+        exerciseValue = 1.4f;
+        description = getItemDescription(
+                getPercentages(exerciseValue), getLanguage().deadlift
+        );
         cost = 50000;
     }
 
-    @Override
-    public float getExerciseMultiplier(PlayerCondition playerCondition) {
-        return 1.4f;
-    }
 
 }

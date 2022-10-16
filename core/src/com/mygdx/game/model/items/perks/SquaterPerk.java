@@ -14,10 +14,9 @@ public class SquaterPerk extends PerkItem {
     }
 
     public SquaterPerk() {
-        title = "SquaterPerk";
+        title = getLanguage().squaterPerk;
+        description = getLanguage().squaterPerkDescription;
         styleName = "perks/squat_first_perk";
-        description = "SquaterPerk";
-        menuStyleName = "potatoMenu";
         cost = 5;
         childPerk.add(new BencherPerk());
         childPerk.add(new DeadliftPerk());

@@ -1,14 +1,17 @@
 package com.mygdx.game.model.items.perks;
 
+import com.mygdx.game.Language;
 import com.mygdx.game.Player;
 
 public class BeltUsePerk extends PerkItem {
 
     public BeltUsePerk() {
-        title = "BeltUsePerk";
+        title = getLanguage().beltUsePerk;
+        description = Language.getString(
+                getLanguage().squatEnergyImprovePerk,
+                getPercentages(energyValue)
+        );
         styleName = "perks/belt_use_perk";
-        description = "BeltUsePerk";
-        menuStyleName = "potatoMenu";
         cost = 5;
     }
 
