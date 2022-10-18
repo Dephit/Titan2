@@ -10,10 +10,7 @@ public class BenchThirdPerk extends PerkItem {
     public BenchThirdPerk() {
         title = getLanguage().bencherIIIPerk;
         exerciseValue = 1.2f;
-        description = Language.getString(
-                getLanguage().bencherImprovePerk,
-                getPercentages(exerciseValue)
-        );
+        description = getLanguage().bencherImprovePerk;
         styleName = "perks/bench_first_perk";
         cost = 5;
         effectType = EffectType.ON_EXERCISE;

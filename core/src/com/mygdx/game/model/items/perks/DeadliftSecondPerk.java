@@ -10,10 +10,7 @@ public class DeadliftSecondPerk extends PerkItem {
     public DeadliftSecondPerk() {
         title = getLanguage().deadliftSecondPerk;
         exerciseValue = 1.2f;
-        description = Language.getString(
-                getLanguage().deadliftImprovePerk,
-                getPercentages(exerciseValue)
-        );
+        description = getLanguage().deadliftImprovePerk;;
         styleName = "perks/deadlift_first_perk";
         cost = 5;
         effectType = EffectType.ON_EXERCISE;

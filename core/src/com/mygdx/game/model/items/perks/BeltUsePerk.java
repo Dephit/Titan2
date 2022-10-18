@@ -7,10 +7,7 @@ public class BeltUsePerk extends PerkItem {
 
     public BeltUsePerk() {
         title = getLanguage().beltUsePerk;
-        description = Language.getString(
-                getLanguage().squatEnergyImprovePerk,
-                getPercentages(energyValue)
-        );
+        description = getLanguage().beltUsePerkDescription;
         styleName = "perks/belt_use_perk";
         cost = 5;
     }

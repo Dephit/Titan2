@@ -89,13 +89,16 @@ public class Language{
     public String squaterPerk;
     public String squaterPerkDescription;
     public String squatThirdPerk;
-    public String squatSecondPerk;
-    public String squatFirstPerk;
+    public String squaterSecondPerk;
+    public String squaterFirstPerk;
+
     public String squatImprovePerk;
     public String squatEnergyImprovePerk;
     public String squatEnergyFirstPerk;
     public String kneesleavesUsePerk;
     public String beltUsePerk;
+    public String beltUsePerkDescription;
+
     public String deadliftSecondPerk;
     public String deadliftThirdPerk;
     public String deadliftFirstPerk;

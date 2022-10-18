@@ -7,10 +7,7 @@ public class KneeUsePerk extends PerkItem {
 
     public KneeUsePerk() {
         title = getLanguage().kneesleavesUsePerk;
-        description = Language.getString(
-                getLanguage().squatEnergyImprovePerk,
-                getPercentages(energyValue)
-        );
+        description = getLanguage().squatEnergyImprovePerk;
         styleName = "perks/knee_use_perk";
         cost = 5;
     }

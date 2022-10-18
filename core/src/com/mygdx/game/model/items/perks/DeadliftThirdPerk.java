@@ -10,10 +10,7 @@ public class DeadliftThirdPerk extends PerkItem {
     public DeadliftThirdPerk() {
         title = getLanguage().deadliftThirdPerk;
         exerciseValue = 1.2f;
-        description = Language.getString(
-                getLanguage().deadliftImprovePerk,
-                getPercentages(exerciseValue)
-        );
+        description = getLanguage().deadliftImprovePerk;
         title = "DeadliftThirdPerk";
         styleName = "perks/deadlift_first_perk";
         cost = 5;

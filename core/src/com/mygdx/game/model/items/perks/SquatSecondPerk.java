@@ -8,7 +8,7 @@ import com.mygdx.game.model.EffectType;
 public class SquatSecondPerk extends PerkItem {
 
     public SquatSecondPerk() {
-        title = getLanguage().squatSecondPerk;
+        title = getLanguage().squaterSecondPerk;
         exerciseValue = 1.2f;
         description = Language.getString(
                 getLanguage().squatImprovePerk,

@@ -9,10 +9,7 @@ public class SquatEnergyFirstPerk extends PerkItem {
     public SquatEnergyFirstPerk() {
         title = getLanguage().squatEnergyFirstPerk;
         energyValue = 0.9f;
-        description = Language.getString(
-                getLanguage().squatEnergyImprovePerk,
-                getPercentages(energyValue)
-        );
+        description = getLanguage().squatEnergyImprovePerk;
 
         styleName = "perks/squat_first_perk";
         cost = 5;

@@ -10,10 +10,7 @@ public class DeadliftFirstPerk extends PerkItem {
     public DeadliftFirstPerk() {
         title = getLanguage().deadliftFirstPerk;
         exerciseValue = 1.2f;
-        description = Language.getString(
-                getLanguage().deadliftImprovePerk,
-                getPercentages(exerciseValue)
-        );
+        description = getLanguage().deadliftImprovePerk;;
         styleName = "perks/deadlift_first_perk";
         cost = 5;
         childPerk.add(new BeltUsePerk());

@@ -9,10 +9,7 @@ public class BenchFirstPerk extends PerkItem {
     public BenchFirstPerk() {
         title = getLanguage().bencherIPerk;
         exerciseValue = 1.2f;
-        description = Language.getString(
-                getLanguage().bencherImprovePerk,
-                getPercentages(exerciseValue)
-        );
+        description = getLanguage().bencherImprovePerk;
         styleName = "perks/bench_first_perk";
 
         cost = 5;
