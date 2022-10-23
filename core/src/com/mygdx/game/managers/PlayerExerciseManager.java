@@ -1,5 +1,6 @@
 package com.mygdx.game.managers;
 
+import com.mygdx.game.BenchPress;
 import com.mygdx.game.Exercise;
 import com.mygdx.game.Language;
 import com.mygdx.game.Player;
@@ -15,7 +16,7 @@ public class PlayerExerciseManager extends ExerciseManager {
         Player player;
 
         public Exercise squatExr = new Exercise(PlayerCondition.squat);
-        public Exercise bench = new Exercise(PlayerCondition.bench);
+        public Exercise bench = new BenchPress(PlayerCondition.bench);
         public Exercise deadlift = new Exercise(PlayerCondition.deadlift);
         Exercise pushUps = new Exercise(PlayerCondition.pushUps);
         Exercise pullUps = new Exercise(PlayerCondition.pullUps);
@@ -24,7 +25,7 @@ public class PlayerExerciseManager extends ExerciseManager {
         public Stat energy;
         public Stat tiredness;
 
-        public PlayerExerciseManager(Player player, Language language){
+        public PlayerExerciseManager(Player player){
                 this.player = player;
                 health = new Stat();
                 energy = new Stat();
@@ -39,9 +40,9 @@ public class PlayerExerciseManager extends ExerciseManager {
         }
 
         public void setDebugValues() {
-                squatExr.setLVL(10, true);
-                bench.setLVL(8,true);
-                deadlift.setLVL(12,true);
+                squatExr.setLVL(100, true);
+                bench.setLVL(100,true);
+                deadlift.setLVL(100,true);
         }
 
         public void act(float delta) {

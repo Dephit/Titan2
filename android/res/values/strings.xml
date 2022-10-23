@@ -17,7 +17,7 @@
     <string name="next_set_description">Squat 1st set</string>
     <string name="close">Close</string>
     <string name="scoresheet">table</string>
-    <string name="congratulation">Congratulation you\'ve took %s place with %d total</string>
+    <string name="congratulation">Congratulation you\'ve took %s place with %s total</string>
     <string name="squat_set">squat %s set</string>
     <string name="bench_set">Bench %s set</string>
     <string name="dl_set">Deadlift %s set</string>

@@ -15,8 +15,6 @@ import java.util.ArrayList;
 
 public class CompetitionRoom extends BaseRoom {
 
-
-
     public CompetitionRoom() {
         super("competition");
     }

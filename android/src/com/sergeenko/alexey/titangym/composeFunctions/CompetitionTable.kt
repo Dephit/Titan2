@@ -55,9 +55,9 @@ fun CompetitionTable(
             }
             if(currentSet < 10){
                 val first = getResult(currentSet, player)
-                val second = first + 10
-                val third = first + 20
-                val fourth = first + 30
+                val second = first + first * 0.025
+                val third = first + first * 0.05
+                val fourth = first + first * 0.075
                 Spacer(modifier = Modifier.height(40.dp))
                 getPercentages(
                     compStatus = currentSet,
@@ -66,9 +66,9 @@ fun CompetitionTable(
                         onFirstClick?.call(it)
                     },
                     first = first,
-                    second = second,
-                    third = third,
-                    fourth = fourth
+                    second = second.roundTo2Point5(),
+                    third = third.roundTo2Point5(),
+                    fourth = fourth.roundTo2Point5()
                 )
             }else{
                 val text = stringResource(R.string.congratulation, (playerList.sortedByDescending { it.getTotal() }.indexOfFirst { it.name == "player" } + 1).toString(), player.compValue.getTotal())
@@ -90,10 +90,10 @@ fun CompetitionTable(
 private fun getPercentages(
     compStatus: Int,
     onFirstClick: OnClickCallback?,
-    first: Int,
-    second: Int,
-    third: Int,
-    fourth: Int,
+    first: Double,
+    second: Double,
+    third: Double,
+    fourth: Double,
 ) {
     var per1 = 90
     var per2 = 90
@@ -188,19 +188,19 @@ private fun getPercentages(
             onFirstClick?.call(CompetitionOpponent.Attempt(first, (Random.nextInt(100) < per1)))
         }
         SetButton(
-            first,
+            second,
             "$per2%",
         ){
             onFirstClick?.call(CompetitionOpponent.Attempt(second, (Random.nextInt(100) < per2)))
         }
         SetButton(
-            first,
+            third,
             "$per3%",
         ){
             onFirstClick?.call(CompetitionOpponent.Attempt(third, (Random.nextInt(100) < per3)))
         }
         SetButton(
-            first,
+            fourth,
             "AD($per4%)",
         ){
             onFirstClick?.call(CompetitionOpponent.Attempt(fourth, true))
@@ -210,7 +210,7 @@ private fun getPercentages(
 }
 
 @Composable
-private fun RowScope.SetButton(first: Int, per1: String, function: () -> Unit?) {
+private fun RowScope.SetButton(first: Double, per1: String, function: () -> Unit?) {
     Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally) {
         Text(
             modifier = Modifier
@@ -222,49 +222,51 @@ private fun RowScope.SetButton(first: Int, per1: String, function: () -> Unit?) 
         MyButton(
             onClick = { function() },
             text = per1,
-            modifier = Modifier.padding(5.dp).fillMaxWidth()
+            modifier = Modifier
+                .padding(5.dp)
+                .fillMaxWidth()
         )
     }
 }
 
-private fun getResult(compStatus: Int, player: Player): Int {
+private fun getResult(compStatus: Int, player: Player): Double {
     when (compStatus) {
         1 -> return player.compValue.squat.firstAttempt.weight
         2 -> {
             player.compValue.squat.secondAttempt.weight = player.compValue.squat.firstAttempt.weight +
-                    if(player.compValue.squat.firstAttempt.isGood) 10 else 0
+                    if(player.compValue.squat.firstAttempt.isGood) player.compValue.squat.firstAttempt.weight * 0.025f else 0.0
             return player.compValue.squat.secondAttempt.weight
         }
         3 ->  {
             player.compValue.squat.thirdAttempt.weight = player.compValue.squat.secondAttempt.weight +
-                    if(player.compValue.squat.secondAttempt.isGood) 5 else 0
+                    if(player.compValue.squat.secondAttempt.isGood) player.compValue.squat.secondAttempt.weight * 0.0125f else 0.0
             return player.compValue.squat.thirdAttempt.weight
         }
         4 -> return player.compValue.bench.firstAttempt.weight
         5 -> {
             player.compValue.bench.secondAttempt.weight = player.compValue.bench.firstAttempt.weight +
-                    if(player.compValue.bench.firstAttempt.isGood) 10 else 0
+                    if(player.compValue.bench.firstAttempt.isGood) player.compValue.bench.firstAttempt.weight * 0.025f else 0.0
             return player.compValue.bench.secondAttempt.weight
         }
         6 ->  {
             player.compValue.bench.thirdAttempt.weight = player.compValue.bench.secondAttempt.weight +
-                    if(player.compValue.bench.secondAttempt.isGood) 5 else 0
+                    if(player.compValue.bench.secondAttempt.isGood) player.compValue.bench.secondAttempt.weight * 0.0125f else 0.0
             return player.compValue.bench.thirdAttempt.weight
         }
         7 -> return player.compValue.deadlift.firstAttempt.weight
         8 -> {
             player.compValue.deadlift.secondAttempt.weight = player.compValue.deadlift.firstAttempt.weight +
-                    if(player.compValue.deadlift.firstAttempt.isGood) 10 else 0
+                    if(player.compValue.deadlift.firstAttempt.isGood) player.compValue.deadlift.firstAttempt.weight * 0.025f else 0.0
             return player.compValue.deadlift.secondAttempt.weight
         }
         9 ->  {
             player.compValue.deadlift.thirdAttempt.weight = player.compValue.deadlift.secondAttempt.weight +
-                    if(player.compValue.deadlift.secondAttempt.isGood) 5 else 0
+                    if(player.compValue.deadlift.secondAttempt.isGood) player.compValue.deadlift.firstAttempt.weight * 0.0125f else 0.0
             return player.compValue.deadlift.thirdAttempt.weight
         }
-        10 -> return 0
+        10 -> return 0.0
     }
-    return 0
+    return 0.0
 }
 
 private fun getFlagColor(currentSet: Int, player: Player): Int {
@@ -296,4 +298,6 @@ private fun getFlagColor(currentSet: Int, player: Player): Int {
 }
 
 
-
+fun Double.roundTo2Point5(): Double{
+    return Math.round(this * 0.4) / 0.4
+}

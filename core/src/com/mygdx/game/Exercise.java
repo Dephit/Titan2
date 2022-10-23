@@ -16,10 +16,14 @@ public class Exercise {
     public int LVL = 0;
     public Boolean newLevelReached = false;
 
+    int lvlMultiplier() {
+        return 100 + LVL * 5;
+    };
+
     public void setLVL(int LVL, boolean isReduced) {
         this.LVL = LVL;
         setResult();
-        limit = 100 + LVL * 20;
+        limit = lvlMultiplier();
         progress = isReduced ? limit : 0;
         newLevelReached = !isReduced;
     }
@@ -39,6 +43,6 @@ public class Exercise {
     }
 
     private void setResult() {
-        result = 80 + 20 * LVL;
+        result = lvlMultiplier() - 20;
     }
 }

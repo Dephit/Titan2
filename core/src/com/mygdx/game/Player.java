@@ -20,7 +20,7 @@ public class Player extends Npc {
 
     public Player(Language language) {
         super("player");
-        exerciseManager = new PlayerExerciseManager(this, language);
+        exerciseManager = new PlayerExerciseManager(this);
         setDebugPlayer();
     }
 

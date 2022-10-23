@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class CompetitionOpponent{
 
-    public Integer getCurrentSet(int attempt) {
+    public double getCurrentSet(int attempt) {
         switch (attempt) {
             case 1:
                 return 0;
@@ -16,13 +16,13 @@ public class CompetitionOpponent{
             case 3:
                 return squat.secondAttempt.isGood ? squat.secondAttempt.weight : squat.firstAttempt.isGood ? squat.firstAttempt.weight : 0;
             case 4:
-                return squat.getBestAttempt() + 0;
+                return squat.getBestAttempt();
             case 5:
                 return squat.getBestAttempt() + (bench.firstAttempt.isGood ? bench.firstAttempt.weight : 0);
             case 6:
                 return squat.getBestAttempt() + (bench.secondAttempt.isGood ? bench.secondAttempt.weight : (bench.firstAttempt.isGood ? bench.firstAttempt.weight : 0));
             case 7:
-                return squat.getBestAttempt() + bench.getBestAttempt() + 0;
+                return squat.getBestAttempt() + bench.getBestAttempt();
             case 8:
                 return squat.getBestAttempt() + bench.getBestAttempt() + (deadlift.firstAttempt.isGood ? deadlift.firstAttempt.weight : 0);
             case 9:
@@ -38,14 +38,14 @@ public class CompetitionOpponent{
         public Attempt thirdAttempt;
 
         public Exr(int weight){
-            firstAttempt = new Attempt((int) (weight * 0.85f));
-            int sW = firstAttempt.isGood ? (int) (weight * 0.95f) : new Random().nextInt(10) <= 8 ? (int) (weight * 0.85f) : (int) (weight * 0.95f);
+            firstAttempt = new Attempt((weight * 0.85));
+            Double sW = (double) (firstAttempt.isGood ? (int) (weight * 0.95) : new Random().nextInt(10) <= 8 ? (int) (weight * 0.85) : (int) (weight * 0.95));
             secondAttempt = new Attempt(sW);
-            int tW = secondAttempt.isGood ? weight : new Random().nextInt(10) <= 8 ? sW : weight;
+            Double tW = secondAttempt.isGood ? weight : new Random().nextInt(10) <= 8 ? sW : weight;
             thirdAttempt = new Attempt(tW);
         }
 
-        public int getBestAttempt(){
+        public double getBestAttempt(){
             return thirdAttempt.isGood ?
                     thirdAttempt.weight : secondAttempt.isGood ?
                     secondAttempt.weight : firstAttempt.isGood ? firstAttempt.weight : 0;
@@ -54,15 +54,23 @@ public class CompetitionOpponent{
     }
 
     public static class Attempt{
-        public int weight;
+        private double weight;
         public boolean isGood = new Random().nextInt(10) <= 7;
 
-        public Attempt(int weight){
-            this.weight = weight;
+        public void setWeight(double weight) {
+            this.weight = Math.round(weight * 0.4) / 0.4;
         }
 
-        public Attempt(int weight, boolean isGood){
-            this.weight = weight;
+        public double getWeight() {
+            return weight;
+        }
+
+        public Attempt(Double weight){
+            setWeight(weight.intValue());
+        }
+
+        public Attempt(Double weight, boolean isGood){
+            setWeight(weight.intValue());
             this.isGood = isGood;
         }
     }
@@ -71,18 +79,18 @@ public class CompetitionOpponent{
     public Exr squat;
     public Exr bench;
     public Exr deadlift;
-    public int total;
+    public double total;
 
     public CompetitionOpponent(String name, int avgLvl) {
         this.name = name;
         squat = new Exr(
-                80 + (new Random().nextInt(15) + 15) * avgLvl
+                80 + (new Random().nextInt(4) + 3) * avgLvl
         );
         bench = new Exr(
-                60 + (new Random().nextInt(10) + 10) * avgLvl
+                60 + (new Random().nextInt(3) + 2) * avgLvl
         );
         deadlift = new Exr(
-                80 + (new Random().nextInt(15) + 15) * avgLvl
+                80 + (new Random().nextInt(4) + 3) * avgLvl
         );
     }
 
@@ -99,7 +107,7 @@ public class CompetitionOpponent{
         );
     }
 
-    public int getTotal() {
+    public double getTotal() {
         if(squat.getBestAttempt() == 0 ||  bench.getBestAttempt() == 0 || deadlift.getBestAttempt() == 0){
             total = 0;
         }else {

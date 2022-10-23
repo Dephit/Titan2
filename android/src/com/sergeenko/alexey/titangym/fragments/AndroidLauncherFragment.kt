@@ -214,12 +214,12 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
                                 }
                             )
                         }else{
-                            player.notificationManager?.addMessage("You can't buy this one yet")
+                            player.notificationManager?.addMessage(language.youCantBuyThisPerkYet)
                         }
                     }else if((it as PerkItem?)?.canBeBought(player) == false) {
-                        player?.notificationManager?.addMessage("You can't buy this one")
+                        player?.notificationManager?.addMessage(language.youDontHaveEnoughMoney)
                     } else{
-                        player?.notificationManager?.addMessage("You have this perk")
+                        player?.notificationManager?.addMessage(language.youAlreadyHaveThisPerk)
                     }
                 }
             ) {

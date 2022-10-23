@@ -109,6 +109,9 @@ public class Language{
     public String bencherIIPerk;
     public String bencherIIIPerk;
     public String bencherImprovePerk;
+    public String youCantBuyThisPerkYet;
+    public String youDontHaveEnoughMoney;
+    public String youAlreadyHaveThisPerk;
 
     Language(){
 

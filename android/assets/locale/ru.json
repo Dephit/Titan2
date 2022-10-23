@@ -90,6 +90,9 @@
   "bencherIIPerk": "Жимовик III",
   "bencherIIIPerk": "Жимовик IV",
   "bencherImprovePerk": "Вы родились с руками как у тиранозавра, ваш жим улучшен на 20%",
+  "youCantBuyThisPerkYet": "You can't buy this one yet",
+  "youDontHaveEnoughMoney": "You can't buy this one",
+  "youAlreadyHaveThisPerk": "You have this perk",
 
 
   "chooseYourExercise" : "Какое упражнение хотите сделать?",
