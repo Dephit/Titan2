@@ -33,4 +33,6 @@
     <string name="options">Options</string>
     <string name="exit">Exit</string>
     <string name="back">Back</string>
+    <string name="new_game">New Game</string>
+    <string name="to_menu">Menu</string>
 </resources>

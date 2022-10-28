@@ -32,7 +32,7 @@ public class CompetitionOpponent{
         }
     }
 
-    public class Exr{
+    public static class Exr{
         public Attempt firstAttempt;
         public Attempt secondAttempt;
         public Attempt thirdAttempt;

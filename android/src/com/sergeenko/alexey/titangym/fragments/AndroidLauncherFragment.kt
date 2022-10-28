@@ -1,6 +1,7 @@
 package com.sergeenko.alexey.titangym.fragments
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -85,7 +86,7 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
             )
             clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN)
         }
-        val gameView = initializeForView(MyGdxGame(this), config)
+        val gameView = initializeForView(MyGdxGame(this, arguments?.getString("PLAYER")), config)
         layout.addView(gameView)
         return layout
     }
@@ -227,6 +228,11 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
                 pauseGame?.run()
             }
         }
+    }
+
+    override fun savePlayer(toString: String?) {
+        val preferences = context?.getSharedPreferences(context!!.packageName, Context.MODE_PRIVATE)
+        preferences?.edit()?.putString("PLAYER", toString)?.apply()
     }
 
 

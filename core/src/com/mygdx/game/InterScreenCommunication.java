@@ -72,6 +72,8 @@ public interface InterScreenCommunication {
     void openStats(Runnable pauseGame);
 
     void openPerkMenu(Runnable pauseGame);
+
+    void savePlayer(String toString);
 }
 
 

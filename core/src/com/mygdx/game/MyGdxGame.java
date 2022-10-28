@@ -18,24 +18,60 @@ import com.mygdx.game.rooms.RoomRoom;
 import com.mygdx.game.rooms.ShopRoom;
 import com.mygdx.game.rooms.WorkRoom;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
+import java.util.Objects;
 
 public class MyGdxGame implements ApplicationListener, InterScreenCommunication {
 
     BaseRoom stage;
     Player player;
+    String saves;
 
     private final IActivityRequestHandler myRequestHandler;
 
-    public MyGdxGame(IActivityRequestHandler handler) {
+    public MyGdxGame(IActivityRequestHandler handler, String player) {
         myRequestHandler = handler;
+        saves = player;
     }
 
     @Override
     public void create() {
         Preffics.getInstance();
-        player = new Player(Preffics.getInstance().getLanguage());
-        openGym();
+        this.player = new Player();
+        if(saves != null){
+            try {
+                JSONObject jsonObject = new JSONObject(saves);
+                this.player.fromJson(jsonObject);
+                openRoom(jsonObject.optString("ROOM_TAG"));
+                saves = null;
+            } catch (JSONException e) {
+                e.printStackTrace();
+                openGym();
+            }
+        }else openGym();
+    }
+
+    private void openRoom(String room_tag) {
+        if(Objects.equals(room_tag, "gym")){
+            openGym();
+        }else if(Objects.equals(room_tag, "map")){
+            openMap();
+        }else if(Objects.equals(room_tag, "park")){
+            openPark();
+        }else if(Objects.equals(room_tag, "room")){
+            openRoom();
+        }else if(Objects.equals(room_tag, "shop")){
+            openShop();
+        }else if(Objects.equals(room_tag, "work")){
+            openWork();
+        }else if(Objects.equals(room_tag, "competition")){
+            openCompetition();
+        }else{
+            openGym();
+        }
     }
 
     @Override
@@ -66,6 +102,11 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
     @Override
     public void openPerkMenu(Runnable pauseGame) {
         myRequestHandler.openPerkMenu(player, pauseGame);
+    }
+
+    @Override
+    public void savePlayer(String toString) {
+        myRequestHandler.savePlayer(toString);
     }
 
     @Override

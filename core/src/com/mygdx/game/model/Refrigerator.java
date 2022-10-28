@@ -15,5 +15,6 @@ public class Refrigerator extends Container {
         addItem(new Nuggets());
     }
 
+
 }
 

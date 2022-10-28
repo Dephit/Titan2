@@ -36,5 +36,10 @@
     <fragment
         android:id="@+id/optionsFragment"
         android:name="com.sergeenko.alexey.titangym.fragments.OptionsFragment"
-        android:label="OptionsFragment" />
+        android:label="OptionsFragment">
+    <action
+        android:id="@+id/action_optionsFragment_to_menu"
+        app:destination="@id/mainMenuFragment" />
+    </fragment>
+
 </navigation>

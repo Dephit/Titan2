@@ -36,10 +36,7 @@ class OptionsFragment : BaseComposeFragment() {
 
     private fun drawView(){
         setContent {
-            Box(Modifier.clickable {
-                isViewVisible = false
-                navigate(R.id.action_splashFragment_to_androidLauncherFragment)
-            }) {
+            Box(Modifier) {
                 Column {
                     FillSpacer()
                     Button(onClick = {
@@ -53,7 +50,17 @@ class OptionsFragment : BaseComposeFragment() {
                             modifier = Modifier.fillMaxWidth()
                         )
                     }
-
+                    Button(onClick = {
+                        navigate(R.id.action_optionsFragment_to_menu)
+                    }) {
+                        Text(
+                            text = stringResource(id = R.string.to_menu),
+                            color = Color.White,
+                            fontSize = titleTextSize,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    }
                     FillSpacer()
                 }
             }

@@ -7,7 +7,6 @@ import com.mygdx.game.model.items.Item;
 
 public class Potato extends FoodItem {
 
-    public int addValue = 50;
 
     public Potato(){
         title = getLanguage().potato;
@@ -18,6 +17,7 @@ public class Potato extends FoodItem {
         );
         menuStyleName = "potatoMenu";
         cost = 100;
+        addValue = 50;
     }
 
     @Override

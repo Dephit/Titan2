@@ -30,12 +30,6 @@ import java.util.ArrayList;
 
 public class GymRoom extends BaseRoom {
 
-    public GymRoom() {
-        super("gym");
-    }
-
-    //Group exrGroup = new Group();
-
     public GymRoom(InterScreenCommunication _communication, Player player) {
         super(_communication, "gym", player);
         Npc npc = new Npc("player2");

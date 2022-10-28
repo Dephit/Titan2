@@ -1,6 +1,11 @@
 package com.mygdx.game.model;
 
+import com.google.gson.Gson;
 import com.mygdx.game.model.items.Item;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,6 +13,7 @@ import java.util.Collections;
 
 public class Container {
 
+    private static final String ITEMS = "ITEMS";
     private final ArrayList<Item> items = new ArrayList<>();
 
     public int totalCapacity = 0;
@@ -43,6 +49,32 @@ public class Container {
 
     public boolean hasSpace(int amount) {
         return items.size() + amount < totalCapacity;
+    }
+
+    public JSONObject toJson(){
+        JSONObject jsonObject = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
+        for (Item item: items) {
+            jsonArray.put(new Gson().toJson(item));
+        }
+        try {
+            jsonObject.put(ITEMS, jsonArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
+    }
+
+    public void fromJson(JSONObject jsonObject){
+        JSONArray jsonArray = jsonObject.optJSONArray(ITEMS);
+        items.clear();
+        for (int i = 0; i < jsonArray.length(); i++){
+            try {
+                items.add(new Gson().fromJson(jsonArray.get(i).toString(), Item.class));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
 

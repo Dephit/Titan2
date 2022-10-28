@@ -9,7 +9,14 @@ import com.mygdx.game.model.items.Item;
 import com.mygdx.game.managers.NotificationManager;
 import com.mygdx.game.model.items.supplements.SupplementItem;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Player extends Npc {
+
+    private static final String DAY = "DAY";
+    private static final String EXERCISE_MANAGER = "EXERCISE_MANAGER";
+    private static final String INVENTORY_MANAGER = "INVENTORY_MANAGER";
 
     public NotificationManager notificationManager = new NotificationManager();
     public InventoryManager inventoryManager = new InventoryManager();
@@ -18,7 +25,7 @@ public class Player extends Npc {
 
     public CompetitionOpponent compValue;
 
-    public Player(Language language) {
+    public Player() {
         super("player");
         exerciseManager = new PlayerExerciseManager(this);
         setDebugPlayer();
@@ -116,6 +123,26 @@ public class Player extends Npc {
 
     public Exercise isInExercise() {
         return exerciseManager.isInExercise();
+    }
+
+    public void fromJson(JSONObject jsonObject){
+        day.fromJson(jsonObject.optJSONObject(DAY));
+        exerciseManager.fromJson(jsonObject.optJSONObject(EXERCISE_MANAGER));
+        inventoryManager.fromJson(jsonObject.optJSONObject(INVENTORY_MANAGER));
+
+    }
+
+    public JSONObject toJson(){
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put(DAY, day.toJson());
+            jsonObject.put(EXERCISE_MANAGER, exerciseManager.toJson());
+            jsonObject.put(INVENTORY_MANAGER, inventoryManager.toJson());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
+
     }
 
 }

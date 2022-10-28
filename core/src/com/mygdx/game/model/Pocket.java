@@ -1,8 +1,11 @@
 package com.mygdx.game.model;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Pocket extends Container {
 
+    private static final String MONEY = "MONEY";
     public int money;
 
     public void setMoney(int money) {
@@ -13,8 +16,6 @@ public class Pocket extends Container {
         totalCapacity = 2;
         setMoney(money);
     }
-
-
 
     public void addMoney(int amount){
         money += amount;
@@ -32,5 +33,19 @@ public class Pocket extends Container {
         return has;
     }
 
+    public JSONObject toJson(){
+        JSONObject jsonObject = super.toJson();
+        try {
+            jsonObject.put(MONEY, money);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
+    }
+
+    public void fromJson(JSONObject jsonObject){
+        money = jsonObject.optInt(MONEY);
+        super.fromJson(jsonObject);
+    }
 
 }

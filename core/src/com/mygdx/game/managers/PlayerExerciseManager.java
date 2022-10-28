@@ -11,7 +11,20 @@ import com.mygdx.game.model.EffectType;
 import com.mygdx.game.model.items.Item;
 import com.mygdx.game.model.items.supplements.SupplementItem;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class PlayerExerciseManager extends ExerciseManager {
+
+        private static final String SQUAT_EXERCISE = "SQUAT_EXERCISE";
+        private static final String BENCH_EXERCISE = "SQUAT_EXERCISE";
+        private static final String DEADLIFT_EXERCISE = "SQUAT_EXERCISE";
+        private static final String PUSH_UP_EXERCISE = "SQUAT_EXERCISE";
+        private static final String PULL_UPS_EXERCISE = "SQUAT_EXERCISE";
+
+        private static final String HEALTH = "SQUAT_EXERCISE";
+        private static final String ENERGY = "SQUAT_EXERCISE";
+        private static final String TIREDNESS = "SQUAT_EXERCISE";
 
         Player player;
 
@@ -166,5 +179,35 @@ public class PlayerExerciseManager extends ExerciseManager {
 
         public void addEnergy(int progress) {
                 energy.addProgress(progress);
+        }
+
+        public JSONObject toJson(){
+                JSONObject jsonObject = new JSONObject();
+                try {
+                        jsonObject.put(SQUAT_EXERCISE, squatExr.toJson());
+                        jsonObject.put(BENCH_EXERCISE, bench.toJson());
+                        jsonObject.put(DEADLIFT_EXERCISE, deadlift.toJson());
+                        jsonObject.put(PUSH_UP_EXERCISE, pushUps.toJson());
+                        jsonObject.put(PULL_UPS_EXERCISE, pullUps.toJson());
+
+                        jsonObject.put(HEALTH, health.toJson());
+                        jsonObject.put(ENERGY, energy.toJson());
+                        jsonObject.put(TIREDNESS, tiredness.toJson());
+                } catch (JSONException e) {
+                        e.printStackTrace();
+                }
+                return jsonObject;
+        }
+
+        public void fromJson(JSONObject jsonObject){
+                squatExr.fromJson(jsonObject);
+                bench.fromJson(jsonObject);
+                deadlift.fromJson(jsonObject);
+                pushUps.fromJson(jsonObject);
+                pullUps.fromJson(jsonObject);
+
+                health.fromJson(jsonObject);
+                energy.fromJson(jsonObject);
+                tiredness.fromJson(jsonObject);
         }
 }

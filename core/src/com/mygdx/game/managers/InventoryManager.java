@@ -13,7 +13,18 @@ import com.mygdx.game.model.SupplementsContainer;
 import com.mygdx.game.model.items.Item;
 import com.mygdx.game.model.items.perks.PerkItem;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class InventoryManager {
+
+    private static final String INVENTORY = "INVENTORY";
+    private static final String SUPPLEMENTS = "SUPPLEMENTS";
+    private static final String PERKS = "PERKS";
+    private static final String EQUIPMENTS = "EQUIPMENTS";
+    private static final String REFRIGERATOR = "REFRIGERATOR";
+    private static final String POCKET = "POCKET";
+    private static final String PERK_POCKET = "PERK_POCKET";
 
     public Container inventory = new Inventory();
     public SupplementsContainer supplements = new SupplementsContainer();
@@ -89,5 +100,32 @@ public class InventoryManager {
 
     public boolean hasPerk(String item) {
         return perkContainer.hasPerk(item);
+    }
+
+    public JSONObject toJson(){
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put(INVENTORY, inventory.toJson());
+            jsonObject.put(SUPPLEMENTS, supplements.toJson());
+            jsonObject.put(PERKS, perkContainer.toJson());
+            jsonObject.put(EQUIPMENTS, equipmentContainer.toJson());
+            jsonObject.put(REFRIGERATOR, refrigerator.toJson());
+            jsonObject.put(POCKET, pocket.toJson());
+            jsonObject.put(PERK_POCKET, perkPocket.toJson());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
+    }
+
+    public void fromJson(JSONObject jsonObject){
+        inventory.fromJson(jsonObject.optJSONObject(INVENTORY));
+        supplements.fromJson(jsonObject.optJSONObject(SUPPLEMENTS));
+        perkContainer.fromJson(jsonObject.optJSONObject(PERKS));
+        equipmentContainer.fromJson(jsonObject.optJSONObject(EQUIPMENTS));
+        refrigerator.fromJson(jsonObject.optJSONObject(REFRIGERATOR));
+        pocket.fromJson(jsonObject.optJSONObject(POCKET));
+        perkPocket.fromJson(jsonObject.optJSONObject(PERK_POCKET));
+
     }
 }

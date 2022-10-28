@@ -22,7 +22,7 @@ public class DesktopLauncher implements IActivityRequestHandler {
 			application = new DesktopLauncher();
 		}
 
-		new LwjglApplication(new MyGdxGame(application), config);
+		new LwjglApplication(new MyGdxGame(application, null), config);
 
 	}
 

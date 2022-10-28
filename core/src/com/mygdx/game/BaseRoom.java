@@ -17,6 +17,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.interfaces.OnClickCallback;
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
 
 public abstract class BaseRoom extends Stage  {
@@ -67,21 +69,25 @@ public abstract class BaseRoom extends Stage  {
         super(new FitViewport(Preffics.SCREEN_WIDTH, Preffics.SCREEN_HEIGHT));
         if(_player != null){
             player = _player;
+            try {
+                communication.savePlayer(
+                        player.toJson()
+                                .put("ROOM_TAG", tag)
+                                .toString()
+                );
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             npcs.add(player);
         }
-        interScreenCommunication = communication;
         ROOM_TAG = tag;
+        interScreenCommunication = communication;
         BACKGROUND_PATH_TAG = "screens/" + ROOM_TAG + "/" + ROOM_TAG + ".png";
         init();
         if(_player != null){
             objectGroup.addActor(player);
-           /* hudGroup.addActor(player.getHealthBar());
-            hudGroup.addActor(player.getEnergyBar());
-            hudGroup.addActor(player.getTirednessBar());
-            hudGroup.addActor(player.getPocketView());*/
         }
         addActor(objectGroup);
-        //addActor(hudGroup);
         addActor(buttonGroup);
     }
 
