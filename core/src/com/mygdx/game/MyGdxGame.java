@@ -29,6 +29,7 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
     BaseRoom stage;
     Player player;
     String saves;
+    int adCount = 0;
 
     private final IActivityRequestHandler myRequestHandler;
 
@@ -157,88 +158,119 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
 
     @Override
     public void openMap() {
-        stage = new MapRoom(this, player);
-        stage.addListener(new InputListener(){
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                stage.onTouchDown();
-                return super.touchDown(event, x, y, pointer, button);
-            }
-        });
+        setStage(
+                new MapRoom(this, player),
+                new InputListener(){
+                    @Override
+                    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                        stage.onTouchDown();
+                        return super.touchDown(event, x, y, pointer, button);
+                    }
+                }
+        );
+    }
+
+    private void setStage(BaseRoom room, InputListener inputListener) {
+        if(stage == null || adCount != 5){
+            stage = room;
+            stage.addListener(inputListener);
+            adCount++;
+        }else {
+            adCount = 0;
+            myRequestHandler.showAd(
+                    (Runnable) () -> {
+                        stage = room;
+                        stage.addListener(inputListener);
+                    }
+            );
+        }
     }
 
     @Override
     public void openGym() {
-        stage = new GymRoom(this, player);
-        stage.addListener(new InputListener(){
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                stage.onTouchDown();
-                return super.touchDown(event, x, y, pointer, button);
-            }
-        });
+        setStage(
+                new GymRoom(this, player),
+                new InputListener(){
+                    @Override
+                    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                        stage.onTouchDown();
+                        return super.touchDown(event, x, y, pointer, button);
+                    }
+                }
+        );
     }
 
     @Override
     public void openRoom() {
-        stage = new RoomRoom(this, player);
-        stage.addListener(new InputListener(){
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                stage.onTouchDown();
-                return super.touchDown(event, x, y, pointer, button);
-            }
-        });
+        setStage(
+                new RoomRoom(this, player),
+                new InputListener(){
+                    @Override
+                    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                        stage.onTouchDown();
+                        return super.touchDown(event, x, y, pointer, button);
+                    }
+                }
+        );
     }
 
     @Override
     public void openShop() {
-        stage = new ShopRoom(this, player);
-        stage.addListener(new InputListener(){
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                stage.onTouchDown();
-                return super.touchDown(event, x, y, pointer, button);
-            }
-        });
+        setStage(
+                new ShopRoom(this, player),
+                new InputListener(){
+                    @Override
+                    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                        stage.onTouchDown();
+                        return super.touchDown(event, x, y, pointer, button);
+                    }
+                }
+        );
     }
 
 
     @Override
     public void openWork() {
-        stage = new WorkRoom(this, player);
-        stage.addListener(new InputListener(){
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                stage.onTouchDown();
-                return super.touchDown(event, x, y, pointer, button);
-            }
-        });
+        setStage(
+                new WorkRoom(this, player),
+                new InputListener(){
+                    @Override
+                    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                        stage.onTouchDown();
+                        return super.touchDown(event, x, y, pointer, button);
+                    }
+                }
+        );
     }
 
 
     @Override
     public void openPark() {
-        stage = new ParkRoom(this, player);
-        stage.addListener(new InputListener(){
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                stage.onTouchDown();
-                return super.touchDown(event, x, y, pointer, button);
-            }
-        });
+        setStage(
+                new ParkRoom(this, player),
+                new InputListener(){
+                    @Override
+                    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                        stage.onTouchDown();
+                        return super.touchDown(event, x, y, pointer, button);
+                    }
+                }
+        );
     }
 
     @Override
     public void openCompetition() {
-        stage = new CompetitionRoom(this, player);
-        stage.addListener(new InputListener(){
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                //stage.onTouchDown();
-                return super.touchDown(event, x, y, pointer, button);
-            }
-        });
+        setStage(
+                new CompetitionRoom(this, player),
+                new InputListener(){
+                    @Override
+                    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                        //stage.onTouchDown();
+                        return super.touchDown(event, x, y, pointer, button);
+                    }
+                }
+        );
+
     }
 
     @Override

@@ -9,6 +9,7 @@
         android:appCategory="game"
         android:icon="@drawable/ic_launcher"
         android:isGame="true"
+        android:name=".App"
         android:label="@string/app_name"
         android:theme="@style/GdxTheme">
 

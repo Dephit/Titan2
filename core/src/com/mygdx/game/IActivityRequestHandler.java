@@ -58,4 +58,6 @@ public interface IActivityRequestHandler {
     void openPerkMenu(Player player, Runnable pauseGame);
 
     void savePlayer(String toString);
+
+    void showAd(Runnable onAdClosed);
 }

@@ -9,18 +9,22 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.RelativeLayout
 import android.widget.Toast
-import androidx.compose.material.MaterialTheme
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.height
+import androidx.compose.material.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration
 import com.badlogic.gdx.backends.android.AndroidFragmentApplication
+import com.kitegroup.adlibrary.Inter
 import com.mygdx.game.IActivityRequestHandler
-import com.mygdx.game.Language
 import com.mygdx.game.MyGdxGame
 import com.mygdx.game.Player
 import com.mygdx.game.interfaces.OnClickCallback
@@ -31,6 +35,7 @@ import com.mygdx.game.model.enums.Comp
 import com.mygdx.game.model.items.Item
 import com.mygdx.game.model.items.perks.PerkItem
 import com.sergeenko.alexey.titangym.*
+import com.sergeenko.alexey.titangym.R
 import com.sergeenko.alexey.titangym.composeFunctions.*
 import com.sergeenko.alexey.titangym.databinding.MainActivityBinding
 import kotlinx.coroutines.Dispatchers.Main
@@ -128,7 +133,7 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
         runnable: OnClickCallback?,
     ) = showComposeView{
         PlayerList(playerList,status) {
-            binding.composeView.setGone()
+            hideComposeView()
             runnable?.call(it)
         }
     }
@@ -152,7 +157,7 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
                             onProgressEnd = onProgressEnd,
                             onClose = {
                                 work = false
-                                binding.composeView.setGone()
+                                hideComposeView()
                                 onClose.call(it)
                             },
                             state = viewModel.progress)
@@ -160,7 +165,7 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
                 }
                 delay(1000)
             }
-            binding.composeView.setGone()
+            hideComposeView()
             onProgressEnd.call(null)
             onClose.call(null)
         }
@@ -189,11 +194,11 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
                 getAssetManager(),
                 player.inventoryManager.equipmentContainer,
                 {
-                    binding.composeView.setGone()
+                    hideComposeView()
                     runnable.run()
                 }
             ) {
-                binding.composeView.setGone()
+                hideComposeView()
                 runnable.run()
             }
         }
@@ -224,7 +229,7 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
                     }
                 }
             ) {
-                binding.composeView.setGone()
+                hideComposeView()
                 pauseGame?.run()
             }
         }
@@ -234,6 +239,34 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
         val preferences = context?.getSharedPreferences(context!!.packageName, Context.MODE_PRIVATE)
         preferences?.edit()?.putString("PLAYER", toString)?.apply()
     }
+
+    override fun showAd(onAdClosed: Runnable?) {
+        lifecycleScope.launchWhenStarted {
+            showLoader()
+            Inter.Builder()
+                .onAdClosed {
+                    onAdClosed?.run()
+                    hideComposeView()
+                }
+                .onAdLoaded {  }
+                .onAdPreload { }
+                .onAdShowed {  }
+                .build()
+                .showAd(requireActivity())
+        }
+    }
+
+    private fun hideComposeView() {
+        binding.composeView.setGone()
+    }
+
+    private fun showLoader() {
+        showComposeView {
+            CircularProgressIndicatorSample()
+        }
+    }
+
+
 
 
     override fun openInventory(player: Player, runnable: Runnable) {
@@ -253,7 +286,7 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
                     }
                 }
             ) {
-                binding.composeView.setGone()
+                hideComposeView()
                 runnable.run()
             }
         }
@@ -276,7 +309,7 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
                     }
                 }
             ) {
-                binding.composeView.setGone()
+                hideComposeView()
                 onClose?.run()
             }
         }
@@ -302,7 +335,7 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
                     }
                 }
             ) {
-                binding.composeView.setGone()
+                hideComposeView()
                 runnable.run()
             }
         }
@@ -329,12 +362,12 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
                         closeText = closeText,
                         onClose = {
                             viewModel.onDialogDismiss()
-                            binding.composeView.setGone()
+                            hideComposeView()
                             onClose.call(it)
                         },
                         onAgree = {
                             viewModel.onDialogConfirm()
-                            binding.composeView.setGone()
+                            hideComposeView()
                             onAgree.call(it)
                         },
                         state = viewModel.showDialog
@@ -374,11 +407,11 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
                 playerList = playerList,
                 onFirstClick = onFirstClick,
                 onClose = {
-                    binding.composeView.setGone()
+                    hideComposeView()
                     onClose?.call(it)
                 }
             ) {
-                binding.composeView.setGone()
+                hideComposeView()
             }
         }
     }

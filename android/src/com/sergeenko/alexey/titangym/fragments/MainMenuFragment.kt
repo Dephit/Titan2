@@ -4,28 +4,21 @@ import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
 import android.view.View
 import androidx.activity.addCallback
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Button
 import androidx.compose.material.Text
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.core.os.bundleOf
 import com.sergeenko.alexey.titangym.R
-import com.sergeenko.alexey.titangym.activities.AndroidLauncher
+import com.sergeenko.alexey.titangym.activities.AndroidLauncherActivity
 import com.sergeenko.alexey.titangym.composeFunctions.FillSpacer
 import com.sergeenko.alexey.titangym.composeFunctions.titleTextSize
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.withContext
-import org.json.JSONObject
 
 class MainMenuFragment : BaseComposeFragment() {
 
@@ -98,7 +91,7 @@ class MainMenuFragment : BaseComposeFragment() {
     }
 
     override fun onBackPress() {
-        (activity as AndroidLauncher).exit()
+        (activity as AndroidLauncherActivity).exit()
     }
 
 
