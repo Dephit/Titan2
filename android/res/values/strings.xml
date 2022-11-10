@@ -35,4 +35,6 @@
     <string name="back">Back</string>
     <string name="new_game">New Game</string>
     <string name="to_menu">Menu</string>
+    <string name="turn_on_music">Turn Music On</string>
+    <string name="turn_off_music">Turn music off</string>
 </resources>
