@@ -31,8 +31,8 @@ public class InventoryManager {
     public PerkContainer perkContainer = new PerkContainer();
     public EquipmentContainer equipmentContainer = new EquipmentContainer();
     public Refrigerator refrigerator = new Refrigerator();
-    public Pocket pocket = new Pocket(100000);
-    public Pocket perkPocket = new Pocket(100);
+    public Pocket pocket = new Pocket(3000);
+    public Pocket perkPocket = new Pocket(0);
 
     public boolean buyItemToRefrigerator(Item item) {
         if(refrigerator.hasSpace()){

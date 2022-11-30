@@ -28,7 +28,7 @@ public class Player extends Npc {
     public Player() {
         super("player");
         exerciseManager = new PlayerExerciseManager(this);
-        setDebugPlayer();
+        //setDebugPlayer();
     }
 
     private void setDebugPlayer() {

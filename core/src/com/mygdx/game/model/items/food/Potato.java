@@ -28,7 +28,6 @@ public class Potato extends FoodItem {
     @Override
     public void onUse(Player player) {
         player.exerciseManager.addHealth(addValue);
-        //player.refrigerator.removeItem(this);
     }
 }
 

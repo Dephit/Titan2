@@ -10,7 +10,7 @@ public class Stat {
 
     public boolean isZero = false;
 
-    public float value = 100;
+    public double value = 100;
 
     public void minusProgress(float progress) {
         if(value > 0) {
@@ -21,12 +21,15 @@ public class Stat {
     public void addProgress(float progress) {
         if(value <= 100) {
             value += progress;
+            if(value > 100){
+                value = 100;
+            }
         }
         isZero = false;
     }
 
 
-    public float getCurrentAmount() {
+    public double getCurrentAmount() {
         return value;
     }
 
@@ -42,7 +45,7 @@ public class Stat {
     }
 
     public void fromJson(JSONObject jsonObject){
-        value = jsonObject.optInt(VALUE);
+        value = jsonObject.optDouble(VALUE, 100.0);
         isZero = jsonObject.optBoolean(IS_ZERO);
     }
 }

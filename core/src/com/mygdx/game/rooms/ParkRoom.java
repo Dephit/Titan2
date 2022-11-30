@@ -84,7 +84,7 @@ public class ParkRoom extends BaseRoom {
                             runnable.run();
                             return false;
                         }
-                        player.exerciseManager.onWork();
+                        player.exerciseManager.onPark();
                         return player.exerciseManager.energy.getCurrentAmount() > 0 && player.exerciseManager.health.getCurrentAmount() > 0 && workInProgress;
                     },
                     //onClose

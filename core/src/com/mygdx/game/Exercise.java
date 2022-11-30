@@ -8,6 +8,7 @@ import org.json.JSONObject;
 public class Exercise {
 
     private static final String RESULT = "RESULT";
+    private static final String PROGRESS = "PROGRESS";
     private static final String LVL_VALUE = "LVL_VALUE";
     private static final String NEW_LEVEL_REACHED = "NEW_LEVEL_REACHED";
 
@@ -17,10 +18,10 @@ public class Exercise {
         condition = statName;
     }
 
-    public float updateValue = 0.05f;
-    public float updateEnergyValue = 0.05f;
-    public float updateHealthValue = 0.05f;
-    public float updateTirednessValue = 0.05f;
+    public float updateValue = 0.1f;
+    public float updateEnergyValue = 0.025f;
+    public float updateHealthValue = 0.0125f;
+    public float updateTirednessValue = 0.0075f;
 
     public int result = 80;
     public int LVL = 0;
@@ -61,6 +62,7 @@ public class Exercise {
         try {
             jsonObject.put(RESULT, result);
             jsonObject.put(LVL_VALUE, LVL);
+            jsonObject.put(PROGRESS, progress);
             jsonObject.put(NEW_LEVEL_REACHED, newLevelReached);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -69,8 +71,9 @@ public class Exercise {
     }
 
     public void fromJson(JSONObject jsonObject){
-        result = jsonObject.optInt(RESULT);
-        LVL = jsonObject.optInt(LVL_VALUE);
-        newLevelReached = jsonObject.optBoolean(NEW_LEVEL_REACHED);
+        result = jsonObject.optInt(RESULT, 80);
+        LVL = jsonObject.optInt(LVL_VALUE, 1);
+        progress = jsonObject.optInt(PROGRESS, 0);
+        newLevelReached = jsonObject.optBoolean(NEW_LEVEL_REACHED, false);
     }
 }

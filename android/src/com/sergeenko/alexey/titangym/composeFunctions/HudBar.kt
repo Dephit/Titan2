@@ -124,7 +124,7 @@ fun MainParams(am: AssetManager, player: Player, isInExercise: Boolean) {
                         RoundedCornerShape(50)
                     ),
                 color = Color.Red,
-                progress = player.exerciseManager.health.currentAmount / 100f,
+                progress = player.exerciseManager.health.currentAmount.toFloat() / 100f,
                 backgroundColor = Color.Black
             )
             Spacer(height = 10.dp)
@@ -136,7 +136,7 @@ fun MainParams(am: AssetManager, player: Player, isInExercise: Boolean) {
                         RoundedCornerShape(50)
                     ),
                 color = Color.Yellow,
-                progress = player.exerciseManager.energy.currentAmount / 100f,
+                progress = player.exerciseManager.energy.currentAmount.toFloat() / 100f,
                 backgroundColor = Color.Black
             )
             Spacer(height = 10.dp)
@@ -148,7 +148,7 @@ fun MainParams(am: AssetManager, player: Player, isInExercise: Boolean) {
                         RoundedCornerShape(50)
                     ),
                 color = Color.Green,
-                progress = player.exerciseManager.tiredness.currentAmount / 100f,
+                progress = player.exerciseManager.tiredness.currentAmount.toFloat() / 100f,
                 backgroundColor = Color.Black
             )
             Spacer(Modifier.height(10.dp))

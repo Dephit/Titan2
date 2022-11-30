@@ -7,8 +7,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 public class Container {
@@ -55,7 +55,14 @@ public class Container {
         JSONObject jsonObject = new JSONObject();
         JSONArray jsonArray = new JSONArray();
         for (Item item: items) {
-            jsonArray.put(new Gson().toJson(item));
+            try {
+                JSONObject obj = new JSONObject(new Gson().toJson(item));
+                obj.putOpt("TYPE", item.getClass().getCanonicalName());
+                System.out.println(item.getClass().getCanonicalName());
+                jsonArray.put(obj);
+            }catch (Exception e){
+
+            }
         }
         try {
             jsonObject.put(ITEMS, jsonArray);
@@ -70,8 +77,12 @@ public class Container {
         items.clear();
         for (int i = 0; i < jsonArray.length(); i++){
             try {
-                items.add(new Gson().fromJson(jsonArray.get(i).toString(), Item.class));
+                JSONObject ogj = jsonArray.optJSONObject(i);
+                Class c = Class.forName(ogj.getString("TYPE"));
+                items.add(new Gson().fromJson(ogj.toString(), (Type) c));
             } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }

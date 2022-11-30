@@ -17,14 +17,14 @@ import org.json.JSONObject;
 public class PlayerExerciseManager extends ExerciseManager {
 
         private static final String SQUAT_EXERCISE = "SQUAT_EXERCISE";
-        private static final String BENCH_EXERCISE = "SQUAT_EXERCISE";
-        private static final String DEADLIFT_EXERCISE = "SQUAT_EXERCISE";
-        private static final String PUSH_UP_EXERCISE = "SQUAT_EXERCISE";
-        private static final String PULL_UPS_EXERCISE = "SQUAT_EXERCISE";
+        private static final String BENCH_EXERCISE = "BENCH_EXERCISE";
+        private static final String DEADLIFT_EXERCISE = "DEADLIFT_EXERCISE";
+        private static final String PUSH_UP_EXERCISE = "PUSH_UP_EXERCISE";
+        private static final String PULL_UPS_EXERCISE = "PULL_UPS_EXERCISE";
 
-        private static final String HEALTH = "SQUAT_EXERCISE";
-        private static final String ENERGY = "SQUAT_EXERCISE";
-        private static final String TIREDNESS = "SQUAT_EXERCISE";
+        private static final String HEALTH = "HEALTH";
+        private static final String ENERGY = "ENERGY";
+        private static final String TIREDNESS = "TIREDNESS";
 
         Player player;
 
@@ -129,8 +129,9 @@ public class PlayerExerciseManager extends ExerciseManager {
 
         public void calculateRecovery(float delta) {
                 if(health.value > 0 && energy.value < 100){
-                        energy.addProgress(delta * 5f);
-                        health.minusProgress(delta * 5f );
+                        energy.addProgress(0.1f);
+                        health.minusProgress(0.025f);
+                        tiredness.addProgress(0.0025f);
                 }else player.setPlayerCondition(PlayerCondition.stay);
         }
 
@@ -144,22 +145,20 @@ public class PlayerExerciseManager extends ExerciseManager {
         }
 
         public void onWork() {
-                float progress = 0.5f * 10;
-                health.minusProgress(progress * 0.5f);
-                energy.minusProgress(progress);
-                tiredness.minusProgress(progress);
+                health.minusProgress(2.5f);
+                energy.minusProgress(5f);
+                tiredness.minusProgress(2.5f);
                 for (Exercise exercise: exercises){
-                        exercise.calculateProgress(-progress * 0.50f);
+                        exercise.calculateProgress(-2.5f);
                 }
         }
 
         public void onPark() {
-                float progress = 0.5f;
-                health.minusProgress(progress * 0.5f);
-                energy.minusProgress(progress * 0.25f);
-                tiredness.addProgress(progress);
+                health.minusProgress(2.5f);
+                energy.minusProgress(2.5f);
+                tiredness.addProgress(5f);
                 for (Exercise exercise: exercises){
-                        exercise.calculateProgress(-progress * 0.50f);
+                        exercise.calculateProgress(-2.5f);
                 }
         }
 
@@ -184,15 +183,15 @@ public class PlayerExerciseManager extends ExerciseManager {
         public JSONObject toJson(){
                 JSONObject jsonObject = new JSONObject();
                 try {
-                        jsonObject.put(SQUAT_EXERCISE, squatExr.toJson());
-                        jsonObject.put(BENCH_EXERCISE, bench.toJson());
-                        jsonObject.put(DEADLIFT_EXERCISE, deadlift.toJson());
-                        jsonObject.put(PUSH_UP_EXERCISE, pushUps.toJson());
-                        jsonObject.put(PULL_UPS_EXERCISE, pullUps.toJson());
+                        jsonObject.putOpt(SQUAT_EXERCISE, squatExr.toJson());
+                        jsonObject.putOpt(BENCH_EXERCISE, bench.toJson());
+                        jsonObject.putOpt(DEADLIFT_EXERCISE, deadlift.toJson());
+                        jsonObject.putOpt(PUSH_UP_EXERCISE, pushUps.toJson());
+                        jsonObject.putOpt(PULL_UPS_EXERCISE, pullUps.toJson());
 
-                        jsonObject.put(HEALTH, health.toJson());
-                        jsonObject.put(ENERGY, energy.toJson());
-                        jsonObject.put(TIREDNESS, tiredness.toJson());
+                        jsonObject.putOpt(HEALTH, health.toJson());
+                        jsonObject.putOpt(ENERGY, energy.toJson());
+                        jsonObject.putOpt(TIREDNESS, tiredness.toJson());
                 } catch (JSONException e) {
                         e.printStackTrace();
                 }
@@ -200,14 +199,14 @@ public class PlayerExerciseManager extends ExerciseManager {
         }
 
         public void fromJson(JSONObject jsonObject){
-                squatExr.fromJson(jsonObject);
-                bench.fromJson(jsonObject);
-                deadlift.fromJson(jsonObject);
-                pushUps.fromJson(jsonObject);
-                pullUps.fromJson(jsonObject);
+                squatExr.fromJson(jsonObject.optJSONObject(SQUAT_EXERCISE));
+                bench.fromJson(jsonObject.optJSONObject(BENCH_EXERCISE));
+                deadlift.fromJson(jsonObject.optJSONObject(DEADLIFT_EXERCISE));
+                pushUps.fromJson(jsonObject.optJSONObject(PUSH_UP_EXERCISE));
+                pullUps.fromJson(jsonObject.optJSONObject(PULL_UPS_EXERCISE));
 
-                health.fromJson(jsonObject);
-                energy.fromJson(jsonObject);
-                tiredness.fromJson(jsonObject);
+                health.fromJson(jsonObject.optJSONObject(HEALTH));
+                energy.fromJson(jsonObject.optJSONObject(ENERGY));
+                tiredness.fromJson(jsonObject.optJSONObject(TIREDNESS));
         }
 }
