@@ -133,9 +133,9 @@ public abstract class BaseRoom extends Stage  {
         interScreenCommunication.showDialog(
                 "Coach",
                 message.text,
-                (OnClickCallback) object -> {
+                object -> {
                 },
-                (OnClickCallback) object -> {
+                object -> {
                     message.onClick();
                     showDialog(message);
                 }

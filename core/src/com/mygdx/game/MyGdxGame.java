@@ -178,7 +178,7 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
         }else {
             adCount = 0;
             myRequestHandler.showAd(
-                    (Runnable) () -> {
+                    () -> {
                         stage = room;
                         stage.addListener(inputListener);
                     }
@@ -276,7 +276,6 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
     @Override
     public void openOptions() {
         myRequestHandler.openOptions();
-  //      myRequestHandler.openInventory(player);
     }
 
     @Override

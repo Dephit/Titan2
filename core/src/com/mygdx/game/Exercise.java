@@ -72,7 +72,7 @@ public class Exercise {
 
     public void fromJson(JSONObject jsonObject){
         result = jsonObject.optInt(RESULT, 80);
-        LVL = jsonObject.optInt(LVL_VALUE, 1);
+        LVL = jsonObject.optInt(LVL_VALUE, 0);
         progress = jsonObject.optInt(PROGRESS, 0);
         newLevelReached = jsonObject.optBoolean(NEW_LEVEL_REACHED, false);
     }

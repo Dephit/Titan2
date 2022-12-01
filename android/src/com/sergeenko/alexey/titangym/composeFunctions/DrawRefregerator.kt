@@ -46,7 +46,7 @@ fun DrawInventory(
                     .fillMaxWidth()
                     .weight(1f)
             )
-            Column() {
+            Column {
                 Spacer(
                     Modifier
                         .fillMaxHeight()
@@ -89,3 +89,5 @@ fun DrawInventory(
         }
     }
 }
+
+

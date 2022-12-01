@@ -271,6 +271,10 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
 
     override fun openInventory(player: Player, runnable: Runnable) {
         showComposeView {
+            DrawPlayerStates(player){
+                hideComposeView()
+                runnable.run()
+            }
             DrawInventory(
                 getAssetManager(),
                 player.inventoryManager.inventory,
