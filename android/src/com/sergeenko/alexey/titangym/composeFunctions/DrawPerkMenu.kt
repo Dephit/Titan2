@@ -21,6 +21,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.mygdx.game.Player
@@ -34,11 +35,13 @@ import com.sergeenko.alexey.titangym.getItemImage
 
 @Composable
 fun DrawPerkMenu(
-    assetManager: AssetManager,
     player: Player?,
     onItemClick: (Item) -> Unit,
     onClose: OnClickCallback
 ) {
+    val assetManager = LocalContext.current.assets
+    val allPerks = PerksMenu().items.map { it as PerkItem }
+
     return Box(
         modifier = dialogModifier()
     ) {
@@ -48,13 +51,12 @@ fun DrawPerkMenu(
             CloseButton(onClose)
             Row {
                 LazyColumn(modifier = Modifier.fillMaxWidth()){
-                    PerksMenu().items.map { it as PerkItem }.forEachIndexed { _, item ->
+                    allPerks.forEachIndexed { _, item ->
                         val bgColor = player!!.getPerkColor(item)
                         item {
                             LazyRow{
                                 item{
                                     PerkItem(
-                                        assetManager,
                                         item,
                                         bgColor,
                                         onItemClick
@@ -74,7 +76,7 @@ fun DrawPerkMenu(
                                         }
                                     }
                                     item{
-                                        PerkItem(assetManager, it, bgColor, onItemClick)
+                                        PerkItem(it, bgColor, onItemClick)
                                     }
                                 }
                             }
@@ -92,14 +94,14 @@ private fun Player.getPerkColor(item: PerkItem): Color {
 }
 
 @Composable
-private fun PerkItem(assetManager: AssetManager, perk: PerkItem, bgColor: Color, onItemClick: (Item) -> Unit){
+private fun PerkItem(perk: PerkItem, bgColor: Color, onItemClick: (Item) -> Unit){
+    val assetManager = LocalContext.current.assets
     Box(modifier = Modifier){
         Column(
             Modifier
                 .background(bgColor)
                 .padding(1.dp)) {
             assetManager.getItemImage(perk, onItemClick)
-            //Text(text = perk.cost.toString(), textAlign = TextAlign.Center, modifier = Modifier.align(CenterHorizontally), color = Color.White)
         }
     }
 }

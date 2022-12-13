@@ -15,6 +15,8 @@ fun PlayerList(
     status: Comp,
     runnable: OnClickCallback?
 ) {
+    val playersList = playerList.sortedByDescending { it.getCurrentSet(status.attempt) }
+
     return DialogBox {
         Column(
             modifier = dialogModifier()
@@ -22,7 +24,7 @@ fun PlayerList(
                 CloseButton(runnable)
                 LazyColumn(content = {
                     item { TableHeaderComposeItem() }
-                    playerList.sortedByDescending { it.getCurrentSet(status.attempt) }.forEachIndexed { index, competitionOpponent ->
+                    playersList.forEachIndexed { index, competitionOpponent ->
                         item { PlayerComposeItem(index = index, status = status, player = competitionOpponent) }
                     }
                 })

@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.mygdx.game.Exercise
 import com.mygdx.game.Player
 import com.mygdx.game.interfaces.OnClickCallback
+import com.sergeenko.alexey.titangym.round5Modifier
 
 @Composable
 fun DrawPlayerStates(
@@ -37,15 +38,12 @@ fun DrawPlayerStates(
                         .weight(1f)
                 )
                 Column(
-                    modifier = Modifier
+                    modifier = round5Modifier
                         .clickable {
 
                         }
                         .height(290.dp)
                         .fillMaxWidth()
-                        .clip(RoundedCornerShape(5))
-                        .background(Color.White)
-                        .padding(10.dp)
                 ) {
                     LazyColumn{
                         item {

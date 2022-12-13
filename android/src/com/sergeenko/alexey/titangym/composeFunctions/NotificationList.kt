@@ -14,24 +14,26 @@ import androidx.compose.ui.unit.dp
 import com.mygdx.game.Exercise
 import com.mygdx.game.Player
 import com.mygdx.game.managers.NotificationManager
+import com.mygdx.game.model.Notification
+import com.sergeenko.alexey.titangym.fillMaxWidthModifier
+import com.sergeenko.alexey.titangym.items.MessageItem
 
 @Composable
-fun HudBar(
-    player: Player
-) {
-    Box(
-        Modifier
-            .fillMaxSize()
-            .padding(top = 10.dp, start = 20.dp, end = 20.dp)
+fun NotificationList(notificationManager: NotificationManager) {
+    Row(
+        modifier = Modifier.padding(end = 10.dp)
     ) {
-        MainParams(player)
-        CurrentExercise(player.isInExercise)
-        NotificationList(player.notificationManager)
+        val lastFiveMessages = notificationManager.notificationList.filter { it.show }.sortedByDescending { it.showTime }.take(5)
+
+        Spacer(modifier = Modifier
+            .fillMaxWidth()
+            )
+        Column{
+            lastFiveMessages.forEach {
+                MessageItem(it)
+            }
+        }
     }
+    notificationManager.countNotification()
 }
-
-
-
-
-
 

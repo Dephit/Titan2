@@ -37,4 +37,6 @@
     <string name="to_menu">Menu</string>
     <string name="turn_on_music">Turn Music On</string>
     <string name="turn_off_music">Turn music off</string>
+    <string name="money_postfix">%s $</string>
+    <string name="perk_coins_postfix">%s $$</string>
 </resources>

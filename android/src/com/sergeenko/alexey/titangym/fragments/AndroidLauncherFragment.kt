@@ -1,6 +1,7 @@
 package com.sergeenko.alexey.titangym.fragments
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,53 +9,52 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.RelativeLayout
-import android.widget.Toast
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.height
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.compose.ui.unit.dp
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration
 import com.badlogic.gdx.backends.android.AndroidFragmentApplication
-import com.kitegroup.adlibrary.Inter
 import com.mygdx.game.IActivityRequestHandler
 import com.mygdx.game.MyGdxGame
 import com.mygdx.game.Player
-import com.mygdx.game.interfaces.OnClickCallback
 import com.mygdx.game.interfaces.OnClickBooleanCallback
-import com.mygdx.game.model.CompetitionOpponent
-import com.mygdx.game.model.Container
-import com.mygdx.game.model.enums.Comp
+import com.mygdx.game.interfaces.OnClickCallback
 import com.mygdx.game.model.items.Item
-import com.mygdx.game.model.items.perks.PerkItem
 import com.sergeenko.alexey.titangym.*
-import com.sergeenko.alexey.titangym.R
 import com.sergeenko.alexey.titangym.composeFunctions.*
 import com.sergeenko.alexey.titangym.databinding.MainActivityBinding
-import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
+import java.lang.Runnable
 
 @SuppressLint("Registered")
-class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHandler {
-    private var gameLayout: RelativeLayout? = null
-    private lateinit var binding: MainActivityBinding
+class AndroidLauncherFragment : AndroidFragmentApplication(), ComposeFragmentInterface {
+
+    override val scope: CoroutineScope
+        get() = scope
+
+    override fun runOnUiThread(unit: () -> Unit) {
+        super.runOnUiThread(unit)
+    }
 
     private val viewModel: MainViewModel by viewModels()
+    private val gameLayout: RelativeLayout by lazy {
+        createGameLayout()
+    }
+    private val binding: MainActivityBinding by lazy {
+        MainActivityBinding.inflate(layoutInflater)
+    }
+    private val gameRequestHandler: IActivityRequestHandler by lazy {
+        GameRequestHandler(this)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setBinding()
-        val config = AndroidApplicationConfiguration()
-        gameLayout = createGameLayout(config)
         launchGame()
     }
 
@@ -63,7 +63,6 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = MainActivityBinding.inflate(inflater)
         return binding.root
     }
 
@@ -82,8 +81,17 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
         showComposeView()
     }
 
-    private fun createGameLayout(config: AndroidApplicationConfiguration): RelativeLayout {
+    private fun createGameLayout(): RelativeLayout {
         val layout = RelativeLayout(context)
+        val config: AndroidApplicationConfiguration = AndroidApplicationConfiguration()
+        val myGdxGame = MyGdxGame(/* handler = */ gameRequestHandler, /* player = */arguments?.getString("PLAYER"))
+        setFullScreenFlags()
+        val gameView = initializeForView(myGdxGame, config)
+        layout.addView(gameView)
+        return layout
+    }
+
+    private fun setFullScreenFlags() {
         activity?.window?.apply {
             setFlags(
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -91,18 +99,10 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
             )
             clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN)
         }
-        val gameView = initializeForView(MyGdxGame(this, arguments?.getString("PLAYER")), config)
-        layout.addView(gameView)
-        return layout
     }
 
-    override fun showToast(s: String) {
-        runOnUiThread {
-            Toast.makeText(context, s, Toast.LENGTH_SHORT).show()
-        }
-    }
 
-    private fun showComposeView(function: @Composable () -> Unit = {}) {
+    override fun showComposeView(function: @Composable () -> Unit) {
         binding.composeView.apply {
             setContent {
                 MaterialTheme {
@@ -115,7 +115,6 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
         }
     }
 
-
     fun dialog(){
         binding.dialogView.apply {
             setContent {
@@ -127,224 +126,25 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
 
     }
 
-    override fun showPlayers(
-        playerList: MutableList<CompetitionOpponent>,
-        status: Comp,
-        runnable: OnClickCallback?,
-    ) = showComposeView{
-        PlayerList(playerList,status) {
-            hideComposeView()
-            runnable?.call(it)
-        }
+    override fun hideComposeView() {
+        binding.composeView.setGone()
     }
 
-    override fun showProgressBar(
-        title: String,
-        onProgressEnd: OnClickCallback,
-        onProgressUpdate: OnClickBooleanCallback,
-        onClose: OnClickCallback
-    ) {
-        var work = true
-        viewModel.resetProgress()
-        lifecycleScope.launch {
-            while (viewModel.progress.value < 1f && work){
-                viewModel.updateProgress(0.1f)
-                work = onProgressUpdate.isConditionOk
-                withContext(Main){
-                    showComposeView {
-                        ProgressBar(
-                            title = title,
-                            onProgressEnd = onProgressEnd,
-                            onClose = {
-                                work = false
-                                hideComposeView()
-                                onClose.call(it)
-                            },
-                            state = viewModel.progress)
-                    }
-                }
-                delay(1000)
-            }
-            hideComposeView()
-            onProgressEnd.call(null)
-            onClose.call(null)
-        }
-    }
-
-    override fun openOptions() {
-        postRunnable {
-            findNavController()
-                .navigate(
-                    R.id.action_androidLauncherFragment_to_optionsFragment
-                )
-        }
-    }
+    override fun navController() = findNavController()
 
     override fun showHud(player: Player) {
         binding.hudView.apply {
             setContent {
-                HudBar(requireContext().assets, player)
+                HudBar(player)
             }
         }
     }
 
-    override fun openStats(player: Player, runnable: Runnable) {
-        showComposeView {
-            DrawInventory(
-                getAssetManager(),
-                player.inventoryManager.equipmentContainer,
-                {
-                    hideComposeView()
-                    runnable.run()
-                }
-            ) {
-                hideComposeView()
-                runnable.run()
-            }
-        }
-    }
-
-    override fun openPerkMenu(player: Player?, pauseGame: Runnable?) {
-        showComposeView {
-            DrawPerkMenu(getAssetManager(), player,
-                {
-                    if(player?.inventoryManager?.hasPerk(it as PerkItem?) == false && (it as PerkItem?)?.canBeBought(player) == true){
-                        if(it.isRequirementSatisfied(player)) {
-                            showDialog(
-                                it,
-                                onAgree = {
-                                    it.buy(player)
-                                },
-                                onClose = {
-                                    pauseGame?.run()
-                                }
-                            )
-                        }else{
-                            player.notificationManager?.addMessage(language.youCantBuyThisPerkYet)
-                        }
-                    }else if((it as PerkItem?)?.canBeBought(player) == false) {
-                        player?.notificationManager?.addMessage(language.youDontHaveEnoughMoney)
-                    } else{
-                        player?.notificationManager?.addMessage(language.youAlreadyHaveThisPerk)
-                    }
-                }
-            ) {
-                hideComposeView()
-                pauseGame?.run()
-            }
-        }
-    }
-
-    override fun savePlayer(toString: String?) {
-        val preferences = context?.getSharedPreferences(context!!.packageName, Context.MODE_PRIVATE)
-        preferences?.edit()?.putString("PLAYER", toString)?.apply()
-    }
-
-    override fun showAd(onAdClosed: Runnable?) {
-        lifecycleScope.launchWhenStarted {
-            showLoader()
-            Inter.Builder()
-                .onAdClosed {
-                    onAdClosed?.run()
-                    hideComposeView()
-                }
-                .onAdLoaded {  }
-                .onAdPreload { }
-                .onAdShowed {  }
-                .build()
-                .showAd(requireActivity())
-        }
-    }
-
-    private fun hideComposeView() {
-        binding.composeView.setGone()
-    }
-
-    private fun showLoader() {
+    override fun showLoader() {
         showComposeView {
             CircularProgressIndicatorSample()
         }
     }
-
-
-
-
-    override fun openInventory(player: Player, runnable: Runnable) {
-        showComposeView {
-            DrawPlayerStates(player){
-                hideComposeView()
-                runnable.run()
-            }
-            DrawInventory(
-                getAssetManager(),
-                player.inventoryManager.inventory,
-                {
-                    showDialog(
-                        it,
-                        onAgree = {
-                            it.onUse(player)
-                            player.inventoryManager.inventory.removeItem(it)
-                        }
-                    ){
-                        runnable.run()
-                    }
-                }
-            ) {
-                hideComposeView()
-                runnable.run()
-            }
-        }
-    }
-
-    override fun openRefrigerator(player: Player, onClose: Runnable?) {
-        showComposeView {
-            DrawInventory(
-                getAssetManager(),
-                player.inventoryManager.refrigerator,
-                {
-                    showDialog(
-                        it,
-                        onAgree = {
-                            it.onUse(player)
-                            player.inventoryManager.refrigerator.removeItem(it)
-                        }
-                    ){
-                        onClose?.run()
-                    }
-                }
-            ) {
-                hideComposeView()
-                onClose?.run()
-            }
-        }
-    }
-
-    override fun openShopByMenu(
-        container: Container,
-        onBuyRunnable: OnClickCallback,
-        runnable: Runnable
-    ) {
-        showComposeView {
-            DrawInventory(
-                getAssetManager(),
-                container,
-                {
-                    showDialog(
-                        it,
-                        onAgree = {
-                            onBuyRunnable.call(it)
-                        }
-                    ){
-                        runnable.run()
-                    }
-                }
-            ) {
-                hideComposeView()
-                runnable.run()
-            }
-        }
-    }
-
 
     override fun showDialog(
         title: String,
@@ -381,58 +181,81 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), IActivityRequestHa
         }
     }
 
-    override fun showDialog(
+    override fun showProgressBar(
+        title: String,
+        onProgressEnd: OnClickCallback,
+        onProgressUpdate: OnClickBooleanCallback,
+        onClose: OnClickCallback
+    ) {
+        var work = true
+        viewModel.resetProgress()
+        lifecycleScope.launch {
+            while (viewModel.progress.value < 1f && work){
+                viewModel.updateProgress(0.1f)
+                work = onProgressUpdate.isConditionOk
+                withContext(Dispatchers.Main){
+                    showComposeView {
+                        ProgressBar(
+                            title = title,
+                            onProgressEnd = onProgressEnd,
+                            onClose = {
+                                work = false
+                                hideComposeView()
+                                onClose.call(it)
+                            },
+                            state = viewModel.progress)
+                    }
+                }
+                delay(1000)
+            }
+            hideComposeView()
+            onProgressEnd.call(null)
+            onClose.call(null)
+        }
+    }
+
+
+}
+
+interface ComposeFragmentInterface{
+
+    val scope: CoroutineScope
+
+    fun requireContext(): Context
+
+    fun requireActivity(): Activity
+
+    fun runOnUiThread(unit: ()-> Unit)
+
+    fun showComposeView(function: @Composable () -> Unit = {})
+
+    fun hideComposeView()
+
+    fun navController(): NavController
+
+    fun postRunnable(runnable: Runnable)
+
+    fun showHud(player: Player)
+
+    fun showLoader()
+
+    fun showDialog(
         title: String,
         subtitle: String,
+        agreeText: String,
+        closeText: String,
         onClose: OnClickCallback,
         onAgree: OnClickCallback
-    ){
-        showDialog(
-            title = title,
-            subtitle = subtitle,
-            agreeText = getString(R.string.ok),
-            closeText = getString(R.string.close),
-            onClose = onClose,
-            onAgree = onAgree
-        )
-    }
-
-    override fun showNextSetMenu(
-        player: Player,
-        currentSet: Int,
-        playerList: MutableList<CompetitionOpponent>,
-        onFirstClick: OnClickCallback?,
-        onClose: OnClickCallback?
-    ) {
-        showComposeView{
-            CompetitionTable(
-                player = player,
-                currentSet = currentSet,
-                playerList = playerList,
-                onFirstClick = onFirstClick,
-                onClose = {
-                    hideComposeView()
-                    onClose?.call(it)
-                }
-            ) {
-                hideComposeView()
-            }
-        }
-    }
-
-}
-
-private fun AndroidLauncherFragment.showDialog(item: Item, onAgree: () -> Unit, onClose: () -> Unit?) {
-    showDialog(
-        title = item.title,
-        subtitle = item.description,
-        onAgree = OnClickCallback { _ ->
-            onAgree()
-            onClose()
-        },
-        onClose = OnClickCallback {
-            onClose()
-        }
     )
+
+    fun showProgressBar(
+        title: String,
+        onProgressEnd: OnClickCallback,
+        onProgressUpdate: OnClickBooleanCallback,
+        onClose: OnClickCallback
+    )
+
 }
+
+
 

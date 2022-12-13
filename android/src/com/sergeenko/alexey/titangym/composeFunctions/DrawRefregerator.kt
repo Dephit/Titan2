@@ -18,21 +18,21 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.mygdx.game.interfaces.OnClickCallback
 import com.mygdx.game.model.Container
 import com.mygdx.game.model.items.Item
-import com.sergeenko.alexey.titangym.assetsToBitmap
-import com.sergeenko.alexey.titangym.getItemImage
-import com.sergeenko.alexey.titangym.getItemPath
+import com.sergeenko.alexey.titangym.*
 
 @Composable
 fun DrawInventory(
-    am: AssetManager?,
     container: Container,
     onItemClick: (Item) -> Unit,
     onClose: OnClickCallback
 ) {
+    val assetManager = LocalContext.current.assets
+
     return Box(
         modifier = Modifier.clickable {
             onClose.call(null)
@@ -47,19 +47,12 @@ fun DrawInventory(
                     .weight(1f)
             )
             Column {
-                Spacer(
-                    Modifier
-                        .fillMaxHeight()
-                        .weight(1f)
-                )
+                Spacer(fillMaxHeightModifier())
                 Column(
-                    modifier = Modifier
+                    modifier = round5Modifier
                         .clickable {
 
                         }
-                        .clip(RoundedCornerShape(5))
-                        .background(Color.White)
-                        .padding(10.dp)
                 ) {
                     CloseButton(onClose)
                     LazyVerticalGrid(
@@ -72,7 +65,7 @@ fun DrawInventory(
                             item {
                                 Box(modifier = Modifier.padding(1.dp)){
                                     Column(Modifier.background(Color.Gray)) {
-                                        am?.getItemImage(item = item, onItemClick = onItemClick::invoke)
+                                        assetManager?.getItemImage(item = item, onItemClick = onItemClick::invoke)
                                         Text(modifier = Modifier.align(CenterHorizontally), text = item.cost.toString())
                                     }
                                 }
@@ -81,9 +74,7 @@ fun DrawInventory(
                     }
                 }
                 Spacer(
-                    Modifier
-                        .fillMaxHeight()
-                        .weight(1f)
+                    fillMaxHeightModifier()
                 )
             }
         }
