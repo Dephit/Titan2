@@ -122,6 +122,9 @@ task run(type: Exec) {
 }
 
 dependencies {
+    implementation 'androidx.work:work-runtime-ktx:2.7.1'
+
+
     // Add dependency
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
@@ -131,7 +134,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation 'androidx.preference:preference-ktx:1.2.0'
     implementation 'androidx.fragment:fragment-ktx:1.5.4'
-    implementation 'com.gitlab.sergeenko123:admodule:1.0.5'
+    implementation 'com.gitlab.sergeenko123:admodule:1.1.1'
 
     //Jetpack Compose
     def jetpack = "1.2.1"

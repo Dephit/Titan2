@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -29,9 +30,9 @@ fun HudBar(
     Box(
         Modifier
             .fillMaxSize()
-            .padding(20.dp)
+            .padding(top = 10.dp, start = 20.dp, end = 20.dp)
     ) {
-        MainParams(am, player, player.isInExercise != null)
+        MainParams(am, player)
         CurrentExercise(player.isInExercise)
         NotificationList(player.notificationManager)
     }
@@ -40,7 +41,7 @@ fun HudBar(
 @Composable
 fun NotificationList(notificationManager: NotificationManager) {
     Row(
-        modifier = Modifier.padding(end = 30.dp)
+        modifier = Modifier.padding(end = 10.dp)
     ) {
         Spacer(
             Modifier
@@ -104,18 +105,45 @@ fun CurrentExercise(bar: Exercise?) {
 
 
 @Composable
-fun MainParams(am: AssetManager, player: Player, isInExercise: Boolean) {
+fun MainParams(am: AssetManager, player: Player) {
     Row(
         modifier = Modifier.padding(end = 30.dp)
     ) {
-        val barHeight = if(isInExercise) 15.dp else 5.dp
+        val barHeight = 5.dp
         Spacer(
             Modifier
                 .fillMaxWidth()
                 .weight(1f))
-        Text(text = "${player.day.currentDay}d", fontSize = 30.sp, color = Color.White)
+        Column(
+            modifier = Modifier
+                .clip(
+                    RoundedCornerShape(5)
+                )
+                .background(Color.White)
+                .padding(5.dp)
+        ) {
+            Text(text = "Day ${player.day.currentDay}", fontSize = 15.sp, color = Color.Black, textAlign = TextAlign.Center)
+            LinearProgressIndicator(
+                modifier = Modifier
+                    .width(40.dp)
+                    .height(5.dp)
+                    .clip(
+                        RoundedCornerShape(50)
+                    ),
+                color = Color.Blue,
+                progress = player.day.currentTime / 24f,
+                backgroundColor = Color.Black
+            )
+        }
         Spacer(width = 5.dp)
-        Column {
+        Column(
+            modifier = Modifier
+                .clip(
+                    RoundedCornerShape(5)
+                )
+                .background(Color.White)
+                .padding(5.dp)
+        ) {
             LinearProgressIndicator(
                 modifier = Modifier
                     .width(150.dp)
@@ -152,8 +180,10 @@ fun MainParams(am: AssetManager, player: Player, isInExercise: Boolean) {
                 backgroundColor = Color.Black
             )
             Spacer(Modifier.height(10.dp))
-            RoundBackgroundText(text = "${player.inventoryManager.pocket.money}$")
-            RoundBackgroundText(text = "${player.inventoryManager.perkPocket.money}$$")
+            Row {
+                RoundBackgroundText(text = "${player.inventoryManager.pocket.money}$")
+                RoundBackgroundText(text = "${player.inventoryManager.perkPocket.money}$$")
+            }
             LazyVerticalGrid(
                 columns = GridCells.Adaptive(30.dp),
                 modifier = Modifier
