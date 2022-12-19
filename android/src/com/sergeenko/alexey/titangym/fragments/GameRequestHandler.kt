@@ -69,13 +69,14 @@ class GameRequestHandler(val fragment: ComposeFragmentInterface): IActivityReque
     override fun openStats(player: Player, runnable: Runnable) {
         fragment.showComposeView {
             DrawInventory(
-                player.inventoryManager.equipmentContainer,
-                {
+                container = player.inventoryManager.equipmentContainer,
+                onClose = {
+                    hideComposeView(runnable)
+                },
+                onItemClick = {
                     hideComposeView(runnable)
                 }
-            ) {
-                hideComposeView(runnable)
-            }
+            )
         }
     }
 
@@ -148,36 +149,37 @@ class GameRequestHandler(val fragment: ComposeFragmentInterface): IActivityReque
     }
 
     override fun openInventory(player: Player, runnable: Runnable) {
-        fragment.showComposeView {
-            DrawPlayerStates(player){
-                hideComposeView()
-                runnable.run()
-            }
-            DrawInventory(
-                player.inventoryManager.inventory,
-                {
-                    showDialog(
-                        it,
-                        onAgree = {
-                            it.onUse(player)
-                            player.inventoryManager.inventory.removeItem(it)
-                        }
-                    ){
-                        runnable.run()
-                    }
+        fun onClose(){
+            hideComposeView()
+            runnable.run()
+        }
+
+        fun onItemClicked(item: Item){
+            showDialog(
+                item = item,
+                onAgree = {
+                    item.onUse(player)
+                    player.inventoryManager.inventory.removeItem(item)
                 }
-            ) {
-                hideComposeView()
+            ){
                 runnable.run()
             }
+        }
+
+        fragment.showComposeView {
+            DrawPlayerStates(
+                player = player,
+                onItemClicked = ::onItemClicked,
+                onClose = ::onClose
+            )
         }
     }
 
     override fun openRefrigerator(player: Player, onClose: Runnable?) {
         fragment.showComposeView {
             DrawInventory(
-                player.inventoryManager.refrigerator,
-                {
+                container = player.inventoryManager.refrigerator,
+                onItemClick = {
                     showDialog(
                         it,
                         onAgree = {
@@ -202,8 +204,8 @@ class GameRequestHandler(val fragment: ComposeFragmentInterface): IActivityReque
     ) {
         fragment.showComposeView {
             DrawInventory(
-                container,
-                {
+                container = container,
+                onItemClick = {
                     showDialog(
                         it,
                         onAgree = {

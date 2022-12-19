@@ -23,7 +23,7 @@ fun CompetitionTable(
     currentSet: Int,
     playerList: MutableList<CompetitionOpponent>,
     onFirstClick: OnClickCallback?,
-    onClose: OnClickCallback?,
+    onClose: OnClickCallback,
     hideView: ()->Unit
 ) {
     return DialogBox{

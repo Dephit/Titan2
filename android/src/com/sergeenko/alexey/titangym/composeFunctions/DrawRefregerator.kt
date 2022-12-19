@@ -8,6 +8,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -24,61 +25,48 @@ import com.mygdx.game.interfaces.OnClickCallback
 import com.mygdx.game.model.Container
 import com.mygdx.game.model.items.Item
 import com.sergeenko.alexey.titangym.*
+import com.sergeenko.alexey.titangym.items.InventoryItem
+import com.sergeenko.alexey.titangym.items.PlayersActiveItem
 
 @Composable
 fun DrawInventory(
+    widthModifier: Modifier = round5Modifier.width(120.dp),
     container: Container,
     onItemClick: (Item) -> Unit,
-    onClose: OnClickCallback
-) {
-    val assetManager = LocalContext.current.assets
-
-    return Box(
-        modifier = Modifier.clickable {
-            onClose.call(null)
+    onClose: () -> Unit
+) = Row(
+    horizontalArrangement = Arrangement.End,
+    verticalAlignment = Alignment.CenterVertically,
+    modifier = Modifier
+        .clickable {
+            onClose()
         }
-    ) {
-        Row(
-            modifier = Modifier.padding(end = 30.dp)
-        ) {
-            Spacer(
-                Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
-            )
-            Column {
-                Spacer(fillMaxHeightModifier())
-                Column(
-                    modifier = round5Modifier
-                        .clickable {
+) {
+    Column(
+        verticalArrangement = Arrangement.Top,
+        modifier = widthModifier
+            .fillMaxHeight()
+            .clickable{
 
-                        }
-                ) {
-                    CloseButton(onClose)
-                    LazyVerticalGrid(
-                        columns = GridCells.Adaptive(40.dp),
-                        modifier = Modifier
-                            .width(100.dp)
-                            .height(200.dp)
-                    ) {
-                        container.items?.forEachIndexed { _, item ->
-                            item {
-                                Box(modifier = Modifier.padding(1.dp)){
-                                    Column(Modifier.background(Color.Gray)) {
-                                        assetManager?.getItemImage(item = item, onItemClick = onItemClick::invoke)
-                                        Text(modifier = Modifier.align(CenterHorizontally), text = item.cost.toString())
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                Spacer(
-                    fillMaxHeightModifier()
-                )
+            }
+    ) {
+        CloseButton{
+            onClose()
+        }
+        LazyVerticalGrid(
+            verticalArrangement = Arrangement.Center,
+            horizontalArrangement = Arrangement.Center,
+            columns = GridCells.Adaptive(40.dp),
+            modifier = Modifier
+
+
+        ) {
+            items(container.items){ item ->
+                InventoryItem(item = item, onItemClick)
             }
         }
     }
 }
+
 
 

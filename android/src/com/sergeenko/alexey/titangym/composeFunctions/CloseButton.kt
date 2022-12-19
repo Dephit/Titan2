@@ -21,19 +21,19 @@ val language: Language
     get() = Preffics.getInstance().language
 
 @Composable
-fun ColumnScope.CloseButton(onClose: OnClickCallback?) {
+fun ColumnScope.CloseButton(onClose: OnClickCallback) {
     MyButton(
-        onClick = {
-            onClose?.call(null)
-        }, language.cancel, modifier = Modifier.align(Alignment.End))
+        onClick = onClose::call,
+        modifier = Modifier.align(Alignment.End),
+        text = language.cancel,
+    )
 }
 
 @Composable
-fun RowScope.CloseButton(onClose: OnClickCallback?) {
+fun RowScope.CloseButton(onClose: OnClickCallback) {
     MyButton(
-        onClick = {
-            onClose?.call(null)
-        }, language.cancel)
+        onClick = onClose::call,
+        text = language.cancel)
 }
 
 
@@ -42,7 +42,8 @@ fun MyButton(onClick: OnClickCallback?, text: String, modifier: Modifier = Modif
     return Button(
         onClick = {
             onClick?.call(null)
-        }, modifier = modifier.padding(10.dp).shadow(10.dp)) {
+        },
+        modifier = modifier.padding(10.dp)) {
         Text(text = text)
     }
 }

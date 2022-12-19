@@ -13,7 +13,7 @@ import com.sergeenko.alexey.titangym.items.TableHeaderComposeItem
 fun PlayerList(
     playerList: MutableList<CompetitionOpponent>,
     status: Comp,
-    runnable: OnClickCallback?
+    runnable: OnClickCallback
 ) {
     val playersList = playerList.sortedByDescending { it.getCurrentSet(status.attempt) }
 

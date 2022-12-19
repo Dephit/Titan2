@@ -39,7 +39,6 @@ fun DrawPerkMenu(
     onItemClick: (Item) -> Unit,
     onClose: OnClickCallback
 ) {
-    val assetManager = LocalContext.current.assets
     val allPerks = PerksMenu().items.map { it as PerkItem }
 
     return Box(
@@ -96,6 +95,7 @@ private fun Player.getPerkColor(item: PerkItem): Color {
 @Composable
 private fun PerkItem(perk: PerkItem, bgColor: Color, onItemClick: (Item) -> Unit){
     val assetManager = LocalContext.current.assets
+
     Box(modifier = Modifier){
         Column(
             Modifier
