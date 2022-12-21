@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.key
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -32,6 +33,7 @@ import com.sergeenko.alexey.titangym.items.PlayersActiveItem
 fun DrawInventory(
     widthModifier: Modifier = round5Modifier.width(120.dp),
     container: Container,
+    gridCound: Int = 2,
     onItemClick: (Item) -> Unit,
     onClose: () -> Unit
 ) = Row(
@@ -46,7 +48,7 @@ fun DrawInventory(
         verticalArrangement = Arrangement.Top,
         modifier = widthModifier
             .fillMaxHeight()
-            .clickable{
+            .clickable {
 
             }
     ) {
@@ -56,13 +58,11 @@ fun DrawInventory(
         LazyVerticalGrid(
             verticalArrangement = Arrangement.Center,
             horizontalArrangement = Arrangement.Center,
-            columns = GridCells.Adaptive(40.dp),
+            columns = GridCells.Fixed(count = gridCound),
             modifier = Modifier
-
-
         ) {
-            items(container.items){ item ->
-                InventoryItem(item = item, onItemClick)
+            items(items = container.items){ item ->
+                InventoryItem(item = item, onItemClick = onItemClick)
             }
         }
     }

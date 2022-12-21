@@ -9,7 +9,6 @@ import androidx.compose.ui.res.stringResource
 
 import com.mygdx.game.interfaces.OnClickCallback
 import com.sergeenko.alexey.titangym.R
-import kotlinx.coroutines.flow.StateFlow
 
 @Composable
 fun AlertDialogSample(
@@ -17,16 +16,14 @@ fun AlertDialogSample(
     subtitle: String,
     agreeText: String = stringResource(id = R.string.ok),
     closeText: String = stringResource(id = R.string.close),
-    onClose: OnClickCallback,
-    onAgree: OnClickCallback,
-    state: StateFlow<Boolean>,
+    onClose: () -> Unit,
+    onAgree: () -> Unit,
+    state: Boolean,
 ) {
-    Column {
-        if (state.value) {
+    if (state) {
+        Column {
             AlertDialog(
-                onDismissRequest = {
-                    onClose.call(null)
-                },
+                onDismissRequest = onClose,
                 title = {
                     Text(text = title)
                 },
@@ -34,18 +31,12 @@ fun AlertDialogSample(
                     Text(subtitle)
                 },
                 confirmButton = {
-                    Button(
-                        onClick = {
-                            onAgree.call(null)
-                        }) {
+                    Button(onClick = onAgree) {
                         Text(agreeText)
                     }
                 },
                 dismissButton = {
-                    Button(
-                        onClick = {
-                            onClose.call(null)
-                        }) {
+                    Button(onClick =onClose) {
                         Text(closeText)
                     }
                 }

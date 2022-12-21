@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun DialogBox(function: @Composable () -> Unit){
-    Box( modifier = Modifier
+    Box(modifier = Modifier
         .padding(25.dp)
         .background(Color.Transparent)
     ) {

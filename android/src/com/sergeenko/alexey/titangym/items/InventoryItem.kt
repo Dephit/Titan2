@@ -21,9 +21,9 @@ fun InventoryItem(item: Item, onItemClick: (Item) -> Unit) {
     Column(
         verticalArrangement = Arrangement.SpaceAround,
         horizontalAlignment = CenterHorizontally,
-        modifier = Modifier.background(Color.Gray)
+        modifier = Modifier.background(Color.White)
     ) {
         assetManager?.getItemImage(item = item, onItemClick = onItemClick::invoke)
-        Text(modifier = Modifier.align(CenterHorizontally), text = item.cost.toString())
+        Text(modifier = Modifier.align(alignment = CenterHorizontally), text = item.cost.toString())
     }
 }

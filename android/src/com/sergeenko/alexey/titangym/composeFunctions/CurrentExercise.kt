@@ -12,18 +12,23 @@ import com.sergeenko.alexey.titangym.linearProgressModifier
 import com.sergeenko.alexey.titangym.round5Modifier
 
 @Composable
-fun CurrentExercise(bar: Exercise?) {
-    val exerciseProgress: Float = bar?.let { bar.progress / bar.limit } ?: 0f
-
-    Column {
-        Spacer(fillMaxHeightModifier())
+fun CurrentExercise(
+    exerciseProgress: Float,
+    modifier: Modifier = Modifier,
+    progressColor: Color = Color.White,
+    backgroundColor: Color = Color.Black
+) {
+    Column(
+        verticalArrangement = Arrangement.Bottom,
+        modifier = modifier
+    ){
         LinearProgressIndicator(
             modifier = round5Modifier
                 .linearProgressModifier()
                 .width(150.dp),
-            color = Color.White,
+            color = progressColor,
             progress = exerciseProgress,
-            backgroundColor = Color.Black
+            backgroundColor = backgroundColor
         )
     }
 }

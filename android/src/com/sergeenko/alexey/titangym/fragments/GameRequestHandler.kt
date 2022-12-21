@@ -2,8 +2,7 @@ package com.sergeenko.alexey.titangym.fragments
 
 import android.content.Context
 import android.widget.Toast
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.lifecycle.lifecycleScope
 import com.kitegroup.adlibrary.Inter
 import com.mygdx.game.IActivityRequestHandler
@@ -133,7 +132,8 @@ class GameRequestHandler(val fragment: ComposeFragmentInterface): IActivityReque
     }
 
     override fun showAd(onAdClosed: Runnable?) {
-        fragment.scope.launch {
+        hideComposeView()
+        /*fragment.scope.launch {
             fragment.showLoader()
             Inter.Builder()
                 .onAdClosed {
@@ -145,7 +145,7 @@ class GameRequestHandler(val fragment: ComposeFragmentInterface): IActivityReque
                 .onAdShowed {  }
                 .build()
                 .showAd(fragment.requireActivity())
-        }
+        }*/
     }
 
     override fun openInventory(player: Player, runnable: Runnable) {
@@ -249,7 +249,30 @@ class GameRequestHandler(val fragment: ComposeFragmentInterface): IActivityReque
         onClose: OnClickCallback,
         onAgree: OnClickCallback
     ) {
-        fragment.showDialog(title, subtitle, agreeText, closeText, onClose, onAgree)
+        fragment.showComposeView {
+            var showDialogState = mutableStateOf(true)
+
+            if (showDialogState.value == true){
+                AlertDialogSample(
+                    title = title,
+                    subtitle = subtitle,
+                    agreeText = context.getString(R.string.ok),
+                    closeText = context.getString(R.string.close),
+                    onAgree = {
+                        showDialogState.value = false
+                        onAgree.call(null)
+                    },
+                    onClose = {
+                        showDialogState.value = false
+                    },
+                    state = showDialogState.value
+                )
+            }else{
+                onClose.call(null)
+                hideComposeView()
+            }
+
+        }
     }
 
     override fun showNextSetMenu(
@@ -276,17 +299,16 @@ class GameRequestHandler(val fragment: ComposeFragmentInterface): IActivityReque
     }
 
     private fun showDialog(item: Item, onAgree: () -> Unit, onClose: () -> Unit?) {
-        fragment.showDialog(
+        showDialog(
             title = item.title,
             subtitle = item.description,
             agreeText = context.getString(R.string.ok),
             closeText = context.getString(R.string.close),
-            onAgree = OnClickCallback { _ ->
-                onAgree()
+            onClose = {
                 onClose()
             },
-            onClose = OnClickCallback {
-                onClose()
+            onAgree = {
+                onAgree()
             }
         )
     }
