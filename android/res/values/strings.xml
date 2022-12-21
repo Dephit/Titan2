@@ -39,4 +39,24 @@
     <string name="turn_off_music">Turn music off</string>
     <string name="money_postfix">%s $</string>
     <string name="perk_coins_postfix">%s $$</string>
+    <string name="health_bar">Здоровье:</string>
+    <string name="health_bar_description">Здоровье персонажа, зависит от сьеденой еды, чтобы много поднимать, надо кушать, чем вы больше, тем больше еды необходимо</string>
+    <string name="energy_bar">Энергия:</string>
+    <string name="energy_bar_description">Енергия нужна чтобы двигаться, чем больше спишь тем ее больше</string>
+    <string name="tiredness_bar">Усталость:</string>
+    <string name="tiredness_bar_description">Чем больше тренируешься тем больше ты устаешь, иногда нужно отвлекаться от этого(погулять или немного раслабиться)</string>
+    <string name="exrcise">Упражнение</string>
+    <string name="squat">Приседания</string>
+    <string name="deadlift">Ст. тяга</string>
+    <string name="bench">Жим лежа</string>
+    <string name="exercise_stat_level"><![CDATA[%s, Уровень -> %s]]></string>
+    <string name="best_result">Лучший показаный результат: %s</string>
+    <string name="squat_description">Приседания - король упражнений, все очень просто, нужно только сесть и встать, ерунда, правда?</string>
+    <string name="bench_description">Жим лежа - король упражнений, также как и присед..хм, говорят с мостом жать просто, ну а ты попробуй</string>
+    <string name="deadlift_description">Становая тяга, сумо или классика?</string>
+    <string name="current_money">Деньги: %s</string>
+    <string name="total_money">Всего денег разаботано: %s</string>
+    <string name="current_perk_coins">Очки навыков: %s</string>
+    <string name="current_perks">Навыков куплено: %s</string>
+    <string name="days_in_the_game">Дней в игре: %s</string>
 </resources>

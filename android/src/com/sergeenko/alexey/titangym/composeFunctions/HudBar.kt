@@ -20,7 +20,9 @@ fun HudBar(
             .padding(30.dp)
     ) {
         MainParams(player)
-        CurrentExercise(exerciseProgress = exerciseProgress, modifier = Modifier.fillMaxHeight())
+        Column(verticalArrangement = Arrangement.Bottom) {
+            CurrentExercise(exerciseProgress = exerciseProgress, modifier = Modifier.fillMaxHeight())
+        }
         NotificationList(lastFiveMessages){
             player.notificationManager.countNotification()
         }

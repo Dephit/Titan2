@@ -21,31 +21,16 @@ import com.sergeenko.alexey.titangym.round5Modifier
 @Composable
 fun DrawPlayerStates(
     player: Player,
-    onItemClicked: (Item)->Unit,
-    onClose: ()->Unit,
+    onItemClicked: (Item) -> Unit,
+    onClose: () -> Unit,
 ) {
-    val stats = listOf(
-        player.exerciseManager.squatExr,
-        player.exerciseManager.bench,
-        player.exerciseManager.deadlift
-    )
-
     return Row(
         horizontalArrangement = Arrangement.SpaceAround,
         verticalAlignment = CenterVertically,
         modifier = Modifier
             .padding(horizontal = 30.dp, vertical = 30.dp)
     ) {
-        LazyColumn(
-            modifier = round5Modifier
-                .fillMaxWidth(0.8f)
-                .fillMaxHeight()
-
-        ){
-            items(stats){
-                ExerciseStatItem(exercise = it)
-            }
-        }
+        DrawStatsMenu(player)
         DrawInventory(
             container = player.inventoryManager.inventory,
             onItemClick = onItemClicked,

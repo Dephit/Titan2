@@ -27,9 +27,9 @@ public class CompetitionRoom extends BaseRoom {
         player.setPlayerPosition((int) (Preffics.SCREEN_WIDTH / 2 - player.getWidth() / 2f), 215, PlayerCondition.stay);
         player.compValue = new CompetitionOpponent(
                 player.getName(),
-                player.exerciseManager.squatExr.result,
-                player.exerciseManager.bench.result,
-                player.exerciseManager.deadlift.result
+                player.exerciseManager.squatExr.bestResult,
+                player.exerciseManager.bench.bestResult,
+                player.exerciseManager.deadlift.bestResult
         );
     }
 

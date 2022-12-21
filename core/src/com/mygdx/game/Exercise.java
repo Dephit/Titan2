@@ -1,7 +1,5 @@
 package com.mygdx.game;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -23,7 +21,7 @@ public class Exercise {
     public float updateHealthValue = 0.0125f;
     public float updateTirednessValue = 0.0075f;
 
-    public int result = 80;
+    public int bestResult = 80;
     public int LVL = 0;
     public Boolean newLevelReached = false;
 
@@ -54,13 +52,13 @@ public class Exercise {
     }
 
     private void setResult() {
-        result = lvlMultiplier() - 20;
+        bestResult = lvlMultiplier() - 20;
     }
 
     public JSONObject toJson(){
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put(RESULT, result);
+            jsonObject.put(RESULT, bestResult);
             jsonObject.put(LVL_VALUE, LVL);
             jsonObject.put(PROGRESS, progress);
             jsonObject.put(NEW_LEVEL_REACHED, newLevelReached);
@@ -71,7 +69,7 @@ public class Exercise {
     }
 
     public void fromJson(JSONObject jsonObject){
-        result = jsonObject.optInt(RESULT, 80);
+        bestResult = jsonObject.optInt(RESULT, 80);
         LVL = jsonObject.optInt(LVL_VALUE, 0);
         progress = jsonObject.optInt(PROGRESS, 0);
         newLevelReached = jsonObject.optBoolean(NEW_LEVEL_REACHED, false);

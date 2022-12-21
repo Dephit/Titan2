@@ -1,9 +1,13 @@
 package com.sergeenko.alexey.titangym.composeFunctions
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.mygdx.game.Exercise
@@ -16,19 +20,62 @@ fun CurrentExercise(
     exerciseProgress: Float,
     modifier: Modifier = Modifier,
     progressColor: Color = Color.White,
-    backgroundColor: Color = Color.Black
+    backgroundColor: Color = Color.Black,
+    modifierColor: Modifier = round5Modifier
 ) {
     Column(
         verticalArrangement = Arrangement.Bottom,
         modifier = modifier
     ){
+
+        Box(
+            Modifier.padding(1.dp)
+        ) {
+            Box(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(25.dp))
+                    .width(160.dp)
+                    .border(5.dp, Color.DarkGray, shape = RoundedCornerShape(25.dp))
+                    .height(10.dp)
+            )
+            LinearProgressIndicator(
+                modifier = Modifier
+                    .width(160.dp)
+                    .clip(RoundedCornerShape(25.dp))
+                    .height(10.dp)
+                    .padding(2.dp),
+                color = progressColor,
+                progress = exerciseProgress,
+                backgroundColor = Color.Gray
+            )
+        }
+    }
+}
+
+@Composable
+fun StatExercise(
+    exerciseProgress: Float,
+    progressColor: Color = Color.White,
+    backgroundColor: Color = Color.Black,
+    modifierColor: Modifier = round5Modifier
+) {
+    Spacer(10.dp)
+    Box(){
+        Box(modifier = Modifier
+            .clip(RoundedCornerShape(25.dp))
+            .width(250.dp)
+            .border(5.dp, Color.DarkGray, shape = RoundedCornerShape(25.dp))
+            .height(10.dp))
         LinearProgressIndicator(
-            modifier = round5Modifier
-                .linearProgressModifier()
-                .width(150.dp),
+            modifier = modifierColor
+                .width(250.dp)
+                .clip(RoundedCornerShape(25.dp))
+                .height(10.dp)
+                .padding(2.dp),
             color = progressColor,
             progress = exerciseProgress,
-            backgroundColor = backgroundColor
+            backgroundColor = Color.Gray
         )
     }
+
 }

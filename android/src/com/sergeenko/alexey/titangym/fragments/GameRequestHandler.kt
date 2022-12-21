@@ -162,7 +162,7 @@ class GameRequestHandler(val fragment: ComposeFragmentInterface): IActivityReque
                     player.inventoryManager.inventory.removeItem(item)
                 }
             ){
-                runnable.run()
+                onClose()
             }
         }
 
@@ -250,7 +250,7 @@ class GameRequestHandler(val fragment: ComposeFragmentInterface): IActivityReque
         onAgree: OnClickCallback
     ) {
         fragment.showComposeView {
-            var showDialogState = mutableStateOf(true)
+            var showDialogState = remember { mutableStateOf(true) }
 
             if (showDialogState.value == true){
                 AlertDialogSample(
@@ -314,3 +314,4 @@ class GameRequestHandler(val fragment: ComposeFragmentInterface): IActivityReque
     }
 
 }
+
