@@ -139,5 +139,5 @@ val shadow = TextStyle(shadow = Shadow(
 val blockModifier = Modifier
     .clip(RoundedCornerShape(25.dp))
     .background(Color.Gray)
-    .border(5.dp, Color.DarkGray, shape = RoundedCornerShape(25.dp))
+    .border(3.dp, Color.DarkGray, shape = RoundedCornerShape(25.dp))
     .padding(10.dp)

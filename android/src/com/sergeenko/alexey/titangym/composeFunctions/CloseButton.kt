@@ -1,15 +1,19 @@
 package com.sergeenko.alexey.titangym.composeFunctions
 
 import android.icu.util.ULocale.getLanguage
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonColors
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.mygdx.game.Language
@@ -40,6 +44,11 @@ fun RowScope.CloseButton(onClose: OnClickCallback) {
 @Composable
 fun MyButton(onClick: OnClickCallback?, text: String, modifier: Modifier = Modifier){
     return Button(
+        colors = ButtonDefaults
+            .buttonColors(
+                backgroundColor = Color.DarkGray,
+                contentColor = Color.White
+            ),
         onClick = {
             onClick?.call(null)
         },

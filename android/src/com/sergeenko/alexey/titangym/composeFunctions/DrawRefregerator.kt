@@ -31,7 +31,7 @@ import com.sergeenko.alexey.titangym.items.PlayersActiveItem
 
 @Composable
 fun DrawInventory(
-    widthModifier: Modifier = round5Modifier.width(120.dp),
+    widthModifier: Modifier = blockModifier.width(120.dp),
     container: Container,
     gridCound: Int = 2,
     onItemClick: (Item) -> Unit,
@@ -40,17 +40,12 @@ fun DrawInventory(
     horizontalArrangement = Arrangement.End,
     verticalAlignment = Alignment.CenterVertically,
     modifier = Modifier
-        .clickable {
-            onClose()
-        }
+
 ) {
     Column(
         verticalArrangement = Arrangement.Top,
         modifier = widthModifier
             .fillMaxHeight()
-            .clickable {
-
-            }
     ) {
         CloseButton{
             onClose()
