@@ -72,7 +72,7 @@ fun MainParams(player: Player) {
             }
             Spacer(height = 5.dp)
             Row(
-                modifier = round5Modifier.width(215.dp)
+                modifier = round5Modifier.width(218.dp)
             ) {
                 RoundBackgroundText(text = stringResource(id = R.string.money_postfix, playersMoney))
                 RoundBackgroundText(text = stringResource(id = R.string.perk_coins_postfix, perksCoins))
@@ -102,7 +102,7 @@ fun DayItem(day: Day) {
     Column(
         verticalArrangement = Arrangement.SpaceAround,
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = round5Modifier
+        modifier = round5Modifier.height(37.dp)
     ) {
         Text(text = "Day $currentDay", fontSize = 15.sp, color = Color.Black, textAlign = TextAlign.Center)
         LinearProgressIndicator(

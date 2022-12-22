@@ -36,11 +36,27 @@ fun DrawInventory(
     gridCound: Int = 2,
     onItemClick: (Item) -> Unit,
     onClose: () -> Unit
+) = DrawInventory(
+    container = container.items,
+    widthModifier =widthModifier,
+    gridCound = gridCound,
+    onItemClick = onItemClick,
+    onClose = onClose
+)
+
+
+
+@Composable
+fun DrawInventory(
+    widthModifier: Modifier = blockModifier.width(180.dp),
+    container: List<Item>,
+    gridCound: Int = 2,
+    onItemClick: (Item) -> Unit,
+    onClose: () -> Unit
 ) = Row(
     horizontalArrangement = Arrangement.End,
     verticalAlignment = Alignment.CenterVertically,
     modifier = Modifier
-
 ) {
     Column(
         verticalArrangement = Arrangement.Top,
@@ -56,12 +72,9 @@ fun DrawInventory(
             columns = GridCells.Fixed(count = gridCound),
             modifier = Modifier
         ) {
-            items(items = container.items){ item ->
+            items(items = container){ item ->
                 InventoryItem(item = item, onItemClick = onItemClick)
             }
         }
     }
 }
-
-
-

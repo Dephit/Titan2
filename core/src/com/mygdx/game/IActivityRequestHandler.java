@@ -5,6 +5,7 @@ import com.mygdx.game.interfaces.OnClickBooleanCallback;
 import com.mygdx.game.model.CompetitionOpponent;
 import com.mygdx.game.model.Container;
 import com.mygdx.game.model.enums.Comp;
+import com.mygdx.game.model.items.OnItemClick;
 
 import java.util.List;
 
@@ -47,7 +48,7 @@ public interface IActivityRequestHandler {
 
     void showHud(Player player);
 
-    void openInventory(Player player, Runnable runnable);
+    void openInventory(Player player, Runnable runnable, OnItemClick onItemClick);
 
     void openRefrigerator(Player player, Runnable onClose);
 

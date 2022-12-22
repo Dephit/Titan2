@@ -1,10 +1,9 @@
 package com.sergeenko.alexey.titangym.fragments
 
 import android.content.Context
+import android.widget.AdapterView.OnItemClickListener
 import android.widget.Toast
 import androidx.compose.runtime.*
-import androidx.lifecycle.lifecycleScope
-import com.kitegroup.adlibrary.Inter
 import com.mygdx.game.IActivityRequestHandler
 import com.mygdx.game.Player
 import com.mygdx.game.interfaces.OnClickBooleanCallback
@@ -13,18 +12,17 @@ import com.mygdx.game.model.CompetitionOpponent
 import com.mygdx.game.model.Container
 import com.mygdx.game.model.enums.Comp
 import com.mygdx.game.model.items.Item
+import com.mygdx.game.model.items.OnItemClick
 import com.mygdx.game.model.items.perks.PerkItem
 import com.sergeenko.alexey.titangym.R
 import com.sergeenko.alexey.titangym.composeFunctions.*
-import com.sergeenko.alexey.titangym.getAssetManager
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+
 
 class GameRequestHandler(val fragment: ComposeFragmentInterface): IActivityRequestHandler {
 
     private val context: Context = fragment.requireContext()
+
+    var dialogScreenState = mutableStateOf(false)
 
     override fun showToast(s: String) {
         fragment.runOnUiThread {
@@ -148,27 +146,33 @@ class GameRequestHandler(val fragment: ComposeFragmentInterface): IActivityReque
         }*/
     }
 
-    override fun openInventory(player: Player, runnable: Runnable) {
+    override fun openInventory(
+        player: Player,
+        runnable: Runnable,
+        onItemClicked: OnItemClick
+    ) {
         fun onClose(){
             hideComposeView()
             runnable.run()
         }
 
+        val state = player.inventoryManager.inventory.items.toMutableStateList()
+
         fun onItemClicked(item: Item){
             showDialog(
                 item = item,
                 onAgree = {
-                    item.onUse(player)
-                    player.inventoryManager.inventory.removeItem(item)
+                    onItemClicked.onClick(item)
                 }
             ){
-                onClose()
+                runnable.run()
             }
         }
 
         fragment.showComposeView {
             DrawPlayerStates(
                 player = player,
+                container = state,
                 onItemClicked = ::onItemClicked,
                 onClose = ::onClose
             )
@@ -249,29 +253,28 @@ class GameRequestHandler(val fragment: ComposeFragmentInterface): IActivityReque
         onClose: OnClickCallback,
         onAgree: OnClickCallback
     ) {
-        fragment.showComposeView {
-            var showDialogState = remember { mutableStateOf(true) }
+        dialogScreenState.value = true
 
-            if (showDialogState.value == true){
+        fragment.showDialogView {
+            if (dialogScreenState.value == true){
                 AlertDialogSample(
                     title = title,
                     subtitle = subtitle,
                     agreeText = context.getString(R.string.ok),
                     closeText = context.getString(R.string.close),
                     onAgree = {
-                        showDialogState.value = false
+                        dialogScreenState.value = false
                         onAgree.call(null)
                     },
                     onClose = {
-                        showDialogState.value = false
+                        dialogScreenState.value = false
+                        //onClose.call(null)
                     },
-                    state = showDialogState.value
+                    state = dialogScreenState.value
                 )
             }else{
-                onClose.call(null)
-                hideComposeView()
-            }
 
+            }
         }
     }
 

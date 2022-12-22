@@ -24,6 +24,7 @@ import com.mygdx.game.Player
 import com.mygdx.game.interfaces.OnClickBooleanCallback
 import com.mygdx.game.interfaces.OnClickCallback
 import com.sergeenko.alexey.titangym.*
+import com.sergeenko.alexey.titangym.R
 import com.sergeenko.alexey.titangym.composeFunctions.*
 import com.sergeenko.alexey.titangym.databinding.MainActivityBinding
 import kotlinx.coroutines.*
@@ -39,6 +40,9 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), ComposeFragmentInt
     private val viewModel: MainViewModel by viewModels()
     private val gameLayout: RelativeLayout by lazy {
         createGameLayout()
+    }
+    private val myGdxGame by lazy {
+        MyGdxGame(/* handler = */ gameRequestHandler, /* player = */arguments?.getString("PLAYER"))
     }
     private val binding: MainActivityBinding by lazy {
         MainActivityBinding.inflate(layoutInflater)
@@ -72,14 +76,16 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), ComposeFragmentInt
     }
 
     private fun launchGame() {
-        binding.container.addView(gameLayout)
+        if(binding.container.childCount == 0) {
+            binding.container.addView(gameLayout)
+        }
         showComposeView()
     }
 
     private fun createGameLayout(): RelativeLayout {
         val layout = RelativeLayout(context)
         val config: AndroidApplicationConfiguration = AndroidApplicationConfiguration()
-        val myGdxGame = MyGdxGame(/* handler = */ gameRequestHandler, /* player = */arguments?.getString("PLAYER"))
+
         setFullScreenFlags()
         val gameView = initializeForView(myGdxGame, config)
         layout.addView(gameView)
@@ -108,17 +114,6 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), ComposeFragmentInt
                 setVisible()
             }
         }
-    }
-
-    fun dialog(){
-        binding.dialogView.apply {
-            setContent {
-                MaterialTheme {
-
-                }
-            }
-        }
-
     }
 
     override fun hideComposeView() {
@@ -171,6 +166,19 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), ComposeFragmentInt
         }
     }
 
+    override fun showDialogView(function: @Composable () -> Unit) {
+        binding.dialogView.apply {
+            setContent {
+                MaterialTheme {
+                    function()
+                }
+            }
+            post {
+                setVisible()
+            }
+        }
+    }
+
 
 }
 
@@ -200,6 +208,8 @@ interface ComposeFragmentInterface{
         onProgressUpdate: OnClickBooleanCallback,
         onClose: OnClickCallback
     )
+
+    fun showDialogView(function: @Composable () -> Unit)
 
 }
 

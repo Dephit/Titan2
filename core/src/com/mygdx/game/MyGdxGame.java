@@ -10,6 +10,7 @@ import com.mygdx.game.interfaces.OnClickBooleanCallback;
 import com.mygdx.game.model.CompetitionOpponent;
 import com.mygdx.game.model.Container;
 import com.mygdx.game.model.enums.Comp;
+import com.mygdx.game.model.items.OnItemClick;
 import com.mygdx.game.rooms.CompetitionRoom;
 import com.mygdx.game.rooms.GymRoom;
 import com.mygdx.game.rooms.MapRoom;
@@ -291,7 +292,15 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
 
     @Override
     public void openInventory(Runnable runnable) {
-        myRequestHandler.openInventory(player, runnable);
+        myRequestHandler
+                .openInventory(
+                        player,
+                        runnable,
+                        (item)-> {
+                            item.onUse(player);
+                            player.inventoryManager.inventory.removeItem(item);
+                            openInventory(runnable);
+                        });
     }
 
 }

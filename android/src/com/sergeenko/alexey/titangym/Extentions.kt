@@ -48,7 +48,7 @@ fun Item.getItemPath() = if(!styleName.contains(".png")) "screens/buttons/${styl
 fun AssetManager.getBitmap(item: Item) = assetsToBitmap(item.getItemPath())?.asImageBitmap()
 
 @Composable
-fun AssetManager.getItemImage(item: Item, onItemClick: (Item) -> Unit) {
+fun AssetManager.getItemImage(item: Item, onItemClick: (Item) -> Unit = { }) {
     Column(modifier = Modifier.fillMaxWidth()) {
         val modifier = Modifier
             .align(Alignment.CenterHorizontally)

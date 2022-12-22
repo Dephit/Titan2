@@ -1,6 +1,7 @@
 package com.sergeenko.alexey.titangym
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.Modifier
@@ -30,6 +31,7 @@ fun Modifier.linearProgressModifier() = height(5.dp).clipRound()
 fun Modifier.clipRound(percent: Int = 50) = clip(RoundedCornerShape(percent))
 
 val round5Modifier = Modifier
-    .clipRound(5)
+    .clip(RoundedCornerShape(5.dp))
     .background(Color.White)
+    .border(1.5.dp, Color.Gray, shape = RoundedCornerShape(5.dp))
     .padding(5.dp)

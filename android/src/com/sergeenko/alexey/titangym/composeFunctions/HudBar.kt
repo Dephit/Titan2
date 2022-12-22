@@ -12,12 +12,12 @@ fun HudBar(
     player: Player
 ) {
     val lastFiveMessages: List<Notification> = player.notificationManager.notificationList.filter { it.show }.sortedByDescending { it.showTime }.take(5)
-    val exerciseProgress: Float = player.isInExercise?.let { bar -> bar.progress / bar.limit } ?: 0f
+    val exerciseProgress: Float? = player.isInExercise?.let { bar -> bar.progress / bar.limit }
 
     Box(
         Modifier
             .fillMaxSize()
-            .padding(30.dp)
+            .padding(10.dp)
     ) {
         MainParams(player)
         Column(verticalArrangement = Arrangement.Bottom) {

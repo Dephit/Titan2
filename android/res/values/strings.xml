@@ -59,4 +59,5 @@
     <string name="current_perk_coins">Очки навыков: %s</string>
     <string name="current_perks">Навыков куплено: %s</string>
     <string name="days_in_the_game">Дней в игре: %s</string>
+    <string name="item_cost">%s $</string>
 </resources>
