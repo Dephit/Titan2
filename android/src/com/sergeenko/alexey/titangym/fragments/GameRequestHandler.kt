@@ -3,7 +3,13 @@ package com.sergeenko.alexey.titangym.fragments
 import android.content.Context
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.Toast
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.mygdx.game.IActivityRequestHandler
 import com.mygdx.game.Player
 import com.mygdx.game.interfaces.OnClickBooleanCallback
@@ -11,6 +17,7 @@ import com.mygdx.game.interfaces.OnClickCallback
 import com.mygdx.game.model.CompetitionOpponent
 import com.mygdx.game.model.Container
 import com.mygdx.game.model.enums.Comp
+import com.mygdx.game.model.enums.InventoryType
 import com.mygdx.game.model.items.Item
 import com.mygdx.game.model.items.OnItemClick
 import com.mygdx.game.model.items.perks.PerkItem
@@ -201,33 +208,47 @@ class GameRequestHandler(val fragment: ComposeFragmentInterface): IActivityReque
         }
     }
 
-    override fun openShopByMenu(
-        container: Container,
-        onBuyRunnable: OnClickCallback,
-        runnable: Runnable
+    override fun openShowBuyMenu(
+        type: InventoryType,
+        inventoryContainer: Container,
+        shopContainer: Container,
+        onBuyRunnable: OnItemClick,
+        onCancel: Runnable
     ) {
+        fun close(){
+            onCancel.run()
+            hideComposeView()
+        }
+
         fragment.showComposeView {
-            DrawInventory(
-                container = container,
-                onItemClick = {
-                    showDialog(
-                        it,
-                        onAgree = {
-                            onBuyRunnable.call(it)
-                        }
-                    ){
-                        runnable.run()
-                    }
-                }
+            Row(
+                horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                hideComposeView()
-                runnable.run()
+                DrawInventory(
+                    container = inventoryContainer,
+                    showCloseBotton = false,
+                    onItemClick = {},
+                    onClose = ::close,
+                    widthModifier = blockModifier.width(240.dp)
+                )
+                DrawInventory(
+                    container = shopContainer,
+                    onItemClick = {
+                        showDialog(
+                            it,
+                            onAgree = {
+                                onBuyRunnable.onClick(it)
+                            }
+                        ){
+                            close()
+                        }
+                    },
+                    onClose = ::close,
+                    widthModifier = blockModifier.width(240.dp)
+                )
             }
         }
     }
-
-
-
 
     override fun showDialog(
         title: String,

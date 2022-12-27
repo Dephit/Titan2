@@ -5,6 +5,8 @@ import com.mygdx.game.interfaces.OnClickBooleanCallback;
 import com.mygdx.game.model.CompetitionOpponent;
 import com.mygdx.game.model.Container;
 import com.mygdx.game.model.enums.Comp;
+import com.mygdx.game.model.enums.InventoryType;
+import com.mygdx.game.model.items.OnItemClick;
 
 import java.util.List;
 
@@ -65,7 +67,7 @@ public interface InterScreenCommunication {
 
     void openRefrigerator(Player player, Runnable runnable);
 
-    void showBuyMenu(Container container, OnClickCallback onBuyRunnable, Runnable runnable);
+    void showBuyMenu(InventoryType type, Container inventoryContainer, Container shopContainer, OnItemClick onBuyRunnable, Runnable onCancel);
 
     void showHud();
 

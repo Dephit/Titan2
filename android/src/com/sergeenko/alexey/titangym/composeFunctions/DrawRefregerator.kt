@@ -32,12 +32,14 @@ import com.sergeenko.alexey.titangym.items.PlayersActiveItem
 @Composable
 fun DrawInventory(
     widthModifier: Modifier = blockModifier.width(120.dp),
+    showCloseBotton: Boolean = true,
     container: Container,
     gridCound: Int = 2,
     onItemClick: (Item) -> Unit,
     onClose: () -> Unit
 ) = DrawInventory(
     container = container.items,
+    showCloseBotton = showCloseBotton,
     widthModifier =widthModifier,
     gridCound = gridCound,
     onItemClick = onItemClick,
@@ -49,6 +51,7 @@ fun DrawInventory(
 @Composable
 fun DrawInventory(
     widthModifier: Modifier = blockModifier.width(180.dp),
+    showCloseBotton: Boolean = true,
     container: List<Item>,
     gridCound: Int = 2,
     onItemClick: (Item) -> Unit,
@@ -63,8 +66,10 @@ fun DrawInventory(
         modifier = widthModifier
             .fillMaxHeight()
     ) {
-        CloseButton{
-            onClose()
+        if(showCloseBotton){
+            CloseButton{
+                onClose()
+            }
         }
         LazyVerticalGrid(
             verticalArrangement = Arrangement.Center,

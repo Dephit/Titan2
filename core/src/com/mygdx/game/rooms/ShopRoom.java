@@ -14,7 +14,9 @@ import com.mygdx.game.Style;
 import com.mygdx.game.interfaces.OnClickCallback;
 import com.mygdx.game.model.Container;
 import com.mygdx.game.model.ContiniousItem;
+import com.mygdx.game.model.enums.InventoryType;
 import com.mygdx.game.model.items.Item;
+import com.mygdx.game.model.items.OnItemClick;
 import com.mygdx.game.model.shop.EquipmentShopMenu;
 import com.mygdx.game.model.shop.ShopMenu;
 import com.mygdx.game.model.shop.SnackMenu;
@@ -78,13 +80,16 @@ public class ShopRoom extends BaseRoom {
         );
 
 
-        OnClickCallback onBuyRunnable = object -> {
+        OnItemClick onBuyRunnable = object -> {
             player.buyEquipmentItem((ContiniousItem) object);
-            pauseRunnable.run();
+            talkToStaff();
         };
 
-        interScreenCommunication.showBuyMenu(equipmentShopMenu, onBuyRunnable, pauseRunnable);
+        showBuyMenu(player.inventoryManager.equipmentContainer, equipmentShopMenu, onBuyRunnable, pauseRunnable);
+    }
 
+    void showBuyMenu(Container inventoryContainer, Container shopContainer, OnItemClick onBuyRunnable, Runnable onCancel) {
+        interScreenCommunication.showBuyMenu(InventoryType.EQUIPMENT, inventoryContainer, shopContainer, onBuyRunnable, onCancel);
     }
 
     private void showBuySnackMenu() {
@@ -93,12 +98,12 @@ public class ShopRoom extends BaseRoom {
         );
 
 
-        OnClickCallback onBuyRunnable = object -> {
-            player.buyItemToInventory((Item) object);
-            pauseRunnable.run();
+        OnItemClick onBuyRunnable = object -> {
+            player.buyItemToInventory(object);
+            showBuySnackMenu();
         };
 
-        interScreenCommunication.showBuyMenu(snackMenu, onBuyRunnable, pauseRunnable);
+        interScreenCommunication.showBuyMenu(InventoryType.INVENTORY, player.inventoryManager.inventory, snackMenu, onBuyRunnable, pauseRunnable);
     }
 
     private void showBuyMenu() {
@@ -106,12 +111,12 @@ public class ShopRoom extends BaseRoom {
                 () -> player.setPath(900 , 500, 900, 500, PlayerCondition.stay)
         );
 
-        OnClickCallback onBuyRunnable = object -> {
-            player.buyItemToRefrigerator((Item) object);
-            pauseRunnable.run();
+        OnItemClick onBuyRunnable = object -> {
+            player.buyItemToRefrigerator(object);
+            showBuyMenu();
         };
 
-        interScreenCommunication.showBuyMenu(shopMenu, onBuyRunnable, pauseRunnable);
+        interScreenCommunication.showBuyMenu(InventoryType.REFRIGERATOR, player.inventoryManager.refrigerator, shopMenu, onBuyRunnable, pauseRunnable);
     }
 
 

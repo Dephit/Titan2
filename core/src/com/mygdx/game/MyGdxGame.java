@@ -10,6 +10,7 @@ import com.mygdx.game.interfaces.OnClickBooleanCallback;
 import com.mygdx.game.model.CompetitionOpponent;
 import com.mygdx.game.model.Container;
 import com.mygdx.game.model.enums.Comp;
+import com.mygdx.game.model.enums.InventoryType;
 import com.mygdx.game.model.items.OnItemClick;
 import com.mygdx.game.rooms.CompetitionRoom;
 import com.mygdx.game.rooms.GymRoom;
@@ -285,8 +286,8 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
     }
 
     @Override
-    public void showBuyMenu(Container container, OnClickCallback onBuyRunnable, Runnable runnable) {
-        myRequestHandler.openShopByMenu(container, onBuyRunnable, runnable);
+    public void showBuyMenu(InventoryType type, Container inventoryContainer, Container shopContainer, OnItemClick onBuyRunnable, Runnable onCancel) {
+        myRequestHandler.openShowBuyMenu(type, inventoryContainer, shopContainer, onBuyRunnable, onCancel);
     }
 
 
