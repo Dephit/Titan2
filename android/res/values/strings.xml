@@ -60,4 +60,7 @@
     <string name="current_perks">Навыков куплено: %s</string>
     <string name="days_in_the_game">Дней в игре: %s</string>
     <string name="item_cost">%s $</string>
+    <string name="inventory_shop_title">Вы можете купить перекус или энергетик себе на тренировку</string>
+    <string name="food_shop_title">Вы можете купить себе еды домой</string>
+    <string name="equipment_shop_title">Вы можете купить себе экипировку, которая усилит вас</string>
 </resources>

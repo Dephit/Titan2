@@ -220,33 +220,25 @@ class GameRequestHandler(val fragment: ComposeFragmentInterface): IActivityReque
             hideComposeView()
         }
 
-        fragment.showComposeView {
-            Row(
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-                DrawInventory(
-                    container = inventoryContainer,
-                    showCloseBotton = false,
-                    onItemClick = {},
-                    onClose = ::close,
-                    widthModifier = blockModifier.width(240.dp)
-                )
-                DrawInventory(
-                    container = shopContainer,
-                    onItemClick = {
-                        showDialog(
-                            it,
-                            onAgree = {
-                                onBuyRunnable.onClick(it)
-                            }
-                        ){
-                            close()
-                        }
-                    },
-                    onClose = ::close,
-                    widthModifier = blockModifier.width(240.dp)
-                )
+        fun showDialog(item: Item){
+            showDialog(
+                item,
+                onAgree = {
+                    onBuyRunnable.onClick(item)
+                }
+            ){
+                close()
             }
+        }
+
+        fragment.showComposeView {
+            DrawShopMenu(
+                type = type,
+                inventoryContainer = inventoryContainer,
+                shopContainer = shopContainer,
+                onBuyRunnable = ::showDialog,
+                onCancel = onCancel
+            )
         }
     }
 
