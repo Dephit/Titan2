@@ -57,6 +57,7 @@ fun DrawShopMenu(
         ) {
             ShopPartScreen(
                 titleText = R.string.your_inventory_title,
+                itemsLimit = inventoryContainer.totalCapacity,
                 container = inventoryContainer
             )
             ShopPartScreen(
@@ -73,6 +74,7 @@ fun DrawShopMenu(
 @Composable
 private fun RowScope.ShopPartScreen(
     titleText: Int,
+    itemsLimit: Int? = null,
     container: Container,
     onBuyRunnable: (Item) -> Unit = { },
 ) {
@@ -87,6 +89,7 @@ private fun RowScope.ShopPartScreen(
         )
         DrawInventory(
             container = container,
+            itemsLimit = itemsLimit,
             showCloseBotton = false,
             onItemClick = {
                 onBuyRunnable(it)

@@ -74,6 +74,7 @@ class GameRequestHandler(val fragment: ComposeFragmentInterface): IActivityReque
         fragment.showComposeView {
             DrawInventory(
                 container = player.inventoryManager.equipmentContainer,
+                itemsLimit = player.inventoryManager.equipmentContainer.totalCapacity,
                 onClose = {
                     hideComposeView(runnable)
                 },
@@ -190,6 +191,7 @@ class GameRequestHandler(val fragment: ComposeFragmentInterface): IActivityReque
         fragment.showComposeView {
             DrawInventory(
                 container = player.inventoryManager.refrigerator,
+                itemsLimit = player.inventoryManager.refrigerator.totalCapacity,
                 onItemClick = {
                     showDialog(
                         it,

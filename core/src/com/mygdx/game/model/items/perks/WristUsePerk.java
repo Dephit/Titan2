@@ -16,3 +16,4 @@ public class WristUsePerk extends PerkItem {
         return player.inventoryManager.hasPerk(BenchFirstPerk.class.getName())  && super.isRequirementSatisfied(player);
     }
 }
+

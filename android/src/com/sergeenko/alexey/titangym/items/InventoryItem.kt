@@ -58,3 +58,36 @@ fun InventoryItem(item: Item, onItemClick: (Item) -> Unit) {
         Text(text = stringResource(id = R.string.item_cost, item.cost))
     }
 }
+
+@Composable
+fun NoInventoryItem(item: Item) {
+    val assetManager = LocalContext.current.assets
+    val bitmap = remember(item) {
+        derivedStateOf { assetManager.getBitmap(item) }
+    }
+
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = CenterHorizontally,
+        modifier = Modifier
+            .clickable { }
+            .padding(5.dp)
+            .border(2.dp, Color.DarkGray)
+            .background(Color.LightGray)
+    ) {
+        bitmap.value?.let {
+            Image(
+                bitmap = it,
+                contentDescription = "Localized description",
+                contentScale = ContentScale.FillBounds,
+                modifier = Modifier
+                    .offset(y = 3.dp)
+                    .border(2.dp, Color.DarkGray)
+                    .background(Color.LightGray)
+                    .width(40.dp)
+                    .height(40.dp)
+            )
+        }
+        Text(text = "")
+    }
+}
