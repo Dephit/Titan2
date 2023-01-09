@@ -59,12 +59,11 @@ fun DrawInventory(
 ) = Row(
     horizontalArrangement = Arrangement.End,
     verticalAlignment = Alignment.CenterVertically,
-    modifier = Modifier
+    modifier = widthModifier.fillMaxHeight()
 ) {
     Column(
         verticalArrangement = Arrangement.Top,
-        modifier = widthModifier
-            .fillMaxHeight()
+        modifier = Modifier.fillMaxHeight()
     ) {
         if(showCloseBotton){
             CloseButton{
@@ -75,7 +74,6 @@ fun DrawInventory(
             verticalArrangement = Arrangement.Center,
             horizontalArrangement = Arrangement.Center,
             columns = GridCells.Fixed(count = gridCound),
-            modifier = Modifier
         ) {
             items(items = container){ item ->
                 InventoryItem(item = item, onItemClick = onItemClick)

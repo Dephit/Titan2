@@ -221,14 +221,7 @@ class GameRequestHandler(val fragment: ComposeFragmentInterface): IActivityReque
         }
 
         fun showDialog(item: Item){
-            showDialog(
-                item,
-                onAgree = {
-                    onBuyRunnable.onClick(item)
-                }
-            ){
-                close()
-            }
+
         }
 
         fragment.showComposeView {
@@ -236,8 +229,19 @@ class GameRequestHandler(val fragment: ComposeFragmentInterface): IActivityReque
                 type = type,
                 inventoryContainer = inventoryContainer,
                 shopContainer = shopContainer,
-                onBuyRunnable = ::showDialog,
-                onCancel = onCancel
+                onBuyRunnable = {
+                    showDialog(
+                        it,
+                        onAgree = {
+                            onBuyRunnable.onClick(it)
+                        }
+                    ){
+                        close()
+                    }
+                },
+                onCancel = {
+                    close()
+                }
             )
         }
     }

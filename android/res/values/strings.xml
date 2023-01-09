@@ -63,4 +63,6 @@
     <string name="inventory_shop_title">Вы можете купить перекус или энергетик себе на тренировку</string>
     <string name="food_shop_title">Вы можете купить себе еды домой</string>
     <string name="equipment_shop_title">Вы можете купить себе экипировку, которая усилит вас</string>
+    <string name="your_inventory_title">Предметы в вашем инвенторе</string>
+    <string name="shops_goods">Товары в магазине</string>
 </resources>

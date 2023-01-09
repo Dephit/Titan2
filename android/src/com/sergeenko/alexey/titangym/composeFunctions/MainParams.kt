@@ -82,7 +82,7 @@ fun MainParams(player: Player) {
                 LazyVerticalGrid(
                     columns = GridCells.Adaptive(30.dp),
                     modifier = round5Modifier
-                        .width(205.dp)
+                        .width(219.dp)
                 ) {
                     items(playerActiveItemList){
                         PlayersActiveItem(it)

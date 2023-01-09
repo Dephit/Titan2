@@ -37,38 +37,64 @@ fun DrawShopMenu(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(
-            modifier = blockModifier.fillMaxWidth().padding(vertical = 20.dp, horizontal = 30.dp),
-            text = stringResource(id = titleText),
-            textAlign = TextAlign.Center,
-            style = shadow)
         Row(
-            Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly
+            modifier = blockModifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
         ) {
-            DrawInventory(
-                container = inventoryContainer,
-                showCloseBotton = false,
-                onItemClick = {
-                    onBuyRunnable(it)
-                },
-                onClose = {
-                    onCancel.run()
-                },
-                widthModifier = blockModifier
+            Text(
+                modifier = Modifier
+                    .padding(vertical = 20.dp, horizontal = 30.dp),
+                text = stringResource(id = titleText),
+                textAlign = TextAlign.Center,
+                style = shadow
             )
-            DrawInventory(
-                container = shopContainer,
-                showCloseBotton = false,
-                onItemClick = {
-                    onBuyRunnable(it)
-                },
-                onClose = {
-                    onCancel.run()
-                },
-                widthModifier = blockModifier
+
+            CloseButton{ onCancel.run() }
+        }
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            ShopPartScreen(
+                titleText = R.string.your_inventory_title,
+                container = inventoryContainer
             )
+            ShopPartScreen(
+                titleText = R.string.shops_goods,
+                container = shopContainer
+            ){
+                onBuyRunnable(it)
+            }
         }
 
+    }
+}
+
+@Composable
+private fun RowScope.ShopPartScreen(
+    titleText: Int,
+    container: Container,
+    onBuyRunnable: (Item) -> Unit = { },
+) {
+    Column(blockModifier.weight(1f)) {
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 20.dp, horizontal = 30.dp),
+            text = stringResource(id = titleText),
+            textAlign = TextAlign.Center,
+            style = shadow
+        )
+        DrawInventory(
+            container = container,
+            showCloseBotton = false,
+            onItemClick = {
+                onBuyRunnable(it)
+            },
+            onClose = {
+
+            },
+            widthModifier = Modifier
+        )
     }
 }
