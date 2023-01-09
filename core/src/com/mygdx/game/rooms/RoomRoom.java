@@ -11,6 +11,8 @@ import com.mygdx.game.Npc;
 import com.mygdx.game.Player;
 import com.mygdx.game.PlayerCondition;
 import com.mygdx.game.Style;
+import com.mygdx.game.model.items.Item;
+import com.mygdx.game.model.items.OnItemClick;
 
 public class RoomRoom extends BaseRoom {
 
@@ -65,6 +67,11 @@ public class RoomRoom extends BaseRoom {
         };
         interScreenCommunication.openRefrigerator(
                 player,
+                item -> {
+                    item.onUse(player);
+                    player.inventoryManager.refrigerator.removeItem(item);
+                    showRefrigerator();
+                },
                 runnable
         );
     }

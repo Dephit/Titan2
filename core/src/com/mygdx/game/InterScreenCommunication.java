@@ -65,7 +65,7 @@ public interface InterScreenCommunication {
 
     void openOptions();
 
-    void openRefrigerator(Player player, Runnable runnable);
+    void openRefrigerator(Player player, OnItemClick onItemClick, Runnable runnable);
 
     void showBuyMenu(InventoryType type, Container inventoryContainer, Container shopContainer, OnItemClick onBuyRunnable, Runnable onCancel);
 

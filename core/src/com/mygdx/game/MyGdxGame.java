@@ -281,8 +281,8 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
     }
 
     @Override
-    public void openRefrigerator(Player player, Runnable runnable) {
-        myRequestHandler.openRefrigerator(player, runnable);
+    public void openRefrigerator(Player player, OnItemClick onItemClick, Runnable runnable) {
+        myRequestHandler.openRefrigerator(player, onItemClick, runnable);
     }
 
     @Override

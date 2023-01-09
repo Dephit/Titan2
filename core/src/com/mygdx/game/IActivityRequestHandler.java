@@ -51,7 +51,7 @@ public interface IActivityRequestHandler {
 
     void openInventory(Player player, Runnable runnable, OnItemClick onItemClick);
 
-    void openRefrigerator(Player player, Runnable onClose);
+    void openRefrigerator(Player player, OnItemClick onItemClick, Runnable onClose);
 
     void openShowBuyMenu(InventoryType type, Container inventoryContainer, Container shopContainer, OnItemClick onBuyRunnable, Runnable onCancel);
 
