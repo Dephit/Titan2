@@ -53,7 +53,7 @@ fun DrawShopMenu(
         }
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
+            horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             ShopPartScreen(
                 titleText = R.string.your_inventory_title,
@@ -87,17 +87,21 @@ private fun RowScope.ShopPartScreen(
             textAlign = TextAlign.Center,
             style = shadow
         )
+
         DrawInventory(
             container = container,
             itemsLimit = itemsLimit,
             showCloseBotton = false,
+            widthModifier = Modifier,
             onItemClick = {
                 onBuyRunnable(it)
             },
             onClose = {
 
             },
-            widthModifier = Modifier
+            gridCound = 4
         )
     }
 }
+
+

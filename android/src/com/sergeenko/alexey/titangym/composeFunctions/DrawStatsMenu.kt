@@ -40,7 +40,10 @@ import com.sergeenko.alexey.titangym.R as R
 
 @OptIn(ExperimentalUnitApi::class)
 @Composable
-fun DrawStatsMenu(player: Player) {
+fun DrawStatsMenu(
+    player: Player,
+    widthFraction: Float = 0.8f
+) {
     val playerExerciseManager = player.exerciseManager
 
     val healthProgress = playerExerciseManager.health.currentAmount.toFloat() / 100f
@@ -51,7 +54,7 @@ fun DrawStatsMenu(player: Player) {
 
     LazyColumn(
         modifier = blockModifier
-            .fillMaxWidth(0.8f)
+            .fillMaxWidth(widthFraction)
             .fillMaxHeight(),
         verticalArrangement = Arrangement.SpaceAround,
         horizontalAlignment = Alignment.CenterHorizontally

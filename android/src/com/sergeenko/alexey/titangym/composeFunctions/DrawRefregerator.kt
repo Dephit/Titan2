@@ -42,7 +42,7 @@ fun DrawInventory(
 fun DrawInventory(
     widthModifier: Modifier = blockModifier.width(180.dp),
     showCloseBotton: Boolean = true,
-    itemsLimit: Int? = 0,
+    itemsLimit: Int? = null,
     container: List<Item>,
     gridCound: Int = 2,
     onItemClick: (Item) -> Unit,
@@ -70,13 +70,13 @@ fun DrawInventory(
             items(items = container){ item ->
                 InventoryItem(item = item, onItemClick = onItemClick)
             }
-            /*itemsLimit?.let {
+            itemsLimit?.let {
                 for (i in 0 until it - container.size){
                     item {
                         NoInventoryItem(item = NoItem())
                     }
                 }
-            }*/
+            }
         }
     }
 }

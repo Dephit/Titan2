@@ -28,7 +28,8 @@ fun DrawPlayerStates(
         DrawInventory(
             container = container,
             onItemClick = onItemClicked,
-            onClose = onClose
+            onClose = onClose,
+            itemsLimit = player.inventoryManager.supplements.totalCapacity
         )
     }
 
