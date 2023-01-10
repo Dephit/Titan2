@@ -1,5 +1,6 @@
 package com.sergeenko.alexey.titangym.composeFunctions
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterVertically
@@ -16,6 +17,7 @@ fun DrawPlayerStates(
     onItemClicked: (Item) -> Unit,
     onClose: () -> Unit,
 ) {
+
     return Row(
         horizontalArrangement = Arrangement.SpaceAround,
         verticalAlignment = CenterVertically,

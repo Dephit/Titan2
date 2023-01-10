@@ -1,5 +1,6 @@
 package com.sergeenko.alexey.titangym.composeFunctions
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -26,6 +27,7 @@ import com.sergeenko.alexey.titangym.R
 import com.sergeenko.alexey.titangym.items.PlayersActiveItem
 import com.sergeenko.alexey.titangym.linearProgressModifier
 import com.sergeenko.alexey.titangym.round5Modifier
+import kotlinx.coroutines.delay
 
 @Composable
 fun MainParams(player: Player) {
@@ -37,12 +39,19 @@ fun MainParams(player: Player) {
 
         val playerInventoryManager = player.inventoryManager
         val playerExerciseManager = player.exerciseManager
-        val day = player.day
+        val day = remember {
+            player.day
+        }
 
 
         val healthProgress = playerExerciseManager.health.currentAmount.toFloat() / 100f
-        val energyProgress = playerExerciseManager.energy.currentAmount.toFloat() / 100f
-        val tirednessProgress = playerExerciseManager.tiredness.currentAmount.toFloat() / 100f
+
+        val energyProgress =
+            playerExerciseManager.energy.currentAmount.toFloat() / 100f
+
+        /*val tirednessProgress =
+            playerExerciseManager.tiredness.currentAmount.toFloat() / 100f*/
+
 
         val playersMoney = playerInventoryManager.pocket.money
         val perksCoins = playerInventoryManager.perkPocket.money
@@ -51,6 +60,7 @@ fun MainParams(player: Player) {
             playerInventoryManager.supplements.items.filter { it is SupplementItem && it.timeInUseLeft < it.timeWillBeLast },
             playerInventoryManager.equipmentContainer.items
         ).flatten()
+
 
         Column(
             horizontalAlignment = Alignment.End,
@@ -67,7 +77,7 @@ fun MainParams(player: Player) {
                 ) {
                     CurrentExercise(healthProgress, progressColor = Color.Red)
                     CurrentExercise(energyProgress, progressColor = Color.Yellow)
-                    CurrentExercise(tirednessProgress, progressColor = Color.Green)
+                    //CurrentExercise(tirednessProgress, progressColor = Color.Green)
                 }
             }
             Spacer(height = 5.dp)

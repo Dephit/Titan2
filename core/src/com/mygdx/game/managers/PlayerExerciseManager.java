@@ -36,13 +36,13 @@ public class PlayerExerciseManager extends ExerciseManager {
 
         public Stat health;
         public Stat energy;
-        public Stat tiredness;
+        //public Stat tiredness;
 
         public PlayerExerciseManager(Player player){
                 this.player = player;
                 health = new Stat();
                 energy = new Stat();
-                tiredness = new Stat();
+                //tiredness = new Stat();
 
                 exercises.add(squatExr);
                 exercises.add(bench);
@@ -120,9 +120,9 @@ public class PlayerExerciseManager extends ExerciseManager {
                         exr.calculateProgress(value);
                         energy.minusProgress(updateEnergyValue);
                         health.minusProgress(updateHealthValue);
-                        tiredness.minusProgress(updateTirednessValue);
+                        //tiredness.minusProgress(updateTirednessValue);
                 }else {
-                        player.notificationManager.manageStats(energy, health, tiredness);
+                        player.notificationManager.manageStats(energy, health/*, tiredness*/);
                         player.setPlayerCondition(PlayerCondition.stay);
                 }
         }
@@ -131,7 +131,7 @@ public class PlayerExerciseManager extends ExerciseManager {
                 if(health.value > 0 && energy.value < 100){
                         energy.addProgress(0.1f);
                         health.minusProgress(0.025f);
-                        tiredness.addProgress(0.0025f);
+                        //tiredness.addProgress(0.0025f);
                 }else player.setPlayerCondition(PlayerCondition.stay);
         }
 
@@ -147,7 +147,7 @@ public class PlayerExerciseManager extends ExerciseManager {
         public void onWork() {
                 health.minusProgress(2.5f);
                 energy.minusProgress(5f);
-                tiredness.minusProgress(2.5f);
+                //tiredness.minusProgress(2.5f);
                 for (Exercise exercise: exercises){
                         exercise.calculateProgress(-2.5f);
                 }
@@ -156,7 +156,7 @@ public class PlayerExerciseManager extends ExerciseManager {
         public void onPark() {
                 health.minusProgress(2.5f);
                 energy.minusProgress(2.5f);
-                tiredness.addProgress(5f);
+                //tiredness.addProgress(5f);
                 for (Exercise exercise: exercises){
                         exercise.calculateProgress(-2.5f);
                 }
@@ -166,7 +166,7 @@ public class PlayerExerciseManager extends ExerciseManager {
                 float progress = 0.25f;
                 health.minusProgress(progress * 0.25f);
                 energy.minusProgress(progress * 0.35f);
-                tiredness.addProgress(progress * 0.15f);
+                //tiredness.addProgress(progress * 0.15f);
                 for (Exercise exercise: exercises){
                         exercise.calculateProgress(-progress * 0.50f);
                 }
@@ -191,7 +191,7 @@ public class PlayerExerciseManager extends ExerciseManager {
 
                         jsonObject.putOpt(HEALTH, health.toJson());
                         jsonObject.putOpt(ENERGY, energy.toJson());
-                        jsonObject.putOpt(TIREDNESS, tiredness.toJson());
+                        //jsonObject.putOpt(TIREDNESS, tiredness.toJson());
                 } catch (JSONException e) {
                         e.printStackTrace();
                 }
@@ -207,6 +207,6 @@ public class PlayerExerciseManager extends ExerciseManager {
 
                 health.fromJson(jsonObject.optJSONObject(HEALTH));
                 energy.fromJson(jsonObject.optJSONObject(ENERGY));
-                tiredness.fromJson(jsonObject.optJSONObject(TIREDNESS));
+                //tiredness.fromJson(jsonObject.optJSONObject(TIREDNESS));
         }
 }

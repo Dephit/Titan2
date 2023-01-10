@@ -45,7 +45,7 @@ fun DrawStatsMenu(player: Player) {
 
     val healthProgress = playerExerciseManager.health.currentAmount.toFloat() / 100f
     val energyProgress = playerExerciseManager.energy.currentAmount.toFloat() / 100f
-    val tirednessProgress = playerExerciseManager.tiredness.currentAmount.toFloat() / 100f
+    //val tirednessProgress = playerExerciseManager.tiredness.currentAmount.toFloat() / 100f
 
     val stats = listOf(player.exerciseManager.squatExr, player.exerciseManager.bench, player.exerciseManager.deadlift)
 
@@ -55,7 +55,6 @@ fun DrawStatsMenu(player: Player) {
             .fillMaxHeight(),
         verticalArrangement = Arrangement.SpaceAround,
         horizontalAlignment = Alignment.CenterHorizontally
-
     ){
         item {
             Column(
@@ -89,7 +88,7 @@ fun DrawStatsMenu(player: Player) {
             }
             Spacer(height = 5.dp)
         }
-        item {
+        /*item {
             Column(
                 modifier = blockModifier
             ) {
@@ -98,13 +97,13 @@ fun DrawStatsMenu(player: Player) {
                     horizontalArrangement = Arrangement.Start,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(text = stringResource(id = R.string.tiredness_bar), style = shadow)
-                    StatExercise(tirednessProgress, progressColor = Color.Green, modifierColor = Modifier)
+                    //Text(text = stringResource(id = R.string.tiredness_bar), style = shadow)
+                    //StatExercise(tirednessProgress, progressColor = Color.Green, modifierColor = Modifier)
                 }
                 Text(text = stringResource(id = R.string.tiredness_bar_description), textAlign = TextAlign.Start, style = shadow)
             }
             Spacer(height = 5.dp)
-        }
+        }*/
 
         items(stats){
             Column(
@@ -138,6 +137,6 @@ val shadow = TextStyle(shadow = Shadow(
 
 val blockModifier = Modifier
     .clip(RoundedCornerShape(25.dp))
-    .background(Color.Gray)
-    .border(3.dp, Color.DarkGray, shape = RoundedCornerShape(25.dp))
+    .background(Color.White)
+    .border(3.dp, Color.LightGray, shape = RoundedCornerShape(25.dp))
     .padding(10.dp)

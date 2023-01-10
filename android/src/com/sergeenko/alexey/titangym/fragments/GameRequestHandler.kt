@@ -3,11 +3,9 @@ package com.sergeenko.alexey.titangym.fragments
 import android.content.Context
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.Toast
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.mygdx.game.IActivityRequestHandler
@@ -189,25 +187,24 @@ class GameRequestHandler(val fragment: ComposeFragmentInterface): IActivityReque
 
     override fun openRefrigerator(player: Player, onItemUse: OnItemClick,onClose: Runnable?) {
         fragment.showComposeView {
-            DrawInventory(
-                container = player.inventoryManager.refrigerator,
-                itemsLimit = player.inventoryManager.refrigerator.totalCapacity,
-                onItemClick = {
+            DrawRefrigerator(
+                player = player,
+                onItemUse = {
                     showDialog(
-                        it,
+                        item = it,
                         onAgree = {
                             onItemUse.onClick(it)
                         }
-                    ){
+                    ) {
 
                     }
-                }
-            ) {
-                hideComposeView()
+                }){
                 onClose?.run()
+                hideComposeView()
             }
         }
     }
+
 
     override fun openShowBuyMenu(
         type: InventoryType,

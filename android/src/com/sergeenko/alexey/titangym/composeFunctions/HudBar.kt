@@ -7,6 +7,7 @@ import androidx.compose.ui.unit.dp
 import com.mygdx.game.Player
 import com.mygdx.game.model.Notification
 
+
 @Composable
 fun HudBar(
     player: Player

@@ -136,6 +136,7 @@ dependencies {
     implementation 'androidx.fragment:fragment-ktx:1.5.4'
     implementation 'com.gitlab.sergeenko123:admodule:1.1.1'
 
+
     //Jetpack Compose
     def jetpack = "1.2.1"
     implementation "androidx.compose.ui:ui:$jetpack"
@@ -145,7 +146,6 @@ dependencies {
     implementation "androidx.compose.material:material-icons-core:$jetpack"
     implementation "androidx.compose.material:material-icons-extended:$jetpack"
     implementation 'androidx.activity:activity-compose:1.6.1'
-
     def koin_version= "3.2.2"
     def koin_android_version= "3.3.0"
 

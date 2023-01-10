@@ -52,7 +52,7 @@ public class NotificationManager {
         exercise.newLevelReached = false;
     }
 
-    public void manageStats(Stat energy, Stat health, Stat tiredness) {
+    public void manageStats(Stat energy, Stat health/*, Stat tiredness*/) {
         if(energy.value <= 0 && !energy.isZero){
             notificationList.add(new Notification("Your energy level is zero, go to sleep",15000L));
             energy.isZero = true;
@@ -61,10 +61,10 @@ public class NotificationManager {
             notificationList.add(new Notification("Your too hungry to do this, go to eat",15000L));
             health.isZero = true;
         }
-        if(tiredness.value <= 0 && !tiredness.isZero){
+        /*if(tiredness.value <= 0 && !tiredness.isZero){
             notificationList.add(new Notification("Your are tired, go to relax",15000L));
             tiredness.isZero = true;
-        }
+        }*/
     }
 
     public void addMessage(String msg) {
