@@ -7,4 +7,6 @@
     <color name="color_green">#4CAF50</color>
     <color name="color_red">#F44336</color>
     <color name="color_player">#80FF9800</color>
+    <color name="light_blue">#DAFFFF</color>
+    <color name="dark_blue">#9AE4FF</color>
 </resources>

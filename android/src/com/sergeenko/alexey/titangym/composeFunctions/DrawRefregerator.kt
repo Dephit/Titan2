@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.mygdx.game.model.Container
 import com.mygdx.game.model.items.Item
 import com.mygdx.game.model.items.perks.NoItem
+import com.sergeenko.alexey.titangym.blockModifier
 import com.sergeenko.alexey.titangym.items.InventoryItem
 import com.sergeenko.alexey.titangym.items.NoInventoryItem
 

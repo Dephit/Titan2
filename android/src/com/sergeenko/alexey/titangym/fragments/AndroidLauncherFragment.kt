@@ -23,6 +23,7 @@ import com.mygdx.game.MyGdxGame
 import com.mygdx.game.Player
 import com.mygdx.game.interfaces.OnClickBooleanCallback
 import com.mygdx.game.interfaces.OnClickCallback
+import com.mygdx.game.model.items.Item
 import com.sergeenko.alexey.titangym.*
 import com.sergeenko.alexey.titangym.R
 import com.sergeenko.alexey.titangym.composeFunctions.*
@@ -122,10 +123,13 @@ class AndroidLauncherFragment : AndroidFragmentApplication(), ComposeFragmentInt
 
     override fun navController() = findNavController()
 
-    override fun showHud(player: Player) {
+    override fun showHud(player: Player, onActiveItemClick: (Item) -> Unit) {
         binding.hudView.apply {
             setContent {
-                HudBar(player)
+                HudBar(
+                    player = player,
+                    onActiveItemClick = onActiveItemClick
+                )
             }
         }
     }
@@ -198,7 +202,7 @@ interface ComposeFragmentInterface{
 
     fun postRunnable(runnable: Runnable)
 
-    fun showHud(player: Player)
+    fun showHud(player: Player, onActiveItemClick: (Item) -> Unit = {})
 
     fun showLoader()
 

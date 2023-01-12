@@ -21,9 +21,8 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow.Companion.Ellipsis
 import androidx.compose.ui.unit.dp
 import com.mygdx.game.model.items.Item
+import com.sergeenko.alexey.titangym.*
 import com.sergeenko.alexey.titangym.R
-import com.sergeenko.alexey.titangym.getBitmap
-import com.sergeenko.alexey.titangym.getItemImage
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 @Composable
@@ -39,8 +38,8 @@ fun InventoryItem(item: Item, onItemClick: (Item) -> Unit) {
         modifier = Modifier
             .clickable { onItemClick(item) }
             .padding(5.dp)
-            .border(2.dp, Color.DarkGray)
-            .background(Color.LightGray)
+            .border(1.dp, LightBlue)
+            .background(DarkBlue)
     ) {
         bitmap.value?.let {
             Image(
@@ -49,8 +48,8 @@ fun InventoryItem(item: Item, onItemClick: (Item) -> Unit) {
                 contentScale = ContentScale.FillBounds,
                 modifier = Modifier
                     .offset(y = 3.dp)
-                    .border(2.dp, Color.DarkGray)
-                    .background(Color.LightGray)
+                    .border(1.dp, LightBlue)
+                    .background(DarkBlue)
                     .width(40.dp)
                     .height(40.dp)
             )
@@ -72,8 +71,8 @@ fun NoInventoryItem(item: Item) {
         modifier = Modifier
             .clickable { }
             .padding(5.dp)
-            .border(2.dp, Color.DarkGray)
-            .background(Color.LightGray)
+            .border(1.dp, LightBlue)
+            .background(DarkBlue)
     ) {
         bitmap.value?.let {
             Image(
@@ -82,8 +81,8 @@ fun NoInventoryItem(item: Item) {
                 contentScale = ContentScale.FillBounds,
                 modifier = Modifier
                     .offset(y = 3.dp)
-                    .border(2.dp, Color.DarkGray)
-                    .background(Color.LightGray)
+                    .border(1.dp, LightBlue)
+                    .background(DarkBlue)
                     .width(40.dp)
                     .height(40.dp)
             )

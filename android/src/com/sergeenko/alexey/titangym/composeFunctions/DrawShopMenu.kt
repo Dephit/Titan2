@@ -15,7 +15,8 @@ import com.mygdx.game.model.enums.InventoryType
 import com.mygdx.game.model.items.Item
 import com.mygdx.game.model.items.OnItemClick
 import com.sergeenko.alexey.titangym.R
-import com.sergeenko.alexey.titangym.composeFunctions.blockModifier
+import com.sergeenko.alexey.titangym.blockModifier
+
 
 @Composable
 fun DrawShopMenu(

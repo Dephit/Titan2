@@ -65,7 +65,19 @@ class GameRequestHandler(val fragment: ComposeFragmentInterface): IActivityReque
     }
 
     override fun showHud(player: Player) {
-        fragment.showHud(player)
+        fragment.showHud(
+            player = player,
+            onActiveItemClick = {
+                showDialog(
+                    item = it,
+                    onAgree = {
+
+                    },
+                    onClose = {
+
+                    }
+                )
+            })
     }
 
     override fun openStats(player: Player, runnable: Runnable) {

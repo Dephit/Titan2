@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.modifier.modifierLocalConsumer
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -32,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import com.mygdx.game.Exercise
 import com.mygdx.game.Player
 import com.mygdx.game.model.items.Item
+import com.sergeenko.alexey.titangym.blockModifier
 import com.sergeenko.alexey.titangym.clipRound
 import com.sergeenko.alexey.titangym.items.ExerciseStatItem
 import com.sergeenko.alexey.titangym.linearProgressModifier
@@ -138,8 +140,3 @@ val shadow = TextStyle(shadow = Shadow(
 )
 )
 
-val blockModifier = Modifier
-    .clip(RoundedCornerShape(25.dp))
-    .background(Color.White)
-    .border(3.dp, Color.LightGray, shape = RoundedCornerShape(25.dp))
-    .padding(10.dp)

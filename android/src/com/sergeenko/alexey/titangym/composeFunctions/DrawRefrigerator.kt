@@ -11,6 +11,7 @@ import com.mygdx.game.Player
 import com.mygdx.game.model.Container
 import com.mygdx.game.model.items.Item
 import com.mygdx.game.model.items.OnItemClick
+import com.sergeenko.alexey.titangym.blockModifier
 
 @Composable
 fun DrawRefrigerator(player: Player, onItemUse: OnItemClick, function: () -> Unit) {

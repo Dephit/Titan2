@@ -14,14 +14,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.mygdx.game.model.items.Item
+import com.mygdx.game.model.items.OnItemClick
 import com.mygdx.game.model.items.supplements.SupplementItem
 import com.sergeenko.alexey.titangym.getItemImage
 
 @Composable
-fun PlayersActiveItem(sup: Item) {
+fun PlayersActiveItem(sup: Item, onItemClick: (Item) -> Unit) {
     val am = LocalContext.current.assets
-    Column(modifier = Modifier.background(Color.White)) {
-        am.getItemImage(item = sup, onItemClick = {})
+    Column {
+        am.getItemImage(item = sup, onItemClick = onItemClick)
         if(sup is SupplementItem){
             LinearProgressIndicator(
                 modifier = Modifier

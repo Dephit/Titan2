@@ -173,19 +173,19 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
     }
 
     private void setStage(BaseRoom room, InputListener inputListener) {
-        if(stage == null || adCount != 5){
+        //if(stage == null /*|| adCount != 5*/){
             stage = room;
             stage.addListener(inputListener);
             adCount++;
-        }else {
-            adCount = 0;
+        //}else {
+            /*adCount = 0;
             myRequestHandler.showAd(
                     () -> {
                         stage = room;
                         stage.addListener(inputListener);
                     }
-            );
-        }
+            );*/
+     //   }
     }
 
     @Override

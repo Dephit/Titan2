@@ -34,7 +34,6 @@ fun RoundBackgroundText(text: String){
     Text(
         text = text,
         modifier = Modifier
-            .background(color = Color.White)
             .clip(RoundedCornerShape(50))
             .padding(3.dp),
         color = Color.Black

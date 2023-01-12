@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mygdx.game.Player
 import com.mygdx.game.model.Day
+import com.mygdx.game.model.items.Item
 import com.mygdx.game.model.items.supplements.SupplementItem
 import com.sergeenko.alexey.titangym.R
 import com.sergeenko.alexey.titangym.items.PlayersActiveItem
@@ -30,7 +31,10 @@ import com.sergeenko.alexey.titangym.round5Modifier
 import kotlinx.coroutines.delay
 
 @Composable
-fun MainParams(player: Player) {
+fun MainParams(
+    player: Player,
+    onActiveItemClick: (Item) -> Unit = {}
+) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.End,
@@ -95,7 +99,7 @@ fun MainParams(player: Player) {
                         .width(219.dp)
                 ) {
                     items(playerActiveItemList){
-                        PlayersActiveItem(it)
+                        PlayersActiveItem(it, onActiveItemClick)
                     }
                 }
             }
@@ -112,7 +116,7 @@ fun DayItem(day: Day) {
     Column(
         verticalArrangement = Arrangement.SpaceAround,
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = round5Modifier.height(37.dp)
+        modifier = round5Modifier.height(25.dp)
     ) {
         Text(text = "Day $currentDay", fontSize = 15.sp, color = Color.Black, textAlign = TextAlign.Center)
         LinearProgressIndicator(
