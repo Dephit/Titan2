@@ -7,13 +7,14 @@ import com.mygdx.game.Player
 import com.sergeenko.alexey.titangym.fragments.GameRequestHandler
 import org.koin.android.ext.android.inject
 
-class MainViewModel : ViewModel() {
+class MainViewModel(
+    val game: GameRequestHandler,
+    val player: String
+) : ViewModel() {
 
-    public val gameRequestHandler: GameRequestHandler = GameRequestHandler()
+    val myGdxGame: MyGdxGame = MyGdxGame(game, player)
 
-    val myGdxGame = MyGdxGame(gameRequestHandler, "")
-
-    val gameObserver = gameRequestHandler.state
+    val gameObserver = game.state
 
 
 }

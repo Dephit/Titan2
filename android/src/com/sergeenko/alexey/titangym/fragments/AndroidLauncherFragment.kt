@@ -11,7 +11,9 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -31,18 +33,20 @@ import com.sergeenko.alexey.titangym.featureGameScreen.models.ComposeState
 import com.sergeenko.alexey.titangym.featureGameScreen.models.PlayerState
 import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 import java.lang.Runnable
 
 class AndroidLauncherFragment : AndroidFragmentApplication() {
 
-    private val viewModel: MainViewModel by viewModels()
+    val viewModel: MainViewModel by viewModel{ parametersOf(arguments?.getString("PLAYER"))}
 
     private val binding: MainActivityBinding by lazy {
         view?.let { MainActivityBinding.bind(it) } ?: MainActivityBinding.inflate(layoutInflater)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onStart() {
+        super.onStart()
         launchGame()
     }
 
@@ -72,6 +76,7 @@ class AndroidLauncherFragment : AndroidFragmentApplication() {
                         gameState.composeState.let { state ->
                             when (state) {
                                 ComposeState.None -> {}
+                                ComposeState.OpenStats -> DrawStatsMenu(player = player)
                                 is ComposeState.ShowPlayers -> PlayerList(state, gameState.onClose)
                                 is ComposeState.OpenRefrigerator -> DrawRefrigerator(player, state, gameState.onClose)
                                 is ComposeState.OpenInventory -> DrawPlayerStates(player, state, gameState.onClose)
@@ -79,11 +84,11 @@ class AndroidLauncherFragment : AndroidFragmentApplication() {
                                 is ComposeState.Options -> { navigateToOptions() }
                                 is ComposeState.OpenBuyingMenu -> DrawShopMenu(player, state, gameState.onClose)
                                 is ComposeState.ShowCompetitionTable -> CompetitionTable(player = player, state = state, gameState.onClose)
-                                ComposeState.OpenStats -> DrawStatsMenu(player = player)
                                 is ComposeState.ShowPerkMenu -> DrawPerkMenu(player = player, state, onClose = gameState.onClose)
                             }
                         }
                     }
+
                     DialogComposable(dialogState)
                 }
             }
