@@ -15,22 +15,20 @@ import com.mygdx.game.Player
 import com.mygdx.game.interfaces.OnClickCallback
 import com.mygdx.game.model.CompetitionOpponent
 import com.sergeenko.alexey.titangym.R
+import com.sergeenko.alexey.titangym.featureGameScreen.models.ComposeState
 import kotlin.random.Random
 
 @Composable
 fun CompetitionTable(
     player: Player,
-    currentSet: Int,
-    playerList: MutableList<CompetitionOpponent>,
-    onFirstClick: OnClickCallback?,
-    onClose: OnClickCallback,
-    hideView: ()->Unit
+    state: ComposeState.ShowCompetitionTable,
+    onClose: ()->Unit
 ) {
     return DialogBox{
         Column(
             modifier = dialogModifier()
         ) {
-            val color = getFlagColor(currentSet, player)
+            val color = getFlagColor(state.currentSet, player)
             Row {
                 Box(modifier = Modifier
                     .size(40.dp)
@@ -49,21 +47,24 @@ fun CompetitionTable(
                 Spacer(modifier = Modifier.weight(1f))
                 MyButton(
                     onClick = {
-                        onFirstClick?.call(null)
-                    }, stringResource(R.string.scoresheet))
-                CloseButton(onClose)
+                        state.onFirstClick()
+                    },
+                    stringResource(R.string.scoresheet))
+                CloseButton{
+                    onClose()
+                }
             }
-            if(currentSet < 10){
-                val first = getResult(currentSet, player)
+            if(state.currentSet < 10){
+                val first = getResult(state.currentSet, player)
                 val second = first + first * 0.025
                 val third = first + first * 0.05
                 val fourth = first + first * 0.075
                 Spacer(modifier = Modifier.height(40.dp))
                 getPercentages(
-                    compStatus = currentSet,
+                    compStatus = state.currentSet,
                     onFirstClick = {
-                        hideView()
-                        onFirstClick?.call(it)
+                        state.onFirstClick()
+                        onClose()
                     },
                     first = first,
                     second = second.roundTo2Point5(),
@@ -71,7 +72,13 @@ fun CompetitionTable(
                     fourth = fourth.roundTo2Point5()
                 )
             }else{
-                val text = stringResource(R.string.congratulation, (playerList.sortedByDescending { it.getTotal() }.indexOfFirst { it.name == "player" } + 1).toString(), player.compValue.getTotal())
+                val text = stringResource(
+                    id = R.string.congratulation,
+                    {
+                        (state.playerList.sortedByDescending { it.getTotal() }.indexOfFirst { it.name == "player" } + 1).toString()
+                    },
+                    player.compValue.getTotal()
+                )
                 val textModifier = Modifier
                     .padding(5.dp)
                     .fillMaxWidth()

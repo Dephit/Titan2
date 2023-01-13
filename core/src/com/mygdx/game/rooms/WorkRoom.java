@@ -69,7 +69,7 @@ public class WorkRoom extends BaseRoom {
             interScreenCommunication.showProgressBar(
                     getLanguage().workInProgress,
                     //onEnd
-                    (OnClickCallback) (o) -> {
+                    (o) -> {
                         player.inventoryManager.pocket.addMoney(workReward);
                         player.setPlayerPosition(((int) player.getX()), (int) player.getY(), PlayerCondition.stay);
                         runnable.run();

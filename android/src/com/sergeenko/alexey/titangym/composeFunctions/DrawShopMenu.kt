@@ -10,24 +10,44 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.mygdx.game.Player
 import com.mygdx.game.model.Container
 import com.mygdx.game.model.enums.InventoryType
 import com.mygdx.game.model.items.Item
 import com.mygdx.game.model.items.OnItemClick
+import com.mygdx.game.model.shop.EquipmentShopMenu
+import com.mygdx.game.model.shop.ShopMenu
+import com.mygdx.game.model.shop.SnackMenu
 import com.sergeenko.alexey.titangym.R
 import com.sergeenko.alexey.titangym.blockModifier
+import com.sergeenko.alexey.titangym.featureGameScreen.models.ComposeState
 
 
 @Composable
 fun DrawShopMenu(
-    type: InventoryType,
-    inventoryContainer: Container,
-    shopContainer: Container,
-    onBuyRunnable: (Item) -> Unit,
-    onCancel: Runnable
+    player: Player,
+    state: ComposeState.OpenBuyingMenu,
+    onClose: () -> Unit
 ) {
+
+    val shopContainer = remember {
+        when(state.type){
+            InventoryType.INVENTORY -> SnackMenu()
+            InventoryType.REFRIGERATOR -> ShopMenu()
+            InventoryType.EQUIPMENT -> EquipmentShopMenu()
+        }
+    }
+
+    val inventoryContainer = remember {
+        when(state.type){
+            InventoryType.INVENTORY -> player.inventoryManager.inventory
+            InventoryType.REFRIGERATOR -> player.inventoryManager.refrigerator
+            InventoryType.EQUIPMENT -> player.inventoryManager.equipmentContainer
+        }
+    }
+
     val titleText = remember {
-        when(type){
+        when(state.type){
             InventoryType.INVENTORY -> R.string.inventory_shop_title
             InventoryType.REFRIGERATOR -> R.string.food_shop_title
             InventoryType.EQUIPMENT -> R.string.equipment_shop_title
@@ -50,7 +70,7 @@ fun DrawShopMenu(
                 style = shadow
             )
 
-            CloseButton{ onCancel.run() }
+            CloseButton{ onClose() }
         }
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -63,10 +83,11 @@ fun DrawShopMenu(
             )
             ShopPartScreen(
                 titleText = R.string.shops_goods,
-                container = shopContainer
-            ){
-                onBuyRunnable(it)
-            }
+                container = shopContainer,
+                onBuyRunnable = {
+                    state.onBuyRunnable(it)
+                }
+            )
         }
 
     }
