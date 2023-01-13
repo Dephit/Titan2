@@ -1,16 +1,19 @@
 package com.sergeenko.alexey.titangym
 
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import com.mygdx.game.IActivityRequestHandler
+import com.mygdx.game.MyGdxGame
+import com.mygdx.game.Player
+import com.sergeenko.alexey.titangym.fragments.GameRequestHandler
+import org.koin.android.ext.android.inject
 
 class MainViewModel : ViewModel() {
-    // Initial value is false so the dialog is hidden
-    //private val _showDialog = MutableStateFlow(false)
-    //val showDialog: StateFlow<Boolean> = _showDialog.asStateFlow()
 
+    public val gameRequestHandler: GameRequestHandler = GameRequestHandler()
 
+    val myGdxGame = MyGdxGame(gameRequestHandler, "")
+
+    val gameObserver = gameRequestHandler.state
 
 
 }

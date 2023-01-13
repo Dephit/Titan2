@@ -54,7 +54,10 @@ public class ParkRoom extends BaseRoom {
                 getLanguage().walkToRecoverYourHead,
                 getLanguage().doWalk,
                 getLanguage().cancel,
-                (o)-> callOnClose = true,
+                (o)-> {
+                    callOnClose = true;
+                    //onClose();
+                },
                 (o)-> showWorkProgress()
 
         );

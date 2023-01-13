@@ -5,10 +5,33 @@ import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 
 import com.mygdx.game.interfaces.OnClickCallback
 import com.sergeenko.alexey.titangym.R
+import com.sergeenko.alexey.titangym.featureGameScreen.models.DialogState
+
+@Composable
+fun DialogComposable(dialogState: DialogState){
+    val context = LocalContext.current
+    when(dialogState){
+        DialogState.None -> { }
+        is DialogState.ShowDialog -> {
+
+        }
+        is DialogState.ShowItemDialog -> {
+            AlertDialogSample(
+                title = dialogState.item.title,
+                subtitle = dialogState.item.description,
+                agreeText = context.getString(R.string.ok),
+                closeText = context.getString(R.string.close),
+                onAgree = dialogState.onAgree,
+                onClose = dialogState.onClose
+            )
+        }
+    }
+}
 
 @Composable
 fun AlertDialogSample(
@@ -17,31 +40,28 @@ fun AlertDialogSample(
     agreeText: String = stringResource(id = R.string.ok),
     closeText: String = stringResource(id = R.string.close),
     onClose: () -> Unit,
-    onAgree: () -> Unit,
-    state: Boolean,
+    onAgree: () -> Unit
 ) {
-    if (state) {
-        Column {
-            AlertDialog(
-                onDismissRequest = onClose,
-                title = {
-                    Text(text = title)
-                },
-                text = {
-                    Text(subtitle)
-                },
-                confirmButton = {
-                    Button(onClick = onAgree) {
-                        Text(agreeText)
-                    }
-                },
-                dismissButton = {
-                    Button(onClick =onClose) {
-                        Text(closeText)
-                    }
+    Column {
+        AlertDialog(
+            onDismissRequest = onClose,
+            title = {
+                Text(text = title)
+            },
+            text = {
+                Text(subtitle)
+            },
+            confirmButton = {
+                Button(onClick = onAgree) {
+                    Text(agreeText)
                 }
-            )
-        }
+            },
+            dismissButton = {
+                Button(onClick =onClose) {
+                    Text(closeText)
+                }
+            }
+        )
     }
 }
 

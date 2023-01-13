@@ -1,13 +1,7 @@
 package com.sergeenko.alexey.titangym.fragments
 
 import android.content.Context
-import android.widget.AdapterView.OnItemClickListener
-import android.widget.Toast
-import androidx.compose.foundation.layout.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.runtime.mutableStateOf
 import com.mygdx.game.IActivityRequestHandler
 import com.mygdx.game.Player
 import com.mygdx.game.interfaces.OnClickBooleanCallback
@@ -21,29 +15,34 @@ import com.mygdx.game.model.items.OnItemClick
 import com.mygdx.game.model.items.perks.PerkItem
 import com.sergeenko.alexey.titangym.R
 import com.sergeenko.alexey.titangym.composeFunctions.*
+import com.sergeenko.alexey.titangym.featureGameScreen.models.ComposeState
+import com.sergeenko.alexey.titangym.featureGameScreen.models.DialogState
+import com.sergeenko.alexey.titangym.featureGameScreen.models.PlayerState
+import com.sergeenko.alexey.titangym.featureGameScreen.models.UiState
 
 
-class GameRequestHandler(val fragment: ComposeFragmentInterface): IActivityRequestHandler {
+class GameRequestHandler(): IActivityRequestHandler {
 
-    private val context: Context = fragment.requireContext()
-
-    var dialogScreenState = mutableStateOf(false)
+    val state = mutableStateOf<UiState>(UiState())
 
     override fun showToast(s: String) {
-        fragment.runOnUiThread {
+        /*fragment.runOnUiThread {
             Toast.makeText(context, s, Toast.LENGTH_SHORT).show()
-        }
+        }*/
     }
 
     override fun showPlayers(
         playerList: MutableList<CompetitionOpponent>,
         status: Comp,
-        runnable: OnClickCallback?,
-    ) = fragment.showComposeView{
-        PlayerList(playerList,status) {
-            fragment.hideComposeView()
-            runnable?.call(it)
-        }
+        runnable: OnClickCallback,
+    ) {
+        postState(
+            state = ComposeState.ShowPlayers(
+                playerList = playerList,
+                status = status,
+            ),
+            onClose = { runnable.call(null) }
+        )
     }
 
     override fun showProgressBar(
@@ -52,36 +51,26 @@ class GameRequestHandler(val fragment: ComposeFragmentInterface): IActivityReque
         onProgressUpdate: OnClickBooleanCallback,
         onClose: OnClickCallback
     ) {
-        fragment.showProgressBar(title, onProgressEnd, onProgressUpdate, onClose)
+        postState(ComposeState.ShowProgressBar(
+            title = title,
+            done = { onProgressEnd.call(null) },
+            isConditionSatisfied = { onProgressUpdate.isConditionOk() },
+        ),
+            { onClose.call(null) }
+        )
     }
 
     override fun openOptions() {
-        fragment.postRunnable {
-            fragment.navController()
-                .navigate(
-                    R.id.action_androidLauncherFragment_to_optionsFragment
-                )
-        }
+        postState(ComposeState.Options)
     }
 
     override fun showHud(player: Player) {
-        fragment.showHud(
-            player = player,
-            onActiveItemClick = {
-                showDialog(
-                    item = it,
-                    onAgree = {
-
-                    },
-                    onClose = {
-
-                    }
-                )
-            })
+        postPlayer(PlayerState.HasPlayer(player))
     }
 
     override fun openStats(player: Player, runnable: Runnable) {
-        fragment.showComposeView {
+
+        /*fragment.showComposeView {
             DrawInventory(
                 container = player.inventoryManager.equipmentContainer,
                 itemsLimit = player.inventoryManager.equipmentContainer.totalCapacity,
@@ -92,76 +81,47 @@ class GameRequestHandler(val fragment: ComposeFragmentInterface): IActivityReque
                     hideComposeView(runnable)
                 }
             )
-        }
+        }*/
     }
 
-    fun hideComposeView(runnable: Runnable? = null){
-        fragment.hideComposeView()
-        runnable?.run()
-    }
+    override fun openPerkMenu(player: Player, pauseGame: Runnable) {
+        postState(
+            ComposeState.ShowPerkMenu{
+                /*val notificationManager = player.notificationManager
 
-    override fun openPerkMenu(player: Player?, pauseGame: Runnable?) {
-        fragment.showComposeView {
-            DrawPerkMenu(player,
-                {
-                    val notificationManager = player?.notificationManager
+                val playerHasPerk = player.inventoryManager?.hasPerk(it as PerkItem?) == true
+                val playerCanBuyPerk = (it as PerkItem?)?.canBeBought(player) == true
+                val isRequirementSatisfied = it.isRequirementSatisfied(player)
 
-                    val playerHasPerk = player?.inventoryManager?.hasPerk(it as PerkItem?) == true
-                    val playerCanBuyPerk = (it as PerkItem?)?.canBeBought(player) == true
-                    val isRequirementSatisfied = it.isRequirementSatisfied(player)
-
-                    if(!playerCanBuyPerk){
-                        notificationManager?.addMessage(language.youDontHaveEnoughMoney)
-                        return@DrawPerkMenu
-                    }
-                    if(playerHasPerk){
-                        notificationManager?.addMessage(language.youAlreadyHaveThisPerk)
-                        return@DrawPerkMenu
-                    }
-                    if(!isRequirementSatisfied){
-                        notificationManager?.addMessage(language.youCantBuyThisPerkYet)
-                        return@DrawPerkMenu
-                    }
-
-                    showDialog(
-                        title = it.title,
-                        subtitle = it.description,
-                        onAgree = OnClickCallback { _ ->
-                            it.buy(player)
-                            pauseGame?.run()
-                        },
-                        onClose = OnClickCallback {
-                            pauseGame?.run()
-                        }
-                    )
+                if(!playerCanBuyPerk){
+                    notificationManager?.addMessage(language.youDontHaveEnoughMoney)
+                    return@DrawPerkMenu
                 }
-            ) {
-                hideComposeView()
-                pauseGame?.run()
+                if(playerHasPerk){
+                    notificationManager?.addMessage(language.youAlreadyHaveThisPerk)
+                    return@DrawPerkMenu
+                }
+                if(!isRequirementSatisfied){
+                    notificationManager?.addMessage(language.youCantBuyThisPerkYet)
+                    return@DrawPerkMenu
+                }
+
+                it.buy(player)
+                pauseGame.run()*/
+                pauseGame.run()
             }
+        ){
+            pauseGame.run()
         }
     }
 
     override fun savePlayer(toString: String?) {
-        val preferences = context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
-        preferences?.edit()?.putString("PLAYER", toString)?.apply()
+        /*val preferences = context?.getSharedPreferences(context?.packageName, Context.MODE_PRIVATE)
+        preferences?.edit()?.putString("PLAYER", toString)?.apply()*/
     }
 
     override fun showAd(onAdClosed: Runnable?) {
-        hideComposeView()
-        /*fragment.scope.launch {
-            fragment.showLoader()
-            Inter.Builder()
-                .onAdClosed {
-                    onAdClosed?.run()
-                    hideComposeView()
-                }
-                .onAdLoaded {  }
-                .onAdPreload { }
-                .onAdShowed {  }
-                .build()
-                .showAd(fragment.requireActivity())
-        }*/
+
     }
 
     override fun openInventory(
@@ -169,54 +129,25 @@ class GameRequestHandler(val fragment: ComposeFragmentInterface): IActivityReque
         runnable: Runnable,
         onItemClicked: OnItemClick
     ) {
-        fun onClose(){
-            hideComposeView()
-            runnable.run()
-        }
-
-        val state = player.inventoryManager.inventory.items.toMutableStateList()
-
-        fun onItemClicked(item: Item){
-            showDialog(
-                item = item,
-                onAgree = {
-                    onItemClicked.onClick(item)
-                }
-            ){
-                runnable.run()
-            }
-        }
-
-        fragment.showComposeView {
-            DrawPlayerStates(
-                player = player,
-                container = state,
-                onItemClicked = ::onItemClicked,
-                onClose = ::onClose
-            )
-        }
+        postState(
+            ComposeState.OpenInventory(
+                onItemClicked = { showItemDialog(it, onItemClicked) },
+            ),
+            runnable::run
+        )
     }
 
-    override fun openRefrigerator(player: Player, onItemUse: OnItemClick,onClose: Runnable?) {
-        fragment.showComposeView {
-            DrawRefrigerator(
-                player = player,
-                onItemUse = {
-                    showDialog(
-                        item = it,
-                        onAgree = {
-                            onItemUse.onClick(it)
-                        }
-                    ) {
-
-                    }
-                }){
-                onClose?.run()
-                hideComposeView()
-            }
-        }
+    override fun openRefrigerator(player: Player, onItemUse: OnItemClick,onClose: Runnable) {
+        postState(
+            ComposeState
+                .OpenRefrigerator(
+                    onItemUse = {
+                        showItemDialog(it, onItemUse)
+                    },
+                ),
+            onClose = onClose::run
+        )
     }
-
 
     override fun openShowBuyMenu(
         type: InventoryType,
@@ -225,34 +156,15 @@ class GameRequestHandler(val fragment: ComposeFragmentInterface): IActivityReque
         onBuyRunnable: OnItemClick,
         onCancel: Runnable
     ) {
-        fun close(){
-            onCancel.run()
-            hideComposeView()
-        }
-
-        fun showDialog(item: Item){
-
-        }
-
-        fragment.showComposeView {
-            DrawShopMenu(
+        postState(
+            ComposeState.OpenBuyingMenu(
                 type = type,
-                inventoryContainer = inventoryContainer,
-                shopContainer = shopContainer,
-                onBuyRunnable = {
-                    showDialog(
-                        it,
-                        onAgree = {
-                            onBuyRunnable.onClick(it)
-                        }
-                    ){
-                        close()
-                    }
-                },
-                onCancel = {
-                    close()
+                {
+                    showItemDialog(it, onBuyRunnable)
                 }
             )
+        ){
+            onCancel.run()
         }
     }
 
@@ -262,13 +174,19 @@ class GameRequestHandler(val fragment: ComposeFragmentInterface): IActivityReque
         onClose: OnClickCallback,
         onAgree: OnClickCallback
     ){
-        showDialog(
-            title = title,
-            subtitle = subtitle,
-            agreeText = context.getString(R.string.ok),
-            closeText = context.getString(R.string.close),
-            onClose = onClose,
-            onAgree = onAgree
+        postDialogState(
+            DialogState.ShowDialog(
+                title,
+                subtitle,
+                onAgree = {
+                    postDialogState(DialogState.None)
+                    onAgree.call(null)
+                },
+                onClose = {
+                    postDialogState(DialogState.None)
+                    onClose.call(null)
+                }
+            )
         )
     }
 
@@ -280,67 +198,55 @@ class GameRequestHandler(val fragment: ComposeFragmentInterface): IActivityReque
         onClose: OnClickCallback,
         onAgree: OnClickCallback
     ) {
-        dialogScreenState.value = true
-
-        fragment.showDialogView {
-            if (dialogScreenState.value == true){
-                AlertDialogSample(
-                    title = title,
-                    subtitle = subtitle,
-                    agreeText = context.getString(R.string.ok),
-                    closeText = context.getString(R.string.close),
-                    onAgree = {
-                        dialogScreenState.value = false
-                        onAgree.call(null)
-                    },
-                    onClose = {
-                        dialogScreenState.value = false
-                        //onClose.call(null)
-                    },
-                    state = dialogScreenState.value
-                )
-            }else{
-
-            }
-        }
     }
 
     override fun showNextSetMenu(
         player: Player,
         currentSet: Int,
         playerList: MutableList<CompetitionOpponent>,
-        onFirstClick: OnClickCallback?,
-        onClose: OnClickCallback?
+        onFirstClick: OnClickCallback,
+        onClose: OnClickCallback
     ) {
-        fragment.showComposeView{
-            CompetitionTable(
-                player = player,
-                currentSet = currentSet,
-                playerList = playerList,
-                onFirstClick = onFirstClick,
-                onClose = {
-                    hideComposeView()
-                    onClose?.call(it)
+        postState(
+            ComposeState.ShowCompetitionTable(
+                currentSet, playerList, {
+                    onFirstClick.call(null)
                 }
-            ) {
-                hideComposeView()
-            }
+            )
+        ){
+            onClose.call(null)
         }
     }
 
-    private fun showDialog(item: Item, onAgree: () -> Unit, onClose: () -> Unit?) {
-        showDialog(
-            title = item.title,
-            subtitle = item.description,
-            agreeText = context.getString(R.string.ok),
-            closeText = context.getString(R.string.close),
-            onClose = {
-                onClose()
-            },
+
+    fun postState(state: ComposeState, onClose: () -> Unit = {}) {
+        this.state.value = this.state.value.copy(composeState = state, onClose = { postNone { onClose() } })
+    }
+
+    fun postPlayer(state: PlayerState) {
+        this.state.value = this.state.value.copy(playerState = state)
+    }
+
+    fun postDialogState(state: DialogState) {
+        this.state.value = this.state.value.copy(dialogState = state)
+    }
+
+    private fun postNone(function: () -> Unit) {
+        function()
+        postState(ComposeState.None)
+    }
+
+    private fun showItemDialog(it: Item, onItemClicked: OnItemClick) {
+        postDialogState(DialogState.ShowItemDialog(
+            item = it,
             onAgree = {
-                onAgree()
+                postDialogState(DialogState.None)
+                onItemClicked.onClick(it)
+            },
+            onClose = {
+                postDialogState(DialogState.None)
             }
-        )
+        ))
     }
 
 }

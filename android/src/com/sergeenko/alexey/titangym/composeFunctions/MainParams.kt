@@ -43,15 +43,12 @@ fun MainParams(
 
         val playerInventoryManager = player.inventoryManager
         val playerExerciseManager = player.exerciseManager
-        val day = remember {
-            player.day
-        }
+        val day = player.day
 
 
         val healthProgress = playerExerciseManager.health.currentAmount.toFloat() / 100f
 
-        val energyProgress =
-            playerExerciseManager.energy.currentAmount.toFloat() / 100f
+        val energyProgress = playerExerciseManager.energy.currentAmount.toFloat() / 100f
 
         /*val tirednessProgress =
             playerExerciseManager.tiredness.currentAmount.toFloat() / 100f*/

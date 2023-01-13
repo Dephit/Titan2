@@ -62,4 +62,5 @@ public interface IActivityRequestHandler {
     void savePlayer(String toString);
 
     void showAd(Runnable onAdClosed);
+
 }

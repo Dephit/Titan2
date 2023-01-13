@@ -30,16 +30,17 @@ import com.mygdx.game.model.items.Item
 import com.mygdx.game.model.items.perks.PerkItem
 import com.mygdx.game.model.items.perks.PerksMenu
 import com.sergeenko.alexey.titangym.assetsToBitmap
+import com.sergeenko.alexey.titangym.featureGameScreen.models.ComposeState
 import com.sergeenko.alexey.titangym.getBitmap
 import com.sergeenko.alexey.titangym.getItemImage
 
 @Composable
 fun DrawPerkMenu(
-    player: Player?,
-    onItemClick: (Item) -> Unit,
-    onClose: OnClickCallback
+    player: Player,
+    state: ComposeState.ShowPerkMenu,
+    onClose: () -> Unit
 ) {
-    val allPerks = PerksMenu().items.map { it as PerkItem }
+    val allPerks: List<PerkItem> = PerksMenu().items.map { it as PerkItem }
 
     return Box(
         modifier = dialogModifier()
@@ -47,18 +48,20 @@ fun DrawPerkMenu(
         Column(
             modifier = Modifier.padding(start = 30.dp, end = 30.dp)
         ) {
-            CloseButton(onClose)
+            CloseButton{
+                onClose()
+            }
             Row {
                 LazyColumn(modifier = Modifier.fillMaxWidth()){
                     allPerks.forEachIndexed { _, item ->
-                        val bgColor = player!!.getPerkColor(item)
+                        val bgColor = player.getPerkColor(item)
                         item {
                             LazyRow{
                                 item{
                                     PerkItem(
                                         item,
                                         bgColor,
-                                        onItemClick
+                                        state.onItemClick
                                     )
 
                                 }
@@ -75,7 +78,7 @@ fun DrawPerkMenu(
                                         }
                                     }
                                     item{
-                                        PerkItem(it, bgColor, onItemClick)
+                                        PerkItem(it, bgColor, state.onItemClick)
                                     }
                                 }
                             }
@@ -93,7 +96,7 @@ private fun Player.getPerkColor(item: PerkItem): Color {
 }
 
 @Composable
-private fun PerkItem(perk: PerkItem, bgColor: Color, onItemClick: (Item) -> Unit){
+private fun PerkItem(perk: PerkItem, bgColor: Color, onItemClick: (PerkItem) -> Unit){
     val assetManager = LocalContext.current.assets
 
     Box(modifier = Modifier){
@@ -101,7 +104,9 @@ private fun PerkItem(perk: PerkItem, bgColor: Color, onItemClick: (Item) -> Unit
             Modifier
                 .background(bgColor)
                 .padding(1.dp)) {
-            assetManager.getItemImage(perk, onItemClick)
+            assetManager.getItemImage(perk){
+                onItemClick(it as PerkItem)
+            }
         }
     }
 }

@@ -12,9 +12,10 @@ import com.mygdx.game.model.Container
 import com.mygdx.game.model.items.Item
 import com.mygdx.game.model.items.OnItemClick
 import com.sergeenko.alexey.titangym.blockModifier
+import com.sergeenko.alexey.titangym.featureGameScreen.models.ComposeState
 
 @Composable
-fun DrawRefrigerator(player: Player, onItemUse: OnItemClick, function: () -> Unit) {
+fun DrawRefrigerator(player: Player, state: ComposeState.OpenRefrigerator, onClose: () -> Unit) {
         Row (
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically,
@@ -25,13 +26,10 @@ fun DrawRefrigerator(player: Player, onItemUse: OnItemClick, function: () -> Uni
             DrawInventory(
                 container = player.inventoryManager.refrigerator,
                 itemsLimit = player.inventoryManager.refrigerator.totalCapacity,
-                onItemClick = {
-                    onItemUse.onClick(it)
-                },
                 gridCound = 3,
-                widthModifier = blockModifier.weight(0.4f)
-            ) {
-                function()
-            }
+                widthModifier = blockModifier.weight(0.4f),
+                onItemClick = { state.onItemUse.onClick(it) },
+                onClose = onClose
+            )
         }
     }

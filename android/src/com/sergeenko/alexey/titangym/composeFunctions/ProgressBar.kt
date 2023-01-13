@@ -24,11 +24,9 @@ import kotlinx.coroutines.launch
 @Composable
 fun ProgressBar(
     title: String,
-    closeText: String = stringResource(id = R.string.close),
-    onProgressEnd: OnClickCallback,
-    onClose: ()->Unit,
+    onClose: () -> Unit,
     state: Float,
-    onProgressUpdate: ()->Unit
+    onProgressUpdate: () -> Unit
 ) {
     Column(
         verticalArrangement = Arrangement.SpaceAround,
