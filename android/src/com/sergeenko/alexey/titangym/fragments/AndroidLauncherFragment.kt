@@ -12,9 +12,12 @@ import android.view.WindowManager
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.core.view.doOnAttach
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration
@@ -42,11 +45,12 @@ class AndroidLauncherFragment : AndroidFragmentApplication() {
     val viewModel: MainViewModel by viewModel{ parametersOf(arguments?.getString("PLAYER"))}
 
     private val binding: MainActivityBinding by lazy {
+
         view?.let { MainActivityBinding.bind(it) } ?: MainActivityBinding.inflate(layoutInflater)
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         launchGame()
     }
 
@@ -59,16 +63,18 @@ class AndroidLauncherFragment : AndroidFragmentApplication() {
         return binding.root
     }
 
+
     private fun launchGame() {
-        binding.container.removeAllViews()
-        binding.container.addView(createGameLayout())
         binding.composeView.apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+
             setContent {
                 MaterialTheme {
                     val gameState = viewModel.gameObserver.value
-                    val player = (gameState.playerState as? PlayerState.HasPlayer)?.player
                     val dialogState = gameState.dialogState
-                    if(player != null){
+                    if(gameState.playerState is PlayerState.HasPlayer){
+                        val player = gameState.playerState.player
+
                         HudBar(
                             player = player,
                             onActiveItemClick = {}
@@ -93,6 +99,9 @@ class AndroidLauncherFragment : AndroidFragmentApplication() {
                 }
             }
         }
+        Log.i("ASDASDASDASd", "callled ${binding.container.isAttachedToWindow}")
+        binding.container.removeAllViews()
+        binding.container.addView(createGameLayout())
     }
 
     private fun navigateToOptions() {
