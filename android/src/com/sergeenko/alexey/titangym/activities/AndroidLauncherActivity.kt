@@ -5,7 +5,7 @@ import com.badlogic.gdx.backends.android.AndroidFragmentApplication
 import android.os.Bundle
 import android.view.Window
 import com.kitegroup.adlibrary.AppOpenManager
-import com.sergeenko.alexey.titangym.AudioManager
+import com.sergeenko.alexey.titangym.core.AudioManager
 import com.sergeenko.alexey.titangym.R
 import org.koin.android.ext.android.inject
 

@@ -35,8 +35,11 @@
     </fragment>
     <fragment
         android:id="@+id/optionsFragment"
-        android:name="com.sergeenko.alexey.titangym.fragments.OptionsFragment"
+        android:name="com.sergeenko.alexey.titangym.optionsFeature.ui.OptionsFragment"
         android:label="OptionsFragment">
+        <action
+            android:id="@+id/toAndroidLauncher"
+            app:destination="@id/androidLauncherFragment" />
     <action
         android:id="@+id/action_optionsFragment_to_menu"
         app:destination="@id/mainMenuFragment" />

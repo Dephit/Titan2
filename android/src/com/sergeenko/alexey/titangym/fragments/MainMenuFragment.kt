@@ -16,16 +16,20 @@ import com.sergeenko.alexey.titangym.R
 import com.sergeenko.alexey.titangym.activities.AndroidLauncherActivity
 import com.sergeenko.alexey.titangym.composeFunctions.FillSpacer
 import com.sergeenko.alexey.titangym.composeFunctions.titleTextSize
+import com.sergeenko.alexey.titangym.core.PreferenceManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import org.koin.android.ext.android.inject
 
 class MainMenuFragment : BaseComposeFragment() {
 
-    private var isViewVisible = true
+    companion object{
 
-    private val state = MutableStateFlow(true)
-    private val progress: StateFlow<Boolean> = state.asStateFlow()
+        const val LOAD_PLAYER = "LOAD_PLAYER"
+    }
+
+    private val preferenceManager: PreferenceManager by inject()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -36,15 +40,15 @@ class MainMenuFragment : BaseComposeFragment() {
     }
 
     private fun drawView(){
-        val preferences = context?.getSharedPreferences(context!!.packageName, MODE_PRIVATE)
-        val player = preferences?.getString("PLAYER", null)
+        val player = preferenceManager.player
+        val hasPlayer = !player.isNullOrEmpty()
         setContent {
             Box {
                 Column {
                     FillSpacer()
-                    if(player != null) {
+                    if(hasPlayer) {
                         Button(onClick = {
-                            navigate(R.id.action_mainMenuFragment_to_androidLauncherFragment, bundleOf("PLAYER" to player))
+                            navigate(R.id.action_mainMenuFragment_to_androidLauncherFragment, bundleOf(LOAD_PLAYER to true))
                         }) {
                             Text(
                                 text = stringResource(id = R.string.launch_game),

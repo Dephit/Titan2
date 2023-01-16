@@ -1,6 +1,5 @@
 package com.sergeenko.alexey.titangym.fragments
 
-import android.content.Context
 import androidx.compose.runtime.mutableStateOf
 import com.mygdx.game.IActivityRequestHandler
 import com.mygdx.game.Player
@@ -12,18 +11,18 @@ import com.mygdx.game.model.enums.Comp
 import com.mygdx.game.model.enums.InventoryType
 import com.mygdx.game.model.items.Item
 import com.mygdx.game.model.items.OnItemClick
-import com.mygdx.game.model.items.perks.PerkItem
-import com.sergeenko.alexey.titangym.R
-import com.sergeenko.alexey.titangym.composeFunctions.*
+import com.sergeenko.alexey.titangym.core.PreferenceManager
 import com.sergeenko.alexey.titangym.featureGameScreen.models.ComposeState
 import com.sergeenko.alexey.titangym.featureGameScreen.models.DialogState
 import com.sergeenko.alexey.titangym.featureGameScreen.models.PlayerState
 import com.sergeenko.alexey.titangym.featureGameScreen.models.UiState
 
 
-class GameRequestHandler(): IActivityRequestHandler {
+class GameRequestHandler(
+    private val preferenceManager: PreferenceManager
+) : IActivityRequestHandler {
 
-    val state = mutableStateOf<UiState>(UiState())
+    val state = mutableStateOf(UiState())
 
     override fun showToast(s: String) {
         /*fragment.runOnUiThread {
@@ -54,10 +53,9 @@ class GameRequestHandler(): IActivityRequestHandler {
         postState(ComposeState.ShowProgressBar(
             title = title,
             done = { onProgressEnd.call(null) },
-            isConditionSatisfied = { onProgressUpdate.isConditionOk() },
-        ),
-            { onClose.call(null) }
+            isConditionSatisfied = { onProgressUpdate.isConditionOk },
         )
+        ) { onClose.call(null) }
     }
 
     override fun openOptions() {
@@ -115,9 +113,8 @@ class GameRequestHandler(): IActivityRequestHandler {
         }
     }
 
-    override fun savePlayer(toString: String?) {
-        /*val preferences = context?.getSharedPreferences(context?.packageName, Context.MODE_PRIVATE)
-        preferences?.edit()?.putString("PLAYER", toString)?.apply()*/
+    override fun savePlayer(player: String?) {
+        preferenceManager.player = player
     }
 
     override fun showAd(onAdClosed: Runnable?) {
@@ -158,11 +155,10 @@ class GameRequestHandler(): IActivityRequestHandler {
     ) {
         postState(
             ComposeState.OpenBuyingMenu(
-                type = type,
-                {
-                    showItemDialog(it, onBuyRunnable)
-                }
-            )
+                type = type
+            ) {
+                showItemDialog(it, onBuyRunnable)
+            }
         ){
             onCancel.run()
         }
@@ -209,10 +205,10 @@ class GameRequestHandler(): IActivityRequestHandler {
     ) {
         postState(
             ComposeState.ShowCompetitionTable(
-                currentSet, playerList, {
-                    onFirstClick.call(null)
-                }
-            )
+                currentSet, playerList
+            ) {
+                onFirstClick.call(null)
+            }
         ){
             onClose.call(null)
         }

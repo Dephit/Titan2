@@ -1,24 +1,19 @@
-package com.sergeenko.alexey.titangym
+package com.sergeenko.alexey.titangym.core
 
 import android.content.Context
-import android.content.res.AssetFileDescriptor
 import android.media.MediaPlayer
 
-
 class AudioManager(
-    val context: Context
+    private val context: Context,
+    private val preferenceManager: PreferenceManager
     ) {
 
     private val mediaPlayer by lazy{
         MediaPlayer()
     }
 
-    var isPlaying = false
-        private set(value) {
-            field = value
-        }
-
-
+    val isMusicOn
+        get() = preferenceManager.isMusicOn
 
     fun playMusic(){
         val music = context.assets.openFd("music/music.mp3")
@@ -33,11 +28,19 @@ class AudioManager(
         mediaPlayer.setVolume(100f, 100f)
         mediaPlayer.prepare()
         mediaPlayer.start()
-        isPlaying = true
+        preferenceManager.isMusicOn = true
     }
 
     fun stopMusic(){
         mediaPlayer.stop()
-        isPlaying = false
+        preferenceManager.isMusicOn = false
+    }
+
+    fun changeMusic() {
+        if(isMusicOn){
+            stopMusic()
+        }else{
+            playMusic()
+        }
     }
 }

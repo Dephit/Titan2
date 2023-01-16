@@ -39,6 +39,14 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
         return myRequestHandler;
     }
 
+    public void setMyRequestHandler(IActivityRequestHandler myRequestHandler) {
+        this.myRequestHandler = myRequestHandler;
+    }
+
+    public void removeObserver() {
+        myRequestHandler = null;
+    }
+
     public MyGdxGame() {
      //   myRequestHandler = handler;
        // saves = player;
