@@ -1,6 +1,5 @@
 {
   "loading": "Loading",
-
   "heavySquat": "Heavy Squat",
   "moderateSquat": "Moderate Squat",
   "easySquat": "Easy Squat",
@@ -9,20 +8,16 @@
   "deadlift": "Deadlift",
   "mockSquat": "Mock Squat",
   "set": "Set",
-
   "heavyBench": "Heavy Bench",
   "moderateBench": "Moderate Bench",
   "easyBench": "Easy Bench",
   "mockBench": "Mock Bench",
-
   "heavyDeadlift": "Heavy Deadlift",
   "moderateDeadlift": "Moderate Deadlift",
   "easyDeadlift": "Easy Deadlift",
   "mockDeadlift": "Mock Deadlift",
-
   "bestResult": "Result",
   "level": "Level",
-
   "refregiratorIsFull": "Refrigerator is full",
   "buyText": "Buy",
   "no": "No",
@@ -68,8 +63,6 @@
   "basicBelt": "Basic Belt",
   "sbdBelt": "SDB Belt",
   "wristUsePerk": "Wrist Wraps Usage",
-
-
   "wristUsePerkDesc": "You asked a more experienced bencher about the wraps on his hands, and he explained and showed you. Now you can use wrist wraps.",
   "squaterPerk": "Squater I",
   "squaterFirstPerk": "Squater II",
@@ -95,20 +88,48 @@
   "youCantBuyThisPerkYet": "You can't buy this one yet",
   "youDontHaveEnoughMoney": "You can't buy this one",
   "youAlreadyHaveThisPerk": "You have this perk",
-
   "chooseYourExercise": "Which exercise do you want to do?",
+  "dumbelGuyRandomText": [
+    "Need to train!",
+    "Hello",
+    "I train on Monday, Wednesday, and Friday",
+    "How are you?"
+  ],
+  "armGirlDialogTree": [
+    "Hello",
+    "They are arm wrestling there",
+    "But you can't go there, it's already crowded",
+    "Maybe later"
+  ],
+  "armGirlRandomText": [
+    "Leave me alone!",
+    "Go away!",
+    "Don't bother me!"
+  ],
+  "coachDialogTree": [
+    "Hello",
+    "So today, do the following",
+    "Pull from the blocks 230 x 4",
+    "And do floor presses"
+  ],
+  "coachRandomText": [
+    "Good luck!",
+    "...!",
+    "Do you have a spare shirt?",
+    "Your membership is expiring!"
+  ],
+  "sanitarRandomText": [
+    "They broke it, and I have to clean up after them!",
+    "I'm so tired",
+    "I wish I could go home faster",
+    "Tomorrow is a day off"
+  ],
+  "stuffRandomText": [
+    "Hey",
+    "
 
-  "dumbelGuyRandomText": ["Need to train!", "Hello", "I train on Monday, Wednesday, and Friday", "How are you?"],
-
-  "armGirlDialogTree": ["Hello", "They are arm wrestling there", "But you can't go there, it's already crowded", "Maybe later"],
-  "armGirlRandomText": ["Leave me alone!", "Go away!", "Don't bother me!"],
-
-  "coachDialogTree": ["Hello", "So today, do the following", "Pull from the blocks 230 x 4", "And do floor presses"],
-  "coachRandomText": ["Good luck!", "...!", "Do you have a spare shirt?", "Your membership is expiring!"],
-
-  "sanitarRandomText": ["They broke it, and I have to clean up after them!", "I'm so tired", "I wish I could go home faster", "Tomorrow is a day off"],
-
-  "stuffRandomText": ["Hey", "
-
-    How's life?", "You're working out? Yeah?", "Once upon a time, the path of adventures led me too, but then I got shot in the knee"]
-    }
+       How's life?",
+    "You're working out? Yeah?",
+    "Once upon a time, the path of adventures led me too, but then I got shot in the knee"
+  ]
+}
