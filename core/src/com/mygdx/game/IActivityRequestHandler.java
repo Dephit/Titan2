@@ -11,7 +11,6 @@ import com.mygdx.game.model.items.OnItemClick;
 import java.util.List;
 
 public interface IActivityRequestHandler {
-    void showToast(String s);
 
     void showPlayers(List<CompetitionOpponent> playerList, Comp status, OnClickCallback runnable);
 

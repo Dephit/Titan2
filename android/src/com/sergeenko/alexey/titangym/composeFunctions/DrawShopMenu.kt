@@ -3,7 +3,6 @@ package com.sergeenko.alexey.titangym.composeFunctions
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -14,13 +13,12 @@ import com.mygdx.game.Player
 import com.mygdx.game.model.Container
 import com.mygdx.game.model.enums.InventoryType
 import com.mygdx.game.model.items.Item
-import com.mygdx.game.model.items.OnItemClick
 import com.mygdx.game.model.shop.EquipmentShopMenu
 import com.mygdx.game.model.shop.ShopMenu
 import com.mygdx.game.model.shop.SnackMenu
 import com.sergeenko.alexey.titangym.R
 import com.sergeenko.alexey.titangym.blockModifier
-import com.sergeenko.alexey.titangym.featureGameScreen.models.ComposeState
+import com.sergeenko.alexey.titangym.fragments.ComposeState
 
 
 @Composable

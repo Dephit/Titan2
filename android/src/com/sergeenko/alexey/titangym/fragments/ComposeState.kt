@@ -1,15 +1,13 @@
-package com.sergeenko.alexey.titangym.featureGameScreen.models
+package com.sergeenko.alexey.titangym.fragments
 
-import com.mygdx.game.interfaces.OnClickCallback
 import com.mygdx.game.model.CompetitionOpponent
-import com.mygdx.game.model.Container
 import com.mygdx.game.model.enums.Comp
 import com.mygdx.game.model.enums.InventoryType
 import com.mygdx.game.model.items.Item
 import com.mygdx.game.model.items.OnItemClick
 import com.mygdx.game.model.items.perks.PerkItem
 
-sealed class ComposeState(){
+sealed class ComposeState{
 
     class ShowPlayers(
         val playerList: MutableList<CompetitionOpponent>,

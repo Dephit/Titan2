@@ -1,34 +1,21 @@
 package com.sergeenko.alexey.titangym.composeFunctions
 
-import androidx.compose.animation.animateColorAsState
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.LinearProgressIndicator
-import androidx.compose.material.Text
+import androidx.compose.foundation.lazy.grid.*
+import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.modifier.modifierLocalConsumer
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.mygdx.game.Player
-import com.mygdx.game.model.Day
-import com.mygdx.game.model.items.Item
-import com.mygdx.game.model.items.supplements.SupplementItem
+import androidx.compose.ui.*
+import androidx.compose.ui.graphics.*
+import androidx.compose.ui.res.*
+import androidx.compose.ui.text.style.*
+import androidx.compose.ui.unit.*
+import com.mygdx.game.*
+import com.mygdx.game.model.*
+import com.mygdx.game.model.items.*
+import com.mygdx.game.model.items.supplements.*
+import com.sergeenko.alexey.titangym.*
 import com.sergeenko.alexey.titangym.R
-import com.sergeenko.alexey.titangym.items.PlayersActiveItem
-import com.sergeenko.alexey.titangym.linearProgressModifier
-import com.sergeenko.alexey.titangym.round5Modifier
-import kotlinx.coroutines.delay
+import com.sergeenko.alexey.titangym.items.*
 
 @Composable
 fun MainParams(
@@ -45,14 +32,9 @@ fun MainParams(
         val playerExerciseManager = player.exerciseManager
         val day = player.day
 
-
         val healthProgress = playerExerciseManager.health.currentAmount.toFloat() / 100f
 
         val energyProgress = playerExerciseManager.energy.currentAmount.toFloat() / 100f
-
-        /*val tirednessProgress =
-            playerExerciseManager.tiredness.currentAmount.toFloat() / 100f*/
-
 
         val playersMoney = playerInventoryManager.pocket.money
         val perksCoins = playerInventoryManager.perkPocket.money

@@ -3,7 +3,7 @@ package com.sergeenko.alexey.titangym.composeFunctions
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import com.sergeenko.alexey.titangym.featureGameScreen.models.ComposeState
+import com.sergeenko.alexey.titangym.fragments.ComposeState
 
 @Composable
 fun DrawProgressBar(state: ComposeState.ShowProgressBar, onClose: () -> Unit) {

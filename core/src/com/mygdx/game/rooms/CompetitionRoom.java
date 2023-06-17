@@ -3,11 +3,7 @@ package com.mygdx.game.rooms;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.mygdx.game.BaseRoom;
-import com.mygdx.game.InterScreenCommunication;
-import com.mygdx.game.Player;
-import com.mygdx.game.PlayerCondition;
-import com.mygdx.game.Preffics;
+import com.mygdx.game.*;
 import com.mygdx.game.model.CompetitionOpponent;
 import com.mygdx.game.model.enums.Comp;
 
@@ -33,16 +29,19 @@ public class CompetitionRoom extends BaseRoom {
         );
     }
 
+
+    private final OnPlayerConditionChangeListener onPlayerConditionChangeListener = (oldPlayerCondition, playerCondition) -> {
+        if(playerCondition == PlayerCondition.stay){
+            showWorkMenu();
+        }
+    };
+
     Comp compStatus = Comp.SQUAT_1;
 
     public void setCommonButtons() {
         super.setCommonButtons();
         showWorkMenu();
-        player.onPlayerConditionChangeListener = (oldPlayerCondition, playerCondition) -> {
-            if(playerCondition == PlayerCondition.stay){
-                showWorkMenu();
-            }
-        };
+        player.setOnPlayerConditionChangeListener(onPlayerConditionChangeListener);
     }
 
     @Override
@@ -68,7 +67,7 @@ public class CompetitionRoom extends BaseRoom {
 
     @Override
     public void onClose(){
-        player.onPlayerConditionChangeListener = null;
+        player.setOnPlayerConditionChangeListener(null);
         interScreenCommunication.openMap();
     }
 
@@ -170,50 +169,50 @@ public class CompetitionRoom extends BaseRoom {
         player.setPlayerPosition((int) (Preffics.SCREEN_WIDTH / 2 - player.getWidth() / 2f), 225, PlayerCondition.stay);
         switch (compStatus){
             case SQUAT_1:
-                player.setPath((int) (Preffics.SCREEN_WIDTH / 2 - player.getWidth() / 2f), 215, PlayerCondition.compSquat);
+                player.goToDestination((int) (Preffics.SCREEN_WIDTH / 2 - player.getWidth() / 2f), 215, PlayerCondition.compSquat);
                 compStatus = Comp.SQUAT_2;
                 compStatus.attempt = 2;
                 break;
             case SQUAT_2:
-                player.setPath((int) (Preffics.SCREEN_WIDTH / 2 - player.getWidth() / 2f), 215, PlayerCondition.compSquat);
+                player.goToDestination((int) (Preffics.SCREEN_WIDTH / 2 - player.getWidth() / 2f), 215, PlayerCondition.compSquat);
                 compStatus = Comp.SQUAT_3;
                 compStatus.attempt = 3;
                 break;
             case SQUAT_3:
-                player.setPath((int) (Preffics.SCREEN_WIDTH / 2 - player.getWidth() / 2f), 215, PlayerCondition.compSquat);
+                player.goToDestination((int) (Preffics.SCREEN_WIDTH / 2 - player.getWidth() / 2f), 215, PlayerCondition.compSquat);
                 compStatus = Comp.BENCH_1;
                 compStatus.attempt = 4;
                 break;
             case BENCH_1:
-                player.setPath((int) (Preffics.SCREEN_WIDTH / 2 - player.getWidth() / 2f), 215, PlayerCondition.compBench);
+                player.goToDestination((int) (Preffics.SCREEN_WIDTH / 2 - player.getWidth() / 2f), 215, PlayerCondition.compBench);
                 compStatus = Comp.BENCH_2;
                 compStatus.attempt = 5;
                 break;
             case BENCH_2:
-                player.setPath((int) (Preffics.SCREEN_WIDTH / 2 - player.getWidth() / 2f), 215, PlayerCondition.compBench);
+                player.goToDestination((int) (Preffics.SCREEN_WIDTH / 2 - player.getWidth() / 2f), 215, PlayerCondition.compBench);
                 compStatus = Comp.BENCH_3;
                 compStatus.attempt = 6;
                 break;
             case BENCH_3:
-                player.setPath((int) (Preffics.SCREEN_WIDTH / 2 - player.getWidth() / 2f), 215, PlayerCondition.compBench);
+                player.goToDestination((int) (Preffics.SCREEN_WIDTH / 2 - player.getWidth() / 2f), 215, PlayerCondition.compBench);
                 compStatus = Comp.DEADLIFT_1;
                 compStatus.attempt = 7;
                 break;
             case DEADLIFT_1:
                 player.setPlayerPosition((int) (Preffics.SCREEN_WIDTH / 2 - deadliftX), 225, PlayerCondition.stay);
-                player.setPath((int) (Preffics.SCREEN_WIDTH / 2 - deadliftX), 215, PlayerCondition.compDeadlift);
+                player.goToDestination((int) (Preffics.SCREEN_WIDTH / 2 - deadliftX), 215, PlayerCondition.compDeadlift);
                 compStatus = Comp.DEADLIFT_2;
                 compStatus.attempt = 8;
                 break;
             case DEADLIFT_2:
                 player.setPlayerPosition((int) (Preffics.SCREEN_WIDTH / 2 - deadliftX), 225, PlayerCondition.stay);
-                player.setPath((int) (Preffics.SCREEN_WIDTH / 2 - deadliftX), 215, PlayerCondition.compDeadlift);
+                player.goToDestination((int) (Preffics.SCREEN_WIDTH / 2 - deadliftX), 215, PlayerCondition.compDeadlift);
                 compStatus = Comp.DEADLIFT_3;
                 compStatus.attempt = 9;
                 break;
             case DEADLIFT_3:
                 player.setPlayerPosition((int) (Preffics.SCREEN_WIDTH / 2 - deadliftX), 225, PlayerCondition.stay);
-                player.setPath((int) (Preffics.SCREEN_WIDTH / 2 - deadliftX), 215, PlayerCondition.compDeadlift);
+                player.goToDestination((int) (Preffics.SCREEN_WIDTH / 2 - deadliftX), 215, PlayerCondition.compDeadlift);
                 compStatus = Comp.CLOSE;
                 compStatus.attempt = 10 ;
                 break;

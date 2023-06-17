@@ -14,23 +14,27 @@ import java.util.Random;
 public class Message {
 
     List<String> dialogTree;
-    List <String> randomText;
+    List<String> randomText;
 
     public String text;
+
+    public String title;
     private int currentDialog = 0;
 
-    public Message(String name, List<String> tree, List<String> random) {
-        dialogTree = tree;
-        randomText = random;
+    public Message(String title, List<String> tree, List<String> random) {
+        this.title = title;
+        this.dialogTree = tree;
+        this.randomText = random;
         manageSize();
     }
 
     private void manageSize() {
-        if(!dialogTree.isEmpty() && currentDialog < dialogTree.size()){
+        if (!dialogTree.isEmpty() && currentDialog < dialogTree.size()) {
             setData(dialogTree.get(currentDialog));
-            currentDialog ++;
-        }else if(!randomText.isEmpty()){
-            setData(randomText.get(new Random().nextInt(randomText.size())));
+            currentDialog++;
+        } else if (!randomText.isEmpty()) {
+            int randomNumber = new Random().nextInt(randomText.size());
+            setData(randomText.get(randomNumber));
         }
 
     }
@@ -40,7 +44,7 @@ public class Message {
     }
 
 
-    public void onClick(){
+    public void onClick() {
         manageSize();
     }
 }

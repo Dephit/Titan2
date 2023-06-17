@@ -12,8 +12,6 @@ import java.util.List;
 
 public interface InterScreenCommunication {
 
-    void showToast(String msg);
-
     void showPlayerList(List<CompetitionOpponent> playerList, Comp status, OnClickCallback runnable);
 
     void showNextSetMenu(

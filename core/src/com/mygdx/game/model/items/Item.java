@@ -18,20 +18,20 @@ public class Item extends BaseActor {
 
     public String menuStyleName;
 
-    public String addItemDesc(String... values){
+    public String addItemDesc(String... values) {
         return String.format(getLanguage().itemAddDescription, values);
     }
 
-    public String getItemDescription(String... values){
+    public String getItemDescription(String... values) {
         return String.format(getLanguage().itemBoostDescription, values);
     }
 
-    public String getItemDescriptions(String... values){
+    public String getItemDescriptions(String... values) {
         return String.format(getLanguage().itemBoostDescriptions, values);
     }
 
 
-    public void onUse(Player player){
+    public void onUse(Player player) {
 
     }
 

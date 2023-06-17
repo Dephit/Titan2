@@ -15,24 +15,24 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.mygdx.game.interfaces.OnClickCallback;
 
 import org.json.JSONException;
 
 import java.util.ArrayList;
 
-public abstract class BaseRoom extends Stage  {
+public abstract class BaseRoom extends Stage {
 
+    private boolean enableMapDrawing = false;
     protected boolean callOnClose = false;
 
-    public Runnable pauseGame(){
+    public Runnable pauseGame() {
         pause = true;
-        return ()-> pause = false;
+        return () -> pause = false;
     }
 
-    public Runnable pauseGame(Runnable runnable){
+    public Runnable pauseGame(Runnable runnable) {
         pause = true;
-        return ()-> {
+        return () -> {
             runnable.run();
             pause = false;
         };
@@ -67,13 +67,13 @@ public abstract class BaseRoom extends Stage  {
 
     public BaseRoom(InterScreenCommunication communication, String tag, Player _player) {
         super(new FitViewport(Preffics.SCREEN_WIDTH, Preffics.SCREEN_HEIGHT));
-        if(_player != null){
+        if (_player != null) {
             player = _player;
             try {
                 communication.savePlayer(
-                        player.toJson()
-                                .put("ROOM_TAG", tag)
-                                .toString()
+                    player.toJson()
+                        .put("ROOM_TAG", tag)
+                        .toString()
                 );
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -84,7 +84,7 @@ public abstract class BaseRoom extends Stage  {
         interScreenCommunication = communication;
         BACKGROUND_PATH_TAG = "screens/" + ROOM_TAG + "/" + ROOM_TAG + ".png";
         init();
-        if(_player != null){
+        if (_player != null) {
             objectGroup.addActor(player);
         }
         addActor(objectGroup);
@@ -94,34 +94,34 @@ public abstract class BaseRoom extends Stage  {
     public void init() {
         Preffics.getInstance().clearAssets();
         Preffics.getInstance()
-                .load(BACKGROUND_PATH_TAG, Texture.class)
-                .load("screens/dialogs/message.png", Texture.class)
-                .load("screens/buttons/buttons.atlas", TextureAtlas.class);
+            .load(BACKGROUND_PATH_TAG, Texture.class)
+            .load("screens/dialogs/message.png", Texture.class)
+            .load("screens/buttons/buttons.atlas", TextureAtlas.class);
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Preffics.SCREEN_WIDTH, Preffics.SCREEN_HEIGHT);
         touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
 
-        pix2 = createProceduralPixmap(1, 1, 1, 0, 0);
-        tex2 = new Texture(pix2);
-        pix3 = createProceduralPixmap(1, 1, 0, 1, 0);
-        tex3 = new Texture(pix3);
-        pix4 = createProceduralPixmap(1, 1, 0, 0, 1);
-        tex4 = new Texture(pix4);
+        if(enableMapDrawing) {
+            pix2 = createProceduralPixmap(1, 1, 1, 0, 0);
+            tex2 = new Texture(pix2);
+            pix3 = createProceduralPixmap(1, 1, 0, 1, 0);
+            tex3 = new Texture(pix3);
+            pix4 = createProceduralPixmap(1, 1, 0, 0, 1);
+            tex4 = new Texture(pix4);
+        }
 
         Gdx.input.setInputProcessor(this);
         Preffics.getInstance().createMap(ROOM_TAG);
-        if(player != null){
+        if (player != null) {
             player.clearPath();
         }
         objectGroup = new Group();
-        //hudGroup = new Group();
         buttonGroup = new Group();
     }
 
 
-
-    public Pixmap createProceduralPixmap (int width, int height, float r, float g, float b) {
+    public Pixmap createProceduralPixmap(int width, int height, float r, float g, float b) {
         Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888);
         pixmap.setColor(r, g, b, 1);
         pixmap.fill();
@@ -129,16 +129,16 @@ public abstract class BaseRoom extends Stage  {
     }
 
 
-    public void showDialog(Message message){
+    public void showDialog(Message message) {
         interScreenCommunication.showDialog(
-                "Coach",
-                message.text,
-                object -> {
-                },
-                object -> {
-                    message.onClick();
-                    showDialog(message);
-                }
+            message.title,
+            message.text,
+            object -> {
+            },
+            object -> {
+                message.onClick();
+                showDialog(message);
+            }
         );
     }
 
@@ -156,17 +156,17 @@ public abstract class BaseRoom extends Stage  {
         camera.unproject(touchPos);
         Preffics preffics = Preffics.getInstance();
         double[][] mapArr = preffics.mapArr;
-        try{
+        try {
             if (mapArr[(int) touchPos.y / preffics.mapCoordinateCorrector][(int) touchPos.x / preffics.mapCoordinateCorrector] != -1) {
-                player.setPath((int)touchPos.x, (int)touchPos.y, 0, 0, PlayerCondition.stay);
+                player.goToDestination((int) touchPos.x, (int) touchPos.y, 0, 0, PlayerCondition.stay);
             }
-        }catch (Exception ignored){
+        } catch (Exception ignored) {
 
         }
     }
 
     public void resize(int width, int height) {
-        getViewport().update(width,height);
+        getViewport().update(width, height);
         camera.update();
     }
 
@@ -181,17 +181,17 @@ public abstract class BaseRoom extends Stage  {
         } else {
             onLoading(preffics);
         }
-        try{
-           // showPath(preffics);
-        }catch (Exception e){
+        try {
+            // showPath(preffics);
+        } catch (Exception e) {
 
         }
         getBatch().end();
         draw();
-        if(!pause) {
+        if (!pause) {
             act(Gdx.graphics.getDeltaTime());
         }
-        if(callOnClose){
+        if (callOnClose) {
             onClose();
         }
     }
@@ -200,15 +200,16 @@ public abstract class BaseRoom extends Stage  {
 
     }
 
+
     private void showPath(Preffics preffics) {
-        for(int i = 0; i < preffics.mapSize; i++) {
+        for (int i = 0; i < preffics.mapSize; i++) {
             for (int j = 0; j < preffics.mapSize * 4; j++) {
                 if (preffics.mapArr[i][j] == 0)
                     getBatch().draw(tex3, j * preffics.mapCoordinateCorrector, i * preffics.mapCoordinateCorrector, 8, 8);
                 else
                     getBatch().draw(tex4, j * preffics.mapCoordinateCorrector, i * preffics.mapCoordinateCorrector, 8, 8);
             }
-            getBatch().draw(tex2, (int) player.getX() / preffics.mapCoordinateCorrector, (int) player.getY() / preffics.mapCoordinateCorrector, 8, 8);
+            getBatch().draw(tex2, player.getX() / preffics.mapCoordinateCorrector, player.getY() / preffics.mapCoordinateCorrector, 8, 8);
             try {
                 for (Grid2d.MapNode mapNode : player.path) {
                     getBatch().draw(tex2, mapNode.x * preffics.mapCoordinateCorrector, mapNode.y * preffics.mapCoordinateCorrector, 8, 8);
@@ -220,7 +221,7 @@ public abstract class BaseRoom extends Stage  {
 
     private void onLoading(Preffics preffics) {
         preffics.updateLoading();
-        showText( preffics.getLanguage().loading + ": " + ((int)preffics.getLoadingProgress()), Preffics.SCREEN_WIDTH / 2 - 250, Preffics.SCREEN_HEIGHT / 2 , 2, Color.CORAL);
+        showText(preffics.getLanguage().loading + ": " + ((int) preffics.getLoadingProgress()), Preffics.SCREEN_WIDTH / 2 - 250, Preffics.SCREEN_HEIGHT / 2, 2, Color.CORAL);
     }
 
     protected void showText(String str, int x, int y, int scale, Color color) {
@@ -232,16 +233,16 @@ public abstract class BaseRoom extends Stage  {
     }
 
     private void onLoaded(Preffics preffics) {
-        if(background == null) {
+        if (background == null) {
             background = preffics.getByPath(BACKGROUND_PATH_TAG, Texture.class);
             createObjects(preffics);
             createButtons();
-        }else {
-            for(Actor objectData: objectGroup.getChildren()){
-                if(objectData.getClass() == ObjectData.class){
+        } else {
+            for (Actor objectData : objectGroup.getChildren()) {
+                if (objectData.getClass() == ObjectData.class) {
                     ObjectData obj = ((ObjectData) objectData);
                     boolean oneFrame = false;
-                    for (Npc npc: npcs){
+                    for (Npc npc : npcs) {
                         if (obj.name.equalsIgnoreCase(npc.playerCondition.name())) {
                             oneFrame = true;
                             break;
@@ -266,18 +267,18 @@ public abstract class BaseRoom extends Stage  {
     }
 
     private void createObjects(Preffics preffics) {
-        try{
+        try {
             TextureAtlas textureAtlas = new TextureAtlas(preffics.getPath() + "screens/" + ROOM_TAG + "/objects/objects.atlas");
             final ArrayList<ObjectData> objectList = preffics.fromObjectFromJson("screens/" + ROOM_TAG + "/objects/objects.json", ArrayList.class);
-            for (ObjectData object: objectList){
+            for (ObjectData object : objectList) {
                 object.setAtlas(textureAtlas);
                 object.addListener(getEventListener(object.name, () -> object.setCertainFrame(true)));
 
                 log(object.name + ", " + object.x + ", " + object.y);
                 objectGroup.addActor(object);
             }
-        }catch (Exception e){
-
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -293,9 +294,10 @@ public abstract class BaseRoom extends Stage  {
         }
     }
 
-    protected void orderExceptions(int i, int j) { }
+    protected void orderExceptions(int i, int j) {
+    }
 
-    TextButton.TextButtonStyle getTextButtonStyleFromFile(Skin skin, String name){
+    TextButton.TextButtonStyle getTextButtonStyleFromFile(Skin skin, String name) {
         final TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.font = FontFactory.font;
         textButtonStyle.fontColor = Color.BLACK;
@@ -315,18 +317,18 @@ public abstract class BaseRoom extends Stage  {
         setCommonButtons();
     }
 
-    public void setCommonButtons(){
-        addButton("map", "map","", 10, 800, 125, 125, 1f, ()-> interScreenCommunication.openMap());
-        addButton("optionButton", "optionButton","", 10,940, 125, 125, 1f, ()-> interScreenCommunication.openOptions());
-        addButton("optionButton", "optionButton","", 10,660, 125, 125, 1f, ()-> interScreenCommunication.openInventory(pauseGame()));
-        addButton("optionButton", "optionButton","", 10,520, 125, 125, 1f, ()-> interScreenCommunication.openPerkMenu(pauseGame()));
+    public void setCommonButtons() {
+        addButton("map", "map", "", 10, 800, 125, 125, 1f, () -> interScreenCommunication.openMap());
+        addButton("optionButton", "optionButton", "", 10, 940, 125, 125, 1f, () -> interScreenCommunication.openOptions());
+        addButton("optionButton", "optionButton", "", 10, 660, 125, 125, 1f, () -> interScreenCommunication.openInventory(pauseGame()));
+        addButton("optionButton", "optionButton", "", 10, 520, 125, 125, 1f, () -> interScreenCommunication.openPerkMenu(pauseGame()));
     }
 
     public void addButton(String name, String style, String text, int x, int y, int w, int h, float scale, Runnable runnable) {
-        buttonGroup.addActor(getTextButton(name, style,text, x, y, w, h, scale, runnable));
+        buttonGroup.addActor(getTextButton(name, style, text, x, y, w, h, scale, runnable));
     }
 
-    void log(String msg){
+    void log(String msg) {
         System.out.println(ROOM_TAG + ": " + msg);
     }
 

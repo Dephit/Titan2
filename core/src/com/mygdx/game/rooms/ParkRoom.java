@@ -9,6 +9,7 @@ import com.mygdx.game.Player;
 import com.mygdx.game.PlayerCondition;
 import com.mygdx.game.interfaces.OnClickCallback;
 
+//TODO make this room
 public class ParkRoom extends BaseRoom {
 
     public ParkRoom() {
@@ -19,7 +20,8 @@ public class ParkRoom extends BaseRoom {
 
     public ParkRoom(InterScreenCommunication _communication, Player player) {
         super(_communication, "park", player);
-        player.setPlayersAction(PlayerCondition.stay, -200, 250, ()->{});
+        player.setPlayersAction(PlayerCondition.stay, -200, 250, () -> {
+        });
     }
 
 
@@ -44,21 +46,21 @@ public class ParkRoom extends BaseRoom {
     }
 
     @Override
-    public void onClose(){
+    public void onClose() {
         openMap();
     }
 
     private void showWorkMenu() {
         interScreenCommunication.showDialog(
-                getLanguage().walkInThePark,
-                getLanguage().walkToRecoverYourHead,
-                getLanguage().doWalk,
-                getLanguage().cancel,
-                (o)-> {
-                    callOnClose = true;
-                    //onClose();
-                },
-                (o)-> showWorkProgress()
+            getLanguage().walkInThePark,
+            getLanguage().walkToRecoverYourHead,
+            getLanguage().doWalk,
+            getLanguage().cancel,
+            (o) -> {
+                callOnClose = true;
+                //onClose();
+            },
+            (o) -> showWorkProgress()
 
         );
     }
@@ -74,27 +76,27 @@ public class ParkRoom extends BaseRoom {
             };
 
             interScreenCommunication.showProgressBar(
-                    getLanguage().walkingInProgress,
-                    //onEnd
-                    (OnClickCallback) (o) -> {
-                        player.setPlayerPosition(((int) player.getX()), (int) player.getY(), PlayerCondition.stay);
+                getLanguage().walkingInProgress,
+                //onEnd
+                (OnClickCallback) (o) -> {
+                    player.setPlayerPosition(((int) player.getX()), (int) player.getY(), PlayerCondition.stay);
+                    runnable.run();
+                },
+                //onUpdate
+                () -> {
+                    if (player.exerciseManager.energy.getCurrentAmount() <= 0 || player.exerciseManager.health.getCurrentAmount() <= 0) {
+                        player.postNotificationMessage(getLanguage().youHaveNoEnergyOrHealth);
                         runnable.run();
-                    },
-                    //onUpdate
-                    () -> {
-                        if(player.exerciseManager.energy.getCurrentAmount() <= 0 || player.exerciseManager.health.getCurrentAmount() <= 0){
-                            interScreenCommunication.showToast(getLanguage().youHaveNoEnergyOrHealth);
-                            runnable.run();
-                            return false;
-                        }
-                        player.exerciseManager.onPark();
-                        return player.exerciseManager.energy.getCurrentAmount() > 0 && player.exerciseManager.health.getCurrentAmount() > 0 && workInProgress;
-                    },
-                    //onClose
-                    (o) -> runnable.run()
+                        return false;
+                    }
+                    player.exerciseManager.onPark();
+                    return player.exerciseManager.energy.getCurrentAmount() > 0 && player.exerciseManager.health.getCurrentAmount() > 0 && workInProgress;
+                },
+                //onClose
+                (o) -> runnable.run()
             );
         } else {
-            interScreenCommunication.showToast(getLanguage().youHaveNoEnergyOrHealth);
+            player.postNotificationMessage(getLanguage().youHaveNoEnergyOrHealth);
             openMap();
         }
     }
@@ -115,13 +117,13 @@ public class ParkRoom extends BaseRoom {
             if (objectGroup.getChildren().get(i).getName().contains("player")) {
                 Npc pl = (Npc) objectGroup.getChildren().get(i);
                 if ((pl.playerCondition.equals(PlayerCondition.bench) ||
-                        pl.playerCondition.equals(PlayerCondition.pullUps) ||
-                        pl.playerCondition.equals(PlayerCondition.legPress) ||
-                        pl.playerCondition.equals(PlayerCondition.sitting) ||
-                        pl.playerCondition.equals(PlayerCondition.sittingRev) ||
-                        pl.playerCondition.equals(PlayerCondition.hiper) ||
-                        pl.playerCondition.equals(PlayerCondition.pushUps)) ||
-                        pl.playerCondition.equals(PlayerCondition.pcSitting))
+                    pl.playerCondition.equals(PlayerCondition.pullUps) ||
+                    pl.playerCondition.equals(PlayerCondition.legPress) ||
+                    pl.playerCondition.equals(PlayerCondition.sitting) ||
+                    pl.playerCondition.equals(PlayerCondition.sittingRev) ||
+                    pl.playerCondition.equals(PlayerCondition.hiper) ||
+                    pl.playerCondition.equals(PlayerCondition.pushUps)) ||
+                    pl.playerCondition.equals(PlayerCondition.pcSitting))
                     if (pl.getName().equals("player"))
                         objectGroup.getChildren().swap(i, objectGroup.getChildren().size - 1);
                     else

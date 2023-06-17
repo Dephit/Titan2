@@ -17,5 +17,14 @@ sealed class DialogState {
         val onAgree: () -> Unit = {}
     ): DialogState()
 
+    class ShowDialogWithCustomButtonText(
+        val titleRes: String,
+        val subtitleRes: String,
+        val agreeText: String,
+        val closeText: String,
+        val onClose: () -> Unit = {},
+        val onAgree: () -> Unit = {}
+    ): DialogState()
+
     object None : DialogState()
 }

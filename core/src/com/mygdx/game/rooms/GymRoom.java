@@ -116,7 +116,7 @@ public class GymRoom extends BaseRoom {
     }
 
     private void setExercise(Runnable runnable, PlayerCondition playerCondition) {
-        if(!someoneDoingIt(playerCondition)) {
+        if(!isItemBusy(playerCondition)) {
             runnable.run();
         }else{
             player.notificationManager.addMessage(getLanguage().thisIsTaken);
@@ -132,26 +132,24 @@ public class GymRoom extends BaseRoom {
     }
 
     private void setUpSquat() {
-        if(!someoneDoingIt(PlayerCondition.squat)) {
+        if(!isItemBusy(PlayerCondition.squat)) {
             player.setModerateSquat();
         }else{
-            interScreenCommunication.showToast(getLanguage().thisIsTaken);
+            player.postNotificationMessage(getLanguage().thisIsTaken);
         }
     }
 
-    private boolean someoneDoingIt(PlayerCondition condition) {
-        boolean isDoing = false;
+    private boolean isItemBusy(PlayerCondition condition) {
         for (Npc npc : npcs){
             if (npc.playerCondition == condition) {
-                isDoing = true;
-                break;
+                return true;
             }
         }
-        return isDoing;
+        return false;
     }
 
     private void setTalkingToAGirl(Preffics preffics) {
-        player.setPath(1025, 450, 0, 0, lookinUp, () -> {
+        player.goToDestination(1025, 450, 0, 0, lookinUp, () -> {
             Message message = new Message("Girl",
                     preffics.getLanguage().armGirlDialogTree,
                     preffics.getLanguage().armGirlRandomText
@@ -162,7 +160,7 @@ public class GymRoom extends BaseRoom {
     }
 
     private void setTalkingToBicepsGuy(Preffics preffics) {
-            player.setPath(400, 300, 0, 0, lookinLeft, () -> {
+            player.goToDestination(400, 300, 0, 0, lookinLeft, () -> {
                 Message message = new Message(
                         "Guy",
                         new ArrayList<>(),
@@ -174,7 +172,7 @@ public class GymRoom extends BaseRoom {
     }
 
     private void setTalkingCoach(Preffics preffics) {
-        player.setPath(350, 50, 0, 0, lookinLeft, () -> {
+        player.goToDestination(350, 50, 0, 0, lookinLeft, () -> {
             Message message = new Message("Coach",
                     preffics.getLanguage().coachDialogTree,
                     preffics.getLanguage().coachRandomText

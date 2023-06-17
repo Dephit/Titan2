@@ -5,11 +5,16 @@ import com.mygdx.game.Stat;
 import com.mygdx.game.model.Notification;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class NotificationManager {
 
-    public NotificationManager(){
+    public NotificationManager() {
+
+    }
+
+    @Deprecated()
+    //Addes testing messages used in testing
+    private void addTestMessages() {
         Notification not1 = new Notification();
         not1.showTime = 10000L;
         not1.message = "message 1";
@@ -26,48 +31,51 @@ public class NotificationManager {
         notificationList.add(not3);
     }
 
-    public ArrayList<Notification> notificationList = new ArrayList();
+    public ArrayList<Notification> getNotificationList() {
+        return notificationList;
+    }
 
-    public void countNotification(){
-        try{
+    private final ArrayList<Notification> notificationList = new ArrayList<>();
+
+    public void countNotification() {
+        try {
             for (Notification next : notificationList) {
                 next.showTime -= 100;
                 if (next.showTime <= 0) {
-                    //notificationList.remove(next);
                     next.show = false;
                 }
             }
-        }catch (Exception ignored){
+        } catch (Exception ignored) {
 
         }
     }
 
     public void addNewLevelNotification(Exercise exercise) {
         notificationList.add(
-                new Notification(
-                        exercise.condition + " is reached level " + exercise.LVL,
-                        10000L
-                )
+            new Notification(
+                exercise.condition + " is reached level " + exercise.LVL,
+                10000L
+            )
         );
         exercise.newLevelReached = false;
     }
 
-    public void manageStats(Stat energy, Stat health/*, Stat tiredness*/) {
-        if(energy.value <= 0 && !energy.isZero){
-            notificationList.add(new Notification("Your energy level is zero, go to sleep",15000L));
+    public void manageStats(Stat energy, Stat health) {
+        if (energy.value <= 0 && !energy.isZero) {
+            notificationList.add(new Notification("Your energy level is zero, go to sleep", 15000L));
             energy.isZero = true;
         }
-        if(health.value <= 0 && !health.isZero){
-            notificationList.add(new Notification("Your too hungry to do this, go to eat",15000L));
+        if (health.value <= 0 && !health.isZero) {
+            notificationList.add(new Notification("Your too hungry to do this, go to eat", 15000L));
             health.isZero = true;
         }
-        /*if(tiredness.value <= 0 && !tiredness.isZero){
-            notificationList.add(new Notification("Your are tired, go to relax",15000L));
-            tiredness.isZero = true;
-        }*/
+
     }
 
     public void addMessage(String msg) {
-        notificationList.add(new Notification(msg, 10000L));
+        Notification newNotification = new Notification(msg, 10000L);
+        if(!notificationList.contains(newNotification)){
+            notificationList.add(newNotification);
+        }
     }
 }

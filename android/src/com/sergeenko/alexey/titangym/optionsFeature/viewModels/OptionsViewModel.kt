@@ -1,7 +1,6 @@
 package com.sergeenko.alexey.titangym.optionsFeature.viewModels;
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import com.sergeenko.alexey.titangym.core.AudioManager
 
@@ -14,6 +13,7 @@ class OptionsViewModel(
 
     fun changeMusicSettings() {
         audioManager.changeMusic()
+        _musicState.value = audioManager.isMusicOn
     }
 
 }

@@ -16,10 +16,10 @@ public class StringAlignUtils extends Format {
     }
 
     /** Current justification for formatting */
-    private Alignment currentAlignment;
+    private final Alignment currentAlignment;
 
     /** Current max length in a line */
-    private int maxChars;
+    private final int maxChars;
 
     public StringAlignUtils(int maxChars, Alignment align) {
         switch (align) {

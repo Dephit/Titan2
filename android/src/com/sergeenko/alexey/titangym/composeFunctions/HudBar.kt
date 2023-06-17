@@ -14,7 +14,8 @@ fun HudBar(
     player: Player,
     onActiveItemClick: (Item) -> Unit = {}
 ) {
-    val lastFiveMessages: List<Notification> = player.notificationManager.notificationList.filter { it.show }.sortedByDescending { it.showTime }.take(5)
+    val lastFiveMessages: List<Notification> =
+        player.notificationManager.notificationList.filter { it.show }.sortedByDescending { it.showTime }.take(5)
     val exerciseProgress: Float? = player.isInExercise?.let { bar -> bar.progress / bar.limit }
 
     Box(
@@ -26,7 +27,7 @@ fun HudBar(
         Column(verticalArrangement = Arrangement.Bottom) {
             CurrentExercise(exerciseProgress = exerciseProgress, modifier = Modifier.fillMaxHeight())
         }
-        NotificationList(lastFiveMessages){
+        NotificationList(lastFiveMessages) {
             player.notificationManager.countNotification()
         }
     }

@@ -12,7 +12,6 @@ import com.mygdx.game.model.enums.InventoryType
 import com.mygdx.game.model.items.Item
 import com.mygdx.game.model.items.OnItemClick
 import com.sergeenko.alexey.titangym.core.PreferenceManager
-import com.sergeenko.alexey.titangym.featureGameScreen.models.ComposeState
 import com.sergeenko.alexey.titangym.featureGameScreen.models.DialogState
 import com.sergeenko.alexey.titangym.featureGameScreen.models.PlayerState
 import com.sergeenko.alexey.titangym.featureGameScreen.models.UiState
@@ -23,12 +22,6 @@ class GameRequestHandler(
 ) : IActivityRequestHandler {
 
     val state = mutableStateOf(UiState())
-
-    override fun showToast(s: String) {
-        /*fragment.runOnUiThread {
-            Toast.makeText(context, s, Toast.LENGTH_SHORT).show()
-        }*/
-    }
 
     override fun showPlayers(
         playerList: MutableList<CompetitionOpponent>,
@@ -50,11 +43,12 @@ class GameRequestHandler(
         onProgressUpdate: OnClickBooleanCallback,
         onClose: OnClickCallback
     ) {
-        postState(ComposeState.ShowProgressBar(
-            title = title,
-            done = { onProgressEnd.call(null) },
-            isConditionSatisfied = { onProgressUpdate.isConditionOk },
-        )
+        postState(
+            ComposeState.ShowProgressBar(
+                title = title,
+                done = { onProgressEnd.call(null) },
+                isConditionSatisfied = { onProgressUpdate.isConditionOk },
+            )
         ) { onClose.call(null) }
     }
 
@@ -84,7 +78,7 @@ class GameRequestHandler(
 
     override fun openPerkMenu(player: Player, pauseGame: Runnable) {
         postState(
-            ComposeState.ShowPerkMenu{
+            ComposeState.ShowPerkMenu {
                 /*val notificationManager = player.notificationManager
 
                 val playerHasPerk = player.inventoryManager?.hasPerk(it as PerkItem?) == true
@@ -108,7 +102,7 @@ class GameRequestHandler(
                 pauseGame.run()*/
                 pauseGame.run()
             }
-        ){
+        ) {
             pauseGame.run()
         }
     }
@@ -134,7 +128,7 @@ class GameRequestHandler(
         )
     }
 
-    override fun openRefrigerator(player: Player, onItemUse: OnItemClick,onClose: Runnable) {
+    override fun openRefrigerator(player: Player, onItemUse: OnItemClick, onClose: Runnable) {
         postState(
             ComposeState
                 .OpenRefrigerator(
@@ -159,7 +153,7 @@ class GameRequestHandler(
             ) {
                 showItemDialog(it, onBuyRunnable)
             }
-        ){
+        ) {
             onCancel.run()
         }
     }
@@ -169,7 +163,7 @@ class GameRequestHandler(
         subtitle: String,
         onClose: OnClickCallback,
         onAgree: OnClickCallback
-    ){
+    ) {
         postDialogState(
             DialogState.ShowDialog(
                 title,
@@ -194,6 +188,22 @@ class GameRequestHandler(
         onClose: OnClickCallback,
         onAgree: OnClickCallback
     ) {
+        postDialogState(
+            DialogState.ShowDialogWithCustomButtonText(
+                title,
+                subtitle,
+                agreeText,
+                closeText,
+                onAgree = {
+                    postDialogState(DialogState.None)
+                    onAgree.call(null)
+                },
+                onClose = {
+                    postDialogState(DialogState.None)
+                    onClose.call(null)
+                }
+            )
+        )
     }
 
     override fun showNextSetMenu(
@@ -209,7 +219,7 @@ class GameRequestHandler(
             ) {
                 onFirstClick.call(null)
             }
-        ){
+        ) {
             onClose.call(null)
         }
     }

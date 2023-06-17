@@ -1,46 +1,21 @@
 package com.sergeenko.alexey.titangym.composeFunctions
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.LinearProgressIndicator
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterVertically
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.graphics.Shadow
-import androidx.compose.ui.modifier.modifierLocalConsumer
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.unit.ExperimentalUnitApi
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.TextUnitType
-import androidx.compose.ui.unit.dp
-import com.mygdx.game.Exercise
-import com.mygdx.game.Player
-import com.mygdx.game.model.items.Item
-import com.sergeenko.alexey.titangym.blockModifier
-import com.sergeenko.alexey.titangym.clipRound
-import com.sergeenko.alexey.titangym.items.ExerciseStatItem
-import com.sergeenko.alexey.titangym.linearProgressModifier
-import com.sergeenko.alexey.titangym.round5Modifier
-import com.sergeenko.alexey.titangym.R as R
+import androidx.compose.foundation.lazy.*
+import androidx.compose.material.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.geometry.*
+import androidx.compose.ui.graphics.*
+import androidx.compose.ui.res.*
+import androidx.compose.ui.text.*
+import androidx.compose.ui.text.style.*
+import androidx.compose.ui.unit.*
+import com.mygdx.game.*
+import com.sergeenko.alexey.titangym.*
+import com.sergeenko.alexey.titangym.R
+import com.sergeenko.alexey.titangym.items.*
 
-@OptIn(ExperimentalUnitApi::class)
 @Composable
 fun DrawStatsMenu(
     player: Player,
@@ -50,7 +25,6 @@ fun DrawStatsMenu(
 
     val healthProgress = playerExerciseManager.health.currentAmount.toFloat() / 100f
     val energyProgress = playerExerciseManager.energy.currentAmount.toFloat() / 100f
-    //val tirednessProgress = playerExerciseManager.tiredness.currentAmount.toFloat() / 100f
 
     val stats = listOf(player.exerciseManager.squatExr, player.exerciseManager.bench, player.exerciseManager.deadlift)
 
@@ -93,22 +67,6 @@ fun DrawStatsMenu(
             }
             Spacer(height = 5.dp)
         }
-        /*item {
-            Column(
-                modifier = blockModifier
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Start,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    //Text(text = stringResource(id = R.string.tiredness_bar), style = shadow)
-                    //StatExercise(tirednessProgress, progressColor = Color.Green, modifierColor = Modifier)
-                }
-                Text(text = stringResource(id = R.string.tiredness_bar_description), textAlign = TextAlign.Start, style = shadow)
-            }
-            Spacer(height = 5.dp)
-        }*/
 
         items(stats){
             Column(

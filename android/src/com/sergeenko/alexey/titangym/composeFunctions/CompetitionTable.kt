@@ -15,7 +15,7 @@ import com.mygdx.game.Player
 import com.mygdx.game.interfaces.OnClickCallback
 import com.mygdx.game.model.CompetitionOpponent
 import com.sergeenko.alexey.titangym.R
-import com.sergeenko.alexey.titangym.featureGameScreen.models.ComposeState
+import com.sergeenko.alexey.titangym.fragments.ComposeState
 import kotlin.random.Random
 
 @Composable

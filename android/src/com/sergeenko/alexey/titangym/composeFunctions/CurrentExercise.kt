@@ -1,20 +1,16 @@
 package com.sergeenko.alexey.titangym.composeFunctions
 
-import androidx.compose.animation.animateColorAsState
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
+import androidx.compose.animation.*
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.LinearProgressIndicator
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
-import com.mygdx.game.Exercise
-import com.sergeenko.alexey.titangym.fillMaxHeightModifier
-import com.sergeenko.alexey.titangym.linearProgressModifier
-import com.sergeenko.alexey.titangym.round5Modifier
+import androidx.compose.foundation.shape.*
+import androidx.compose.material.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
+import androidx.compose.ui.draw.*
+import androidx.compose.ui.graphics.*
+import androidx.compose.ui.unit.*
+import com.sergeenko.alexey.titangym.*
 
 @Composable
 fun CurrentExercise(

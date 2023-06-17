@@ -6,7 +6,7 @@ import android.media.MediaPlayer
 class AudioManager(
     private val context: Context,
     private val preferenceManager: PreferenceManager
-    ) {
+) {
 
     private val mediaPlayer by lazy{
         MediaPlayer()
@@ -31,7 +31,7 @@ class AudioManager(
         preferenceManager.isMusicOn = true
     }
 
-    fun stopMusic(){
+    private fun stopMusic(){
         mediaPlayer.stop()
         preferenceManager.isMusicOn = false
     }

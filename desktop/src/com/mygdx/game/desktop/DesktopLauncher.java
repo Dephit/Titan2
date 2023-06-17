@@ -52,9 +52,6 @@ public class DesktopLauncher implements IActivityRequestHandler {
 		return null;
 	}
 
-	@Override
-	public void showToast(String s) {
 
-	}
 
 }

@@ -1,25 +1,19 @@
 package com.sergeenko.alexey.titangym.composeFunctions
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.toMutableStateList
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
 import androidx.compose.ui.Alignment.Companion.CenterVertically
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import com.mygdx.game.Player
-import com.sergeenko.alexey.titangym.featureGameScreen.models.ComposeState
+import androidx.compose.ui.unit.*
+import com.mygdx.game.*
+import com.sergeenko.alexey.titangym.fragments.*
 
 @Composable
-fun DrawPlayerStates(
+fun DrawPlayerInvertory(
     player: Player,
     state: ComposeState.OpenInventory,
     onClose: () -> Unit
 ) {
-    val container = remember {
-        player.inventoryManager.inventory.items.toMutableStateList()
-    }
-
     return Row(
         horizontalArrangement = Arrangement.SpaceAround,
         verticalAlignment = CenterVertically,
@@ -28,7 +22,7 @@ fun DrawPlayerStates(
     ) {
         DrawStatsMenu(player)
         DrawInventory(
-            container = container,
+            container = player.inventoryManager.inventory.items,
             itemsLimit = player.inventoryManager.supplements.totalCapacity,
             onItemClick = { state.onItemClicked.onClick(it) },
             onClose = onClose,

@@ -1,5 +1,7 @@
 package com.mygdx.game.model;
 
+import java.util.Objects;
+
 public class Notification {
 
     public Notification(){
@@ -20,4 +22,18 @@ public class Notification {
     public Long showTime = 5000L;
 
     public Boolean show = true;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Notification that = (Notification) o;
+
+        return message.contentEquals(that.message) && Objects.equals(showTime, that.showTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(message, showTime);
+    }
 }

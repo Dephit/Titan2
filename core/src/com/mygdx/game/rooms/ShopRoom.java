@@ -11,11 +11,9 @@ import com.mygdx.game.Npc;
 import com.mygdx.game.Player;
 import com.mygdx.game.PlayerCondition;
 import com.mygdx.game.Style;
-import com.mygdx.game.interfaces.OnClickCallback;
 import com.mygdx.game.model.Container;
 import com.mygdx.game.model.ContiniousItem;
 import com.mygdx.game.model.enums.InventoryType;
-import com.mygdx.game.model.items.Item;
 import com.mygdx.game.model.items.OnItemClick;
 import com.mygdx.game.model.shop.EquipmentShopMenu;
 import com.mygdx.game.model.shop.ShopMenu;
@@ -44,27 +42,27 @@ public class ShopRoom extends BaseRoom {
     public void setCommonButtons(){
         super.setCommonButtons();
         addButton("watchLoli", Style.empty, "",  140, 280, 100, 200, 1f,
-                () -> player.setPath(300 , 300, PlayerCondition.watchLoli));
+                () -> player.goToDestination(300 , 300, PlayerCondition.watchLoli));
         addButton("watchAlc", Style.empty, "",  585, 460, 200, 250, 1f,
-                () -> player.setPath(685 , 410, PlayerCondition.watchShop));
+                () -> player.goToDestination(685 , 410, PlayerCondition.watchShop));
         addButton("watchAlc2", Style.empty, "",  785, 460, 200, 250, 1f,
-                () -> player.setPath(885 , 410, PlayerCondition.watchShop));
+                () -> player.goToDestination(885 , 410, PlayerCondition.watchShop));
         addButton("watchAlc3", Style.empty, "",  985, 460, 200, 250, 1f,
-                () -> player.setPath(1085 , 410, PlayerCondition.watchShop));
+                () -> player.goToDestination(1085 , 410, PlayerCondition.watchShop));
         addButton("watchAlc3", Style.empty, "",  1510, 360, 200, 250, 1f,
-                () -> player.setPath(1610 , 310,1610 , 310, PlayerCondition.stay, this::showBuySnackMenu)
+                () -> player.goToDestination(1610 , 310,1610 , 310, PlayerCondition.stay, this::showBuySnackMenu)
         );
         addButton("watchCam", Style.empty, "",   244, 700, 75, 75, 1f,
-                () -> player.setPath(360 , 385, PlayerCondition.watchCam));
+                () -> player.goToDestination(360 , 385, PlayerCondition.watchCam));
         addButton("talkToStaffBut", Style.empty, "",   230, 460, 75, 175, 1f,
-                () -> player.setPath(340 , 420,340 , 420, PlayerCondition.stay, this::talkToStaff));
+                () -> player.goToDestination(340 , 420,340 , 420, PlayerCondition.stay, this::talkToStaff));
         addButton("talkToCleanerBut", Style.empty, "",   1250, 430, 75, 155, 1f, this::talkToSanitaire);
         addButton("buyMenuBut", Style.empty, "",   1100, 200, 200, 200, 1f,
-                () -> player.setPath(1310 , 380,1310 , 380, PlayerCondition.stay, this::showBuyMenu));
+                () -> player.goToDestination(1310 , 380,1310 , 380, PlayerCondition.stay, this::showBuyMenu));
     }
 
     private void talkToSanitaire() {
-        player.setPath(1310 , 380, 0, 0, PlayerCondition.lookinUp, () -> {
+        player.goToDestination(1310 , 380, 0, 0, PlayerCondition.lookinUp, () -> {
             Message message = new Message("Sanitar",
                     new ArrayList<>(),
                     getLanguage().sanitarRandomText
@@ -76,7 +74,7 @@ public class ShopRoom extends BaseRoom {
 
     private void talkToStaff() {
         Runnable pauseRunnable = pauseGame(
-                () -> player.setPath(340 , 420, PlayerCondition.stay)
+                () -> player.goToDestination(340 , 420, PlayerCondition.stay)
         );
 
 
@@ -94,7 +92,7 @@ public class ShopRoom extends BaseRoom {
 
     private void showBuySnackMenu() {
         Runnable pauseRunnable = pauseGame(
-                () -> player.setPath(1610 , 310, PlayerCondition.stay)
+                () -> player.goToDestination(1610 , 310, PlayerCondition.stay)
         );
 
 
@@ -108,7 +106,7 @@ public class ShopRoom extends BaseRoom {
 
     private void showBuyMenu() {
         Runnable pauseRunnable = pauseGame(
-                () -> player.setPath(900 , 500, 900, 500, PlayerCondition.stay)
+                () -> player.goToDestination(900 , 500, 900, 500, PlayerCondition.stay)
         );
 
         OnItemClick onBuyRunnable = object -> {

@@ -18,7 +18,14 @@ fun DialogComposable(dialogState: DialogState){
     when(dialogState){
         DialogState.None -> { }
         is DialogState.ShowDialog -> {
-
+            AlertDialogSample(
+                title = dialogState.titleRes,
+                subtitle = dialogState.subtitleRes,
+                agreeText = context.getString(R.string.ok),
+                closeText = context.getString(R.string.close),
+                onAgree = dialogState.onAgree,
+                onClose = dialogState.onClose
+            )
         }
         is DialogState.ShowItemDialog -> {
             AlertDialogSample(
@@ -26,6 +33,16 @@ fun DialogComposable(dialogState: DialogState){
                 subtitle = dialogState.item.description,
                 agreeText = context.getString(R.string.ok),
                 closeText = context.getString(R.string.close),
+                onAgree = dialogState.onAgree,
+                onClose = dialogState.onClose
+            )
+        }
+        is DialogState.ShowDialogWithCustomButtonText -> {
+            AlertDialogSample(
+                title = dialogState.titleRes,
+                subtitle = dialogState.subtitleRes,
+                agreeText = dialogState.agreeText,
+                closeText = dialogState.closeText,
                 onAgree = dialogState.onAgree,
                 onClose = dialogState.onClose
             )

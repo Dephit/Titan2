@@ -16,7 +16,7 @@ import com.mygdx.game.rooms.CompetitionRoom;
 import com.mygdx.game.rooms.GymRoom;
 import com.mygdx.game.rooms.MapRoom;
 import com.mygdx.game.rooms.ParkRoom;
-import com.mygdx.game.rooms.RoomRoom;
+import com.mygdx.game.rooms.HomeRoom;
 import com.mygdx.game.rooms.ShopRoom;
 import com.mygdx.game.rooms.WorkRoom;
 
@@ -24,7 +24,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
-import java.util.Objects;
 
 public class MyGdxGame implements ApplicationListener, InterScreenCommunication {
 
@@ -48,8 +47,8 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
     }
 
     public MyGdxGame() {
-     //   myRequestHandler = handler;
-       // saves = player;
+        //   myRequestHandler = handler;
+        // saves = player;
     }
 
     public MyGdxGame(IActivityRequestHandler handler, String player) {
@@ -61,7 +60,7 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
     public void create() {
         Preffics.getInstance();
         this.player = new Player();
-        if(saves != null){
+        if (saves != null) {
             try {
                 JSONObject jsonObject = new JSONObject(saves);
                 this.player.fromJson(jsonObject);
@@ -71,26 +70,32 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
                 e.printStackTrace();
                 openGym();
             }
-        }else openGym();
+        } else openGym();
     }
 
     private void openRoom(String room_tag) {
-        if(Objects.equals(room_tag, "gym")){
-            openGym();
-        }else if(Objects.equals(room_tag, "map")){
-            openMap();
-        }else if(Objects.equals(room_tag, "park")){
-            openPark();
-        }else if(Objects.equals(room_tag, "room")){
-            openRoom();
-        }else if(Objects.equals(room_tag, "shop")){
-            openShop();
-        }else if(Objects.equals(room_tag, "work")){
-            openWork();
-        }else if(Objects.equals(room_tag, "competition")){
-            openCompetition();
-        }else{
-            openGym();
+        switch (room_tag) {
+            case "map":
+                openMap();
+                break;
+            case "park":
+                openPark();
+                break;
+            case "room":
+                openRoom();
+                break;
+            case "shop":
+                openShop();
+                break;
+            case "work":
+                openWork();
+                break;
+            case "competition":
+                openCompetition();
+                break;
+            default:
+                openGym();
+                break;
         }
     }
 
@@ -104,7 +109,7 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.onRender();
-        if(player != null){
+        if (player != null) {
             showHud();
         }
     }
@@ -145,11 +150,6 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
     }
 
     @Override
-    public void showToast(String msg) {
-        myRequestHandler.showToast(msg);
-    }
-
-    @Override
     public void showPlayerList(List<CompetitionOpponent> playerList, Comp status, OnClickCallback runnable) {
         myRequestHandler.showPlayers(playerList, status, runnable);
     }
@@ -178,72 +178,62 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
     @Override
     public void openMap() {
         setStage(
-                new MapRoom(this, player),
-                new InputListener(){
-                    @Override
-                    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                        stage.onTouchDown();
-                        return super.touchDown(event, x, y, pointer, button);
-                    }
+            new MapRoom(this, player),
+            new InputListener() {
+                @Override
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    stage.onTouchDown();
+                    return super.touchDown(event, x, y, pointer, button);
                 }
+            }
         );
     }
 
     private void setStage(BaseRoom room, InputListener inputListener) {
-        //if(stage == null /*|| adCount != 5*/){
-            stage = room;
-            stage.addListener(inputListener);
-            adCount++;
-        //}else {
-            /*adCount = 0;
-            myRequestHandler.showAd(
-                    () -> {
-                        stage = room;
-                        stage.addListener(inputListener);
-                    }
-            );*/
-     //   }
+        stage = room;
+        stage.addListener(inputListener);
+        adCount++;
     }
 
     @Override
     public void openGym() {
         setStage(
-                new GymRoom(this, player),
-                new InputListener(){
-                    @Override
-                    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                        stage.onTouchDown();
-                        return super.touchDown(event, x, y, pointer, button);
-                    }
+            new GymRoom(this, player),
+            new InputListener() {
+                @Override
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    stage.onTouchDown();
+                    return super.touchDown(event, x, y, pointer, button);
                 }
+            }
         );
     }
 
     @Override
     public void openRoom() {
         setStage(
-                new RoomRoom(this, player),
-                new InputListener(){
-                    @Override
-                    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                        stage.onTouchDown();
-                        return super.touchDown(event, x, y, pointer, button);
-                    }
+            new HomeRoom(this, player),
+            new InputListener() {
+                @Override
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    stage.onTouchDown();
+                    return super.touchDown(event, x, y, pointer, button);
                 }
+            }
         );
     }
 
     @Override
     public void openShop() {
         setStage(
-                new ShopRoom(this, player),
-                new InputListener(){
-                    @Override
-                    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                        stage.onTouchDown();
-                        return super.touchDown(event, x, y, pointer, button);
-                    }
+            new ShopRoom(this, player),
+            new InputListener() {
+                @Override
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    stage.onTouchDown();
+                    return super.touchDown(event, x, y, pointer, button);
                 }
+            }
         );
     }
 
@@ -251,14 +241,14 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
     @Override
     public void openWork() {
         setStage(
-                new WorkRoom(this, player),
-                new InputListener(){
-                    @Override
-                    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                        stage.onTouchDown();
-                        return super.touchDown(event, x, y, pointer, button);
-                    }
+            new WorkRoom(this, player),
+            new InputListener() {
+                @Override
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    stage.onTouchDown();
+                    return super.touchDown(event, x, y, pointer, button);
                 }
+            }
         );
     }
 
@@ -266,28 +256,28 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
     @Override
     public void openPark() {
         setStage(
-                new ParkRoom(this, player),
-                new InputListener(){
-                    @Override
-                    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                        stage.onTouchDown();
-                        return super.touchDown(event, x, y, pointer, button);
-                    }
+            new ParkRoom(this, player),
+            new InputListener() {
+                @Override
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    stage.onTouchDown();
+                    return super.touchDown(event, x, y, pointer, button);
                 }
+            }
         );
     }
 
     @Override
     public void openCompetition() {
         setStage(
-                new CompetitionRoom(this, player),
-                new InputListener(){
-                    @Override
-                    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                        //stage.onTouchDown();
-                        return super.touchDown(event, x, y, pointer, button);
-                    }
+            new CompetitionRoom(this, player),
+            new InputListener() {
+                @Override
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    //stage.onTouchDown();
+                    return super.touchDown(event, x, y, pointer, button);
                 }
+            }
         );
 
     }
@@ -311,14 +301,13 @@ public class MyGdxGame implements ApplicationListener, InterScreenCommunication 
     @Override
     public void openInventory(Runnable runnable) {
         myRequestHandler
-                .openInventory(
-                        player,
-                        runnable,
-                        (item)-> {
-                            item.onUse(player);
-                            player.inventoryManager.inventory.removeItem(item);
-                            openInventory(runnable);
-                        });
+            .openInventory(
+                player,
+                runnable,
+                (item) -> {
+                    player.useItemAndRemove(item);
+                    openInventory(runnable);
+                });
     }
 
 }

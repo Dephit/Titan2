@@ -18,9 +18,9 @@ public class Player extends Npc {
     private static final String EXERCISE_MANAGER = "EXERCISE_MANAGER";
     private static final String INVENTORY_MANAGER = "INVENTORY_MANAGER";
 
-    public NotificationManager notificationManager = new NotificationManager();
-    public InventoryManager inventoryManager = new InventoryManager();
-    public PlayerExerciseManager exerciseManager;
+    public final NotificationManager notificationManager = new NotificationManager();
+    public final InventoryManager inventoryManager = new InventoryManager();
+    public final PlayerExerciseManager exerciseManager;
     public Day day = new Day();
 
     public CompetitionOpponent compValue;
@@ -28,9 +28,9 @@ public class Player extends Npc {
     public Player() {
         super("player");
         exerciseManager = new PlayerExerciseManager(this);
-        //setDebugPlayer();
     }
 
+    @Deprecated
     private void setDebugPlayer() {
         exerciseManager.setDebugValues();
         day.currentDay = 5;
@@ -39,7 +39,7 @@ public class Player extends Npc {
     @Override
     public void act(float delta) {
         super.act(delta);
-        switch (playerCondition){
+        switch (playerCondition) {
             case up:
             case down:
             case left:
@@ -49,70 +49,64 @@ public class Player extends Npc {
             case lookinLeft:
             case lookinRight:
             case stay:
-                break;
             case sleeping:
-                calculateRecovery(delta);
                 break;
             case pcSitting:
                 exerciseManager.onPC();
                 break;
         }
-        exerciseManager.act(delta);
+        exerciseManager.act();
     }
 
     @Override
     public void onAnimationEnd() {
         log(playerCondition.name());
-        if(playerCondition == PlayerCondition.compSquat || playerCondition == PlayerCondition.compBench || playerCondition == PlayerCondition.compDeadlift){
+        if (playerCondition == PlayerCondition.compSquat || playerCondition == PlayerCondition.compBench || playerCondition == PlayerCondition.compDeadlift) {
             setPlayerCondition(PlayerCondition.stay);
         }
-    }
-
-    private void calculateRecovery(float delta) {
-        exerciseManager.calculateRecovery(delta);
     }
 
     @Override
     boolean isAnimationFinished() {
         boolean isFinished = super.isAnimationFinished();
-        if(isFinished){
-            if(playerCondition != PlayerCondition.stay && playerCondition != PlayerCondition.compSquat
-                    && playerCondition != PlayerCondition.compDeadlift
-                    && playerCondition != PlayerCondition.compBench
-                    && playerCondition != PlayerCondition.lookinUp
-                    && playerCondition != PlayerCondition.sittingRev
-                    && playerCondition != PlayerCondition.sitting
-                    && playerCondition != PlayerCondition.lookinLeft
-                    && playerCondition != PlayerCondition.lookinRight
-                    && playerCondition != PlayerCondition.watchLoli
-                    && playerCondition != PlayerCondition.watchCam
-                    && playerCondition != PlayerCondition.watchShop
-                    && playerCondition != PlayerCondition.up
-                    && playerCondition != PlayerCondition.left
-                    && playerCondition != PlayerCondition.right
-                    && playerCondition != PlayerCondition.down)
-            day.addTime(this);
+        if (isFinished) {
+            if (playerCondition != PlayerCondition.stay && playerCondition != PlayerCondition.compSquat
+                && playerCondition != PlayerCondition.compDeadlift
+                && playerCondition != PlayerCondition.compBench
+                && playerCondition != PlayerCondition.lookinUp
+                && playerCondition != PlayerCondition.sittingRev
+                && playerCondition != PlayerCondition.sitting
+                && playerCondition != PlayerCondition.lookinLeft
+                && playerCondition != PlayerCondition.lookinRight
+                && playerCondition != PlayerCondition.watchLoli
+                && playerCondition != PlayerCondition.watchCam
+                && playerCondition != PlayerCondition.watchShop
+                && playerCondition != PlayerCondition.up
+                && playerCondition != PlayerCondition.left
+                && playerCondition != PlayerCondition.right
+                && playerCondition != PlayerCondition.down)
+                day.addTime(this);
         }
 
         return isFinished;
     }
 
-    public void buyItemToRefrigerator(Item item){
-        if(!inventoryManager.buyItemToRefrigerator(item)){
+    public void buyItemToRefrigerator(Item item) {
+        if (!inventoryManager.buyItemToRefrigerator(item)) {
             notificationManager.addMessage(getLanguage().refregiratorIsFull);
         }
     }
 
-    public void buyItemToInventory(Item item){
-        if(!inventoryManager.buyItemToInventory(item)){
+    public void buyItemToInventory(Item item) {
+        if (!inventoryManager.buyItemToInventory(item)) {
             notificationManager.addMessage(getLanguage().refregiratorIsFull);
         }
     }
 
-    public void buyEquipmentItem(ContiniousItem item){
-        if(item instanceof SupplementItem){
+    public void buyEquipmentItem(ContiniousItem item) {
+        if (item instanceof SupplementItem) {
             inventoryManager.buySupplement(this, item);
-        }else if(!inventoryManager.buyItemToEquipment(this, item)){
+        } else if (!inventoryManager.buyItemToEquipment(this, item)) {
             notificationManager.addMessage(getLanguage().refregiratorIsFull);
         }
     }
@@ -125,14 +119,14 @@ public class Player extends Npc {
         return exerciseManager.isInExercise();
     }
 
-    public void fromJson(JSONObject jsonObject){
+    public void fromJson(JSONObject jsonObject) {
         day.fromJson(jsonObject.optJSONObject(DAY));
         exerciseManager.fromJson(jsonObject.optJSONObject(EXERCISE_MANAGER));
         inventoryManager.fromJson(jsonObject.optJSONObject(INVENTORY_MANAGER));
 
     }
 
-    public JSONObject toJson(){
+    public JSONObject toJson() {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put(DAY, day.toJson());
@@ -145,5 +139,13 @@ public class Player extends Npc {
 
     }
 
+    public void useItemAndRemove(Item item) {
+        item.onUse(this);
+        inventoryManager.inventory.removeItem(item);
+    }
+
+    public void postNotificationMessage(String message) {
+        notificationManager.addMessage(message);
+    }
 }
 

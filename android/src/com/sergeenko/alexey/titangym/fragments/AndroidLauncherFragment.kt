@@ -1,20 +1,12 @@
 package com.sergeenko.alexey.titangym.fragments
 
-import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import androidx.compose.foundation.clickable
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.runtime.CompositionContext
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.compose.ui.platform.compositionContext
-import androidx.core.view.doOnAttach
 import androidx.navigation.fragment.findNavController
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration
 import com.badlogic.gdx.backends.android.AndroidFragmentApplication
@@ -22,14 +14,13 @@ import com.sergeenko.alexey.titangym.MainViewModel
 import com.sergeenko.alexey.titangym.R
 import com.sergeenko.alexey.titangym.composeFunctions.*
 import com.sergeenko.alexey.titangym.databinding.MainActivityBinding
-import com.sergeenko.alexey.titangym.featureGameScreen.models.ComposeState
 import com.sergeenko.alexey.titangym.featureGameScreen.models.PlayerState
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
 class AndroidLauncherFragment : AndroidFragmentApplication() {
 
-    private val viewModel: MainViewModel by viewModel{
+    private val viewModel: MainViewModel by viewModel {
         parametersOf(arguments?.getBoolean(MainMenuFragment.LOAD_PLAYER) ?: false)
     }
 
@@ -57,45 +48,66 @@ class AndroidLauncherFragment : AndroidFragmentApplication() {
             setContent {
                 MaterialTheme {
                     val gameState = viewModel.gameObserver.value
-                        val dialogState = gameState.dialogState
-                        if (gameState.playerState is PlayerState.HasPlayer) {
-                            val player = gameState.playerState.player
+                    val dialogState = gameState.dialogState
+                    if (gameState.playerState is PlayerState.HasPlayer) {
+                        val player = gameState.playerState.player
 
-                            HudBar(
-                                player = player,
-                                onActiveItemClick = {}
-                            )
-                            gameState.composeState.let { state ->
-                                when (state) {
-                                    ComposeState.None -> {}
-                                    ComposeState.OpenStats -> DrawStatsMenu(player = player)
-                                    is ComposeState.ShowPlayers -> PlayerList(state,
-                                        gameState.onClose)
-                                    is ComposeState.OpenRefrigerator -> DrawRefrigerator(player,
-                                        state,
-                                        gameState.onClose)
-                                    is ComposeState.OpenInventory -> DrawPlayerStates(player,
-                                        state,
-                                        gameState.onClose)
-                                    is ComposeState.ShowProgressBar -> DrawProgressBar(state,
-                                        gameState.onClose)
-                                    is ComposeState.Options -> {
-                                        navigateToOptions()
-                                    }
-                                    is ComposeState.OpenBuyingMenu -> DrawShopMenu(player,
-                                        state,
-                                        gameState.onClose)
-                                    is ComposeState.ShowCompetitionTable -> CompetitionTable(player = player,
-                                        state = state,
-                                        gameState.onClose)
-                                    is ComposeState.ShowPerkMenu -> DrawPerkMenu(player = player,
-                                        state,
-                                        onClose = gameState.onClose)
+                        HudBar(
+                            player = player,
+                            onActiveItemClick = {}
+                        )
+                        gameState.composeState.let { state ->
+                            when (state) {
+                                ComposeState.None -> {}
+                                ComposeState.OpenStats -> DrawStatsMenu(player = player)
+                                is ComposeState.ShowPlayers -> PlayerList(
+                                    state,
+                                    gameState.onClose
+                                )
+
+                                is ComposeState.OpenRefrigerator -> DrawRefrigerator(
+                                    player,
+                                    state,
+                                    gameState.onClose
+                                )
+
+                                is ComposeState.OpenInventory -> DrawPlayerInvertory(
+                                    player,
+                                    state,
+                                    gameState.onClose
+                                )
+
+                                is ComposeState.ShowProgressBar -> DrawProgressBar(
+                                    state,
+                                    gameState.onClose
+                                )
+
+                                is ComposeState.Options -> {
+                                    navigateToOptions()
                                 }
+
+                                is ComposeState.OpenBuyingMenu -> DrawShopMenu(
+                                    player,
+                                    state,
+                                    gameState.onClose
+                                )
+
+                                is ComposeState.ShowCompetitionTable -> CompetitionTable(
+                                    player = player,
+                                    state = state,
+                                    gameState.onClose
+                                )
+
+                                is ComposeState.ShowPerkMenu -> DrawPerkMenu(
+                                    player = player,
+                                    state,
+                                    onClose = gameState.onClose
+                                )
                             }
                         }
+                    }
 
-                        DialogComposable(dialogState)
+                    DialogComposable(dialogState)
                 }
             }
         }

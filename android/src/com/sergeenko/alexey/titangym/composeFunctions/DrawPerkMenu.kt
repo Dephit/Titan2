@@ -1,38 +1,18 @@
 package com.sergeenko.alexey.titangym.composeFunctions
 
-import android.content.res.AssetManager
-import android.graphics.Bitmap
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.Center
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.foundation.lazy.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.*
 import androidx.compose.ui.Alignment.Companion.CenterVertically
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import com.mygdx.game.Player
-import com.mygdx.game.interfaces.OnClickCallback
-import com.mygdx.game.model.items.Item
-import com.mygdx.game.model.items.perks.PerkItem
-import com.mygdx.game.model.items.perks.PerksMenu
-import com.sergeenko.alexey.titangym.assetsToBitmap
-import com.sergeenko.alexey.titangym.featureGameScreen.models.ComposeState
-import com.sergeenko.alexey.titangym.getBitmap
-import com.sergeenko.alexey.titangym.getItemImage
+import androidx.compose.ui.graphics.*
+import androidx.compose.ui.platform.*
+import androidx.compose.ui.unit.*
+import com.mygdx.game.*
+import com.mygdx.game.model.items.perks.*
+import com.sergeenko.alexey.titangym.*
+import com.sergeenko.alexey.titangym.fragments.*
 
 @Composable
 fun DrawPerkMenu(
@@ -48,16 +28,16 @@ fun DrawPerkMenu(
         Column(
             modifier = Modifier.padding(start = 30.dp, end = 30.dp)
         ) {
-            CloseButton{
+            CloseButton {
                 onClose()
             }
             Row {
-                LazyColumn(modifier = Modifier.fillMaxWidth()){
+                LazyColumn(modifier = Modifier.fillMaxWidth()) {
                     allPerks.forEachIndexed { _, item ->
                         val bgColor = player.getPerkColor(item)
                         item {
-                            LazyRow{
-                                item{
+                            LazyRow {
+                                item {
                                     PerkItem(
                                         item,
                                         bgColor,
@@ -66,18 +46,21 @@ fun DrawPerkMenu(
 
                                 }
                                 item.childPerk.forEach {
+                                    //TODO make it as item
                                     val bgColor = player.getPerkColor(it)
-                                    item{
+                                    item {
                                         Row(
                                             modifier = Modifier.height(40.dp)
                                         ) {
-                                            Box(modifier = Modifier
-                                                .size(width = 30.dp, height = 2.dp)
-                                                .align(CenterVertically)
-                                                .background(color = bgColor))
+                                            Box(
+                                                modifier = Modifier
+                                                    .size(width = 30.dp, height = 2.dp)
+                                                    .align(CenterVertically)
+                                                    .background(color = bgColor)
+                                            )
                                         }
                                     }
-                                    item{
+                                    item {
                                         PerkItem(it, bgColor, state.onItemClick)
                                     }
                                 }
@@ -92,19 +75,23 @@ fun DrawPerkMenu(
 }
 
 private fun Player.getPerkColor(item: PerkItem): Color {
-    return if(inventoryManager?.hasPerk(item) == true) Color.Gray else if(item.canBeBought(this)) if(item.isRequirementSatisfied(this)) Color.Green else Color.Yellow else Color.Red
+    return if (inventoryManager?.hasPerk(item) == true) Color.Gray else if (item.canBeBought(this)) if (item.isRequirementSatisfied(
+            this
+        )
+    ) Color.Green else Color.Yellow else Color.Red
 }
 
 @Composable
-private fun PerkItem(perk: PerkItem, bgColor: Color, onItemClick: (PerkItem) -> Unit){
+private fun PerkItem(perk: PerkItem, bgColor: Color, onItemClick: (PerkItem) -> Unit) {
     val assetManager = LocalContext.current.assets
 
-    Box(modifier = Modifier){
+    Box(modifier = Modifier) {
         Column(
             Modifier
                 .background(bgColor)
-                .padding(1.dp)) {
-            assetManager.getItemImage(perk){
+                .padding(1.dp)
+        ) {
+            assetManager.getItemImage(perk) {
                 onItemClick(it as PerkItem)
             }
         }
