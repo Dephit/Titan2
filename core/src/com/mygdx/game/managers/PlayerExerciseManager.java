@@ -132,7 +132,7 @@ public class PlayerExerciseManager extends ExerciseManager {
             } else {
                 player.setPlayerPosition(550, 256, PlayerCondition.stay);
                 //TODO make it only one message
-                player.postNotificationMessage("I don't want to sleep");
+                //player.postNotificationMessage("I don't want to sleep");
             }
         }
     }

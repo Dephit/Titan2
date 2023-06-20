@@ -22,7 +22,7 @@ import java.util.ArrayList;
 
 public abstract class BaseRoom extends Stage {
 
-    private boolean enableMapDrawing = false;
+    private final boolean enableMapDrawing = false;
     protected boolean callOnClose = false;
 
     public Runnable pauseGame() {
@@ -102,7 +102,7 @@ public abstract class BaseRoom extends Stage {
         camera.setToOrtho(false, Preffics.SCREEN_WIDTH, Preffics.SCREEN_HEIGHT);
         touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
 
-        if(enableMapDrawing) {
+        if (enableMapDrawing) {
             pix2 = createProceduralPixmap(1, 1, 1, 0, 0);
             tex2 = new Texture(pix2);
             pix3 = createProceduralPixmap(1, 1, 0, 1, 0);
@@ -181,11 +181,10 @@ public abstract class BaseRoom extends Stage {
         } else {
             onLoading(preffics);
         }
-        try {
-            // showPath(preffics);
-        } catch (Exception e) {
-
+        if (enableMapDrawing) {
+            showPath(preffics);
         }
+
         getBatch().end();
         draw();
         if (!pause) {
@@ -202,20 +201,24 @@ public abstract class BaseRoom extends Stage {
 
 
     private void showPath(Preffics preffics) {
-        for (int i = 0; i < preffics.mapSize; i++) {
-            for (int j = 0; j < preffics.mapSize * 4; j++) {
-                if (preffics.mapArr[i][j] == 0)
-                    getBatch().draw(tex3, j * preffics.mapCoordinateCorrector, i * preffics.mapCoordinateCorrector, 8, 8);
-                else
-                    getBatch().draw(tex4, j * preffics.mapCoordinateCorrector, i * preffics.mapCoordinateCorrector, 8, 8);
-            }
-            getBatch().draw(tex2, player.getX() / preffics.mapCoordinateCorrector, player.getY() / preffics.mapCoordinateCorrector, 8, 8);
-            try {
-                for (Grid2d.MapNode mapNode : player.path) {
-                    getBatch().draw(tex2, mapNode.x * preffics.mapCoordinateCorrector, mapNode.y * preffics.mapCoordinateCorrector, 8, 8);
+        try {
+            for (int i = 0; i < preffics.mapSize; i++) {
+                for (int j = 0; j < preffics.mapSize * 4; j++) {
+                    if (preffics.mapArr[i][j] == 0)
+                        getBatch().draw(tex3, j * preffics.mapCoordinateCorrector, i * preffics.mapCoordinateCorrector, 8, 8);
+                    else
+                        getBatch().draw(tex4, j * preffics.mapCoordinateCorrector, i * preffics.mapCoordinateCorrector, 8, 8);
                 }
-            } catch (NullPointerException ignored) {
+                getBatch().draw(tex2, player.getX() / preffics.mapCoordinateCorrector, player.getY() / preffics.mapCoordinateCorrector, 8, 8);
+                try {
+                    for (Grid2d.MapNode mapNode : player.path) {
+                        getBatch().draw(tex2, mapNode.x * preffics.mapCoordinateCorrector, mapNode.y * preffics.mapCoordinateCorrector, 8, 8);
+                    }
+                } catch (NullPointerException ignored) {
+                }
             }
+        } catch (Exception e) {
+
         }
     }
 

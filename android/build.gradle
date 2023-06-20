@@ -153,6 +153,8 @@ dependencies {
     // Koin main features for Android
     implementation "io.insert-koin:koin-android:$koin_android_version"
     implementation "io.insert-koin:koin-androidx-compose:$koin_android_version"
+
+    implementation platform('com.google.firebase:firebase-bom:32.1.1')
 }
 
 
